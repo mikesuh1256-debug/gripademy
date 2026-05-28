@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>잉그립 영어학원 — 손에 잡히는 영어</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f3;color:#1a1a1a;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.97);border-bottom:1px solid #e8e8e8;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-brand-text{font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#00391e;}
+.nav-brand-text span{color:#ec6619;}
+.nav-back{font-size:12px;color:#aaa;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s;}
+.nav-back:hover{color:#00391e;}
+.nav-menu{display:flex;align-items:center;gap:28px;}
+.nav-menu a{font-size:13px;font-weight:500;color:#555;text-decoration:none;transition:color 0.2s;}
+.nav-menu a:hover{color:#00391e;}
+.nav-cta{background:#00391e;color:#fff !important;padding:8px 20px;border-radius:6px;transition:background 0.2s;}
+.nav-cta:hover{background:#ec6619 !important;}
+
+/* HERO */
+.hero{background:#00391e;padding:140px 40px 80px;position:relative;overflow:hidden;}
+.hero::before{content:'R G L V';font-family:'Montserrat',sans-serif;font-size:140px;font-weight:800;color:rgba(255,255,255,0.04);position:absolute;top:20px;right:-20px;white-space:nowrap;pointer-events:none;letter-spacing:30px;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;width:400px;height:400px;background:radial-gradient(circle,rgba(236,102,25,0.18) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:960px;margin:0 auto;position:relative;z-index:1;}
+.hero-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#ec6619;margin-bottom:20px;}
+.hero-title{font-size:56px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:16px;letter-spacing:-2px;}
+.hero-title span{color:#ec6619;}
+.hero-slogan{font-size:18px;color:rgba(255,255,255,0.5);font-weight:300;letter-spacing:3px;margin-bottom:48px;}
+.hero-metrics{display:flex;gap:40px;}
+.hero-metric-num{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:800;color:#ec6619;line-height:1;}
+.hero-metric-label{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;letter-spacing:0.5px;}
+
+/* SECTION COMMON */
+.section{padding:80px 40px;}
+.section-inner{max-width:960px;margin:0 auto;}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:12px;}
+.section-title{font-size:28px;font-weight:700;color:#1a1a1a;margin-bottom:8px;}
+.section-sub{font-size:15px;color:#999;font-weight:300;margin-bottom:48px;}
+
+/* PROGRAMS */
+.programs{background:#fff;}
+.prog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.prog-card{border-radius:16px;border:1px solid #eee;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+.prog-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,57,30,0.1);}
+.prog-head{padding:24px;background:#00391e;}
+.prog-head-num{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.4);margin-bottom:8px;text-transform:uppercase;}
+.prog-head-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;}
+.prog-head-sub{font-size:12px;color:rgba(255,255,255,0.5);}
+.prog-body{padding:20px 24px;background:#fafafa;}
+.prog-items{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.prog-items li{font-size:13px;color:#666;display:flex;align-items:center;gap:8px;}
+.prog-dot{width:5px;height:5px;border-radius:50%;background:#ec6619;flex-shrink:0;}
+
+/* SIGNATURE */
+.signature{background:#f5f5f3;}
+.sig-box{background:#00391e;border-radius:20px;padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.sig-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#ec6619;margin-bottom:16px;}
+.sig-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:16px;line-height:1.3;}
+.sig-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;margin-bottom:24px;}
+.sig-points{display:flex;flex-direction:column;gap:12px;}
+.sig-point{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,0.06);border-radius:10px;padding:14px;}
+.sig-point-icon{font-size:18px;flex-shrink:0;}
+.sig-point-text h4{font-size:13px;font-weight:600;color:#ec6619;margin-bottom:2px;}
+.sig-point-text p{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;}
+.sig-result{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:32px;text-align:center;}
+.sig-result-before{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:16px;}
+.sig-result-arrow{font-size:28px;color:rgba(255,255,255,0.2);margin-bottom:16px;}
+.sig-result-after-label{font-size:12px;color:#ec6619;letter-spacing:1px;margin-bottom:8px;}
+.sig-result-after-num{font-family:'Montserrat',sans-serif;font-size:56px;font-weight:800;color:#fff;line-height:1;}
+.sig-result-after-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-top:4px;}
+
+/* RESULTS */
+.results{background:#fff;}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:40px;}
+.score-card{border:1px solid #eee;border-radius:14px;padding:28px;text-align:center;transition:border-color 0.2s,transform 0.2s;}
+.score-card:hover{border-color:#ec6619;transform:translateY(-2px);}
+.score-school{font-size:13px;font-weight:600;color:#00391e;margin-bottom:12px;}
+.score-num{font-family:'Montserrat',sans-serif;font-size:48px;font-weight:800;color:#ec6619;line-height:1;margin-bottom:4px;}
+.score-label{font-size:12px;color:#bbb;}
+.metrics-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.metric-box{background:#f9f9f7;border-radius:12px;padding:24px;text-align:center;}
+.metric-num{font-family:'Montserrat',sans-serif;font-size:36px;font-weight:800;color:#00391e;line-height:1;margin-bottom:6px;}
+.metric-label{font-size:13px;color:#999;line-height:1.5;}
+
+/* CONTACT */
+.contact{padding:80px 40px;background:#f9f9f7;text-align:center;}
+.contact-box{max-width:540px;margin:0 auto;background:#fff;border-radius:20px;padding:48px;border:1px solid #eee;box-shadow:0 8px 32px rgba(0,0,0,0.06);}
+.contact-icon{font-size:40px;margin-bottom:20px;}
+.contact-title{font-size:24px;font-weight:700;color:#00391e;margin-bottom:8px;}
+.contact-sub{font-size:14px;color:#bbb;margin-bottom:32px;line-height:1.7;}
+.contact-btn{display:inline-block;background:#00391e;color:#fff;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:background 0.2s;margin-bottom:12px;}
+.contact-btn:hover{background:#ec6619;}
+.contact-hint{font-size:12px;color:#ccc;}
+
+/* FOOTER */
+footer{background:#111;padding:32px 40px;text-align:center;}
+.footer-brand{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:#fff;margin-bottom:10px;}
+.footer-brand span{color:#ec6619;}
+.footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:12px;}
+.footer-links a{font-size:12px;color:#555;text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:#ec6619;}
+.footer-copy{font-size:11px;color:#444;}
+
+/* ANIM */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← 메인으로</a>
+  <a href="index.html" class="nav-brand">
+    <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원" style="height:34px; width:auto; object-fit:contain; display:block;">
+  </a>
+  <div class="nav-menu">
+    <a href="#programs">프로그램</a>
+    <a href="#signature">시그니처</a>
+    <a href="#results">성과</a>
+    <a href="#contact" class="nav-cta">무료상담 →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-tag">English Program</p>
+    <h1 class="hero-title">잉그립<br><span>영어학원</span></h1>
+    <p class="hero-slogan">손에 잡히는 영어</p>
+    <div class="hero-metrics">
+      <div class="hero-metric">
+        <div class="hero-metric-num">94%</div>
+        <div class="hero-metric-label">높은 재등록률</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-num">28개월</div>
+        <div class="hero-metric-label">평균 재원 기간</div>
+      </div>
+      <div class="hero-metric">
+        <div class="hero-metric-num">125명</div>
+        <div class="hero-metric-label">특목고·국제중 합격</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 수업 사진 배너 -->
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; height:320px; overflow:hidden;">
+  <img src="assets/images/photos/1763705263.656843IMG_9255.jpeg" alt="수업 장면" style="width:100%; height:100%; object-fit:cover; display:block;">
+  <img src="assets/images/photos/1763705263.6298761IMG_9257.jpeg" alt="수업 장면" style="width:100%; height:100%; object-fit:cover; display:block;">
+  <img src="assets/images/photos/1763705263.5482368IMG_9260.jpeg" alt="수업 장면" style="width:100%; height:100%; object-fit:cover; display:block;">
+</div>
+
+<!-- PROGRAMS -->
+<section class="section programs" id="programs">
+  <div class="section-inner">
+    <p class="section-tag">프로그램 구성</p>
+    <h2 class="section-title">3단계 체계적 학습 시스템</h2>
+    <p class="section-sub">유치~고등까지, 단계별 맞춤 커리큘럼</p>
+    <div class="prog-grid fade-up">
+      <div class="prog-card">
+        <div class="prog-head">
+          <p class="prog-head-num">Program 01</p>
+          <h3 class="prog-head-title">초등부</h3>
+          <p class="prog-head-sub">Phonics → 기초/중급/고급</p>
+        </div>
+        <div class="prog-body">
+          <ul class="prog-items">
+            <li><span class="prog-dot"></span>유치~초6 단계별 커리큘럼</li>
+            <li><span class="prog-dot"></span>파닉스 완성 후 단계 진입</li>
+            <li><span class="prog-dot"></span>기초/중급/고급반 세분화</li>
+            <li><span class="prog-dot"></span>어휘·문법·독해 통합 학습</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-head">
+          <p class="prog-head-num">Program 02</p>
+          <h3 class="prog-head-title">중등부</h3>
+          <p class="prog-head-sub">내신 특화 프로그램</p>
+        </div>
+        <div class="prog-body">
+          <ul class="prog-items">
+            <li><span class="prog-dot"></span>중1~중3 학교별 기출 분석</li>
+            <li><span class="prog-dot"></span>4주 시험 대비 사이클</li>
+            <li><span class="prog-dot"></span>서술형 완성 집중 훈련</li>
+            <li><span class="prog-dot"></span>백지테스트 시그니처 적용</li>
+          </ul>
+        </div>
+      </div>
+      <div class="prog-card">
+        <div class="prog-head">
+          <p class="prog-head-num">Program 03</p>
+          <h3 class="prog-head-title">특목고·국제중</h3>
+          <p class="prog-head-sub">입시 대비 심화 과정</p>
+        </div>
+        <div class="prog-body">
+          <ul class="prog-items">
+            <li><span class="prog-dot"></span>심화 문법 완성</li>
+            <li><span class="prog-dot"></span>고급 리딩 + 분석적 독해</li>
+            <li><span class="prog-dot"></span>영작 완성 과정</li>
+            <li><span class="prog-dot"></span>입시 전략 맞춤 코칭</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="section signature" id="signature">
+  <div class="section-inner">
+    <p class="section-tag">시그니처 프로그램</p>
+    <div class="sig-box fade-up">
+      <div>
+        <p class="sig-label">Signature</p>
+        <h2 class="sig-title">백지테스트<br>프로그램</h2>
+        <p class="sig-desc">외우기가 아닌 원리부터 이해하고, 손으로 직접 쓰며 완벽히 내 것으로 만드는 잉그립만의 핵심 학습법입니다.</p>
+        <div class="sig-points">
+          <div class="sig-point">
+            <div class="sig-point-icon">🧠</div>
+            <div class="sig-point-text">
+              <h4>완전한 이해</h4>
+              <p>단순 암기가 아닌 원리부터 완전히 이해하는 방식</p>
+            </div>
+          </div>
+          <div class="sig-point">
+            <div class="sig-point-icon">✍️</div>
+            <div class="sig-point-text">
+              <h4>서술형 완성</h4>
+              <p>손으로 쓰며 서술형 대비 완벽 준비</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sig-result">
+        <p class="sig-result-before">기존 서술형 평균<br><strong style="color:rgba(255,255,255,0.6);font-size:28px;">18.2점</strong></p>
+        <p class="sig-result-arrow">↓</p>
+        <p class="sig-result-after-label">2024년 성과</p>
+        <div class="sig-result-after-num">23.8</div>
+        <p class="sig-result-after-sub">서술형 평균 점수 / 25점 만점</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section results" id="results">
+  <div class="section-inner">
+    <p class="section-tag">2024년 내신 성과</p>
+    <h2 class="section-title">숫자로 보는 실력</h2>
+    <p class="section-sub">재원 학교별 평균 점수 (2024년 기준)</p>
+    <div class="score-grid fade-up">
+      <div class="score-card">
+        <p class="score-school">가재울중학교</p>
+        <div class="score-num">92</div>
+        <p class="score-label">평균 점수</p>
+      </div>
+      <div class="score-card">
+        <p class="score-school">명지중학교</p>
+        <div class="score-num">90</div>
+        <p class="score-label">평균 점수</p>
+      </div>
+      <div class="score-card">
+        <p class="score-school">연희중학교</p>
+        <div class="score-num">94<span style="font-size:20px">/91</span></div>
+        <p class="score-label">1학년 / 2학년</p>
+      </div>
+    </div>
+    <div class="metrics-row fade-up">
+      <div class="metric-box">
+        <div class="metric-num">94%</div>
+        <div class="metric-label">높은 재등록률</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">28개월</div>
+        <div class="metric-label">평균 재원 기간</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-num">125명</div>
+        <div class="metric-label">특목고·국제중 합격</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-box fade-up">
+    <div class="contact-icon">📖</div>
+    <h2 class="contact-title">잉그립 영어 무료상담</h2>
+    <p class="contact-sub">영어 프로그램, 레벨 테스트, 수업 일정 등<br>궁금한 점을 편하게 문의해 주세요</p>
+    <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn">네이버 톡으로 상담하기 →</a>
+    <p class="contact-hint">상담 완료 시 첫 달 교재비 50% 지원 혜택</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">ING<span>GRIP</span> 영어학원</div>
+  <div class="footer-links">
+    <a href="index.html">메인으로</a>
+    <a href="math.html">매쓰그립 수학학원</a>
+    <a href="#contact">상담문의</a>
+  </div>
+  <p class="footer-copy">© 2025 잉그립 영어학원. All rights reserved. | 서울특별시 서대문구 가재울</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.12});
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

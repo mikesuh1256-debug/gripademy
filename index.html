@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>매쓰그립 수학학원 · 잉그립 영어학원</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:#f5f5f3;color:#1a1a1a;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.97);border-bottom:1px solid #e8e8e8;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;}
+.nav-logos{display:flex;align-items:center;gap:24px;}
+.nav-logo-math{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#1e2a6d;letter-spacing:-0.5px;cursor:pointer;text-decoration:none;}
+.nav-logo-math span{color:#19b1c6;}
+.nav-logo-eng{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#00391e;letter-spacing:-0.5px;cursor:pointer;text-decoration:none;}
+.nav-logo-eng span{color:#ec6619;}
+.nav-divider{width:1px;height:20px;background:#ddd;}
+.nav-menu{display:flex;align-items:center;gap:32px;}
+.nav-menu a{font-size:13px;font-weight:500;color:#555;text-decoration:none;letter-spacing:0.3px;transition:color 0.2s;}
+.nav-menu a:hover{color:#1e2a6d;}
+.nav-cta{background:#1e2a6d;color:#fff !important;font-size:13px;font-weight:500;padding:8px 20px;border-radius:6px;text-decoration:none;transition:background 0.2s;}
+.nav-cta:hover{background:#19b1c6 !important;}
+
+/* HERO */
+.hero{height:100vh;display:flex;padding-top:64px;}
+.hero-half{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:60px 40px;position:relative;cursor:pointer;overflow:hidden;transition:flex 0.5s cubic-bezier(0.4,0,0.2,1);text-decoration:none;}
+.hero-half:hover{flex:1.18;}
+.hero-math{background:#1e2a6d;}
+.hero-math::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%, rgba(25,177,198,0.15) 0%, transparent 60%);}
+.hero-eng{background:#00391e;}
+.hero-eng::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%, rgba(236,102,25,0.15) 0%, transparent 60%);}
+.hero-divider{width:3px;background:linear-gradient(to bottom,#19b1c6,#ec6619);z-index:2;flex-shrink:0;}
+.hero-content{position:relative;z-index:1;text-align:center;}
+.hero-symbol{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;opacity:0.08;color:#fff;position:absolute;top:-50px;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;}
+.hero-badge{display:inline-block;font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;text-transform:uppercase;}
+.hero-math .hero-badge{background:rgba(25,177,198,0.15);color:#19b1c6;border:1px solid rgba(25,177,198,0.3);}
+.hero-eng .hero-badge{background:rgba(236,102,25,0.15);color:#ec6619;border:1px solid rgba(236,102,25,0.3);}
+.hero-name{font-size:44px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:12px;letter-spacing:-1px;}
+.hero-name span{display:block;}
+.hero-math .hero-name span:last-child{color:#19b1c6;}
+.hero-eng .hero-name span:last-child{color:#ec6619;}
+.hero-slogan{font-size:15px;color:rgba(255,255,255,0.55);font-weight:300;letter-spacing:3px;margin-bottom:36px;}
+.hero-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 30px;border-radius:6px;font-size:14px;font-weight:600;transition:all 0.2s;border:none;cursor:pointer;font-family:'Noto Sans KR',sans-serif;}
+.hero-math .hero-btn{background:#19b1c6;color:#fff;}
+.hero-math:hover .hero-btn{background:#fff;color:#1e2a6d;}
+.hero-eng .hero-btn{background:#ec6619;color:#fff;}
+.hero-eng:hover .hero-btn{background:#fff;color:#00391e;}
+.hero-stats{margin-top:40px;display:flex;gap:28px;justify-content:center;}
+.hero-stat{text-align:center;}
+.hero-stat-num{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:700;color:#fff;}
+.hero-stat-label{font-size:11px;color:rgba(255,255,255,0.45);margin-top:3px;letter-spacing:0.5px;}
+.hero-arrow{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,0.35);font-size:12px;letter-spacing:2px;text-transform:uppercase;}
+
+/* BANNER */
+.banner{background:#fff;padding:64px 40px;border-top:1px solid #eee;}
+.banner-inner{max-width:960px;margin:0 auto;}
+.banner-title{text-align:center;font-size:12px;font-weight:500;letter-spacing:3px;color:#bbb;text-transform:uppercase;margin-bottom:44px;}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#f0f0f0;border:1px solid #f0f0f0;border-radius:14px;overflow:hidden;}
+.stat-item{background:#fff;padding:36px 20px;text-align:center;}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:38px;font-weight:800;margin-bottom:8px;line-height:1;}
+.stat-num.c-navy{color:#1e2a6d;}
+.stat-num.c-cyan{color:#19b1c6;}
+.stat-num.c-green{color:#00391e;}
+.stat-num.c-orange{color:#ec6619;}
+.stat-label{font-size:13px;color:#999;font-weight:400;line-height:1.6;}
+
+/* PROGRAMS */
+.programs{padding:80px 40px;max-width:960px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:56px;}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#bbb;margin-bottom:14px;}
+.section-title{font-size:30px;font-weight:700;color:#1a1a1a;line-height:1.3;}
+.programs-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.program-card{border-radius:16px;overflow:hidden;border:1px solid #e8e8e8;background:#fff;transition:transform 0.3s,box-shadow 0.3s;text-decoration:none;display:block;color:inherit;}
+.program-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.12);}
+.card-header{padding:36px 32px 28px;position:relative;}
+.card-header-math{background:#1e2a6d;}
+.card-header-eng{background:#00391e;}
+.card-tag{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;opacity:0.6;color:#fff;}
+.card-title{font-size:26px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:6px;}
+.card-title span{display:block;}
+.card-header-math .card-title span:last-child{color:#19b1c6;}
+.card-header-eng .card-title span:last-child{color:#ec6619;}
+.card-subtitle{font-size:13px;color:rgba(255,255,255,0.55);margin-top:10px;}
+.card-body{padding:28px 32px 32px;}
+.card-features{list-style:none;margin-bottom:28px;}
+.card-features li{font-size:14px;color:#555;padding:9px 0;border-bottom:1px solid #f5f5f5;display:flex;align-items:center;gap:12px;}
+.card-features li:last-child{border-bottom:none;}
+.feat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.feat-dot-math{background:#19b1c6;}
+.feat-dot-eng{background:#ec6619;}
+.card-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:11px 22px;border-radius:7px;transition:all 0.2s;}
+.card-btn-math{background:#1e2a6d;color:#fff;}
+.program-card:hover .card-btn-math{background:#19b1c6;}
+.card-btn-eng{background:#00391e;color:#fff;}
+.program-card:hover .card-btn-eng{background:#ec6619;}
+
+/* DIRECTOR */
+.director{background:#1e2a6d;padding:80px 40px;}
+.director-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:64px;align-items:center;}
+.director-visual{background:rgba(255,255,255,0.06);border-radius:20px;padding:44px 32px;text-align:center;border:1px solid rgba(255,255,255,0.1);}
+.director-initials{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#19b1c6,#1e2a6d);border:2px solid rgba(25,177,198,0.4);display:flex;align-items:center;justify-content:center;font-family:'Noto Sans KR',sans-serif;font-size:32px;font-weight:700;color:#fff;margin:0 auto 20px;}
+.director-years{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;color:#19b1c6;line-height:1;}
+.director-years-sub{font-size:14px;color:rgba(255,255,255,0.4);margin-top:6px;letter-spacing:1px;}
+.director-years-badges{display:flex;flex-direction:column;gap:8px;margin-top:24px;}
+.d-badge{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:8px 12px;font-size:12px;color:rgba(255,255,255,0.55);text-align:center;}
+.director-label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
+.director-name{font-size:38px;font-weight:800;color:#fff;margin-bottom:6px;}
+.director-role{font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:28px;letter-spacing:0.5px;}
+.director-quote{font-size:17px;color:rgba(255,255,255,0.8);line-height:1.8;font-weight:300;border-left:3px solid #19b1c6;padding-left:22px;margin-bottom:32px;}
+.director-careers{display:flex;flex-direction:column;gap:10px;}
+.career-item{font-size:13px;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:10px;}
+.career-dot{width:4px;height:4px;border-radius:50%;background:#19b1c6;flex-shrink:0;}
+
+/* FACILITIES */
+.facilities{padding:80px 40px;background:#f9f9f7;}
+.facilities-inner{max-width:960px;margin:0 auto;text-align:center;}
+.facilities-title{font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:12px;}
+.facilities-sub{font-size:15px;color:#aaa;margin-bottom:48px;font-weight:300;}
+.facilities-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+.facility-card{background:#fff;border:1px solid #e8e8e8;border-radius:16px;padding:28px 16px;transition:transform 0.25s,box-shadow 0.25s;}
+.facility-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08);}
+.facility-icon{font-size:32px;margin-bottom:14px;}
+.facility-name{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:6px;}
+.facility-desc{font-size:12px;color:#aaa;line-height:1.5;}
+@media(max-width:768px){.facilities-grid{grid-template-columns:repeat(2,1fr);}.facility-card:last-child{grid-column:1/-1;}}
+
+/* CONTACT */
+.contact{padding:80px 40px;background:#f9f9f7;}
+.contact-inner{max-width:960px;margin:0 auto;text-align:center;}
+.contact-title{font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:12px;}
+.contact-sub{font-size:15px;color:#aaa;margin-bottom:48px;font-weight:300;}
+.contact-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:640px;margin:0 auto;}
+.contact-card{padding:36px 32px;border-radius:16px;border:1px solid #e8e8e8;background:#fff;transition:transform 0.25s,box-shadow 0.25s;}
+.contact-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08);}
+.contact-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;}
+.contact-card-math .contact-icon{background:rgba(30,42,109,0.08);}
+.contact-card-eng .contact-icon{background:rgba(0,57,30,0.08);}
+.contact-name{font-size:16px;font-weight:700;margin-bottom:6px;}
+.contact-card-math .contact-name{color:#1e2a6d;}
+.contact-card-eng .contact-name{color:#00391e;}
+.contact-desc{font-size:12px;color:#bbb;margin-bottom:22px;line-height:1.6;}
+.contact-cta{display:inline-block;padding:11px 26px;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;transition:all 0.2s;}
+.contact-card-math .contact-cta{background:#1e2a6d;color:#fff;}
+.contact-card-math .contact-cta:hover{background:#19b1c6;}
+.contact-card-eng .contact-cta{background:#00391e;color:#fff;}
+.contact-card-eng .contact-cta:hover{background:#ec6619;}
+
+/* FOOTER */
+footer{background:#111;padding:40px;}
+.footer-inner{max-width:960px;margin:0 auto;text-align:center;}
+.footer-logos{display:flex;justify-content:center;align-items:center;gap:32px;margin-bottom:16px;}
+.footer-logo-math{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:#fff;}
+.footer-logo-math span{color:#19b1c6;}
+.footer-logo-eng{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:#fff;}
+.footer-logo-eng span{color:#ec6619;}
+.footer-div{width:1px;height:16px;background:#333;}
+.footer-address{font-size:12px;color:#555;margin-bottom:8px;}
+.footer-copy{font-size:11px;color:#444;}
+
+/* ANIMATIONS */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+.fade-up:nth-child(2){transition-delay:0.1s;}
+.fade-up:nth-child(3){transition-delay:0.2s;}
+.fade-up:nth-child(4){transition-delay:0.3s;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logos">
+    <a href="math.html" class="nav-logo-math">
+      <img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원" style="height:32px; width:auto; object-fit:contain; display:block;">
+    </a>
+    <div class="nav-divider"></div>
+    <a href="english.html" class="nav-logo-eng">
+      <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원" style="height:32px; width:auto; object-fit:contain; display:block;">
+    </a>
+  </div>
+  <div class="nav-menu">
+    <a href="#programs">프로그램</a>
+    <a href="#director">원장소개</a>
+    <a href="#contact">상담문의</a>
+    <a href="#contact" class="nav-cta">무료상담 →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <a href="math.html" class="hero-half hero-math">
+    <div class="hero-symbol">x ÷ √ π</div>
+    <div class="hero-content">
+      <div class="hero-badge">Math Program</div>
+      <h1 class="hero-name">
+        <span>매쓰그립</span>
+        <span>수학학원</span>
+      </h1>
+      <p class="hero-slogan">손에 잡히는 수학</p>
+      <div class="hero-btn">프로그램 보기 →</div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">18.5점</div>
+          <div class="hero-stat-label">평균 성적 향상</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">95%</div>
+          <div class="hero-stat-label">학생 만족도</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-arrow">클릭하여 수학 페이지로 ↓</div>
+  </a>
+
+  <div class="hero-divider"></div>
+
+  <a href="english.html" class="hero-half hero-eng">
+    <div class="hero-symbol">R G L V</div>
+    <div class="hero-content">
+      <div class="hero-badge">English Program</div>
+      <h1 class="hero-name">
+        <span>잉그립</span>
+        <span>영어학원</span>
+      </h1>
+      <p class="hero-slogan">손에 잡히는 영어</p>
+      <div class="hero-btn">프로그램 보기 →</div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">94%</div>
+          <div class="hero-stat-label">재등록률</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">28개월</div>
+          <div class="hero-stat-label">평균 재원기간</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-arrow">클릭하여 영어 페이지로 ↓</div>
+  </a>
+</section>
+
+<!-- BANNER -->
+<section class="banner">
+  <div class="banner-inner">
+    <p class="banner-title">15년이 증명하는 숫자들</p>
+    <div class="stats-grid fade-up">
+      <div class="stat-item">
+        <div class="stat-num c-navy" data-count="15" data-suffix="년">0년</div>
+        <div class="stat-label">검증된<br>교육 전통</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num c-cyan" data-count="125" data-suffix="명">0명</div>
+        <div class="stat-label">특목고·국제중<br>합격생</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num c-green" data-count="94" data-suffix="%">0%</div>
+        <div class="stat-label">높은<br>재등록률</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num c-orange" data-count="28" data-suffix="개월">0개월</div>
+        <div class="stat-label">평균<br>재원 기간</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="section-header fade-up">
+    <p class="section-tag">Our Programs</p>
+    <h2 class="section-title">수학과 영어, 두 분야의 전문 시스템</h2>
+  </div>
+  <div class="programs-grid">
+    <a href="math.html" class="program-card fade-up">
+      <div class="card-header card-header-math">
+        <p class="card-tag">수학 프로그램</p>
+        <h3 class="card-title"><span>매쓰그립</span><span>수학학원</span></h3>
+        <p class="card-subtitle">DD반 + PT반 2-Track 시스템</p>
+      </div>
+      <div class="card-body">
+        <ul class="card-features">
+          <li><span class="feat-dot feat-dot-math"></span>DD반 — 강의식 수업 + 반복 훈련</li>
+          <li><span class="feat-dot feat-dot-math"></span>PT반 — 1:1 과외식 맞춤 수업</li>
+          <li><span class="feat-dot feat-dot-math"></span>3자 학습톡방 (학생-학부모-원장)</li>
+          <li><span class="feat-dot feat-dot-math"></span>주간 리포트 + 월말 평가</li>
+          <li><span class="feat-dot feat-dot-math"></span>학교별 내신 대비 맞춤 교재</li>
+        </ul>
+        <span class="card-btn card-btn-math">자세히 보기 →</span>
+      </div>
+    </a>
+    <a href="english.html" class="program-card fade-up">
+      <div class="card-header card-header-eng">
+        <p class="card-tag">영어 프로그램</p>
+        <h3 class="card-title"><span>잉그립</span><span>영어학원</span></h3>
+        <p class="card-subtitle">원장 직강 · 3단계 체계적 학습</p>
+      </div>
+      <div class="card-body">
+        <ul class="card-features">
+          <li><span class="feat-dot feat-dot-eng"></span>파닉스 → 초등 기초/중급/고급</li>
+          <li><span class="feat-dot feat-dot-eng"></span>중등부 내신 특화 프로그램</li>
+          <li><span class="feat-dot feat-dot-eng"></span>특목고·국제중 입시 대비</li>
+          <li><span class="feat-dot feat-dot-eng"></span>백지테스트 시그니처 프로그램</li>
+          <li><span class="feat-dot feat-dot-eng"></span>학교별 기출 분석 + 4주 시험 대비</li>
+        </ul>
+        <span class="card-btn card-btn-eng">자세히 보기 →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- DIRECTOR -->
+<section class="director" id="director">
+  <div class="director-inner">
+    <div class="director-visual fade-up">
+      <img src="assets/images/photos/suhmyungeun_photo.JPG" alt="서명은 원장" style="width:120px; height:120px; border-radius:50%; object-fit:cover; object-position:top center; border:3px solid rgba(25,177,198,0.4); margin:0 auto 20px; display:block;">
+      <div class="director-years">15</div>
+      <div class="director-years-sub">년 교육 경력</div>
+      <div class="director-years-badges">
+        <div class="d-badge">연세대 행정학 석사</div>
+        <div class="d-badge">고려대 영어교육 전공</div>
+        <div class="d-badge">특목고 합격 125명</div>
+        <div class="d-badge">저서 3권 집필</div>
+      </div>
+    </div>
+    <div class="fade-up">
+      <p class="director-label">Director</p>
+      <h2 class="director-name">서명은 원장</h2>
+      <p class="director-role">매쓰그립 수학학원 · 잉그립 영어학원</p>
+      <blockquote class="director-quote">
+        "아이들의 잠재력을 믿습니다.<br>
+        단순한 지식 전달을 넘어, 스스로 공부하는<br>
+        힘과 태도를 길러주는 참된 교육을 지향합니다."
+      </blockquote>
+      <div class="director-careers">
+        <div class="career-item"><span class="career-dot"></span>연세대학교 행정학 석사 / 고려대학교 대학원 영어교육 전공</div>
+        <div class="career-item"><span class="career-dot"></span>전) 청담어학원 목동 원장</div>
+        <div class="career-item"><span class="career-dot"></span>전) 아발론교육 강서캠퍼스 대표원장</div>
+        <div class="career-item"><span class="career-dot"></span>15년 경력, 특목고·국제중·명문대 합격생 다수 배출</div>
+        <div class="career-item"><span class="career-dot"></span>교육 관련 저서 3권 집필</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FACILITIES -->
+<section class="facilities">
+  <div class="facilities-inner">
+    <h2 class="facilities-title fade-up">캠퍼스 시설</h2>
+    <p class="facilities-sub fade-up">쾌적하고 안전한 학습 환경을 제공합니다</p>
+    <div class="facilities-grid fade-up">
+      <div class="facility-card">
+        <div class="facility-icon">🖥️</div>
+        <div class="facility-name">스마트 교실</div>
+        <div class="facility-desc">최신 디지털 장비로 구성된 학습 공간</div>
+      </div>
+      <div class="facility-card">
+        <div class="facility-icon">📚</div>
+        <div class="facility-name">자습실</div>
+        <div class="facility-desc">집중 학습을 위한 전용 자습 공간</div>
+      </div>
+      <div class="facility-card">
+        <div class="facility-icon">🛋️</div>
+        <div class="facility-name">학생 대기공간</div>
+        <div class="facility-desc">수업 전후 편안하게 쉴 수 있는 공간</div>
+      </div>
+      <div class="facility-card">
+        <div class="facility-icon">📷</div>
+        <div class="facility-name">CCTV 완비</div>
+        <div class="facility-desc">24시간 안전한 학원 환경 관리</div>
+      </div>
+      <div class="facility-card">
+        <div class="facility-icon">🚌</div>
+        <div class="facility-name">셔틀버스</div>
+        <div class="facility-desc">등하원 편의를 위한 셔틀버스 운행</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-title fade-up">무료 상담 신청</h2>
+    <p class="contact-sub fade-up">궁금한 점은 언제든지 편하게 문의해 주세요</p>
+    <div class="contact-cards fade-up">
+      <div class="contact-card contact-card-math">
+        <div class="contact-icon">📐</div>
+        <div class="contact-name">매쓰그립 수학학원</div>
+        <div class="contact-desc">수학 프로그램 · 레벨테스트<br>수업 일정 안내</div>
+        <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-cta">네이버 톡 상담 →</a>
+      </div>
+      <div class="contact-card contact-card-eng">
+        <div class="contact-icon">📖</div>
+        <div class="contact-name">잉그립 영어학원</div>
+        <div class="contact-desc">영어 프로그램 · 레벨테스트<br>수업 일정 안내</div>
+        <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-cta">네이버 톡 상담 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logos">
+      <img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원" style="height:28px; width:auto; background:white; padding:4px 8px; border-radius:4px;">
+      <div class="footer-div"></div>
+      <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원" style="height:28px; width:auto; background:white; padding:4px 8px; border-radius:4px;">
+    </div>
+    <p class="footer-address">서울특별시 서대문구 가재울 · 문의: 네이버 톡</p>
+    <p class="footer-copy">© 2025 매쓰그립 수학학원 · 잉그립 영어학원. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+// Scroll fade
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.12});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Count-up animation
+function countUp(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  let current = 0;
+  const duration = 1800;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.textContent = Math.floor(current) + suffix;
+    if(current >= target) clearInterval(timer);
+  }, 16);
+}
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(countUp);
+      countObserver.unobserve(e.target);
+    }
+  });
+}, {threshold:0.3});
+document.querySelectorAll('.stats-grid').forEach(el => countObserver.observe(el));
+</script>
+</body>
+</html>
