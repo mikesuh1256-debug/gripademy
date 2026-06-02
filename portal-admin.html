@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그립학원 관리자 포털</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#f0f2f5;min-height:100vh;}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;}
+.login-title{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#aaa;margin-bottom:32px;}
+.login-box input{width:100%;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;margin-bottom:12px;outline:none;font-family:inherit;}
+.login-box input:focus{border-color:#1e2a6d;}
+.login-btn{width:100%;padding:14px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+.login-btn:hover{background:#19b1c6;}
+
+.app{display:none;min-height:100vh;}
+.header{background:#1e2a6d;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{color:#fff;font-size:16px;font-weight:700;}
+.logout-btn{background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;}
+
+.body{max-width:1000px;margin:0 auto;padding:24px 16px;}
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.tab{padding:8px 20px;border-radius:20px;border:1.5px solid #e0e0e0;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#999;font-family:inherit;}
+.tab.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+
+.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.card h2{font-size:15px;font-weight:700;color:#333;margin-bottom:20px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:12px;font-weight:600;color:#666;}
+.form-group select,.form-group input{padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;}
+.form-group select:focus,.form-group input:focus{border-color:#1e2a6d;}
+.submit-btn{padding:11px 24px;background:#1e2a6d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.submit-btn:hover{background:#19b1c6;}
+.success-msg{color:#2e7d32;font-size:13px;margin-top:8px;display:none;}
+
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 14px;background:#f5f5f5;font-size:12px;color:#999;font-weight:600;text-align:left;}
+td{padding:12px 14px;font-size:14px;color:#333;border-bottom:1px solid #f5f5f5;}
+tr:last-child td{border-bottom:none;}
+
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.badge-math{background:#e3f2fd;color:#1565c0;}
+.badge-eng{background:#e8f5e9;color:#2e7d32;}
+.badge-both{background:#f3e5f5;color:#6a1b9a;}
+.del-btn{background:#ffebee;color:#c62828;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;}
+
+@media(max-width:600px){.form-row,.form-row-3{grid-template-columns:1fr;}}
+
+/* 학생 상세 모달 */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
+.modal-header{padding:20px 24px 0;display:flex;align-items:flex-start;gap:16px;}
+.modal-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;background:#e8eaf6;flex-shrink:0;border:3px solid #e8eaf6;cursor:pointer;}
+.modal-photo-placeholder{width:80px;height:80px;border-radius:50%;background:#e8eaf6;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;cursor:pointer;border:3px dashed #c5cae9;}
+.modal-title{flex:1;}
+.modal-title h2{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.modal-title p{font-size:13px;color:#999;}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#bbb;padding:0;}
+.modal-tabs{display:flex;border-bottom:1.5px solid #f0f0f0;margin-top:16px;padding:0 24px;}
+.modal-tab{padding:10px 16px;font-size:14px;font-weight:600;color:#bbb;cursor:pointer;border-bottom:2.5px solid transparent;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;}
+.modal-tab.active{color:#1e2a6d;border-bottom-color:#1e2a6d;}
+.modal-body{padding:20px 24px 24px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.info-item{background:#f8f9fa;border-radius:10px;padding:12px 14px;}
+.info-label{font-size:11px;color:#aaa;margin-bottom:4px;}
+.info-value{font-size:14px;font-weight:700;color:#222;}
+.info-edit input,.info-edit select{width:100%;padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;}
+.class-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8f9fa;border-radius:10px;margin-bottom:8px;}
+.payment-row{display:grid;grid-template-columns:72px 50px 1fr 80px 60px;gap:6px;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:13px;}
+.paid-badge{background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.unpaid-badge{background:#ffebee;color:#c62828;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+
+/* 반 관리 */
+.class-create-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:4px;}
+@media(max-width:640px){.class-create-wrap{grid-template-columns:1fr;}}
+.class-section{border-radius:14px;padding:18px;}
+.class-section-math{border:2px solid #1e2a6d;}
+.class-section-eng{border:2px solid #00391e;}
+.class-section-header{font-size:12px;font-weight:700;color:#fff;display:inline-block;padding:4px 12px;border-radius:6px;margin-bottom:14px;}
+.class-cat-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#888;font-family:inherit;transition:all .15s;}
+.class-cat-btn.active-all{background:#555;color:#fff;border-color:#555;}
+.class-cat-btn.math-btn{border-color:#1e2a6d;color:#1e2a6d;}
+.class-cat-btn.math-btn.active{background:#1e2a6d;color:#fff;}
+.class-cat-btn.eng-btn{border-color:#00391e;color:#00391e;}
+.class-cat-btn.eng-btn.active{background:#00391e;color:#fff;}
+.cat-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
+.cat-math{background:#e3f2fd;color:#1565c0;}
+.cat-eng{background:#e8f5e9;color:#1b5e20;}
+</style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div style="width:90px;height:90px;margin:0 auto 12px;"><img src="assets/images/logo/grip-icon.png" alt="그립학원" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'"></div>
+    <h1 class="login-title">관리자 포털</h1>
+    <p class="login-sub">관리자 계정으로 로그인하세요</p>
+    <input type="email" id="loginEmail" placeholder="이메일">
+    <input type="password" id="loginPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <p style="color:#e53935;font-size:13px;margin-top:8px;display:none;" id="loginError">로그인 실패</p>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <div class="header">
+    <h1><img src="assets/images/logo/grip-icon.png" style="height:28px;width:28px;object-fit:contain;vertical-align:middle;margin-right:8px;mix-blend-mode:screen;">그립학원 관리자 포털</h1>
+    <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+  </div>
+
+  <div class="body">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('students')">👥 학생 관리</button>
+      <button class="tab" onclick="showTab('classes')">🏫 반 관리</button>
+      <button class="tab" onclick="showTab('db')">🗄️ DB 가져오기</button>
+      <button class="tab" onclick="showTab('users')">👤 계정 생성</button>
+      <button class="tab" onclick="showTab('schedule')">📅 전체 일정</button>
+    </div>
+
+    <!-- 학생 관리 -->
+    <div id="tab-students">
+      <div class="card">
+        <h2>➕ 학생 추가</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>학생 이름 *</label>
+            <input type="text" id="sName" placeholder="이름">
+          </div>
+          <div class="form-group">
+            <label>학년</label>
+            <select id="sGrade">
+              <option value="">선택</option>
+              <option>초1</option><option>초2</option><option>초3</option>
+              <option>초4</option><option>초5</option><option>초6</option>
+              <option>중1</option><option>중2</option><option>중3</option>
+              <option>고1</option><option>고2</option><option>고3</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>학교</label>
+            <select id="sSchool">
+              <option value="">선택</option>
+              <optgroup label="초등학교">
+                <option>가재울초</option><option>북가좌초</option><option>연가초</option>
+                <option>중동초</option><option>홍연초</option><option>이대부초</option>
+                <option>명지초</option><option>홍대부초</option><option>충암초</option>
+                <option>어울초</option><option>인왕초</option><option>은명초</option>
+                <option>서신초</option><option>응암초</option><option>연은초</option>
+                <option>선일초</option>
+              </optgroup>
+              <optgroup label="중학교">
+                <option>연희중</option><option>서연중</option><option>명지중</option>
+                <option>이대부중</option><option>가재울중</option><option>충암중</option>
+                <option>성사중</option><option>중암중</option><option>증산중</option>
+                <option>예원예중</option>
+              </optgroup>
+              <optgroup label="기타">
+                <option>세인트존스베리아카데미 제주</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>수강 과목</label>
+            <select id="sCourse">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+              <option value="both">수학+영어</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>학부모 이름</label>
+            <input type="text" id="sParentName" placeholder="학부모 이름">
+          </div>
+          <div class="form-group">
+            <label>연락처</label>
+            <input type="text" id="sPhone" placeholder="010-0000-0000">
+          </div>
+        </div>
+        <button class="submit-btn" onclick="addStudent()">학생 추가</button>
+        <p class="success-msg" id="studentSuccess">✅ 학생이 추가되었습니다!</p>
+      </div>
+
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+          <h2 style="margin:0;">👥 전체 학생 목록 <span id="studentCount" style="font-size:13px;color:#aaa;font-weight:400;"></span></h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <input type="text" id="searchStudent" placeholder="이름 검색..." onkeyup="filterStudents()" style="padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;width:140px;">
+            <select id="filterGrade" onchange="filterStudents()" style="padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;">
+              <option value="">전체 학년</option>
+              <option>초1</option><option>초2</option><option>초3</option><option>초4</option><option>초5</option><option>초6</option>
+              <option>중1</option><option>중2</option><option>중3</option><option>고1</option>
+            </select>
+            <select id="filterCourse" onchange="filterStudents()" style="padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;">
+              <option value="">전체 과목</option>
+              <option value="english">영어</option>
+              <option value="math">수학</option>
+              <option value="both">수학+영어</option>
+            </select>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;min-width:600px;">
+            <thead><tr>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">이름</th>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">학년</th>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">학교</th>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">과목</th>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">학부모</th>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">연락처</th>
+              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">관리</th>
+            </tr></thead>
+            <tbody id="studentList"><tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">학생 없음</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- DB 가져오기 -->
+    <div id="tab-db" style="display:none;">
+      <div class="card">
+        <h2>🗄️ 노션에서 학생 DB 가져오기</h2>
+        <p style="font-size:13px;color:#999;margin-bottom:16px;">노션 수강생 명단을 불러와서 Firebase에 저장합니다.</p>
+        <button class="submit-btn" onclick="loadNotionStudents()" id="notionLoadBtn">📥 노션에서 불러오기</button>
+        <p id="notionStatus" style="font-size:13px;color:#1e2a6d;margin-top:8px;display:none;"></p>
+      </div>
+      <div class="card" id="notionPreviewCard" style="display:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <h2 style="margin:0;">📋 미리보기 (<span id="notionCount">0</span>명)</h2>
+          <button class="submit-btn" onclick="importAllStudents()" style="background:#2e7d32;">✅ 전체 Firebase에 저장</button>
+        </div>
+        <p style="font-size:12px;color:#aaa;margin-bottom:12px;">저장할 필드를 확인하세요. 이름, 학년, 학교, 과목, 학부모, 연락처가 자동 매핑됩니다.</p>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:13px;">
+            <thead id="notionTableHead"></thead>
+            <tbody id="notionTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 반 관리 -->
+    <div id="tab-classes" style="display:none;">
+
+      <!-- ① 반만들기 -->
+      <div class="card">
+        <h2>➕ 반만들기</h2>
+        <div class="class-create-wrap">
+
+          <!-- 수학반 -->
+          <div class="class-section class-section-math">
+            <div class="class-section-header" style="background:#1e2a6d;">📐 수학반 만들기</div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>반구분</label>
+              <select id="cCatMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="math_elem">초등수학</option>
+                <option value="math_mid">중등수학</option>
+                <option value="math_high">고등수학</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>반명 *</label>
+              <input type="text" id="cNameMath" placeholder="예: 화목중등A반, 월수금초등B반">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="form-group">
+                <label>요일</label>
+                <select id="cDaysMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                  <option value="월수금">월수금</option>
+                  <option value="화목">화목</option>
+                  <option value="월화수목금">월~금</option>
+                  <option value="토">토</option>
+                  <option value="금토">금토</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>시간</label>
+                <input type="text" id="cTimeMath" placeholder="예: 15:00~17:00">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>담임 선생님</label>
+              <select id="cTeacherMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="">-- 담임 선택 --</option>
+                <option>변선숙T</option>
+                <option>오미경T</option>
+                <option>안영균T</option>
+                <option>박진희T</option>
+                <option>권유경T</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>강의실</label>
+              <select id="cRoomMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="">-- 강의실 선택 --</option>
+                <option>601호</option>
+                <option>602호</option>
+                <option>603호</option>
+                <option>6층 그립룸</option>
+                <option>701호</option>
+                <option>702호</option>
+                <option>703호</option>
+              </select>
+            </div>
+            <button class="submit-btn" style="width:100%;" onclick="addClassNew('math')">수학반 추가</button>
+          </div>
+
+          <!-- 영어반 -->
+          <div class="class-section class-section-eng">
+            <div class="class-section-header" style="background:#00391e;">📖 영어반 만들기</div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>반구분</label>
+              <select id="cCatEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="english_elem">초등영어</option>
+                <option value="english_mid">중등영어</option>
+                <option value="english_high">고등영어</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>반명 *</label>
+              <input type="text" id="cNameEng" placeholder="예: Reach2, Touch1, Run_B">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+              <div class="form-group">
+                <label>요일</label>
+                <select id="cDaysEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                  <option value="월수금">월수금</option>
+                  <option value="화목">화목</option>
+                  <option value="월화수목금">월~금</option>
+                  <option value="토">토</option>
+                  <option value="금토">금토</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>시간</label>
+                <input type="text" id="cTimeEng" placeholder="예: 15:00~17:00">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:10px;">
+              <label>담임 선생님</label>
+              <select id="cTeacherEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="">-- 담임 선택 --</option>
+                <option>Emma</option>
+                <option>Rita</option>
+                <option>Jay</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:14px;">
+              <label>강의실</label>
+              <select id="cRoomEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="">-- 강의실 선택 --</option>
+                <option>601호</option>
+                <option>602호</option>
+                <option>603호</option>
+                <option>6층 그립룸</option>
+                <option>701호</option>
+                <option>702호</option>
+                <option>703호</option>
+              </select>
+            </div>
+            <button class="submit-btn" style="width:100%;background:#00391e;" onclick="addClassNew('english')">영어반 추가</button>
+          </div>
+
+        </div>
+        <p class="success-msg" id="classSuccess">✅ 반이 추가되었습니다!</p>
+      </div>
+
+      <!-- ② 반구분 필터 + 반목록 -->
+      <div class="card">
+        <h2>🏫 반 목록</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
+          <button class="class-cat-btn active-all" id="catBtn-all" onclick="filterClassCat('all',this)">전체</button>
+          <button class="class-cat-btn math-btn" id="catBtn-math_elem" onclick="filterClassCat('math_elem',this)">초등수학</button>
+          <button class="class-cat-btn math-btn" id="catBtn-math_mid" onclick="filterClassCat('math_mid',this)">중등수학</button>
+          <button class="class-cat-btn math-btn" id="catBtn-math_high" onclick="filterClassCat('math_high',this)">고등수학</button>
+          <button class="class-cat-btn eng-btn" id="catBtn-english_elem" onclick="filterClassCat('english_elem',this)">초등영어</button>
+          <button class="class-cat-btn eng-btn" id="catBtn-english_mid" onclick="filterClassCat('english_mid',this)">중등영어</button>
+          <button class="class-cat-btn eng-btn" id="catBtn-english_high" onclick="filterClassCat('english_high',this)">고등영어</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>반 이름</th><th>구분</th><th>요일/시간</th><th>담임</th><th>강의실</th><th style="text-align:center;">인원</th><th>삭제</th>
+              </tr>
+            </thead>
+            <tbody id="classList">
+              <tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">반 없음</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ③ 학생 배정 -->
+      <div class="card">
+        <h2>👤 반에 학생 배정</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>반 선택</label>
+            <select id="assignClass"></select>
+          </div>
+          <div class="form-group">
+            <label>학생 선택</label>
+            <select id="assignStudent"></select>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="assignStudentToClass()">배정</button>
+        <p class="success-msg" id="assignSuccess">✅ 배정되었습니다!</p>
+      </div>
+
+    </div>
+
+    <!-- 계정 생성 -->
+    <div id="tab-users" style="display:none;">
+      <div class="card">
+        <h2>👤 계정 생성 (학부모/선생님)</h2>
+        <p style="font-size:13px;color:#999;margin-bottom:20px;">⚠️ Firebase Console에서 직접 계정을 생성하고, 아래에서 역할을 설정하세요.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>이름</label>
+            <input type="text" id="uName" placeholder="이름">
+          </div>
+          <div class="form-group">
+            <label>이메일</label>
+            <input type="email" id="uEmail" placeholder="이메일">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>역할</label>
+            <select id="uRole">
+              <option value="parent">학부모</option>
+              <option value="teacher">선생님</option>
+              <option value="admin">관리자</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>연결 학생 (학부모만)</label>
+            <select id="uStudent"><option value="">선택 안함</option></select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>Firebase UID (Firebase Console에서 복사)</label>
+          <input type="text" id="uUid" placeholder="Firebase Auth UID">
+        </div>
+        <button class="submit-btn" onclick="createUserDoc()">계정 등록</button>
+        <p class="success-msg" id="userSuccess">✅ 계정이 등록되었습니다!</p>
+      </div>
+
+      <div class="card" style="background:#fff3e0;border:1px solid #ffe0b2;">
+        <h2 style="color:#e65100;">📌 계정 생성 방법</h2>
+        <ol style="padding-left:20px;font-size:14px;color:#555;line-height:2;">
+          <li>Firebase Console → Authentication → 사용자 추가</li>
+          <li>이메일과 비밀번호 입력 후 생성</li>
+          <li>생성된 사용자의 UID 복사</li>
+          <li>위 양식에 UID 붙여넣고 역할 설정</li>
+        </ol>
+        <a href="https://console.firebase.google.com/project/gripacademyweb1/authentication/users" target="_blank"
+           style="display:inline-block;margin-top:16px;background:#1e2a6d;color:#fff;padding:10px 20px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">
+          Firebase Console 열기 →
+        </a>
+      </div>
+    <!-- 전체 일정 -->
+    <div id="tab-schedule" style="display:none;">
+      <div class="card">
+        <h2>📅 전체 학사일정 (원장님 전용)</h2>
+        <div id="scheduleListAdmin"><p style="text-align:center;color:#bbb;padding:20px;">불러오는 중...</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, deleteDoc, updateDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAS9iH2_r33OP3fFazsEk5lcJL-oH0eWbU",
+  authDomain: "gripacademyweb1.firebaseapp.com",
+  projectId: "gripacademyweb1",
+  storageBucket: "gripacademyweb1.firebasestorage.app",
+  messagingSenderId: "202451577041",
+  appId: "1:202451577041:web:de15134759530143173df0"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (!userDoc.exists()) {
+      await signOut(auth);
+      showError(`Firestore에 계정 없음. UID: ${user.uid}`);
+      return;
+    }
+    if (userDoc.data().role !== 'admin') {
+      await signOut(auth);
+      showError(`권한 없음 (현재 역할: ${userDoc.data().role})`);
+      return;
+    }
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    await loadStudents();
+  } else {
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
+
+function showError(msg) {
+  const el = document.getElementById('loginError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+window.doLogin = async () => {
+  document.getElementById('loginError').style.display = 'none';
+  try {
+    await signInWithEmailAndPassword(auth,
+      document.getElementById('loginEmail').value,
+      document.getElementById('loginPw').value);
+  } catch(e) {
+    showError('로그인 실패: ' + (e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential' ? '비밀번호가 틀렸습니다' : e.code));
+  }
+};
+
+window.doLogout = () => signOut(auth);
+
+window.showTab = (tab) => {
+  ['students','classes','db','users','schedule'].forEach(t => {
+    document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ['students','classes','db','users','schedule'][i] === tab);
+  });
+  if (tab === 'schedule') loadScheduleAdmin();
+  if (tab === 'classes') loadClasses();
+};
+
+// ── 노션 학생 DB 가져오기 ──────────────────────────────
+let notionStudentsData = [];
+let notionFieldsData = [];
+let notionTitleField = '';
+let notionFieldTypes = {};
+
+window.loadNotionStudents = async () => {
+  const btn = document.getElementById('notionLoadBtn');
+  const status = document.getElementById('notionStatus');
+  btn.disabled = true;
+  btn.textContent = '불러오는 중...';
+  status.style.display = 'block';
+  status.textContent = '노션에서 데이터를 가져오는 중...';
+  try {
+    const res = await fetch('/.netlify/functions/import-students');
+    const data = await res.json();
+    if (data.error) throw new Error(JSON.stringify(data.error));
+    notionStudentsData = data.students;
+    notionFieldsData = data.fields;
+    notionTitleField = data.titleField;
+    notionFieldTypes = data.fieldTypes || {};
+    status.textContent = `✅ ${data.students.length}명 불러왔습니다.`;
+    document.getElementById('notionCount').textContent = data.students.length;
+    renderNotionPreview(data.fields, data.students);
+    document.getElementById('notionPreviewCard').style.display = 'block';
+  } catch(e) {
+    status.textContent = '❌ 오류: ' + e.message;
+  }
+  btn.disabled = false;
+  btn.textContent = '📥 노션에서 불러오기';
+};
+
+function renderNotionPreview(fields, students) {
+  // 주요 필드만 표시 (최대 8개)
+  const showFields = fields.slice(0, 8);
+  const thead = document.getElementById('notionTableHead');
+  const tbody = document.getElementById('notionTableBody');
+  thead.innerHTML = '<tr>' + showFields.map(f =>
+    `<th style="padding:8px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;white-space:nowrap">${f}</th>`
+  ).join('') + '</tr>';
+  tbody.innerHTML = students.slice(0, 20).map(s =>
+    '<tr>' + showFields.map(f =>
+      `<td style="padding:8px 12px;border-bottom:1px solid #f5f5f5;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis">${s[f] ?? ''}</td>`
+    ).join('') + '</tr>'
+  ).join('');
+}
+
+window.importAllStudents = async () => {
+  if (!notionStudentsData.length) return alert('먼저 데이터를 불러오세요.');
+  if (!confirm(`${notionStudentsData.length}명을 Firebase에 저장하시겠습니까?`)) return;
+
+  const status = document.getElementById('notionStatus');
+  status.textContent = '저장 중...';
+  let count = 0;
+  for (const s of notionStudentsData) {
+    // title 필드(이름) 사용
+    const name = s._name || s[notionTitleField] || s[notionFieldsData[0]];
+    if (!name) continue;
+
+    const studentData = {
+      name,
+      grade: s._grade || '',
+      school: s._school || '',
+      course: s._course || '',
+      parentName: s._parentName || '',
+      phone: s._phone || '',
+      notionId: s.notionId,
+    };
+
+    // notionId로 기존 학생 찾아서 업데이트, 없으면 새로 생성
+    const existing = await getDocs(query(collection(db, 'students'), where('notionId', '==', s.notionId)));
+    if (!existing.empty) {
+      await updateDoc(doc(db, 'students', existing.docs[0].id), studentData);
+    } else {
+      await addDoc(collection(db, 'students'), { ...studentData, createdAt: new Date() });
+    }
+    count++;
+  }
+  status.textContent = `✅ ${count}명 저장 완료!`;
+  await loadStudents();
+};
+
+async function loadScheduleAdmin() {
+  const el = document.getElementById('scheduleListAdmin');
+  try {
+    const res = await fetch('/.netlify/functions/schedule?role=admin');
+    const items = await res.json();
+    if (!items.length) { el.innerHTML = '<p style="text-align:center;color:#bbb;padding:20px;">일정이 없습니다.</p>'; return; }
+    const deptColor = {'원장만':'#ffebee','영어과':'#e8f5e9','수학과':'#e3f2fd','전체학원':'#f3e5f5'};
+    const deptText = {'원장만':'#c62828','영어과':'#2e7d32','수학과':'#1565c0','전체학원':'#6a1b9a'};
+    let html = '';
+    items.forEach(s => {
+      const d = new Date(s.date.start);
+      const endD = s.date.end && s.date.end !== s.date.start ? new Date(s.date.end) : null;
+      const dept = s.department ? `<span style="display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${deptColor[s.department]||'#eee'};color:${deptText[s.department]||'#666'}">${s.department}</span>` : '';
+      const targets = (s.target||[]).map(t => `<span style="display:inline-block;padding:1px 7px;border-radius:20px;font-size:10px;background:#eee;color:#666;margin-right:3px">${t}</span>`).join('');
+      html += `<tr>
+        <td style="white-space:nowrap;padding:10px 12px;font-size:13px;border-bottom:1px solid #f5f5f5">${d.getMonth()+1}/${d.getDate()}${endD?'~'+endD.getDate()+'일':''}</td>
+        <td style="padding:10px 12px;font-size:13px;font-weight:600;border-bottom:1px solid #f5f5f5">${s.title}</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #f5f5f5">${dept}</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #f5f5f5">${targets}</td>
+        <td style="padding:10px 12px;font-size:12px;color:#aaa;border-bottom:1px solid #f5f5f5">${s.category||''}</td>
+      </tr>`;
+    });
+    el.innerHTML = `<table style="width:100%;border-collapse:collapse">
+      <thead><tr style="background:#f5f5f5">
+        <th style="padding:8px 12px;font-size:12px;color:#999;text-align:left">날짜</th>
+        <th style="padding:8px 12px;font-size:12px;color:#999;text-align:left">일정명</th>
+        <th style="padding:8px 12px;font-size:12px;color:#999;text-align:left">해당부서</th>
+        <th style="padding:8px 12px;font-size:12px;color:#999;text-align:left">공지대상</th>
+        <th style="padding:8px 12px;font-size:12px;color:#999;text-align:left">분류</th>
+      </tr></thead><tbody>${html}</tbody></table>`;
+  } catch(e) {
+    el.innerHTML = '<p style="text-align:center;color:#bbb;padding:20px;">일정을 불러올 수 없습니다.</p>';
+  }
+}
+
+let studentList = [];
+
+async function loadStudents() {
+  const snap = await getDocs(query(collection(db, 'students'), orderBy('name')));
+  studentList = [];
+  snap.forEach(d => studentList.push({ id: d.id, ...d.data() }));
+  renderStudentTable();
+  const sel = document.getElementById('uStudent');
+  sel.innerHTML = '<option value="">선택 안함</option>';
+  studentList.forEach(s => sel.innerHTML += `<option value="${s.id}">${s.name}</option>`);
+}
+
+function renderStudentTable(list) {
+  const data = list || studentList;
+  const courseMap = { math:'수학', english:'영어', both:'수학+영어' };
+  const courseBg = { math:'#e3f2fd', english:'#e8f5e9', both:'#f3e5f5' };
+  const courseColor = { math:'#1565c0', english:'#2e7d32', both:'#6a1b9a' };
+
+  document.getElementById('studentCount').textContent = `(${data.length}명)`;
+
+  const rows = data.map(s => `
+    <tr style="cursor:pointer;" onclick="openStudentDetail('${s.id}')" onmouseover="this.style.background='#f5f7ff'" onmouseout="this.style.background=''">
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-weight:700;">${s.name}</td>
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;">${s.grade||'-'}</td>
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;">${s.school||'-'}</td>
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;">
+        ${s.course ? `<span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600;background:${courseBg[s.course]||'#eee'};color:${courseColor[s.course]||'#666'}">${courseMap[s.course]||s.course}</span>` : '-'}
+      </td>
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;">${s.parentName||'-'}</td>
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;">
+        ${s.phone ? `<a href="tel:${s.phone}" style="color:#1e2a6d;text-decoration:none;">${s.phone}</a>` : '-'}
+      </td>
+      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;" onclick="event.stopPropagation()">
+        <button class="del-btn" onclick="deleteStudent('${s.id}')">삭제</button>
+      </td>
+    </tr>`);
+  document.getElementById('studentList').innerHTML = rows.length
+    ? rows.join('')
+    : '<tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">학생 없음</td></tr>';
+}
+
+window.filterStudents = () => {
+  const search = document.getElementById('searchStudent').value.toLowerCase();
+  const grade = document.getElementById('filterGrade').value;
+  const course = document.getElementById('filterCourse').value;
+  const filtered = studentList.filter(s => {
+    const matchName = !search || s.name.toLowerCase().includes(search);
+    const matchGrade = !grade || s.grade === grade;
+    const matchCourse = !course || s.course === course;
+    return matchName && matchGrade && matchCourse;
+  });
+  renderStudentTable(filtered);
+};
+
+let currentStudentId = null;
+
+window.openStudentDetail = async (id) => {
+  const s = studentList.find(x => x.id === id);
+  if (!s) return;
+  currentStudentId = id;
+  const courseMap = { math:'수학', english:'영어', both:'수학+영어' };
+
+  // 이 학생이 속한 반 찾기
+  const myClasses = classList.filter(c => (c.studentIds||[]).includes(id));
+
+  const photoHtml = s.photoURL
+    ? `<img src="${s.photoURL}" class="modal-photo" style="width:100px;height:100px;" onclick="triggerPhotoUpload('${id}')" title="클릭하여 사진 변경">`
+    : `<div class="modal-photo-placeholder" style="width:100px;height:100px;font-size:36px;" onclick="triggerPhotoUpload('${id}')" title="클릭하여 사진 추가">📷</div>`;
+
+  const relOpts = ['부','모','조모','조부','이모','삼촌','기타'].map(r=>`<option ${(s.parentRelation1||'모')===r?'selected':''}>${r}</option>`).join('');
+  const schools = ['가재울초','북가좌초','연가초','중동초','홍연초','이대부초','명지초','홍대부초','충암초','어울초','인왕초','은명초','서신초','응암초','연은초','선일초','연희중','서연중','명지중','이대부중','가재울중','충암중','성사중','중암중','증산중','예원예중','기타'];
+  const grades = ['초1','초2','초3','초4','초5','초6','중1','중2','중3','고1','고2','고3'];
+  const statusBadge = s.status==='퇴원' ? '<span style="background:#ffebee;color:#c62828;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">퇴원</span>' : '<span style="background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;">재원</span>';
+
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.id = 'studentModal';
+  modal.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-header">
+        ${photoHtml}
+        <input type="file" id="photoFile" accept="image/*" style="display:none" onchange="uploadStudentPhoto('${id}')">
+        <div class="modal-title">
+          <h2>${s.name} ${statusBadge}</h2>
+          <p>${s.grade||''} · ${s.school||''} · ${courseMap[s.course]||'-'}</p>
+        </div>
+        <button class="modal-close" onclick="document.getElementById('studentModal').remove()">✕</button>
+      </div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" onclick="switchModalTab('info',this)">📋 기본정보</button>
+        <button class="modal-tab" onclick="switchModalTab('classes',this)">🏫 반 배정</button>
+        <button class="modal-tab" onclick="switchModalTab('payment',this)">💰 수납</button>
+      </div>
+      <div class="modal-body">
+
+        <!-- 기본정보 -->
+        <div id="modal-info">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div class="info-item info-edit"><div class="info-label">이름 *</div><input id="edit-name" value="${s.name||''}"></div>
+            <div class="info-item info-edit"><div class="info-label">학년</div>
+              <select id="edit-grade">${grades.map(g=>`<option ${s.grade===g?'selected':''}>${g}</option>`).join('')}</select>
+            </div>
+            <div class="info-item info-edit" style="grid-column:1/-1"><div class="info-label">학교</div>
+              <select id="edit-school">${schools.map(sc=>`<option ${s.school===sc?'selected':''}>${sc}</option>`).join('')}</select>
+            </div>
+            <div class="info-item info-edit"><div class="info-label">생년월일</div>
+              <input id="edit-birthday" type="date" value="${s.birthday||''}">
+            </div>
+            <div class="info-item info-edit"><div class="info-label">성별</div>
+              <select id="edit-gender">
+                <option value="">선택</option>
+                <option value="남" ${s.gender==='남'?'selected':''}>남</option>
+                <option value="여" ${s.gender==='여'?'selected':''}>여</option>
+              </select>
+            </div>
+            <div class="info-item info-edit" style="grid-column:1/-1"><div class="info-label">주소</div>
+              <input id="edit-address" value="${s.address||''}" placeholder="주소">
+            </div>
+            <div class="info-item info-edit"><div class="info-label">수강 과목</div>
+              <select id="edit-course">
+                <option value="english" ${s.course==='english'?'selected':''}>영어</option>
+                <option value="math" ${s.course==='math'?'selected':''}>수학</option>
+                <option value="both" ${s.course==='both'?'selected':''}>수학+영어</option>
+              </select>
+            </div>
+            <div class="info-item info-edit"><div class="info-label">학생 연락처</div>
+              <input id="edit-student-phone" type="tel" value="${s.studentPhone||''}">
+            </div>
+          </div>
+
+          <div style="background:#f8f9fa;border-radius:10px;padding:12px;margin-bottom:10px;">
+            <div class="info-label" style="margin-bottom:8px;">학부모 연락처 1</div>
+            <div style="display:grid;grid-template-columns:1fr 90px;gap:8px;">
+              <input class="info-edit" id="edit-phone" type="tel" value="${s.phone||''}" placeholder="전화번호" style="padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+              <select id="edit-relation1" style="padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">${relOpts}</select>
+            </div>
+          </div>
+
+          <div style="background:#f8f9fa;border-radius:10px;padding:12px;margin-bottom:10px;">
+            <div class="info-label" style="margin-bottom:8px;">학부모 연락처 2 (선택)</div>
+            <div style="display:grid;grid-template-columns:1fr 90px;gap:8px;">
+              <input id="edit-phone2" type="tel" value="${s.phone2||''}" placeholder="전화번호" style="padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+              <select id="edit-relation2" style="padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                ${['부','모','조모','조부','이모','삼촌','기타'].map(r=>`<option ${(s.parentRelation2||'부')===r?'selected':''}>${r}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+
+          <div style="background:#f8f9fa;border-radius:10px;padding:12px;margin-bottom:16px;">
+            <div class="info-label" style="margin-bottom:8px;">메모</div>
+            <textarea id="edit-memo" placeholder="학생 관련 특이사항, 메모..." style="width:100%;padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;height:70px;resize:vertical;">${s.memo||''}</textarea>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+            <button class="submit-btn" onclick="saveStudentInfo('${id}')">💾 수정</button>
+            <button class="submit-btn" style="background:#19b1c6;" onclick="saveStudentInfo('${id}',true)">✅ 등록</button>
+            <button class="submit-btn" style="background:#c62828;" onclick="withdrawStudent('${id}')">🚪 퇴원</button>
+          </div>
+          <p id="saveMsg" style="color:#2e7d32;font-size:13px;margin-top:8px;display:none;">✅ 저장됐습니다!</p>
+        </div>
+
+        <!-- 반 배정 -->
+        <div id="modal-classes" style="display:none;">
+
+          <!-- 수학 수강반 -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:#fff;background:#1e2a6d;padding:5px 10px;border-radius:6px;margin-bottom:8px;letter-spacing:0.3px;">수학 수강반</div>
+            ${myClasses.filter(c=>c.subject==='math').length
+              ? myClasses.filter(c=>c.subject==='math').map(c=>`
+              <div class="class-item">
+                <div>
+                  <div style="font-weight:700;font-size:14px;">${c.name}</div>
+                  <div style="font-size:12px;color:#555;">담임: ${c.teacherName||'-'}</div>
+                  <div style="font-size:12px;color:#19b1c6;">${c.days||''} ${c.time||''}</div>
+                </div>
+                <button class="del-btn" onclick="removeFromClass('${id}','${c.id}')">제외</button>
+              </div>`).join('')
+              : '<p style="color:#bbb;font-size:12px;padding:6px 0;">배정된 수학반 없음</p>'}
+          </div>
+
+          <!-- 영어 수강반 -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:#fff;background:#00391e;padding:5px 10px;border-radius:6px;margin-bottom:8px;letter-spacing:0.3px;">영어 수강반</div>
+            ${myClasses.filter(c=>c.subject==='english').length
+              ? myClasses.filter(c=>c.subject==='english').map(c=>`
+              <div class="class-item">
+                <div>
+                  <div style="font-weight:700;font-size:14px;">${c.name}</div>
+                  <div style="font-size:12px;color:#555;">담임: ${c.teacherName||'-'}</div>
+                  <div style="font-size:12px;color:#ec6619;">${c.days||''} ${c.time||''}</div>
+                </div>
+                <button class="del-btn" onclick="removeFromClass('${id}','${c.id}')">제외</button>
+              </div>`).join('')
+              : '<p style="color:#bbb;font-size:12px;padding:6px 0;">배정된 영어반 없음</p>'}
+          </div>
+
+          <!-- 반 추가 -->
+          <div style="padding-top:12px;border-top:1.5px solid #f0f0f0;">
+            <p style="font-size:13px;color:#999;margin-bottom:8px;">반 추가</p>
+            <div style="display:flex;gap:8px;">
+              <select id="addClassSel" style="flex:1;padding:8px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                ${classList.filter(c=>!(c.studentIds||[]).includes(id)).map(c=>`<option value="${c.id}">${c.name} (${CAT_LABEL[c.category||c.subject]||'-'} · ${c.days||''} ${c.time||''} · ${c.teacherName||''})</option>`).join('')}
+              </select>
+              <button class="submit-btn" onclick="addToClass('${id}')">추가</button>
+            </div>
+          </div>
+
+          <!-- 최초등록일 -->
+          <div style="margin-top:16px;text-align:right;padding-top:10px;border-top:1px solid #f5f5f5;">
+            <span style="font-size:11px;color:#bbb;">최초등록일: ${s.createdAt ? (s.createdAt.toDate ? s.createdAt.toDate().toLocaleDateString('ko-KR') : new Date(s.createdAt).toLocaleDateString('ko-KR')) : '-'}</span>
+          </div>
+
+        </div>
+
+        <!-- 수납 -->
+        <div id="modal-payment" style="display:none;flex-direction:column;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <p style="font-size:13px;font-weight:700;color:#333;">수강료 및 교재 납부내역</p>
+            <button class="submit-btn" style="font-size:12px;padding:6px 14px;" onclick="addPaymentRow('${id}')">+ 수납 추가</button>
+          </div>
+          <div style="display:grid;grid-template-columns:72px 50px 1fr 80px 60px;gap:6px;padding:6px 0;font-size:11px;color:#999;font-weight:700;border-bottom:1.5px solid #eee;">
+            <span>월</span><span>항목</span><span>금액</span><span>상태</span><span>관리</span>
+          </div>
+          <div id="paymentList" style="max-height:260px;overflow-y:auto;flex:1;">
+            <p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">수납 내역 없음</p>
+          </div>
+          <!-- 총 수납금액 -->
+          <div style="margin-top:12px;padding-top:10px;border-top:2px solid #1e2a6d;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:12px;color:#999;">미납</span>
+              <span id="totalUnpaidAmount" style="font-size:12px;color:#c62828;font-weight:600;">0원</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:13px;font-weight:700;color:#1e2a6d;">총 수납금액</span>
+              <span id="totalPaidAmount" style="font-size:18px;font-weight:800;color:#1e2a6d;">0원</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if(e.target === modal) modal.remove(); });
+  loadPayments(id);
+};
+
+window.switchModalTab = (tab, btn) => {
+  ['info','classes','payment'].forEach(t => {
+    const el = document.getElementById(`modal-${t}`);
+    if (t === tab) {
+      el.style.display = t === 'payment' ? 'flex' : 'block';
+      el.style.flexDirection = 'column';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+  document.querySelectorAll('.modal-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+};
+
+window.triggerPhotoUpload = (id) => document.getElementById('photoFile').click();
+
+window.uploadStudentPhoto = async (id) => {
+  const file = document.getElementById('photoFile').files[0];
+  if (!file) return;
+  const storageRef = ref(storage, `students/${id}/photo`);
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+  await updateDoc(doc(db, 'students', id), { photoURL: url });
+  const idx = studentList.findIndex(s => s.id === id);
+  if (idx >= 0) studentList[idx].photoURL = url;
+  document.getElementById('studentModal').remove();
+  openStudentDetail(id);
+};
+
+window.saveStudentInfo = async (id, isNew = false) => {
+  const data = {
+    name: document.getElementById('edit-name').value.trim(),
+    grade: document.getElementById('edit-grade').value,
+    school: document.getElementById('edit-school').value,
+    course: document.getElementById('edit-course').value,
+    birthday: document.getElementById('edit-birthday').value,
+    gender: document.getElementById('edit-gender').value,
+    address: document.getElementById('edit-address').value,
+    studentPhone: document.getElementById('edit-student-phone').value,
+    phone: document.getElementById('edit-phone').value,
+    parentRelation1: document.getElementById('edit-relation1').value,
+    phone2: document.getElementById('edit-phone2').value,
+    parentRelation2: document.getElementById('edit-relation2').value,
+    memo: document.getElementById('edit-memo').value,
+    status: '재원',
+    updatedAt: new Date()
+  };
+  if (!data.name) return alert('이름을 입력해주세요.');
+  await updateDoc(doc(db, 'students', id), data);
+  const idx = studentList.findIndex(s => s.id === id);
+  if (idx >= 0) Object.assign(studentList[idx], data);
+  renderStudentTable();
+  const msg = document.getElementById('saveMsg');
+  msg.style.display = 'block';
+  msg.textContent = isNew ? '✅ 등록됐습니다!' : '✅ 수정됐습니다!';
+  setTimeout(() => msg.style.display = 'none', 2000);
+};
+
+window.withdrawStudent = async (id) => {
+  if (!confirm('정말 퇴원 처리하시겠습니까?')) return;
+  await updateDoc(doc(db, 'students', id), {
+    status: '퇴원',
+    withdrawDate: new Date(),
+    updatedAt: new Date()
+  });
+  const idx = studentList.findIndex(s => s.id === id);
+  if (idx >= 0) studentList[idx].status = '퇴원';
+  renderStudentTable();
+  document.getElementById('studentModal').remove();
+  alert('퇴원 처리됐습니다.');
+};
+
+window.removeFromClass = async (studentId, classId) => {
+  const classRef = doc(db, 'classes', classId);
+  const classDoc = await getDoc(classRef);
+  const ids = (classDoc.data().studentIds||[]).filter(i => i !== studentId);
+  await updateDoc(classRef, { studentIds: ids });
+  const idx = classList.findIndex(c => c.id === classId);
+  if (idx >= 0) classList[idx].studentIds = ids;
+  document.getElementById('studentModal').remove();
+  openStudentDetail(studentId);
+};
+
+window.addToClass = async (studentId) => {
+  const classId = document.getElementById('addClassSel').value;
+  if (!classId) return;
+  const classRef = doc(db, 'classes', classId);
+  const classDoc = await getDoc(classRef);
+  const ids = [...(classDoc.data().studentIds||[])];
+  if (!ids.includes(studentId)) ids.push(studentId);
+  await updateDoc(classRef, { studentIds: ids });
+  const idx = classList.findIndex(c => c.id === classId);
+  if (idx >= 0) classList[idx].studentIds = ids;
+  document.getElementById('studentModal').remove();
+  openStudentDetail(studentId);
+};
+
+async function loadPayments(studentId) {
+  const snap = await getDocs(query(collection(db, 'payments'),
+    where('studentId', '==', studentId), orderBy('yearMonth', 'desc')));
+  const rows = [];
+  snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+  const el = document.getElementById('paymentList');
+  if (!el) return;
+  const paidTotal = rows.filter(p=>p.paid).reduce((s,p)=>s+(p.amount||0),0);
+  const unpaidTotal = rows.filter(p=>!p.paid).reduce((s,p)=>s+(p.amount||0),0);
+  const ptEl = document.getElementById('totalPaidAmount');
+  const utEl = document.getElementById('totalUnpaidAmount');
+  if (ptEl) ptEl.textContent = paidTotal.toLocaleString()+'원';
+  if (utEl) utEl.textContent = unpaidTotal.toLocaleString()+'원';
+  if (!rows.length) { el.innerHTML = '<p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">수납 내역 없음</p>'; return; }
+  el.innerHTML = rows.map(p => `
+    <div class="payment-row">
+      <span style="font-weight:700;">${p.yearMonth||'-'}</span>
+      <span style="font-size:11px;color:#555;">${p.type||'수강료'}</span>
+      <span>${(p.amount||0).toLocaleString()}원</span>
+      <span><span class="${p.paid?'paid-badge':'unpaid-badge'}">${p.paid?'납입':'미납'}</span></span>
+      <button class="del-btn" onclick="togglePayment('${p.id}',${!p.paid},'${studentId}')">${p.paid?'미납':'납입'}</button>
+    </div>`).join('');
+}
+
+window.addPaymentRow = async (studentId) => {
+  const yearMonth = prompt('월 입력 (예: 2026-06)');
+  if (!yearMonth) return;
+  const typeChoice = confirm('수강료 → 확인\n교재비 → 취소');
+  const type = typeChoice ? '수강료' : '교재비';
+  const amount = Number(prompt(`금액 (원) — ${type}`) || 0);
+  await addDoc(collection(db, 'payments'), {
+    studentId,
+    yearMonth,
+    type,
+    amount,
+    paid: false,
+    createdAt: new Date()
+  });
+  loadPayments(studentId);
+};
+
+window.togglePayment = async (paymentId, newPaid, studentId) => {
+  await updateDoc(doc(db, 'payments', paymentId), { paid: newPaid, paidDate: newPaid ? new Date() : null });
+  loadPayments(studentId);
+};
+
+window.addStudent = async () => {
+  const name = document.getElementById('sName').value.trim();
+  if (!name) return alert('이름을 입력해주세요.');
+  await addDoc(collection(db, 'students'), {
+    name,
+    grade: document.getElementById('sGrade').value,
+    school: document.getElementById('sSchool').value,
+    course: document.getElementById('sCourse').value,
+    parentName: document.getElementById('sParentName').value,
+    phone: document.getElementById('sPhone').value,
+    createdAt: new Date()
+  });
+  ['sName','sSchool','sParentName','sPhone'].forEach(id => document.getElementById(id).value = '');
+  await loadStudents();
+  const el = document.getElementById('studentSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+};
+
+window.deleteStudent = async (id) => {
+  if (!confirm('정말 삭제하시겠습니까?')) return;
+  await deleteDoc(doc(db, 'students', id));
+  await loadStudents();
+};
+
+window.createUserDoc = async () => {
+  const uid = document.getElementById('uUid').value.trim();
+  if (!uid) return alert('Firebase UID를 입력해주세요.');
+  await setDoc(doc(db, 'users', uid), {
+    name: document.getElementById('uName').value,
+    email: document.getElementById('uEmail').value,
+    role: document.getElementById('uRole').value,
+    studentId: document.getElementById('uStudent').value || null,
+    createdAt: new Date()
+  });
+  const el = document.getElementById('userSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+};
+
+// ── 반 관리 ──────────────────────────────────────
+let classList = [];
+let currentCat = 'all';
+
+const CAT_LABEL = {
+  math_elem:'초등수학', math_mid:'중등수학', math_high:'고등수학',
+  english_elem:'초등영어', english_mid:'중등영어', english_high:'고등영어',
+  math:'수학', english:'영어'
+};
+const CAT_IS_MATH = cat => cat && cat.startsWith('math');
+
+async function loadClasses() {
+  const snap = await getDocs(query(collection(db, 'classes'), orderBy('name')));
+  classList = [];
+  snap.forEach(d => classList.push({ id: d.id, ...d.data() }));
+  renderClassTable();
+  const cSel = document.getElementById('assignClass');
+  if (cSel) cSel.innerHTML = classList.map(c => `<option value="${c.id}">${c.name} (${CAT_LABEL[c.category||c.subject]||'-'})</option>`).join('');
+  const sSel = document.getElementById('assignStudent');
+  if (sSel) sSel.innerHTML = studentList.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+}
+
+function renderClassTable() {
+  const filtered = currentCat === 'all'
+    ? classList
+    : classList.filter(c => (c.category || c.subject) === currentCat);
+  const rows = filtered.map(c => {
+    const cat = c.category || c.subject || '';
+    const isMath = CAT_IS_MATH(cat);
+    const badgeCls = isMath ? 'cat-math' : 'cat-eng';
+    const label = CAT_LABEL[cat] || cat;
+    const cnt = (c.studentIds || []).length;
+    return `<tr>
+      <td style="font-weight:700;">${c.name}</td>
+      <td><span class="cat-badge ${badgeCls}">${label}</span></td>
+      <td style="font-size:13px;">${c.days||''} ${c.time||''}</td>
+      <td style="font-size:13px;">${c.teacherName||'-'}</td>
+      <td style="font-size:13px;color:#666;">${c.classroom||'-'}</td>
+      <td style="text-align:center;font-weight:700;">${cnt}</td>
+      <td><button class="del-btn" onclick="deleteClass('${c.id}')">삭제</button></td>
+    </tr>`;
+  });
+  document.getElementById('classList').innerHTML = rows.length
+    ? rows.join('')
+    : `<tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">반 없음</td></tr>`;
+}
+
+window.filterClassCat = (cat, btn) => {
+  currentCat = cat;
+  document.querySelectorAll('.class-cat-btn').forEach(b => {
+    b.classList.remove('active', 'active-all');
+  });
+  if (cat === 'all') btn.classList.add('active-all');
+  else btn.classList.add('active');
+  renderClassTable();
+};
+
+window.addClassNew = async (subject) => {
+  const sfx = subject === 'math' ? 'Math' : 'Eng';
+  const name = document.getElementById(`cName${sfx}`).value.trim();
+  if (!name) return alert('반명을 입력해주세요.');
+  const category = document.getElementById(`cCat${sfx}`).value;
+  const days = document.getElementById(`cDays${sfx}`).value;
+  const time = document.getElementById(`cTime${sfx}`).value;
+  const teacherName = document.getElementById(`cTeacher${sfx}`).value;
+  const classroom = document.getElementById(`cRoom${sfx}`).value;
+  await addDoc(collection(db, 'classes'), {
+    name,
+    subject,
+    category,
+    days,
+    time,
+    schedule: `${days} ${time}`,
+    teacherName,
+    classroom,
+    studentIds: [],
+    createdAt: new Date()
+  });
+  document.getElementById(`cName${sfx}`).value = '';
+  document.getElementById(`cTime${sfx}`).value = '';
+  await loadClasses();
+  const el = document.getElementById('classSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+};
+
+window.deleteClass = async (id) => {
+  if (!confirm('반을 삭제하시겠습니까?')) return;
+  await deleteDoc(doc(db, 'classes', id));
+  await loadClasses();
+};
+
+window.assignStudentToClass = async () => {
+  const classId = document.getElementById('assignClass').value;
+  const studentId = document.getElementById('assignStudent').value;
+  if (!classId || !studentId) return;
+  const classRef = doc(db, 'classes', classId);
+  const classDoc = await getDoc(classRef);
+  const existing = classDoc.data().studentIds || [];
+  if (existing.includes(studentId)) return alert('이미 배정된 학생입니다.');
+  await setDoc(classRef, { studentIds: [...existing, studentId] }, { merge: true });
+  const el = document.getElementById('assignSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+};
+</script>
+<footer style="background:#1e2a6d;padding:28px 20px;text-align:center;margin-top:40px;">
+  <img src="assets/images/logo/grip-icon.png" style="height:40px;width:40px;object-fit:contain;mix-blend-mode:screen;margin-bottom:10px;display:block;margin-left:auto;margin-right:auto;">
+  <p style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:6px;">서울특별시 서대문구 가재울</p>
+  <p style="margin-bottom:8px;"><a href="tel:02-3152-5678" style="color:#fff;font-size:14px;font-weight:700;text-decoration:none;">02-3152-5678</a></p>
+  <p style="font-size:11px;color:rgba(255,255,255,0.5);">© 2025 매쓰그립 수학학원 · 잉그립 영어학원. All rights reserved.</p>
+</footer>
+</body>
+</html>
