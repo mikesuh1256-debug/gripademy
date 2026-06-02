@@ -308,6 +308,11 @@ tr:last-child td{border-bottom:none;}
                 <option>701호</option>
                 <option>702호</option>
                 <option>703호</option>
+                <option>704호</option>
+                <option>705호</option>
+                <option>706호</option>
+                <option>707호</option>
+                <option>708호</option>
               </select>
             </div>
             <button class="submit-btn" style="width:100%;" onclick="addClassNew('math')">수학반 추가</button>
@@ -364,6 +369,11 @@ tr:last-child td{border-bottom:none;}
                 <option>701호</option>
                 <option>702호</option>
                 <option>703호</option>
+                <option>704호</option>
+                <option>705호</option>
+                <option>706호</option>
+                <option>707호</option>
+                <option>708호</option>
               </select>
             </div>
             <button class="submit-btn" style="width:100%;background:#00391e;" onclick="addClassNew('english')">영어반 추가</button>
@@ -1119,30 +1129,98 @@ async function loadClasses() {
   if (sSel) sSel.innerHTML = studentList.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
 }
 
+const ROOMS = ['','601호','602호','603호','6층 그립룸','701호','702호','703호','704호','705호','706호','707호','708호'];
+const MATH_TEACHERS = ['','변선숙T','오미경T','안영균T','박진희T','권유경T'];
+const ENG_TEACHERS  = ['','Emma','Rita','Jay'];
+const DAYS_OPTS = ['월수금','화목','월화수목금','토','금토'];
+
+function classRowView(c) {
+  const cat = c.category || c.subject || '';
+  const isMath = CAT_IS_MATH(cat);
+  const badgeCls = isMath ? 'cat-math' : 'cat-eng';
+  const label = CAT_LABEL[cat] || cat;
+  const cnt = (c.studentIds || []).length;
+  return `<tr id="row-${c.id}">
+    <td style="font-weight:700;">${c.name}</td>
+    <td><span class="cat-badge ${badgeCls}">${label}</span></td>
+    <td style="font-size:13px;">${c.days||''} ${c.time||''}</td>
+    <td style="font-size:13px;">${c.teacherName||'-'}</td>
+    <td style="font-size:13px;color:#666;">${c.classroom||'-'}</td>
+    <td style="text-align:center;font-weight:700;">${cnt}</td>
+    <td style="white-space:nowrap;">
+      <button class="del-btn" style="background:#e3f2fd;color:#1565c0;margin-right:4px;" onclick="editClassRow('${c.id}')">수정</button>
+      <button class="del-btn" onclick="deleteClass('${c.id}')">삭제</button>
+    </td>
+  </tr>`;
+}
+
+function classRowEdit(c) {
+  const cat = c.category || c.subject || '';
+  const isMath = CAT_IS_MATH(cat);
+  const teachers = isMath ? MATH_TEACHERS : ENG_TEACHERS;
+  const catOpts = isMath
+    ? ['math_elem','math_mid','math_high']
+    : ['english_elem','english_mid','english_high'];
+  const sel = (arr, val) => arr.map(v => `<option${v===val?' selected':''}>${v}</option>`).join('');
+  const roomSel = ROOMS.map(r => `<option${r===c.classroom?' selected':''}>${r}</option>`).join('');
+  const teacherSel = teachers.map(t => `<option${t===c.teacherName?' selected':''}>${t}</option>`).join('');
+  const catSel = catOpts.map(v => `<option value="${v}"${v===cat?' selected':''}>${CAT_LABEL[v]}</option>`).join('');
+  const daysSel = DAYS_OPTS.map(d => `<option${d===c.days?' selected':''}>${d}</option>`).join('');
+  const inp = s => `style="padding:4px 6px;border:1.5px solid #1e2a6d;border-radius:6px;font-size:12px;font-family:inherit;outline:none;${s}"`;
+  return `<tr id="row-${c.id}" style="background:#f0f4ff;">
+    <td><input id="e-name-${c.id}" value="${c.name}" ${inp('width:100px;font-weight:700;')}></td>
+    <td><select id="e-cat-${c.id}" ${inp('')}>${catSel}</select></td>
+    <td style="white-space:nowrap;">
+      <select id="e-days-${c.id}" ${inp('width:68px;')}>${daysSel}</select>
+      <input id="e-time-${c.id}" value="${c.time||''}" placeholder="시간" ${inp('width:80px;margin-left:4px;')}>
+    </td>
+    <td><select id="e-teacher-${c.id}" ${inp('')}>${teacherSel}</select></td>
+    <td><select id="e-room-${c.id}" ${inp('')}>${roomSel}</select></td>
+    <td style="text-align:center;font-weight:700;">${(c.studentIds||[]).length}</td>
+    <td style="white-space:nowrap;">
+      <button class="submit-btn" style="padding:4px 10px;font-size:12px;margin-right:4px;" onclick="saveClassRow('${c.id}')">확인</button>
+      <button class="del-btn" onclick="cancelClassRow('${c.id}')">취소</button>
+    </td>
+  </tr>`;
+}
+
 function renderClassTable() {
   const filtered = currentCat === 'all'
     ? classList
     : classList.filter(c => (c.category || c.subject) === currentCat);
-  const rows = filtered.map(c => {
-    const cat = c.category || c.subject || '';
-    const isMath = CAT_IS_MATH(cat);
-    const badgeCls = isMath ? 'cat-math' : 'cat-eng';
-    const label = CAT_LABEL[cat] || cat;
-    const cnt = (c.studentIds || []).length;
-    return `<tr>
-      <td style="font-weight:700;">${c.name}</td>
-      <td><span class="cat-badge ${badgeCls}">${label}</span></td>
-      <td style="font-size:13px;">${c.days||''} ${c.time||''}</td>
-      <td style="font-size:13px;">${c.teacherName||'-'}</td>
-      <td style="font-size:13px;color:#666;">${c.classroom||'-'}</td>
-      <td style="text-align:center;font-weight:700;">${cnt}</td>
-      <td><button class="del-btn" onclick="deleteClass('${c.id}')">삭제</button></td>
-    </tr>`;
-  });
+  const rows = filtered.map(c => classRowView(c));
   document.getElementById('classList').innerHTML = rows.length
     ? rows.join('')
     : `<tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">반 없음</td></tr>`;
 }
+
+window.editClassRow = (id) => {
+  const c = classList.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById(`row-${id}`).outerHTML = classRowEdit(c);
+};
+
+window.cancelClassRow = (id) => {
+  const c = classList.find(x => x.id === id);
+  if (!c) return;
+  document.getElementById(`row-${id}`).outerHTML = classRowView(c);
+};
+
+window.saveClassRow = async (id) => {
+  const name = document.getElementById(`e-name-${id}`).value.trim();
+  if (!name) return alert('반명을 입력해주세요.');
+  const category = document.getElementById(`e-cat-${id}`).value;
+  const days = document.getElementById(`e-days-${id}`).value;
+  const time = document.getElementById(`e-time-${id}`).value;
+  const teacherName = document.getElementById(`e-teacher-${id}`).value;
+  const classroom = document.getElementById(`e-room-${id}`).value;
+  const subject = category.startsWith('math') ? 'math' : 'english';
+  const data = { name, category, subject, days, time, schedule:`${days} ${time}`, teacherName, classroom };
+  await updateDoc(doc(db, 'classes', id), data);
+  const idx = classList.findIndex(c => c.id === id);
+  if (idx >= 0) Object.assign(classList[idx], data);
+  document.getElementById(`row-${id}`).outerHTML = classRowView(classList[idx >= 0 ? idx : 0]);
+};
 
 window.filterClassCat = (cat, btn) => {
   currentCat = cat;
