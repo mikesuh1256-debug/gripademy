@@ -227,9 +227,17 @@ tr:last-child td{border-bottom:none;}
 
     <!-- DB 가져오기 -->
     <div id="tab-db" style="display:none;">
+      <div class="card" style="border:2px solid #ffcdd2;">
+        <h2 style="color:#c62828;">🗑️ 전체 학생 삭제</h2>
+        <p style="font-size:13px;color:#999;margin-bottom:12px;">Firebase의 모든 학생 데이터를 삭제합니다. 삭제 후 노션에서 다시 불러오세요.</p>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <button class="submit-btn" style="background:#c62828;" onclick="deleteAllStudents()" id="deleteAllBtn">🗑️ 전체 학생 삭제</button>
+          <span id="deleteStatus" style="font-size:13px;color:#c62828;display:none;"></span>
+        </div>
+      </div>
       <div class="card">
         <h2>🗄️ 노션에서 학생 DB 가져오기</h2>
-        <p style="font-size:13px;color:#999;margin-bottom:16px;">노션 수강생 명단을 불러와서 Firebase에 저장합니다.</p>
+        <p style="font-size:13px;color:#999;margin-bottom:16px;">노션 수강생 명단을 불러와서 Firebase에 저장합니다. (학교·학년·과목·연락처 등 전체 필드 저장)</p>
         <button class="submit-btn" onclick="loadNotionStudents()" id="notionLoadBtn">📥 노션에서 불러오기</button>
         <p id="notionStatus" style="font-size:13px;color:#1e2a6d;margin-top:8px;display:none;"></p>
       </div>
@@ -647,6 +655,29 @@ window.showTab = (tab) => {
   if (tab === 'textbooks') loadTextbooks();
 };
 
+// ── 전체 학생 삭제 ──────────────────────────────────────
+window.deleteAllStudents = async () => {
+  const status = document.getElementById('deleteStatus');
+  const btn = document.getElementById('deleteAllBtn');
+  const snap = await getDocs(collection(db, 'students'));
+  const total = snap.docs.length;
+  if (!total) return alert('삭제할 학생이 없습니다.');
+  if (!confirm(`⚠️ Firebase에 저장된 학생 ${total}명을 전부 삭제합니다.\n반 배정 정보(studentIds)는 유지됩니다.\n\n정말 삭제하시겠습니까?`)) return;
+  btn.disabled = true;
+  status.style.display = 'block';
+  status.textContent = `삭제 중... (0/${total})`;
+  let done = 0;
+  for (const d of snap.docs) {
+    await deleteDoc(doc(db, 'students', d.id));
+    done++;
+    if (done % 10 === 0) status.textContent = `삭제 중... (${done}/${total})`;
+  }
+  status.textContent = `✅ ${total}명 삭제 완료. 노션에서 다시 불러오세요.`;
+  btn.disabled = false;
+  studentList = [];
+  renderStudentTable();
+};
+
 // ── 노션 학생 DB 가져오기 ──────────────────────────────
 let notionStudentsData = [];
 let notionFieldsData = [];
@@ -680,41 +711,69 @@ window.loadNotionStudents = async () => {
 };
 
 function renderNotionPreview(fields, students) {
-  // 주요 필드만 표시 (최대 8개)
-  const showFields = fields.slice(0, 8);
+  // 매핑된 내부 필드 우선 표시, 나머지는 노션 원본 필드
+  const mapped = [
+    {key:'_name',label:'이름'},{key:'_grade',label:'학년'},{key:'_school',label:'학교'},
+    {key:'_course',label:'과목'},{key:'_phone',label:'연락처1'},{key:'_phone2',label:'연락처2'},
+    {key:'_birthday',label:'생년월일'},{key:'_gender',label:'성별'},{key:'_address',label:'주소'},
+    {key:'_studentPhone',label:'학생연락처'},{key:'_memo',label:'메모'},
+  ];
   const thead = document.getElementById('notionTableHead');
   const tbody = document.getElementById('notionTableBody');
-  thead.innerHTML = '<tr>' + showFields.map(f =>
-    `<th style="padding:8px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;white-space:nowrap">${f}</th>`
+  thead.innerHTML = '<tr>' + mapped.map(m =>
+    `<th style="padding:8px 12px;background:#e8eaf6;font-size:12px;color:#1e2a6d;text-align:left;white-space:nowrap;font-weight:700;">${m.label}</th>`
   ).join('') + '</tr>';
-  tbody.innerHTML = students.slice(0, 20).map(s =>
-    '<tr>' + showFields.map(f =>
-      `<td style="padding:8px 12px;border-bottom:1px solid #f5f5f5;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis">${s[f] ?? ''}</td>`
+  tbody.innerHTML = students.slice(0, 30).map(s =>
+    '<tr>' + mapped.map(m =>
+      `<td style="padding:8px 12px;border-bottom:1px solid #f5f5f5;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;font-size:13px;">${s[m.key] ?? ''}</td>`
     ).join('') + '</tr>'
   ).join('');
 }
 
 window.importAllStudents = async () => {
   if (!notionStudentsData.length) return alert('먼저 데이터를 불러오세요.');
-  if (!confirm(`${notionStudentsData.length}명을 Firebase에 저장하시겠습니까?`)) return;
+  if (!confirm(`${notionStudentsData.length}명을 Firebase에 저장하시겠습니까?\n(기존 학생은 업데이트, 신규는 추가)`)) return;
 
   const status = document.getElementById('notionStatus');
   status.textContent = '저장 중...';
   let count = 0;
+  const total = notionStudentsData.length;
+
   for (const s of notionStudentsData) {
-    // title 필드(이름) 사용
     const name = s._name || s[notionTitleField] || s[notionFieldsData[0]];
     if (!name) continue;
 
+    // 노션 필드 다중 시도 헬퍼
+    const pick = (...keys) => { for (const k of keys) { if (s[k] !== undefined && s[k] !== '') return s[k]; } return ''; };
+
     const studentData = {
       name,
-      grade: s._grade || '',
-      school: s._school || '',
-      course: s._course || '',
-      parentName: s._parentName || '',
-      phone: s._phone || '',
+      // 기본 정보
+      grade:          s._grade  || pick('학년','학년(한글수식)','Grade'),
+      school:         s._school || pick('학교','학교명'),
+      course:         s._course || '',
+      // 개인 정보
+      birthday:       pick('생년월일','생일','Birthday'),
+      gender:         pick('성별','Gender'),
+      address:        pick('주소','집주소','Address'),
+      studentPhone:   pick('학생연락처','학생전화','본인연락처','학생번호'),
+      // 학부모 1
+      phone:          s._phone || pick('연락처','전화번호','핸드폰','학부모연락처','보호자연락처'),
+      parentRelation1: pick('관계','보호자관계','학부모관계','관계1'),
+      // 학부모 2
+      phone2:          pick('연락처2','학부모2연락처','보호자2연락처','핸드폰2','연락처 2'),
+      parentRelation2: pick('관계2','보호자2관계','학부모2관계'),
+      // 메모
+      memo:            pick('메모','비고','특이사항','Memo'),
+      // 상태
+      status: '재원',
       notionId: s.notionId,
     };
+
+    // 노션 전체 raw 데이터도 함께 저장 (나중에 필드 추가 시 활용)
+    const rawNotion = {};
+    notionFieldsData.forEach(f => { if (s[f] !== undefined) rawNotion[f] = s[f]; });
+    studentData._notionRaw = rawNotion;
 
     // notionId로 기존 학생 찾아서 업데이트, 없으면 새로 생성
     const existing = await getDocs(query(collection(db, 'students'), where('notionId', '==', s.notionId)));
@@ -724,8 +783,9 @@ window.importAllStudents = async () => {
       await addDoc(collection(db, 'students'), { ...studentData, createdAt: new Date() });
     }
     count++;
+    if (count % 20 === 0) status.textContent = `저장 중... (${count}/${total})`;
   }
-  status.textContent = `✅ ${count}명 저장 완료!`;
+  status.textContent = `✅ ${count}명 저장 완료! (학교·학년·과목·연락처 등 전체 필드 저장)`;
   await loadStudents();
 };
 
