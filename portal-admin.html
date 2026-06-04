@@ -31,20 +31,19 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;backg
 @media(min-width:1400px){.body{padding:0 48px 40px;}}
 
 /* ── 탭 ── */
-.tabs{display:flex;gap:4px;padding:16px 0 0;margin-bottom:0;background:#eef0f9;flex-wrap:wrap;border-bottom:3px solid #1e2a6d;padding:16px 24px 0;margin:0 -24px;}
-.tab{padding:14px 28px;border-radius:10px 10px 0 0;border:none;background:transparent;font-size:17px;font-weight:800;cursor:pointer;color:#6b7280;font-family:inherit;transition:all .15s;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-3px;}
-.tab.active{background:#fff;color:#1e2a6d;border:2px solid #e9ecef;border-bottom:3px solid #fff;}
-.tab:hover:not(.active){background:#e0e4f5;color:#1e2a6d;}
-@media(min-width:1400px){.tabs{margin:0 -48px;padding-left:48px;padding-right:48px;}}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:16px 0;margin:0;background:transparent;border-bottom:none;}
+.tab{padding:13px 8px;border-radius:10px;border:2px solid #e5e7eb;background:#fff;font-size:15px;font-weight:800;cursor:pointer;color:#6b7280;font-family:inherit;transition:all .15s;text-align:center;white-space:nowrap;}
+.tab.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+.tab:hover:not(.active){background:#eef0f9;color:#1e2a6d;border-color:#c7d2fe;}
 
 /* ── 탭 콘텐츠 ── */
-.tab-content-wrap{background:#fff;border:2px solid #e9ecef;border-top:none;border-radius:0 0 16px 16px;padding:28px 28px 36px;margin:0 -24px;}
-@media(min-width:1400px){.tab-content-wrap{margin:0 -48px;padding:32px 48px 40px;}}
+.tab-content-wrap{background:#fff;border:1px solid #e9ecef;border-radius:14px;padding:20px 16px 32px;margin-top:4px;}
+@media(min-width:768px){.tabs{grid-template-columns:repeat(6,1fr);}.tab{font-size:15px;}.tab-content-wrap{padding:24px 28px 36px;}}
 
-/* ── 카드 (섹션) ── */
-.card{background:#f8f9fc;border-radius:14px;padding:28px;margin-bottom:20px;border:1.5px solid #e2e6f0;}
-.card:last-child{margin-bottom:0;}
-.card h2{font-size:20px;font-weight:800;color:#1a1d23;margin-bottom:22px;}
+/* ── 카드 (섹션) - 박스 없이 구분선만 ── */
+.card{background:transparent;border-radius:0;padding:22px 0;margin-bottom:0;border:none;border-bottom:1px solid #eef0f9;}
+.card:last-child{border-bottom:none;padding-bottom:0;}
+.card h2{font-size:18px;font-weight:800;color:#1a1d23;margin-bottom:18px;}
 
 /* ── 폼 ── */
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
@@ -151,21 +150,30 @@ tbody tr:hover td{background:#f0f3ff;}
 .sch-cal-nav h3{font-size:20px;font-weight:800;color:#1e2a6d;min-width:160px;text-align:center;}
 .sch-cal-nav button{background:#f4f6fb;border:2px solid #e5e7eb;border-radius:8px;padding:8px 16px;font-size:18px;cursor:pointer;color:#374151;font-family:inherit;font-weight:700;}
 .sch-cal-nav button:hover{background:#e8edf8;}
-.sch-cal{border:2px solid #e2e6f0;border-radius:14px;overflow:hidden;}
+.sch-cal{border:1px solid #e2e6f0;border-radius:12px;overflow:hidden;}
 .sch-cal-hd{display:grid;grid-template-columns:repeat(7,1fr);background:#1e2a6d;}
-.sch-cal-hd span{padding:12px;text-align:center;font-size:13px;font-weight:800;color:#fff;}
+.sch-cal-hd span{padding:10px 4px;text-align:center;font-size:13px;font-weight:800;color:#fff;}
 .sch-cal-body{display:grid;grid-template-columns:repeat(7,1fr);}
-.sch-cal-cell{min-height:80px;padding:8px;border-right:1px solid #eef0f9;border-bottom:1px solid #eef0f9;background:#fff;vertical-align:top;}
-.sch-cal-cell:hover{background:#f8f9fc;}
-.sch-cal-cell.other-month{background:#fafafa;}
+.sch-cal-cell{min-height:54px;padding:6px 4px;border-right:1px solid #eef0f9;border-bottom:1px solid #eef0f9;background:#fff;text-align:center;cursor:pointer;}
+.sch-cal-cell:hover{background:#f0f3ff;}
+.sch-cal-cell.other-month .sch-cal-date{color:#d1d5db;}
 .sch-cal-cell.today{background:#eff6ff;}
-.sch-cal-date{font-size:14px;font-weight:700;color:#374151;margin-bottom:4px;}
-.sch-cal-date.today-num{color:#1e2a6d;background:#c7d2fe;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;}
-.sch-cal-event{font-size:11px;padding:2px 6px;border-radius:4px;margin-bottom:2px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;}
-.sch-sel-events{margin-top:16px;padding:16px;background:#f8f9fc;border-radius:10px;border:1px solid #e2e6f0;}
-.sch-sel-events h4{font-size:15px;font-weight:800;color:#1e2a6d;margin-bottom:10px;}
-.sch-ev-row{font-size:14px;color:#374151;padding:6px 0;border-bottom:1px solid #f0f0f0;}
-.sch-ev-row:last-child{border-bottom:none;}
+.sch-cal-cell.selected{background:#e0e7ff;}
+.sch-cal-date{font-size:15px;font-weight:700;color:#374151;display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;margin:0 auto 2px;}
+.sch-cal-date.today-num{background:#1e2a6d;color:#fff;}
+.sch-cal-date.selected-num{background:#4f46e5;color:#fff;}
+.sch-cal-dots{display:flex;justify-content:center;gap:3px;flex-wrap:wrap;min-height:8px;}
+.sch-cal-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.sch-ev-list{margin-top:16px;}
+.sch-ev-month-title{font-size:16px;font-weight:800;color:#1e2a6d;margin-bottom:12px;}
+.sch-ev-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #f0f2f8;}
+.sch-ev-item:last-child{border-bottom:none;}
+.sch-ev-date-box{min-width:44px;text-align:center;background:#1e2a6d;color:#fff;border-radius:8px;padding:6px 4px;flex-shrink:0;}
+.sch-ev-date-box .d{font-size:18px;font-weight:900;line-height:1;}
+.sch-ev-date-box .m{font-size:11px;font-weight:600;margin-top:2px;}
+.sch-ev-info{flex:1;}
+.sch-ev-title{font-size:15px;font-weight:700;color:#1a1d23;margin-bottom:4px;}
+.sch-ev-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:700;margin-right:4px;}
 </style>
 </head>
 <body>
@@ -1066,36 +1074,58 @@ function renderAdminCal() {
       const s2 = s.date.end ? new Date(s.date.end) : new Date(s1); s2.setHours(0,0,0,0);
       return cur >= s1 && cur <= s2;
     });
-    const ds = DEPT_STYLE;
-    const evHtml = evs.slice(0,3).map(e => {
-      const style = ds[e.department] || {bg:'#e5e7eb',text:'#374151'};
-      return `<div class="sch-cal-event" style="background:${style.bg};color:${style.text};" title="${e.title}">${e.title}</div>`;
-    }).join('') + (evs.length > 3 ? `<div style="font-size:10px;color:#9ca3af;">+${evs.length-3}개</div>` : '');
-    cells += `<div class="sch-cal-cell${isToday?' today':''}${isSel?' today':''}" onclick="adminSelectDay(${adminCalY},${adminCalM},${d})" style="cursor:${evs.length?'pointer':'default'};">
-      <div class="sch-cal-date${isToday?' today-num':''}">${d}</div>
-      ${evHtml}
+    // 점 표시 (부서별 색상, 최대 3개)
+    const dots = evs.slice(0,3).map(e => {
+      const dot = (DEPT_STYLE[e.department]||{dot:'#9ca3af'}).dot;
+      return `<div class="sch-cal-dot" style="background:${dot};"></div>`;
+    }).join('');
+    const dateClass = isToday ? 'today-num' : isSel ? 'selected-num' : '';
+    cells += `<div class="sch-cal-cell${isToday?' today':''}${isSel?' selected':''}" onclick="adminSelectDay(${adminCalY},${adminCalM},${d})">
+      <div class="sch-cal-date ${dateClass}">${d}</div>
+      <div class="sch-cal-dots">${dots}</div>
     </div>`;
   }
   body.innerHTML = cells;
+  // 달 일정 목록 표시
+  renderAdminMonthEvents();
+}
+
+// 선택된 달의 전체 일정 목록 (캘린더 아래)
+function renderAdminMonthEvents() {
+  const sel = document.getElementById('adminCalSel');
+  const monthEvs = adminSchData.filter(s => {
+    const d = new Date(s.date.start);
+    return d.getFullYear() === adminCalY && d.getMonth() === adminCalM;
+  }).sort((a,b) => new Date(a.date.start) - new Date(b.date.start));
+
+  if (!monthEvs.length) { sel.innerHTML = `<p style="color:#9ca3af;text-align:center;padding:20px 0;">이 달의 일정이 없습니다.</p>`; return; }
+
+  sel.innerHTML = `<div class="sch-ev-list">
+    <div class="sch-ev-month-title">${adminCalM+1}월 일정 (${monthEvs.length}건)</div>
+    ${monthEvs.map(e => {
+      const d = new Date(e.date.start);
+      const endD = e.date.end && e.date.end !== e.date.start ? new Date(e.date.end) : null;
+      const ds = DEPT_STYLE[e.department] || {bg:'#f3f4f6',text:'#374151',dot:'#9ca3af'};
+      return `<div class="sch-ev-item">
+        <div class="sch-ev-date-box">
+          <div class="d">${d.getDate()}</div>
+          <div class="m">${d.getMonth()+1}월</div>
+        </div>
+        <div class="sch-ev-info">
+          <div class="sch-ev-title">${e.title}${endD?` ~ ${endD.getDate()}일`:''}</div>
+          <div>
+            ${e.department?`<span class="sch-ev-badge" style="background:${ds.bg};color:${ds.text};">${e.department}</span>`:''}
+            ${(e.target||[]).map(t=>`<span class="sch-ev-badge" style="background:#f3f4f6;color:#6b7280;">${t}</span>`).join('')}
+          </div>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
 }
 
 window.adminSelectDay = (y, m, d) => {
   adminCalSel = new Date(y, m, d); adminCalSel.setHours(0,0,0,0);
-  renderAdminCal();
-  const evs = adminSchData.filter(s => {
-    const s1 = new Date(s.date.start); s1.setHours(0,0,0,0);
-    const s2 = s.date.end ? new Date(s.date.end) : new Date(s1); s2.setHours(0,0,0,0);
-    return adminCalSel >= s1 && adminCalSel <= s2;
-  });
-  const sel = document.getElementById('adminCalSel');
-  if (!evs.length) { sel.innerHTML = ''; return; }
-  sel.innerHTML = `<div class="sch-sel-events">
-    <h4>${m+1}월 ${d}일 일정 (${evs.length}건)</h4>
-    ${evs.map(e => {
-      const ds2 = DEPT_STYLE[e.department] || {bg:'#f3f4f6',text:'#374151'};
-      return `<div class="sch-ev-row"><span style="padding:2px 8px;border-radius:5px;font-size:12px;font-weight:700;background:${ds2.bg};color:${ds2.text};margin-right:8px;">${e.department||''}</span>${e.title}</div>`;
-    }).join('')}
-  </div>`;
+  renderAdminCal(); // 점 선택 표시 업데이트 + 월 목록 재렌더
 };
 
 let studentList = [];
