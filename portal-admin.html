@@ -1595,47 +1595,44 @@ window.deleteClass = async (id) => {
 
 // ── 반 학생 아코디언 ──────────────────────────────────
 let openClassDetailId = null;
+const pendingSet = {}; // classId → Set of studentIds (추가 예정)
 
 window.toggleClassStudents = (classId) => {
   const existing = document.getElementById(`detail-row-${classId}`);
   if (existing) {
     existing.remove();
     openClassDetailId = null;
+    delete pendingSet[classId];
     return;
   }
-  // 다른 열려있는 것 닫기
   if (openClassDetailId) {
-    const prev = document.getElementById(`detail-row-${openClassDetailId}`);
-    if (prev) prev.remove();
+    document.getElementById(`detail-row-${openClassDetailId}`)?.remove();
+    delete pendingSet[openClassDetailId];
   }
   openClassDetailId = classId;
+  pendingSet[classId] = new Set();
   renderClassDetailRow(classId);
 };
+
+function enrolledPillsHtml(classId, accentColor) {
+  const c = classList.find(x => x.id === classId);
+  const ids = c?.studentIds || [];
+  if (!ids.length) return `<span style="font-size:12px;color:#bbb;">등록된 학생 없음</span>`;
+  const enrolled = studentList.filter(s => ids.includes(s.id))
+    .sort((a,b) => a.name.localeCompare(b.name,'ko'));
+  return enrolled.map(s => `
+    <span style="display:inline-flex;align-items:center;gap:4px;background:${accentColor}18;border:1px solid ${accentColor}44;color:${accentColor};border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600;margin:2px;">
+      ${s.name}<span style="font-size:10px;color:#999;">(${s.grade||''})</span>
+      <button onclick="removeEnrolled('${classId}','${s.id}')" style="background:none;border:none;cursor:pointer;color:#999;font-size:12px;padding:0;line-height:1;margin-left:2px;">✕</button>
+    </span>`).join('');
+}
 
 function renderClassDetailRow(classId) {
   const c = classList.find(x => x.id === classId);
   if (!c) return;
   const isMath = CAT_IS_MATH(c.category || c.subject || '');
   const accentColor = isMath ? '#1e2a6d' : '#00391e';
-  const studentIds = c.studentIds || [];
-
-  // 전체 학생을 이름순 정렬, 등록된 학생은 체크
-  const allSorted = [...studentList].sort((a,b) => a.name.localeCompare(b.name, 'ko'));
-  const enrolledCount = allSorted.filter(s => studentIds.includes(s.id)).length;
-
-  const checkItems = allSorted.map(s => {
-    const checked = studentIds.includes(s.id);
-    const courses = getCoursesArr(s);
-    const courseTag = courses.includes('math') ? '수' : courses.includes('english') ? '영' : courses.includes('논술') ? '논' : '';
-    const courseColor = courses.includes('math') ? '#1e2a6d' : courses.includes('english') ? '#00391e' : '#ec6619';
-    return `<label id="stu-label-${classId}-${s.id}" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;border:1.5px solid ${checked?accentColor:'#e8e8e8'};background:${checked?`${accentColor}18`:'#fff'};margin-bottom:4px;" class="stu-check-item">
-      <input type="checkbox" id="stu-chk-${classId}-${s.id}" value="${s.id}" ${checked?'checked':''} onchange="onStuChkChange('${classId}','${s.id}',this)" style="width:16px;height:16px;accent-color:${accentColor};cursor:pointer;">
-      <span style="font-weight:${checked?'700':'400'};font-size:13px;flex:1;">${s.name}</span>
-      <span style="font-size:11px;color:#999;">${s.grade||''}</span>
-      <span style="font-size:11px;color:#999;">${s.school||''}</span>
-      ${courseTag?`<span style="font-size:10px;font-weight:700;color:#fff;background:${courseColor};padding:1px 6px;border-radius:8px;">${courseTag}</span>`:''}
-    </label>`;
-  }).join('');
+  const enrolledCount = (c.studentIds || []).length;
 
   const detailHtml = `
     <tr id="detail-row-${classId}">
@@ -1643,93 +1640,161 @@ function renderClassDetailRow(classId) {
         <div style="padding:16px 18px;">
 
           <!-- 헤더 -->
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-            <div>
-              <span style="font-size:14px;font-weight:800;color:${accentColor};">${c.name}</span>
-              <span id="enrolled-count-${classId}" style="font-size:12px;color:#999;margin-left:8px;">${enrolledCount}명 등록</span>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+            <span style="font-size:14px;font-weight:800;color:${accentColor};">${c.name}
+              <span id="ec-${classId}" style="font-size:12px;color:#999;font-weight:400;margin-left:6px;">${enrolledCount}명</span>
+            </span>
+            <button onclick="toggleClassStudents('${classId}')" style="background:none;border:none;cursor:pointer;font-size:20px;color:#bbb;line-height:1;padding:0;">✕</button>
+          </div>
+
+          <!-- ① 등록된 학생 -->
+          <div style="margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:#999;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">현재 등록 학생</div>
+            <div id="enrolled-pills-${classId}" style="display:flex;flex-wrap:wrap;gap:2px;min-height:28px;">
+              ${enrolledPillsHtml(classId, accentColor)}
             </div>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <button class="submit-btn" style="background:${accentColor};padding:7px 20px;font-size:13px;" onclick="applyClassStudents('${classId}')">적용</button>
-              <button onclick="toggleClassStudents('${classId}')" style="background:none;border:none;cursor:pointer;font-size:20px;color:#bbb;line-height:1;padding:0;">✕</button>
+          </div>
+
+          <!-- ② 학생 추가 검색 -->
+          <div style="border-top:1px dashed #d0d4e8;padding-top:14px;">
+            <div style="font-size:11px;font-weight:700;color:#999;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px;">학생 추가</div>
+            <div style="display:flex;gap:8px;margin-bottom:10px;">
+              <input type="text" id="stu-search-${classId}" placeholder="이름 입력 후 검색..."
+                style="flex:1;padding:9px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;outline:none;"
+                onkeydown="if(event.key==='Enter')searchClassStu('${classId}')">
+              <button onclick="searchClassStu('${classId}')" style="padding:9px 18px;background:${accentColor};color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">검색</button>
+            </div>
+
+            <!-- 검색 결과 -->
+            <div id="stu-results-${classId}" style="max-height:220px;overflow-y:auto;margin-bottom:10px;"></div>
+
+            <!-- 체크된 학생 미리보기 + 등록 버튼 -->
+            <div id="pending-preview-${classId}" style="display:none;padding:10px 12px;background:#fff;border-radius:8px;border:1.5px solid ${accentColor};margin-bottom:10px;">
+              <div style="font-size:11px;color:#999;margin-bottom:6px;">추가할 학생:</div>
+              <div id="pending-names-${classId}" style="display:flex;flex-wrap:wrap;gap:4px;"></div>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;">
+              <button id="reg-btn-${classId}" onclick="registerPending('${classId}')"
+                style="display:none;padding:9px 28px;background:${accentColor};color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">
+                등록
+              </button>
             </div>
           </div>
 
-          <!-- 검색 + 전체선택 -->
-          <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;">
-            <input type="text" placeholder="이름 검색..." oninput="filterClassStuList('${classId}',this.value)"
-              style="flex:1;padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
-            <button onclick="checkAllClassStu('${classId}',true)"  style="padding:6px 12px;border:1.5px solid ${accentColor};border-radius:8px;font-size:12px;font-weight:700;color:${accentColor};background:#fff;cursor:pointer;">전체선택</button>
-            <button onclick="checkAllClassStu('${classId}',false)" style="padding:6px 12px;border:1.5px solid #ccc;border-radius:8px;font-size:12px;font-weight:700;color:#888;background:#fff;cursor:pointer;">전체해제</button>
-          </div>
-
-          <!-- 체크박스 목록 -->
-          <div id="stu-checklist-${classId}" style="max-height:280px;overflow-y:auto;padding-right:4px;">
-            ${checkItems}
-          </div>
-
-          <!-- 하단 적용 -->
-          <div style="margin-top:12px;padding-top:10px;border-top:1px solid #e0e0e0;display:flex;justify-content:flex-end;gap:8px;">
-            <span style="font-size:12px;color:#999;align-self:center;">체크된 학생이 이 반에 등록됩니다</span>
-            <button class="submit-btn" style="background:${accentColor};padding:8px 24px;" onclick="applyClassStudents('${classId}')">적용</button>
-          </div>
         </div>
       </td>
     </tr>`;
 
-  const mainRow = document.getElementById(`row-${classId}`);
-  if (mainRow) mainRow.insertAdjacentHTML('afterend', detailHtml);
+  document.getElementById(`row-${classId}`)?.insertAdjacentHTML('afterend', detailHtml);
 }
 
-// 체크박스 변경 시 라벨 스타일 즉시 업데이트
-window.onStuChkChange = (classId, studentId, chk) => {
-  const lbl = document.getElementById(`stu-label-${classId}-${studentId}`);
-  if (!lbl) return;
+// 검색 실행
+window.searchClassStu = (classId) => {
+  const q = document.getElementById(`stu-search-${classId}`).value.trim().toLowerCase();
   const c = classList.find(x => x.id === classId);
   const isMath = CAT_IS_MATH(c?.category || c?.subject || '');
   const accentColor = isMath ? '#1e2a6d' : '#00391e';
-  if (chk.checked) {
-    lbl.style.borderColor = accentColor;
-    lbl.style.background = `${accentColor}18`;
-    lbl.querySelector('span').style.fontWeight = '700';
-  } else {
-    lbl.style.borderColor = '#e8e8e8';
-    lbl.style.background = '#fff';
-    lbl.querySelector('span').style.fontWeight = '400';
+  const enrolled = new Set(c?.studentIds || []);
+  const pending = pendingSet[classId] || new Set();
+
+  const matches = studentList
+    .filter(s => !q || s.name.toLowerCase().includes(q))
+    .sort((a,b) => a.name.localeCompare(b.name,'ko'));
+
+  const resultsEl = document.getElementById(`stu-results-${classId}`);
+  if (!matches.length) { resultsEl.innerHTML = `<p style="font-size:13px;color:#bbb;text-align:center;padding:12px;">검색 결과 없음</p>`; return; }
+
+  resultsEl.innerHTML = matches.map(s => {
+    const isEnrolled = enrolled.has(s.id);
+    const isPending  = pending.has(s.id);
+    const courses = getCoursesArr(s);
+    const courseTag = courses.includes('math') ? '수' : courses.includes('english') ? '영' : courses.includes('논술') ? '논' : '';
+    const courseColor = courses.includes('math') ? '#1e2a6d' : courses.includes('english') ? '#00391e' : '#ec6619';
+    return `<label style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:${isEnrolled?'default':'pointer'};border:1.5px solid ${isPending?accentColor:isEnrolled?'#e0e0e0':'#e8e8e8'};background:${isEnrolled?'#f5f5f5':isPending?accentColor+'18':'#fff'};margin-bottom:4px;opacity:${isEnrolled?'.55':'1'};">
+      <input type="checkbox" value="${s.id}" ${isEnrolled?'disabled checked':isPending?'checked':''} onchange="togglePending('${classId}','${s.id}',this)"
+        style="width:16px;height:16px;accent-color:${accentColor};cursor:${isEnrolled?'not-allowed':'pointer'};">
+      <span style="font-weight:600;font-size:13px;flex:1;">${s.name}</span>
+      <span style="font-size:11px;color:#999;">${s.grade||''}</span>
+      <span style="font-size:11px;color:#999;">${s.school||''}</span>
+      ${isEnrolled?`<span style="font-size:10px;color:#fff;background:#aaa;padding:1px 7px;border-radius:8px;">등록됨</span>`:
+        courseTag?`<span style="font-size:10px;font-weight:700;color:#fff;background:${courseColor};padding:1px 6px;border-radius:8px;">${courseTag}</span>`:''}
+    </label>`;
+  }).join('');
+};
+
+// 체크 토글 → pendingSet 갱신
+window.togglePending = (classId, studentId, chk) => {
+  const pending = pendingSet[classId] || (pendingSet[classId] = new Set());
+  if (chk.checked) pending.add(studentId);
+  else pending.delete(studentId);
+  refreshPendingPreview(classId);
+};
+
+function refreshPendingPreview(classId) {
+  const pending = pendingSet[classId] || new Set();
+  const previewEl  = document.getElementById(`pending-preview-${classId}`);
+  const namesEl    = document.getElementById(`pending-names-${classId}`);
+  const regBtn     = document.getElementById(`reg-btn-${classId}`);
+  const c = classList.find(x => x.id === classId);
+  const isMath = CAT_IS_MATH(c?.category || c?.subject || '');
+  const accentColor = isMath ? '#1e2a6d' : '#00391e';
+  if (!pending.size) {
+    previewEl.style.display = 'none';
+    regBtn.style.display = 'none';
+    return;
   }
+  previewEl.style.display = 'block';
+  regBtn.style.display = 'block';
+  namesEl.innerHTML = [...pending].map(id => {
+    const s = studentList.find(x => x.id === id);
+    return s ? `<span style="background:${accentColor};color:#fff;border-radius:16px;padding:3px 10px;font-size:12px;font-weight:700;">
+      ${s.name}<span style="font-size:10px;font-weight:400;margin-left:3px;">(${s.grade||''})</span>
+      <button onclick="cancelPending('${classId}','${id}')" style="background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;font-size:11px;padding:0;margin-left:4px;">✕</button>
+    </span>` : '';
+  }).join('');
+}
+
+window.cancelPending = (classId, studentId) => {
+  pendingSet[classId]?.delete(studentId);
+  // 검색 결과 체크박스도 해제
+  const chkEl = document.querySelector(`#stu-results-${classId} input[value="${studentId}"]`);
+  if (chkEl) chkEl.checked = false;
+  refreshPendingPreview(classId);
 };
 
-// 이름 검색 필터
-window.filterClassStuList = (classId, query) => {
-  const q = query.trim().toLowerCase();
-  document.querySelectorAll(`#stu-checklist-${classId} .stu-check-item`).forEach(lbl => {
-    const name = lbl.querySelector('span')?.textContent.toLowerCase() || '';
-    lbl.style.display = (!q || name.includes(q)) ? '' : 'none';
-  });
-};
-
-// 전체 선택/해제
-window.checkAllClassStu = (classId, check) => {
-  document.querySelectorAll(`#stu-checklist-${classId} input[type=checkbox]`).forEach(chk => {
-    const visible = chk.closest('.stu-check-item')?.style.display !== 'none';
-    if (visible) { chk.checked = check; onStuChkChange(classId, chk.value, chk); }
-  });
-};
-
-// 적용 버튼 → Firestore 저장
-window.applyClassStudents = async (classId) => {
-  const newIds = [];
-  document.querySelectorAll(`#stu-checklist-${classId} input[type=checkbox]`).forEach(chk => {
-    if (chk.checked) newIds.push(chk.value);
-  });
-  const btn = document.querySelector(`#detail-row-${classId} .submit-btn`);
-  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; }
+// 등록 버튼
+window.registerPending = async (classId) => {
+  const pending = pendingSet[classId];
+  if (!pending || !pending.size) return;
+  const btn = document.getElementById(`reg-btn-${classId}`);
+  btn.disabled = true; btn.textContent = '저장 중...';
+  const c = classList.find(x => x.id === classId);
+  const newIds = [...new Set([...(c.studentIds||[]), ...pending])];
   await updateDoc(doc(db, 'classes', classId), { studentIds: newIds });
   const idx = classList.findIndex(x => x.id === classId);
   if (idx >= 0) classList[idx].studentIds = newIds;
-  // 카운트 업데이트
-  const countEl = document.getElementById(`enrolled-count-${classId}`);
-  if (countEl) countEl.textContent = `${newIds.length}명 등록`;
-  if (btn) { btn.disabled = false; btn.textContent = '✅ 저장됨'; setTimeout(()=>{ btn.textContent='적용'; },1500); }
+  pending.clear();
+  // 패널 새로고침
+  document.getElementById(`enrolled-pills-${classId}`).innerHTML =
+    enrolledPillsHtml(classId, CAT_IS_MATH(c.category||c.subject||'') ? '#1e2a6d' : '#00391e');
+  document.getElementById(`ec-${classId}`).textContent = newIds.length + '명';
+  document.getElementById(`stu-results-${classId}`).innerHTML = '';
+  document.getElementById(`stu-search-${classId}`).value = '';
+  refreshPendingPreview(classId);
+  btn.disabled = false; btn.textContent = '등록';
+  renderClassTable();
+};
+
+// 등록된 학생 제외 (✕)
+window.removeEnrolled = async (classId, studentId) => {
+  const c = classList.find(x => x.id === classId);
+  const newIds = (c.studentIds||[]).filter(i => i !== studentId);
+  await updateDoc(doc(db, 'classes', classId), { studentIds: newIds });
+  const idx = classList.findIndex(x => x.id === classId);
+  if (idx >= 0) classList[idx].studentIds = newIds;
+  const accentColor = CAT_IS_MATH(c.category||c.subject||'') ? '#1e2a6d' : '#00391e';
+  document.getElementById(`enrolled-pills-${classId}`).innerHTML = enrolledPillsHtml(classId, accentColor);
+  document.getElementById(`ec-${classId}`).textContent = newIds.length + '명';
   renderClassTable();
 };
 
