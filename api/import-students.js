@@ -1,4 +1,4 @@
-const NOTION_TOKEN = process.env.NOTION_TOKEN || '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';
+const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = '1b2a6cf4db6a81ee9273ce8e72ec29a7';
 
 module.exports = async (req, res) => {
