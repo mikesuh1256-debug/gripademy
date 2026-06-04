@@ -40,6 +40,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;backg
 /* ── 탭 콘텐츠 ── */
 .tab-content-wrap{background:#fff;border:1px solid #e9ecef;border-radius:14px;padding:20px 16px 32px;margin-top:4px;}
 @media(min-width:768px){.tabs{grid-template-columns:repeat(4,1fr);}.tab{font-size:15px;}.tab-content-wrap{padding:24px 28px 36px;}}
+@media(max-width:768px){.tabs{display:none;}}
 
 /* ── 카드 (섹션) - 박스 없이 구분선만 ── */
 .card{background:transparent;border-radius:0;padding:22px 0;margin-bottom:0;border:none;border-bottom:1px solid #eef0f9;}
@@ -210,11 +211,22 @@ tbody tr:hover td{background:#f0f3ff;}
 <div class="app" id="app">
   <div class="header">
     <h1>
-      <img src="assets/images/logo/grip-icon.png" style="height:52px;width:52px;object-fit:contain;" onerror="this.style.display='none'">
+      <img src="assets/images/logo/grip-icon.png" style="height:38px;width:38px;object-fit:contain;filter:brightness(10);" onerror="this.style.display='none'">
       그립학원
-      <span style="font-weight:500;color:#9ca3af;margin-left:4px;font-size:18px;">관리자 포털</span>
+      <span>관리자 포털</span>
     </h1>
     <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+  </div>
+  <!-- 서브 네비 -->
+  <div style="background:#fff;border-bottom:1px solid #eee;display:flex;overflow-x:auto;padding:10px 14px;gap:8px;position:sticky;top:70px;z-index:150;scrollbar-width:none;">
+    <button onclick="showTab('students')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">👥 학생</button>
+    <button onclick="showTab('classes')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">🏫 반</button>
+    <button onclick="showTab('textbooks')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">📚 교재</button>
+    <button onclick="showTab('schedule')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">📅 일정</button>
+    <button onclick="showTab('board')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">📋 게시판</button>
+    <button onclick="showTab('chat')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">💬 톡방</button>
+    <button onclick="showTab('db')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">🗄️ DB</button>
+    <button onclick="showTab('users')" style="flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;">👤 계정</button>
   </div>
 
   <div class="body">

@@ -46,7 +46,7 @@ body{font-family:'Noto Sans KR',system-ui,sans-serif;background:#f0f2f7;-webkit-
 .menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 .menu-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;cursor:pointer;border-radius:12px;transition:background .15s;}
 .menu-item:active{background:#f0f2f7;}
-.menu-icon{font-size:46px;line-height:1;display:flex;align-items:center;justify-content:center;height:52px;}
+.menu-icon{font-size:28px;line-height:1;display:flex;align-items:center;justify-content:center;height:36px;}
 .menu-label{font-size:12px;font-weight:700;color:#333;text-align:center;line-height:1.3;}
 
 /* 서브 네비 */
@@ -170,7 +170,7 @@ tr:last-child td{border-bottom:none;}
         </div>
       </div>
       <div class="header-greeting">
-        <div class="greeting-name"><span style="font-weight:500;font-size:16px;opacity:.8;">안녕하세요,</span><br><span id="greetingName">학부모님 👋</span></div>
+        <div class="greeting-name">안녕하세요? <span id="greetingName">학부모님</span> 👋</div>
         <div class="greeting-sub">오늘도 함께 성장하는 하루 되세요</div>
         <div class="student-pill">
           <span id="studentPillName">-</span>
@@ -368,6 +368,14 @@ window.doLogin = async () => {
 };
 window.doLogout = () => signOut(auth);
 
+// 성 제거 → 이름만 추출 (김슬혜→슬혜, 금윤→윤, 명은→명은)
+function getGivenName(name) {
+  if (!name) return '';
+  if (name.length >= 3) return name.slice(1); // 3자 이상: 성 제거
+  if (name.length === 2) return name.slice(1); // 2자: 성 제거 → 1자만
+  return name; // 1자: 그대로
+}
+
 function watchChatUnread(uid) {
   const lastSeen = parseInt(localStorage.getItem('chatLastSeen') || '0');
   const q = query(collection(db, 'chatRooms'), where('participantIds', 'array-contains', uid));
@@ -386,7 +394,7 @@ async function loadStudentInfo(sid) {
   if (!snap.exists()) return;
   const d = snap.data();
   const courses = d.courses?.length ? d.courses.map(c => c==='math'?'수학':c==='english'?'영어':c).join('+') : (d.course==='both'?'수학+영어':d.course==='math'?'수학':'영어');
-  document.getElementById('greetingName').textContent = `${d.name} 학부모님 👋`;
+  document.getElementById('greetingName').textContent = `${getGivenName(d.name)} 학부모님`;
   document.getElementById('myStudentName').textContent = d.name + ' 학생';
   document.getElementById('studentPillName').textContent = d.name;
   document.getElementById('studentPillInfo').textContent = `${d.grade||''} · ${courses}`;
