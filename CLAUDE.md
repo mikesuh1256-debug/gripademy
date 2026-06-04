@@ -2,11 +2,12 @@
 
 ## 프로젝트 개요
 - **학원명**: 매쓰그립 수학학원 + 잉그립 영어학원
-- **도메인**: megrip.com (Netlify 호스팅, 가비아 도메인)
+- **도메인**: megrip.com (Vercel 호스팅, 가비아 도메인)
 - **Firebase 프로젝트**: gripacademyweb1
-- **노션 Integration 토큰**: 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
+- **노션 Integration 토큰**: Vercel 환경변수 NOTION_TOKEN에 저장 (코드에 하드코딩 금지)
+- **Cloudinary**: Cloud=dca7oczdy, Preset=gripacademy (이미지/동영상 업로드)
 - **GitHub**: https://github.com/mikesuh1256-debug/gripacademy.git
-- **배포**: GitHub push → Netlify 자동 배포
+- **배포**: GitHub push → Vercel 자동 배포 (Claude가 push까지 자동 처리)
 
 ---
 
@@ -22,10 +23,12 @@ gripacademy/
 ├── teacher.html            ← 선생님 포털 (Firebase Auth)
 ├── portal-admin.html       ← 관리자 포털 (Firebase Auth) ★ 주요 작업 파일
 ├── schedule.html           ← 학사일정 (노션 연동)
-├── netlify.toml            ← Netlify 설정
-├── netlify/functions/
+├── vercel.json             ← Vercel 설정
+├── api/
 │   ├── schedule.js         ← 노션 학사일정 API (±6개월, role 파라미터)
 │   └── import-students.js  ← 노션 학생 DB 가져오기
+├── board.html              ← 게시판 (학부모/선생님용)
+├── chat.html               ← 톡방 (실시간 채팅)
 └── assets/images/
     ├── logo/               ← 로고 파일들 (grip-icon.png 포함)
     └── photos/
