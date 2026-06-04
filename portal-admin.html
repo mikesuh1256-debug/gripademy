@@ -235,8 +235,8 @@ tr:last-child td{border-bottom:none;}
           <table style="width:100%;border-collapse:collapse;min-width:600px;">
             <thead><tr>
               <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">이름</th>
-              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">학년</th>
-              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">학교</th>
+              <th id="th-grade" onclick="toggleSortMode('grade')" style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;cursor:pointer;user-select:none;">학년 <span id="sort-arrow-grade"></span></th>
+              <th id="th-school" onclick="toggleSortMode('school')" style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;cursor:pointer;user-select:none;">학교 <span id="sort-arrow-school"></span></th>
               <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:center;">수영논</th>
               <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">연락처</th>
               <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">관리</th>
@@ -908,6 +908,25 @@ async function loadScheduleAdmin() {
 }
 
 let studentList = [];
+let sortMode = null; // null | 'school' | 'grade'
+
+window.toggleSortMode = (mode) => {
+  sortMode = (sortMode === mode) ? null : mode;
+  // 헤더 스타일 갱신
+  ['school','grade'].forEach(m => {
+    const th = document.getElementById(`th-${m}`);
+    const arrow = document.getElementById(`sort-arrow-${m}`);
+    if (!th || !arrow) return;
+    if (sortMode === m) {
+      th.style.color = '#1e2a6d'; th.style.background = '#e8eaf6';
+      arrow.textContent = ' ▲';
+    } else {
+      th.style.color = '#999'; th.style.background = '#f5f5f5';
+      arrow.textContent = '';
+    }
+  });
+  filterStudents();
+};
 
 async function loadStudents() {
   const snap = await getDocs(query(collection(db, 'students'), orderBy('name')));
@@ -927,43 +946,100 @@ function getCoursesArr(s) {
   return [];
 }
 
+// 전화번호에서 숫자/하이픈만 추출 (앞에 (모) (부) 등 제거)
+function cleanPhone(raw) {
+  if (!raw) return '';
+  const m = raw.match(/[\d-]{9,}/);
+  return m ? m[0] : raw;
+}
+
+function studentRowHtml(s) {
+  const courses = getCoursesArr(s);
+  const mathOn = courses.includes('math');
+  const engOn  = courses.includes('english');
+  const discOn = courses.includes('논술');
+  const photoHtml = s.photoURL
+    ? `<img src="${s.photoURL}" class="photo-mini" onclick="event.stopPropagation();showPhotoLightbox('${s.photoURL}')" title="사진 크게 보기">`
+    : `<span class="photo-mini-placeholder" title="사진 없음">👤</span>`;
+  const tel = cleanPhone(s.phone);
+  return `<tr style="cursor:pointer;" onclick="openStudentDetail('${s.id}')" onmouseover="this.style.background='#f5f7ff'" onmouseout="this.style.background=''">
+    <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-weight:700;white-space:nowrap;">${photoHtml}${s.name}</td>
+    <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;">${s.grade||'-'}</td>
+    <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;">${s.school||'-'}</td>
+    <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;text-align:center;">
+      <div style="display:inline-flex;gap:5px;">
+        <div class="course-dot"><span>수</span><div class="dot ${mathOn?'on-math':''}"></div></div>
+        <div class="course-dot"><span>영</span><div class="dot ${engOn?'on-english':''}"></div></div>
+        <div class="course-dot"><span>논</span><div class="dot ${discOn?'on-discussion':''}"></div></div>
+      </div>
+    </td>
+    <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;" onclick="event.stopPropagation()">
+      ${tel ? `<a href="tel:${tel}" style="color:#1e2a6d;text-decoration:none;font-weight:600;">${s.phone}</a>` : '-'}
+    </td>
+    <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;white-space:nowrap;" onclick="event.stopPropagation()">
+      <button class="del-btn" style="background:#e3f2fd;color:#1565c0;margin-right:4px;" onclick="openStudentDetail('${s.id}')">수정</button>
+      <button class="del-btn" onclick="deleteStudent('${s.id}')">삭제</button>
+    </td>
+  </tr>`;
+}
+
+function groupHeaderHtml(label, count) {
+  return `<tr>
+    <td colspan="6" style="padding:8px 14px;background:#e8eaf6;font-size:12px;font-weight:700;color:#1e2a6d;border-bottom:1px solid #d0d4e8;">
+      ${label} <span style="font-weight:400;color:#666;">(${count}명)</span>
+    </td>
+  </tr>`;
+}
+
 function renderStudentTable(list) {
   const data = list || studentList;
   document.getElementById('studentCount').textContent = `(${data.length}명)`;
 
-  const rows = data.map(s => {
-    const courses = getCoursesArr(s);
-    const mathOn  = courses.includes('math');
-    const engOn   = courses.includes('english');
-    const discOn  = courses.includes('논술');
-    const photoHtml = s.photoURL
-      ? `<img src="${s.photoURL}" class="photo-mini" onclick="event.stopPropagation();showPhotoLightbox('${s.photoURL}')" title="사진 크게 보기">`
-      : `<span class="photo-mini-placeholder" title="사진 없음">👤</span>`;
-    return `<tr style="cursor:pointer;" onclick="openStudentDetail('${s.id}')" onmouseover="this.style.background='#f5f7ff'" onmouseout="this.style.background=''">
-      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-weight:700;white-space:nowrap;">
-        ${photoHtml}${s.name}
-      </td>
-      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;">${s.grade||'-'}</td>
-      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;">${s.school||'-'}</td>
-      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;text-align:center;">
-        <div style="display:inline-flex;gap:5px;">
-          <div class="course-dot"><span>수</span><div class="dot ${mathOn?'on-math':''}"></div></div>
-          <div class="course-dot"><span>영</span><div class="dot ${engOn?'on-english':''}"></div></div>
-          <div class="course-dot"><span>논</span><div class="dot ${discOn?'on-discussion':''}"></div></div>
-        </div>
-      </td>
-      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;font-size:13px;">
-        ${s.phone ? `<a href="tel:${s.phone}" style="color:#1e2a6d;text-decoration:none;" onclick="event.stopPropagation()">${s.phone}</a>` : '-'}
-      </td>
-      <td style="padding:11px 12px;border-bottom:1px solid #f5f5f5;white-space:nowrap;" onclick="event.stopPropagation()">
-        <button class="del-btn" style="background:#e3f2fd;color:#1565c0;margin-right:4px;" onclick="openStudentDetail('${s.id}')">수정</button>
-        <button class="del-btn" onclick="deleteStudent('${s.id}')">삭제</button>
-      </td>
-    </tr>`;
-  });
-  document.getElementById('studentList').innerHTML = rows.length
-    ? rows.join('')
-    : '<tr><td colspan="6" style="text-align:center;color:#bbb;padding:20px;">학생 없음</td></tr>';
+  if (!data.length) {
+    document.getElementById('studentList').innerHTML =
+      '<tr><td colspan="6" style="text-align:center;color:#bbb;padding:20px;">학생 없음</td></tr>';
+    return;
+  }
+
+  // 학년 정렬 순서
+  const gradeOrder = ['초1','초2','초3','초4','초5','초6','중1','중2','중3','고1','고2','고3'];
+
+  if (sortMode === 'school') {
+    // 학교별 그룹, 학교명 가나다 순
+    const groups = {};
+    data.forEach(s => { const k = s.school||'(학교 미입력)'; if(!groups[k]) groups[k]=[]; groups[k].push(s); });
+    const sorted = Object.keys(groups).sort((a,b) => a.localeCompare(b,'ko'));
+    let html = '';
+    sorted.forEach(school => {
+      const arr = groups[school].sort((a,b) => a.name.localeCompare(b.name,'ko'));
+      html += groupHeaderHtml(school, arr.length);
+      html += arr.map(studentRowHtml).join('');
+    });
+    document.getElementById('studentList').innerHTML = html;
+
+  } else if (sortMode === 'grade') {
+    // 학년별 그룹, 초1→고3 순
+    const groups = {};
+    data.forEach(s => { const k = s.grade||'(학년 미입력)'; if(!groups[k]) groups[k]=[]; groups[k].push(s); });
+    const sorted = Object.keys(groups).sort((a,b) => {
+      const ia = gradeOrder.indexOf(a); const ib = gradeOrder.indexOf(b);
+      if (ia >= 0 && ib >= 0) return ia - ib;
+      if (ia >= 0) return -1; if (ib >= 0) return 1;
+      return a.localeCompare(b,'ko');
+    });
+    let html = '';
+    sorted.forEach(grade => {
+      const arr = groups[grade].sort((a,b) => a.name.localeCompare(b.name,'ko'));
+      html += groupHeaderHtml(grade, arr.length);
+      html += arr.map(studentRowHtml).join('');
+    });
+    document.getElementById('studentList').innerHTML = html;
+
+  } else {
+    // 기본: 이름순
+    const sorted = [...data].sort((a,b) => a.name.localeCompare(b.name,'ko'));
+    document.getElementById('studentList').innerHTML = sorted.map(studentRowHtml).join('');
+  }
 }
 
 window.filterStudents = () => {
