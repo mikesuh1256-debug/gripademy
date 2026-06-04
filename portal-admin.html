@@ -1616,64 +1616,60 @@ function renderClassDetailRow(classId) {
   if (!c) return;
   const isMath = CAT_IS_MATH(c.category || c.subject || '');
   const accentColor = isMath ? '#1e2a6d' : '#00391e';
-
   const studentIds = c.studentIds || [];
-  const enrolled = studentList.filter(s => studentIds.includes(s.id))
-    .sort((a,b) => a.name.localeCompare(b.name, 'ko'));
-  const notEnrolled = studentList.filter(s => !studentIds.includes(s.id))
-    .sort((a,b) => a.name.localeCompare(b.name, 'ko'));
 
-  const studentRows = enrolled.length
-    ? enrolled.map(s => {
-        const courses = getCoursesArr(s);
-        const mathOn = courses.includes('math');
-        const engOn  = courses.includes('english');
-        const discOn = courses.includes('논술');
-        return `<tr style="background:#fff;">
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-weight:600;">${s.name}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666;">${s.grade||'-'}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666;">${s.school||'-'}</td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
-            <div style="display:inline-flex;gap:4px;">
-              <div class="course-dot"><span>수</span><div class="dot ${mathOn?'on-math':''}"></div></div>
-              <div class="course-dot"><span>영</span><div class="dot ${engOn?'on-english':''}"></div></div>
-              <div class="course-dot"><span>논</span><div class="dot ${discOn?'on-discussion':''}"></div></div>
-            </div>
-          </td>
-          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
-            <button class="del-btn" onclick="removeStudentFromClass('${classId}','${s.id}')">제외</button>
-          </td>
-        </tr>`;
-      }).join('')
-    : `<tr><td colspan="5" style="padding:16px;text-align:center;color:#bbb;font-size:13px;">등록된 학생 없음</td></tr>`;
+  // 전체 학생을 이름순 정렬, 등록된 학생은 체크
+  const allSorted = [...studentList].sort((a,b) => a.name.localeCompare(b.name, 'ko'));
+  const enrolledCount = allSorted.filter(s => studentIds.includes(s.id)).length;
 
-  const addOpts = notEnrolled.map(s => `<option value="${s.id}">${s.name} (${s.grade||''})</option>`).join('');
+  const checkItems = allSorted.map(s => {
+    const checked = studentIds.includes(s.id);
+    const courses = getCoursesArr(s);
+    const courseTag = courses.includes('math') ? '수' : courses.includes('english') ? '영' : courses.includes('논술') ? '논' : '';
+    const courseColor = courses.includes('math') ? '#1e2a6d' : courses.includes('english') ? '#00391e' : '#ec6619';
+    return `<label id="stu-label-${classId}-${s.id}" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;cursor:pointer;border:1.5px solid ${checked?accentColor:'#e8e8e8'};background:${checked?`${accentColor}18`:'#fff'};margin-bottom:4px;" class="stu-check-item">
+      <input type="checkbox" id="stu-chk-${classId}-${s.id}" value="${s.id}" ${checked?'checked':''} onchange="onStuChkChange('${classId}','${s.id}',this)" style="width:16px;height:16px;accent-color:${accentColor};cursor:pointer;">
+      <span style="font-weight:${checked?'700':'400'};font-size:13px;flex:1;">${s.name}</span>
+      <span style="font-size:11px;color:#999;">${s.grade||''}</span>
+      <span style="font-size:11px;color:#999;">${s.school||''}</span>
+      ${courseTag?`<span style="font-size:10px;font-weight:700;color:#fff;background:${courseColor};padding:1px 6px;border-radius:8px;">${courseTag}</span>`:''}
+    </label>`;
+  }).join('');
 
   const detailHtml = `
     <tr id="detail-row-${classId}">
-      <td colspan="7" style="padding:0;background:#f8faff;border-bottom:2px solid ${accentColor};">
-        <div style="padding:14px 16px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-            <span style="font-size:13px;font-weight:700;color:${accentColor};">📋 ${c.name} — 학생 목록 (${enrolled.length}명)</span>
-            <button onclick="toggleClassStudents('${classId}')" style="background:none;border:none;cursor:pointer;font-size:18px;color:#bbb;line-height:1;">✕</button>
+      <td colspan="7" style="padding:0;background:#f4f6ff;border-bottom:3px solid ${accentColor};">
+        <div style="padding:16px 18px;">
+
+          <!-- 헤더 -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div>
+              <span style="font-size:14px;font-weight:800;color:${accentColor};">${c.name}</span>
+              <span id="enrolled-count-${classId}" style="font-size:12px;color:#999;margin-left:8px;">${enrolledCount}명 등록</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button class="submit-btn" style="background:${accentColor};padding:7px 20px;font-size:13px;" onclick="applyClassStudents('${classId}')">적용</button>
+              <button onclick="toggleClassStudents('${classId}')" style="background:none;border:none;cursor:pointer;font-size:20px;color:#bbb;line-height:1;padding:0;">✕</button>
+            </div>
           </div>
-          <div style="overflow-x:auto;margin-bottom:12px;">
-            <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
-              <thead><tr style="background:${accentColor};">
-                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">이름</th>
-                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">학년</th>
-                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">학교</th>
-                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">수강</th>
-                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">관리</th>
-              </tr></thead>
-              <tbody>${studentRows}</tbody>
-            </table>
+
+          <!-- 검색 + 전체선택 -->
+          <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center;">
+            <input type="text" placeholder="이름 검색..." oninput="filterClassStuList('${classId}',this.value)"
+              style="flex:1;padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+            <button onclick="checkAllClassStu('${classId}',true)"  style="padding:6px 12px;border:1.5px solid ${accentColor};border-radius:8px;font-size:12px;font-weight:700;color:${accentColor};background:#fff;cursor:pointer;">전체선택</button>
+            <button onclick="checkAllClassStu('${classId}',false)" style="padding:6px 12px;border:1.5px solid #ccc;border-radius:8px;font-size:12px;font-weight:700;color:#888;background:#fff;cursor:pointer;">전체해제</button>
           </div>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <select id="addStu-${classId}" style="flex:1;padding:8px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
-              <option value="">-- 학생 추가 선택 --</option>${addOpts}
-            </select>
-            <button class="submit-btn" style="background:${accentColor};padding:8px 16px;font-size:13px;" onclick="addStudentToClassInline('${classId}')">추가</button>
+
+          <!-- 체크박스 목록 -->
+          <div id="stu-checklist-${classId}" style="max-height:280px;overflow-y:auto;padding-right:4px;">
+            ${checkItems}
+          </div>
+
+          <!-- 하단 적용 -->
+          <div style="margin-top:12px;padding-top:10px;border-top:1px solid #e0e0e0;display:flex;justify-content:flex-end;gap:8px;">
+            <span style="font-size:12px;color:#999;align-self:center;">체크된 학생이 이 반에 등록됩니다</span>
+            <button class="submit-btn" style="background:${accentColor};padding:8px 24px;" onclick="applyClassStudents('${classId}')">적용</button>
           </div>
         </div>
       </td>
@@ -1683,33 +1679,56 @@ function renderClassDetailRow(classId) {
   if (mainRow) mainRow.insertAdjacentHTML('afterend', detailHtml);
 }
 
-window.addStudentToClassInline = async (classId) => {
-  const studentId = document.getElementById(`addStu-${classId}`).value;
-  if (!studentId) return alert('학생을 선택하세요.');
+// 체크박스 변경 시 라벨 스타일 즉시 업데이트
+window.onStuChkChange = (classId, studentId, chk) => {
+  const lbl = document.getElementById(`stu-label-${classId}-${studentId}`);
+  if (!lbl) return;
   const c = classList.find(x => x.id === classId);
-  const ids = [...(c.studentIds || [])];
-  if (ids.includes(studentId)) return alert('이미 등록된 학생입니다.');
-  ids.push(studentId);
-  await updateDoc(doc(db, 'classes', classId), { studentIds: ids });
-  const idx = classList.findIndex(x => x.id === classId);
-  if (idx >= 0) classList[idx].studentIds = ids;
-  renderClassDetailRow(classId);
-  // 기존 detail row 교체
-  const old = document.getElementById(`detail-row-${classId}`);
-  if (old) old.remove();
-  renderClassDetailRow(classId);
-  renderClassTable();
+  const isMath = CAT_IS_MATH(c?.category || c?.subject || '');
+  const accentColor = isMath ? '#1e2a6d' : '#00391e';
+  if (chk.checked) {
+    lbl.style.borderColor = accentColor;
+    lbl.style.background = `${accentColor}18`;
+    lbl.querySelector('span').style.fontWeight = '700';
+  } else {
+    lbl.style.borderColor = '#e8e8e8';
+    lbl.style.background = '#fff';
+    lbl.querySelector('span').style.fontWeight = '400';
+  }
 };
 
-window.removeStudentFromClass = async (classId, studentId) => {
-  const c = classList.find(x => x.id === classId);
-  const ids = (c.studentIds || []).filter(i => i !== studentId);
-  await updateDoc(doc(db, 'classes', classId), { studentIds: ids });
+// 이름 검색 필터
+window.filterClassStuList = (classId, query) => {
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll(`#stu-checklist-${classId} .stu-check-item`).forEach(lbl => {
+    const name = lbl.querySelector('span')?.textContent.toLowerCase() || '';
+    lbl.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+};
+
+// 전체 선택/해제
+window.checkAllClassStu = (classId, check) => {
+  document.querySelectorAll(`#stu-checklist-${classId} input[type=checkbox]`).forEach(chk => {
+    const visible = chk.closest('.stu-check-item')?.style.display !== 'none';
+    if (visible) { chk.checked = check; onStuChkChange(classId, chk.value, chk); }
+  });
+};
+
+// 적용 버튼 → Firestore 저장
+window.applyClassStudents = async (classId) => {
+  const newIds = [];
+  document.querySelectorAll(`#stu-checklist-${classId} input[type=checkbox]`).forEach(chk => {
+    if (chk.checked) newIds.push(chk.value);
+  });
+  const btn = document.querySelector(`#detail-row-${classId} .submit-btn`);
+  if (btn) { btn.disabled = true; btn.textContent = '저장 중...'; }
+  await updateDoc(doc(db, 'classes', classId), { studentIds: newIds });
   const idx = classList.findIndex(x => x.id === classId);
-  if (idx >= 0) classList[idx].studentIds = ids;
-  const old = document.getElementById(`detail-row-${classId}`);
-  if (old) old.remove();
-  renderClassDetailRow(classId);
+  if (idx >= 0) classList[idx].studentIds = newIds;
+  // 카운트 업데이트
+  const countEl = document.getElementById(`enrolled-count-${classId}`);
+  if (countEl) countEl.textContent = `${newIds.length}명 등록`;
+  if (btn) { btn.disabled = false; btn.textContent = '✅ 저장됨'; setTimeout(()=>{ btn.textContent='적용'; },1500); }
   renderClassTable();
 };
 
