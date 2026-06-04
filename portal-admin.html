@@ -110,9 +110,9 @@ tbody tr:hover td{background:#f0f3ff;}
 .modal-body{padding:18px 24px 24px;}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .info-item{background:#f8f9fc;border-radius:8px;padding:12px 14px;}
-.info-label{font-size:10px;color:#9ca3af;margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
-.info-value{font-size:14px;font-weight:700;color:#1a1d23;}
-.info-edit input,.info-edit select{width:100%;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s;}
+.info-label{font-size:12px;color:#9ca3af;margin-bottom:6px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.info-value{font-size:17px;font-weight:700;color:#1a1d23;}
+.info-edit input,.info-edit select{width:100%;padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:16px;font-family:inherit;outline:none;transition:border-color .15s;}
 .info-edit input:focus,.info-edit select:focus{border-color:#1e2a6d;}
 .class-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8f9fc;border-radius:8px;margin-bottom:6px;border:1px solid #f0f2f8;}
 .payment-row{display:grid;grid-template-columns:72px 50px 1fr 80px 60px;gap:6px;align-items:center;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:13px;}
@@ -232,64 +232,62 @@ tbody tr:hover td{background:#f0f3ff;}
     <div id="tab-students">
       <div class="card">
         <h2>➕ 학생 추가</h2>
-        <div class="form-row">
-          <div class="form-group">
-            <label>학생 이름 *</label>
-            <input type="text" id="sName" placeholder="이름">
-          </div>
-          <div class="form-group">
-            <label>학년</label>
-            <select id="sGrade">
-              <option value="">선택</option>
-              <option>초1</option><option>초2</option><option>초3</option>
-              <option>초4</option><option>초5</option><option>초6</option>
-              <option>중1</option><option>중2</option><option>중3</option>
-              <option>고1</option><option>고2</option><option>고3</option>
-            </select>
-          </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+          <label>학생 이름 *</label>
+          <input type="text" id="sName" placeholder="이름">
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>학교</label>
-            <select id="sSchool">
-              <option value="">선택</option>
-              <optgroup label="초등학교">
-                <option>가재울초</option><option>북가좌초</option><option>연가초</option>
-                <option>중동초</option><option>홍연초</option><option>이대부초</option>
-                <option>명지초</option><option>홍대부초</option><option>충암초</option>
-                <option>어울초</option><option>인왕초</option><option>은명초</option>
-                <option>서신초</option><option>응암초</option><option>연은초</option>
-                <option>선일초</option>
-              </optgroup>
-              <optgroup label="중학교">
-                <option>연희중</option><option>서연중</option><option>명지중</option>
-                <option>이대부중</option><option>가재울중</option><option>충암중</option>
-                <option>성사중</option><option>중암중</option><option>증산중</option>
-                <option>예원예중</option>
-              </optgroup>
-              <optgroup label="기타">
-                <option>세인트존스베리아카데미 제주</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>수강 과목</label>
-            <select id="sCourse">
-              <option value="math">수학</option>
-              <option value="english">영어</option>
-              <option value="both">수학+영어</option>
-            </select>
-          </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+          <label>학년</label>
+          <select id="sGrade">
+            <option value="">선택</option>
+            <option>초1</option><option>초2</option><option>초3</option>
+            <option>초4</option><option>초5</option><option>초6</option>
+            <option>중1</option><option>중2</option><option>중3</option>
+            <option>고1</option><option>고2</option><option>고3</option>
+          </select>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>학부모 이름</label>
-            <input type="text" id="sParentName" placeholder="학부모 이름">
-          </div>
-          <div class="form-group">
-            <label>연락처</label>
-            <input type="text" id="sPhone" placeholder="010-0000-0000">
-          </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+          <label>학교</label>
+          <select id="sSchool">
+            <option value="">선택</option>
+            <optgroup label="초등학교">
+              <option>가재울초</option><option>북가좌초</option><option>연가초</option>
+              <option>중동초</option><option>홍연초</option><option>이대부초</option>
+              <option>명지초</option><option>홍대부초</option><option>충암초</option>
+              <option>어울초</option><option>인왕초</option><option>은명초</option>
+              <option>서신초</option><option>응암초</option><option>연은초</option>
+              <option>선일초</option>
+            </optgroup>
+            <optgroup label="중학교">
+              <option>연희중</option><option>서연중</option><option>명지중</option>
+              <option>이대부중</option><option>가재울중</option><option>충암중</option>
+              <option>성사중</option><option>중암중</option><option>증산중</option>
+              <option>예원예중</option>
+            </optgroup>
+            <optgroup label="기타">
+              <option>세인트존스베리아카데미 제주</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+          <label>수강 과목</label>
+          <select id="sCourse">
+            <option value="math">수학</option>
+            <option value="english">영어</option>
+            <option value="both">수학+영어</option>
+          </select>
+        </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+          <label>학생 연락처</label>
+          <input type="tel" id="sStudentPhone" placeholder="010-0000-0000">
+        </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+          <label>학부모 이름</label>
+          <input type="text" id="sParentName" placeholder="학부모 이름">
+        </div>
+        <div class="form-group class-field-wrap" style="margin-bottom:14px;">
+          <label>연락처</label>
+          <input type="text" id="sPhone" placeholder="010-0000-0000">
         </div>
         <button class="submit-btn" onclick="addStudent()">학생 추가</button>
         <p class="success-msg" id="studentSuccess">✅ 학생이 추가되었습니다!</p>
@@ -388,7 +386,10 @@ tbody tr:hover td{background:#f0f3ff;}
 
           <!-- 수학반 -->
           <div class="class-section class-section-math">
-            <div class="class-section-header" style="background:#1e2a6d;">📐 수학반 만들기</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+              <div class="class-section-header" style="background:#1e2a6d;margin-bottom:0;">📐 수학반 만들기</div>
+              <button class="submit-btn" onclick="addClassNew('math')">수학반 추가</button>
+            </div>
             <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>반구분</label>
               <select id="cCatMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
@@ -397,7 +398,7 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option value="math_high">고등수학</option>
               </select>
             </div>
-            <div class="form-group" style="margin-bottom:10px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>반명 *</label>
               <input type="text" id="cNameMath" placeholder="예: 화목중등A반, 월수금초등B반">
             </div>
@@ -411,7 +412,7 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option value="금토">금토</option>
               </select>
             </div>
-            <div class="form-group" style="margin-bottom:10px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>시간</label>
               <input type="text" id="cTimeMath" placeholder="예: 15:00~17:00">
             </div>
@@ -445,12 +446,14 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option>708호</option>
               </select>
             </div>
-            <button class="submit-btn" style="width:100%;" onclick="addClassNew('math')">수학반 추가</button>
           </div>
 
           <!-- 영어반 -->
           <div class="class-section class-section-eng">
-            <div class="class-section-header" style="background:#00391e;">📖 영어반 만들기</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+              <div class="class-section-header" style="background:#00391e;margin-bottom:0;">📖 영어반 만들기</div>
+              <button class="submit-btn" style="background:#00391e;" onclick="addClassNew('english')">영어반 추가</button>
+            </div>
             <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>반구분</label>
               <select id="cCatEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
@@ -459,7 +462,7 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option value="english_high">고등영어</option>
               </select>
             </div>
-            <div class="form-group" style="margin-bottom:10px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>반명 *</label>
               <input type="text" id="cNameEng" placeholder="예: Reach2, Touch1, Run_B">
             </div>
@@ -473,7 +476,7 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option value="금토">금토</option>
               </select>
             </div>
-            <div class="form-group" style="margin-bottom:10px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>시간</label>
               <input type="text" id="cTimeEng" placeholder="예: 15:00~17:00">
             </div>
@@ -505,7 +508,6 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option>708호</option>
               </select>
             </div>
-            <button class="submit-btn" style="width:100%;background:#00391e;" onclick="addClassNew('english')">영어반 추가</button>
           </div>
 
         </div>
@@ -1361,18 +1363,23 @@ window.openStudentDetail = async (id) => {
       <div style="padding:14px 20px 0;text-align:center;">
         <span style="font-size:11px;font-weight:700;color:#aaa;letter-spacing:1px;text-transform:uppercase;">학생 정보 편집</span>
       </div>
-      <div class="modal-header" style="padding-top:10px;">
+      <div class="modal-header" style="padding-top:10px;align-items:flex-start;">
         <input type="file" id="photoFile" accept="image/*" style="display:none" onchange="uploadStudentPhoto('${id}')">
-        <div class="modal-title" style="flex:1;">
-          <h2>${s.name} ${statusBadge}</h2>
-          <p>${s.grade||''} · ${s.school||''}</p>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-left:8px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-right:14px;flex-shrink:0;">
           ${s.photoURL
-            ? `<img src="${s.photoURL}" class="modal-photo" style="width:70px;height:70px;" onclick="showPhotoLightbox('${s.photoURL}')" title="클릭하면 크게 보기">
-               <button style="font-size:10px;background:none;border:1px solid #ddd;border-radius:6px;padding:2px 6px;cursor:pointer;color:#999;" onclick="triggerPhotoUpload('${id}')">변경</button>`
-            : `<div class="modal-photo-placeholder" style="width:70px;height:70px;font-size:28px;" onclick="triggerPhotoUpload('${id}')" title="사진 추가">📷</div>
-               <span style="font-size:10px;color:#bbb;">사진 추가</span>`}
+            ? `<img src="${s.photoURL}" class="modal-photo" style="width:140px;height:140px;border-radius:10px;object-fit:cover;" onclick="showPhotoLightbox('${s.photoURL}')" title="클릭하면 크게 보기">
+               <button style="font-size:11px;background:none;border:1px solid #ddd;border-radius:6px;padding:3px 8px;cursor:pointer;color:#999;" onclick="triggerPhotoUpload('${id}')">사진 변경</button>`
+            : `<div class="modal-photo-placeholder" style="width:140px;height:140px;font-size:48px;" onclick="triggerPhotoUpload('${id}')" title="사진 추가">📷</div>
+               <span style="font-size:11px;color:#bbb;">사진 추가</span>`}
+        </div>
+        <div class="modal-title" style="flex:1;">
+          <h2 style="font-size:28px;font-weight:900;line-height:1.2;margin-bottom:4px;">${s.name} ${statusBadge}</h2>
+          <p style="font-size:18px;font-weight:700;color:#555;margin-bottom:8px;">${s.grade||''} · ${s.school||''}</p>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            ${courses.includes('math') ? '<span style="background:#1e2a6d;color:#fff;padding:3px 10px;border-radius:20px;font-size:13px;font-weight:700;">수학</span>' : ''}
+            ${courses.includes('english') ? '<span style="background:#00391e;color:#fff;padding:3px 10px;border-radius:20px;font-size:13px;font-weight:700;">영어</span>' : ''}
+            ${courses.includes('논술') ? '<span style="background:#ec6619;color:#fff;padding:3px 10px;border-radius:20px;font-size:13px;font-weight:700;">논술</span>' : ''}
+          </div>
         </div>
         <button class="modal-close" onclick="document.getElementById('studentModal').remove()">✕</button>
       </div>
@@ -1386,12 +1393,12 @@ window.openStudentDetail = async (id) => {
         <!-- 기본정보 -->
         <div id="modal-info">
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+          <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px;">
             <div class="info-item info-edit"><div class="info-label">이름 *</div><input id="edit-name" value="${s.name||''}"></div>
             <div class="info-item info-edit"><div class="info-label">학년</div>
               <select id="edit-grade">${grades.map(g=>`<option ${s.grade===g?'selected':''}>${g}</option>`).join('')}</select>
             </div>
-            <div class="info-item info-edit" style="grid-column:1/-1"><div class="info-label">학교</div>
+            <div class="info-item info-edit"><div class="info-label">학교</div>
               <select id="edit-school">${schools.map(sc=>`<option ${s.school===sc?'selected':''}>${sc}</option>`).join('')}</select>
             </div>
             <div class="info-item info-edit"><div class="info-label">생년월일</div>
@@ -1404,10 +1411,10 @@ window.openStudentDetail = async (id) => {
                 <option value="여" ${s.gender==='여'?'selected':''}>여</option>
               </select>
             </div>
-            <div class="info-item info-edit" style="grid-column:1/-1"><div class="info-label">주소</div>
+            <div class="info-item info-edit"><div class="info-label">주소</div>
               <input id="edit-address" value="${s.address||''}" placeholder="주소">
             </div>
-            <div class="info-item" style="grid-column:1/-1;"><div class="info-label" style="margin-bottom:8px;">수강 과목</div>
+            <div class="info-item"><div class="info-label" style="margin-bottom:8px;">수강 과목</div>
               <div class="course-chk">
                 <label id="lbl-math" class="${chkMath?'math-on':''}" onclick="toggleCourseLabel(this,'math-on')">
                   <input type="checkbox" id="chk-math" ${chkMath?'checked':''}>수학
@@ -1787,11 +1794,12 @@ window.addStudent = async () => {
     grade: document.getElementById('sGrade').value,
     school: document.getElementById('sSchool').value,
     course: document.getElementById('sCourse').value,
+    studentPhone: document.getElementById('sStudentPhone').value,
     parentName: document.getElementById('sParentName').value,
     phone: document.getElementById('sPhone').value,
     createdAt: new Date()
   });
-  ['sName','sSchool','sParentName','sPhone'].forEach(id => document.getElementById(id).value = '');
+  ['sName','sSchool','sStudentPhone','sParentName','sPhone'].forEach(id => document.getElementById(id).value = '');
   await loadStudents();
   const el = document.getElementById('studentSuccess');
   el.style.display = 'block';
