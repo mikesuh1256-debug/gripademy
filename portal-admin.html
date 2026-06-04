@@ -7,7 +7,7 @@
 <style>
 /* ── 기반 ── */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;background:#f7f8fc;min-height:100vh;color:#1a1d23;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;background:#f7f8fc;min-height:100vh;color:#1a1d23;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 
 /* ── 로그인 ── */
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#f4f6fb 0%,#e8edf8 100%);}
@@ -139,7 +139,9 @@ tbody tr:hover td{background:#f0f3ff;}
 
 /* ── 반 관리 ── */
 .class-create-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:6px;}
-@media(max-width:640px){.class-create-wrap{grid-template-columns:1fr;}}
+@media(max-width:768px){.class-create-wrap{grid-template-columns:1fr;}}
+.tb-form-grid{display:grid;grid-template-columns:2fr 1fr 80px 80px 120px auto;gap:8px;align-items:end;margin-bottom:8px;}
+@media(max-width:768px){.tb-form-grid{grid-template-columns:1fr 1fr;}.tb-form-grid .form-group:last-child{grid-column:1/-1;}}
 .class-section{border-radius:14px;padding:24px;}
 .class-section-math{border:2.5px solid #1e2a6d;background:#fafbff;}
 .class-section-eng{border:2.5px solid #00391e;background:#f6fffb;}
@@ -638,7 +640,7 @@ tbody tr:hover td{background:#f0f3ff;}
       <!-- 교재 입고 -->
       <div class="card">
         <h2>📦 교재 입고</h2>
-        <div style="display:grid;grid-template-columns:2fr 1fr 80px 80px 120px auto;gap:8px;align-items:end;margin-bottom:8px;">
+        <div class="tb-form-grid">
           <div class="form-group">
             <label>교재명 *</label>
             <input type="text" id="tbName" placeholder="예: 그래머존 Level 1">
