@@ -321,9 +321,12 @@ window.openPost = async (id) => {
   document.getElementById('modalTitle').textContent = post.title || '';
   document.getElementById('modalMeta').innerHTML = `<span>👁 ${post.views}</span><span>${timeAgo(post)}</span>`;
   document.getElementById('modalContent').textContent = post.content || '';
-  document.getElementById('modalImages').innerHTML = (post.imageURLs||[]).map(url =>
-    `<img src="${url}" alt="">`
-  ).join('');
+  document.getElementById('modalImages').innerHTML = (post.imageURLs||[]).map(url => {
+    const isVideo = url.includes('/video/') || /\.(mp4|mov|avi|webm)(\?|$)/i.test(url);
+    return isVideo
+      ? `<video src="${url}" controls style="width:100%;border-radius:10px;max-height:400px;"></video>`
+      : `<img src="${url}" alt="" style="width:100%;border-radius:10px;">`;
+  }).join('');
 
   document.getElementById('postModal').style.display = 'flex';
 };

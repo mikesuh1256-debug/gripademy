@@ -789,8 +789,8 @@ tbody tr:hover td{background:#f0f3ff;}
             <textarea id="postContent" placeholder="내용을 입력하세요..." style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;font-family:inherit;outline:none;height:120px;resize:vertical;line-height:1.6;"></textarea>
           </div>
           <div class="form-group" style="margin-bottom:10px;">
-            <label>이미지 (최대 5장)</label>
-            <input type="file" id="postImages" accept="image/*" multiple style="padding:8px 0;font-size:13px;">
+            <label>이미지 / 동영상 (최대 5개)</label>
+            <input type="file" id="postImages" accept="image/*,video/*" multiple style="padding:8px 0;font-size:13px;">
             <div id="postImagePreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;"></div>
           </div>
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
@@ -2654,6 +2654,19 @@ function renderAdminPosts() {
     </div>`).join('');
 }
 
+async function uploadToCloudinary(file, onProgress) {
+  const resourceType = file.type.startsWith('video/') ? 'video' : 'image';
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'gripacademy');
+  const res = await fetch(`https://api.cloudinary.com/v1_1/dca7oczdy/${resourceType}/upload`, {
+    method: 'POST', body: formData
+  });
+  if (!res.ok) throw new Error('Cloudinary 업로드 실패');
+  const data = await res.json();
+  return data.secure_url;
+}
+
 window.submitPost = async () => {
   const title = document.getElementById('postTitle').value.trim();
   if (!title) return alert('제목을 입력하세요.');
@@ -2661,13 +2674,11 @@ window.submitPost = async () => {
   btn.disabled = true; btn.textContent = '저장 중...';
 
   try {
-    const imageURLs = [];
+    const mediaURLs = [];
     for (let i = 0; i < postImageFiles.length; i++) {
       const file = postImageFiles[i];
-      btn.textContent = `이미지 업로드 ${i+1}/${postImageFiles.length}...`;
-      const r = ref(storage, `posts/${Date.now()}_${file.name}`);
-      await uploadBytes(r, file);
-      imageURLs.push(await getDownloadURL(r));
+      btn.textContent = `업로드 ${i+1}/${postImageFiles.length}... (${file.type.startsWith('video/') ? '동영상' : '이미지'})`;
+      mediaURLs.push(await uploadToCloudinary(file));
     }
 
     btn.textContent = '게시물 저장 중...';
@@ -2676,7 +2687,7 @@ window.submitPost = async () => {
       content: document.getElementById('postContent').value,
       category: document.getElementById('postCat').value,
       isPinned: document.getElementById('postPinned').checked,
-      imageURLs,
+      imageURLs: mediaURLs,
       views: 0,
       createdAt: new Date()
     });
@@ -2687,7 +2698,7 @@ window.submitPost = async () => {
     setTimeout(() => s.style.display = 'none', 3000);
     await loadAdminPosts();
   } catch (err) {
-    alert('오류: ' + err.message + '\n\nFirebase Storage 규칙을 확인하세요.');
+    alert('업로드 오류: ' + err.message);
   } finally {
     btn.disabled = false; btn.textContent = '게시하기';
   }
