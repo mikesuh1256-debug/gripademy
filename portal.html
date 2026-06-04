@@ -372,7 +372,7 @@ const schToday = new Date(); schToday.setHours(0,0,0,0);
 async function loadSchedule() {
   document.getElementById('schListPortal').innerHTML = '<div class="empty">불러오는 중...</div>';
   try {
-    const res = await fetch('/.netlify/functions/schedule?role=parent');
+    const res = await fetch('/api/schedule?role=parent');
     const json = await res.json();
     if (!Array.isArray(json)) throw new Error('응답 오류');
     schDataPortal = json;

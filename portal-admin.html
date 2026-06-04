@@ -899,7 +899,7 @@ window.loadNotionStudents = async () => {
   status.style.display = 'block';
   status.textContent = '노션에서 데이터를 가져오는 중...';
   try {
-    const res = await fetch('/.netlify/functions/import-students');
+    const res = await fetch('/api/import-students');
     const data = await res.json();
     if (data.error) throw new Error(JSON.stringify(data.error));
     notionStudentsData = data.students;
@@ -1041,7 +1041,7 @@ async function loadScheduleAdmin() {
   const listEl = document.getElementById('adminSchList');
   listEl.innerHTML = '<p style="text-align:center;color:#bbb;padding:20px;">불러오는 중...</p>';
   try {
-    const res = await fetch('/.netlify/functions/schedule?role=admin');
+    const res = await fetch('/api/schedule?role=admin');
     const items = await res.json();
     adminSchData = Array.isArray(items) ? items : [];
     renderAdminSchList();

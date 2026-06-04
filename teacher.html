@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그립학원 선생님 입력</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#f0f2f5;min-height:100vh;}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;}
+.login-title{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#aaa;margin-bottom:32px;}
+.login-box input{width:100%;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;margin-bottom:12px;outline:none;font-family:inherit;}
+.login-box input:focus{border-color:#1e2a6d;}
+.login-btn{width:100%;padding:14px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+.login-btn:hover{background:#19b1c6;}
+.login-error{color:#e53935;font-size:13px;margin-top:8px;}
+
+.app{display:none;min-height:100vh;}
+.header{background:#1e2a6d;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{color:#fff;font-size:16px;font-weight:700;}
+.logout-btn{background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;}
+
+.body{max-width:900px;margin:0 auto;padding:24px 16px;}
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+.tab{padding:8px 20px;border-radius:20px;border:1.5px solid #e0e0e0;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#999;font-family:inherit;}
+.tab.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+
+.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.card h2{font-size:15px;font-weight:700;color:#333;margin-bottom:20px;}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:12px;font-weight:600;color:#666;}
+.form-group select,.form-group input,.form-group textarea{padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;}
+.form-group select:focus,.form-group input:focus,.form-group textarea:focus{border-color:#1e2a6d;}
+.form-group textarea{resize:vertical;min-height:80px;}
+.submit-btn{width:100%;padding:13px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;}
+.submit-btn:hover{background:#19b1c6;}
+.success-msg{color:#2e7d32;font-size:13px;margin-top:8px;text-align:center;display:none;}
+
+.student-select{margin-bottom:16px;}
+.student-select select{width:100%;padding:12px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;font-family:inherit;outline:none;}
+
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 14px;background:#f5f5f5;font-size:12px;color:#999;font-weight:600;text-align:left;}
+td{padding:12px 14px;font-size:14px;color:#333;border-bottom:1px solid #f5f5f5;}
+.grade-badge{display:inline-block;width:32px;height:32px;border-radius:8px;text-align:center;line-height:32px;font-weight:800;font-size:16px;}
+.grade-A{background:#e8f5e9;color:#2e7d32;}
+.grade-B{background:#e3f2fd;color:#1565c0;}
+.grade-C{background:#fff3e0;color:#e65100;}
+.att-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.att-present{background:#e8f5e9;color:#2e7d32;}
+.att-absent{background:#ffebee;color:#c62828;}
+.att-late{background:#fff3e0;color:#e65100;}
+
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+.sch-toggle{display:flex;gap:0;border:1.5px solid #e0e0e0;border-radius:8px;overflow:hidden;margin-bottom:14px;width:fit-content;}
+.sch-toggle button{padding:6px 16px;background:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#999;font-family:inherit;}
+.sch-toggle button.active{background:#1e2a6d;color:#fff;}
+.sch-cal-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px;}
+.sch-cal-nav button{background:none;border:1.5px solid #e0e0e0;border-radius:6px;padding:4px 12px;font-size:15px;cursor:pointer;}
+.sch-cal-nav h3{font-size:15px;font-weight:700;color:#1e2a6d;min-width:110px;text-align:center;}
+.sch-cal{background:#f8f9fa;border-radius:10px;overflow:hidden;}
+.sch-cal-hd{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid #eee;}
+.sch-cal-hd span{text-align:center;padding:7px 0;font-size:11px;font-weight:700;color:#999;}
+.sch-cal-body{display:grid;grid-template-columns:repeat(7,1fr);}
+.sch-day{border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;min-height:60px;padding:4px 3px;cursor:pointer;background:#fff;}
+.sch-day:hover{background:#f0f4ff;}
+.sch-day.other{background:#fafafa;}
+.sch-day.other .dn{color:#ddd;}
+.sch-day.today .dn{background:#1e2a6d;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+.sch-day.sel{background:#eef0fb;}
+.dn{font-size:12px;font-weight:600;color:#333;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;}
+.sch-day:nth-child(7n+1) .dn{color:#e53935;}
+.sch-day:nth-child(7n) .dn{color:#1565c0;}
+.sch-day.other:nth-child(7n+1) .dn,.sch-day.other:nth-child(7n) .dn{color:#ddd;}
+.sdot{font-size:9px;line-height:1.4;padding:0 2px;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;background:#e8eaf6;color:#1e2a6d;}
+.sel-events{margin-top:10px;background:#f8f9fa;border-radius:8px;padding:12px 14px;}
+.sel-events h4{font-size:13px;font-weight:700;color:#1e2a6d;margin-bottom:8px;}
+.sel-ev-row{font-size:13px;color:#333;padding:5px 0;border-bottom:1px solid #eee;}
+.sel-ev-row:last-child{border-bottom:none;}
+</style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div style="width:90px;height:90px;margin:0 auto 12px;"><img src="assets/images/logo/grip-icon.png" alt="그립학원" style="width:100%;height:100%;object-fit:contain;" onerror="this.style.display='none'"></div>
+    <h1 class="login-title">선생님 페이지</h1>
+    <p class="login-sub">선생님 계정으로 로그인하세요</p>
+    <input type="email" id="loginEmail" placeholder="이메일">
+    <input type="password" id="loginPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <p class="login-error" id="loginError" style="display:none;">이메일 또는 비밀번호를 확인해주세요.</p>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <div class="header">
+    <h1><img src="assets/images/logo/grip-icon.png" style="height:28px;width:28px;object-fit:contain;vertical-align:middle;margin-right:8px;mix-blend-mode:screen;">그립학원 선생님 페이지</h1>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="color:rgba(255,255,255,0.7);font-size:13px;" id="teacherName"></span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('classlog')">📋 수업일지</button>
+      <button class="tab" onclick="showTab('studentrec')">👤 학생기록</button>
+      <button class="tab" onclick="showTab('grade')">📊 성적</button>
+      <button class="tab" onclick="showTab('attendance')">📅 출결</button>
+      <button class="tab" onclick="showTab('board')">📢 게시판</button>
+      <button class="tab" onclick="showTab('schedule')">📅 학사일정</button>
+    </div>
+
+    <!-- 수업일지 -->
+    <div id="tab-classlog">
+      <div class="card">
+        <h2>📋 수업일지 입력</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>반 선택</label>
+            <select id="logClass" onchange="loadClassStudents('logClass','')"></select>
+          </div>
+          <div class="form-group">
+            <label>날짜</label>
+            <input type="date" id="logDate">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>오늘 진도</label>
+          <input type="text" id="logProgress" placeholder="예: U1. Grammar - 관계대명사 who">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>숙제 내용</label>
+          <input type="text" id="logHomework" placeholder="예: 워크북 p.23-24, 단어 20개">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>학부모 공지 (전체)</label>
+          <textarea id="logNotice" placeholder="학부모님께 전달할 내용을 입력하세요" style="width:100%;padding:10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;height:80px;resize:vertical;"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitClassLog()">수업일지 저장</button>
+        <p class="success-msg" id="logSuccess">✅ 저장되었습니다!</p>
+      </div>
+      <div class="card">
+        <h2>📋 최근 수업일지</h2>
+        <div id="recentLogs"><p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">반을 선택하세요</p></div>
+      </div>
+    </div>
+
+    <!-- 학생기록 -->
+    <div id="tab-studentrec" style="display:none;">
+      <div class="card">
+        <h2>👤 학생 일일기록 입력</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>반 선택</label>
+            <select id="recClass" onchange="loadClassStudents('recClass','recStudent')"></select>
+          </div>
+          <div class="form-group">
+            <label>날짜</label>
+            <input type="date" id="recDate">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>학생</label>
+            <select id="recStudent"></select>
+          </div>
+          <div class="form-group">
+            <label>출결</label>
+            <select id="recAttendance">
+              <option value="출석">출석</option>
+              <option value="결석">결석</option>
+              <option value="지각">지각</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>단어 점수</label>
+            <input type="number" id="recWordScore" placeholder="0">
+          </div>
+          <div class="form-group">
+            <label>단어 총점</label>
+            <input type="number" id="recWordTotal" placeholder="54">
+          </div>
+          <div class="form-group">
+            <label>단어 결과</label>
+            <select id="recWordResult">
+              <option value="PASS">PASS</option>
+              <option value="FAIL">FAIL</option>
+              <option value="재시면제">재시면제</option>
+              <option value="-">해당없음</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>숙제 완성도</label>
+            <select id="recHomeworkStars">
+              <option value="3">★★★ (완벽)</option>
+              <option value="2">★★☆ (보통)</option>
+              <option value="1">★☆☆ (미흡)</option>
+              <option value="0">미제출</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>오늘 진도</label>
+            <input type="text" id="recProgress" placeholder="개인 진도 메모">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>숙제 코멘트</label>
+          <input type="text" id="recHomeworkComment" placeholder="숙제 관련 코멘트">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>태도 코멘트</label>
+          <input type="text" id="recAttitudeComment" placeholder="수업 태도 관련 코멘트">
+        </div>
+        <button class="submit-btn" onclick="submitStudentRecord()">저장</button>
+        <p class="success-msg" id="recSuccess">✅ 저장되었습니다!</p>
+      </div>
+      <div class="card">
+        <h2>📋 최근 학생기록</h2>
+        <div id="recentRecords"><p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">반과 학생을 선택하세요</p></div>
+      </div>
+    </div>
+
+    <!-- 성적 입력 -->
+    <div id="tab-grade" style="display:none;">
+      <div class="card">
+        <h2>📊 성적 입력</h2>
+        <div class="student-select">
+          <select id="gradeStudent"><option value="">학생 선택</option></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>과목</label>
+            <select id="gradeSubject">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>등급</label>
+            <select id="gradeValue">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>시험명</label>
+            <input type="text" id="gradeTestName" placeholder="예: 6월 중간고사">
+          </div>
+          <div class="form-group">
+            <label>날짜</label>
+            <input type="date" id="gradeDate">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>메모</label>
+          <textarea id="gradeNote" placeholder="선생님 코멘트 (선택)"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitGrade()">성적 저장</button>
+        <p class="success-msg" id="gradeSuccess">✅ 저장되었습니다!</p>
+      </div>
+    </div>
+
+    <!-- 출결 입력 -->
+    <div id="tab-attendance" style="display:none;">
+      <div class="card">
+        <h2>📅 출결 입력</h2>
+        <div class="student-select">
+          <select id="attStudent"><option value="">학생 선택</option></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>과목</label>
+            <select id="attSubject">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>출결</label>
+            <select id="attStatus">
+              <option value="present">출석</option>
+              <option value="absent">결석</option>
+              <option value="late">지각</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>날짜</label>
+          <input type="date" id="attDate">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>메모</label>
+          <textarea id="attNote" placeholder="메모 (선택)"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitAttendance()">출결 저장</button>
+        <p class="success-msg" id="attSuccess">✅ 저장되었습니다!</p>
+      </div>
+    </div>
+
+    <!-- 태도 입력 -->
+    <div id="tab-attitude" style="display:none;">
+      <div class="card">
+        <h2>⭐ 태도 입력</h2>
+        <div class="student-select">
+          <select id="atiStudent"><option value="">학생 선택</option></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>과목</label>
+            <select id="atiSubject">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>태도 등급</label>
+            <select id="atiGrade">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>날짜</label>
+          <input type="date" id="atiDate">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>메모</label>
+          <textarea id="atiNote" placeholder="태도 관련 코멘트"></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitAttitude()">태도 저장</button>
+        <p class="success-msg" id="atiSuccess">✅ 저장되었습니다!</p>
+      </div>
+    </div>
+
+    <!-- 게시판 -->
+    <div id="tab-board" style="display:none;">
+      <div class="card">
+        <h2>📢 공지사항 작성</h2>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>제목</label>
+          <input type="text" id="postTitle" placeholder="공지 제목">
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label>내용</label>
+          <textarea id="postContent" placeholder="내용 입력" style="min-height:120px;"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>대상</label>
+            <select id="postTarget">
+              <option value="all">전체</option>
+              <option value="math">수학반</option>
+              <option value="english">영어반</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>공지 여부</label>
+            <select id="postIsNotice">
+              <option value="true">공지</option>
+              <option value="false">일반</option>
+            </select>
+          </div>
+        </div>
+        <button class="submit-btn" onclick="submitPost()">게시글 올리기</button>
+        <p class="success-msg" id="postSuccess">✅ 게시되었습니다!</p>
+      </div>
+    </div>
+
+    <!-- 입력 내역 -->
+    <div id="tab-history" style="display:none;">
+      <div class="card">
+        <h2>📋 최근 성적 입력 내역</h2>
+        <table>
+          <thead><tr><th>학생</th><th>과목</th><th>시험명</th><th>등급</th><th>날짜</th></tr></thead>
+          <tbody id="historyList"><tr><td colspan="5" style="text-align:center;color:#bbb;padding:20px;">데이터 없음</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 학사일정 -->
+    <div id="tab-schedule" style="display:none;">
+      <div class="card">
+        <h2>📅 직원 학사일정</h2>
+        <div class="sch-toggle">
+          <button class="active" onclick="schViewT('list',this)">≡ 목록</button>
+          <button onclick="schViewT('cal',this)">▦ 캘린더</button>
+        </div>
+        <div id="schListTeacher"></div>
+        <div id="schCalTeacher" style="display:none;">
+          <div class="sch-cal-nav">
+            <button onclick="schCalMoveT(-1)">‹</button>
+            <h3 id="schCalTitleTeacher"></h3>
+            <button onclick="schCalMoveT(1)">›</button>
+          </div>
+          <div class="sch-cal"><div class="sch-cal-hd"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="sch-cal-body" id="schCalBodyTeacher"></div></div>
+          <div id="schSelTeacher"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, addDoc, query, orderBy, getDocs, where, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAS9iH2_r33OP3fFazsEk5lcJL-oH0eWbU",
+  authDomain: "gripacademyweb1.firebaseapp.com",
+  projectId: "gripacademyweb1",
+  storageBucket: "gripacademyweb1.firebasestorage.app",
+  messagingSenderId: "202451577041",
+  appId: "1:202451577041:web:de15134759530143173df0"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentTeacher = null;
+let students = [];
+
+const today = new Date().toISOString().split('T')[0];
+['gradeDate','attDate','atiDate'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.value = today;
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const userDoc = await getDoc(doc(db, 'users', user.uid));
+    if (userDoc.exists()) {
+      const data = userDoc.data();
+      if (data.role !== 'teacher' && data.role !== 'admin') { return; }
+      currentTeacher = { uid: user.uid, role: data.role, ...data };
+      document.getElementById('teacherName').textContent = data.name;
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('app').style.display = 'block';
+      await loadStudents();
+      await loadMyClasses();
+    }
+  } else {
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
+
+async function loadStudents() {
+  const snap = await getDocs(query(collection(db, 'students'), orderBy('name')));
+  students = [];
+  snap.forEach(d => students.push({ id: d.id, ...d.data() }));
+  ['gradeStudent','attStudent','atiStudent'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '<option value="">학생 선택</option>';
+    students.forEach(s => {
+      sel.innerHTML += `<option value="${s.id}">${s.name} (${s.grade})</option>`;
+    });
+  });
+}
+
+window.doLogin = async () => {
+  const email = document.getElementById('loginEmail').value;
+  const pw = document.getElementById('loginPw').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, pw);
+  } catch(e) {
+    document.getElementById('loginError').style.display = 'block';
+  }
+};
+
+window.doLogout = () => signOut(auth);
+
+window.showTab = (tab) => {
+  ['classlog','studentrec','grade','attendance','board','schedule'].forEach(t => {
+    document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ['classlog','studentrec','grade','attendance','board','schedule'][i] === tab);
+  });
+  if (tab === 'schedule') loadScheduleTeacher();
+};
+
+// ── 반 목록 로드 ──────────────────────────────────────
+let myClasses = [];
+let classStudentMap = {};
+
+async function loadMyClasses() {
+  const isAdmin = currentTeacher.role === 'admin';
+  let snap;
+  if (isAdmin) {
+    snap = await getDocs(query(collection(db, 'classes'), orderBy('subject')));
+  } else {
+    snap = await getDocs(query(collection(db, 'classes'), orderBy('subject')));
+  }
+  myClasses = [];
+  snap.forEach(d => {
+    const c = { id: d.id, ...d.data() };
+    if (isAdmin || c.teacherName === currentTeacher.name) myClasses.push(c);
+  });
+
+  // 시간대별 그룹으로 드롭다운 구성
+  const grouped = {};
+  myClasses.forEach(c => {
+    const key = c.schedule || '시간미정';
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(c);
+  });
+
+  ['logClass','recClass'].forEach(selId => {
+    const sel = document.getElementById(selId);
+    if (!sel) return;
+    sel.innerHTML = '<option value="">반 선택</option>';
+    Object.entries(grouped).forEach(([time, classes]) => {
+      const grp = document.createElement('optgroup');
+      grp.label = time;
+      classes.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = `${c.name} - ${c.teacherName||''}`;
+        grp.appendChild(opt);
+      });
+      sel.appendChild(grp);
+    });
+  });
+
+  // 날짜 기본값 오늘
+  const today = new Date().toISOString().split('T')[0];
+  ['logDate','recDate'].forEach(id => { const el = document.getElementById(id); if(el) el.value = today; });
+}
+
+window.loadClassStudents = async (classSelId, studentSelId) => {
+  const classId = document.getElementById(classSelId).value;
+  if (!classId) return;
+  const classDoc = await getDoc(doc(db, 'classes', classId));
+  const studentIds = classDoc.data().studentIds || [];
+
+  if (studentSelId) {
+    const sel = document.getElementById(studentSelId);
+    sel.innerHTML = '<option value="">학생 선택</option>';
+    if (!classStudentMap[classId]) {
+      classStudentMap[classId] = [];
+      for (const sid of studentIds) {
+        const sDoc = await getDoc(doc(db, 'students', sid));
+        if (sDoc.exists()) classStudentMap[classId].push({ id: sid, ...sDoc.data() });
+      }
+    }
+    classStudentMap[classId].forEach(s => {
+      sel.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+    });
+  }
+
+  if (classSelId === 'logClass') loadRecentLogs(classId);
+};
+
+window.submitClassLog = async () => {
+  const classId = document.getElementById('logClass').value;
+  if (!classId) return alert('반을 선택해주세요.');
+  const classInfo = myClasses.find(c => c.id === classId);
+  await addDoc(collection(db, 'class_logs'), {
+    classId,
+    className: classInfo?.name || '',
+    subject: classInfo?.subject || '',
+    date: new Date(document.getElementById('logDate').value),
+    progress: document.getElementById('logProgress').value,
+    homework: document.getElementById('logHomework').value,
+    notice: document.getElementById('logNotice').value,
+    teacherId: currentTeacher.uid,
+    teacherName: currentTeacher.name,
+    createdAt: new Date()
+  });
+  ['logProgress','logHomework','logNotice'].forEach(id => document.getElementById(id).value = '');
+  const el = document.getElementById('logSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+  loadRecentLogs(classId);
+};
+
+async function loadRecentLogs(classId) {
+  const snap = await getDocs(query(collection(db, 'class_logs'),
+    where('classId', '==', classId), orderBy('date', 'desc'), limit(5)));
+  const rows = [];
+  snap.forEach(d => {
+    const g = d.data();
+    const date = g.date?.toDate?.()?.toLocaleDateString('ko-KR') || '-';
+    rows.push(`<div style="padding:12px 0;border-bottom:1px solid #f5f5f5;">
+      <div style="font-size:12px;color:#999;margin-bottom:4px">${date}</div>
+      <div style="font-size:14px;font-weight:600;margin-bottom:3px">📖 ${g.progress||'-'}</div>
+      <div style="font-size:13px;color:#555;margin-bottom:3px">📝 숙제: ${g.homework||'-'}</div>
+      ${g.notice ? `<div style="font-size:13px;color:#1e2a6d;margin-top:4px">📢 ${g.notice}</div>` : ''}
+    </div>`);
+  });
+  document.getElementById('recentLogs').innerHTML = rows.length ? rows.join('') : '<p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">기록 없음</p>';
+}
+
+window.submitStudentRecord = async () => {
+  const classId = document.getElementById('recClass').value;
+  const studentId = document.getElementById('recStudent').value;
+  if (!classId || !studentId) return alert('반과 학생을 선택해주세요.');
+  const classInfo = myClasses.find(c => c.id === classId);
+  const students = classStudentMap[classId] || [];
+  const student = students.find(s => s.id === studentId);
+  await addDoc(collection(db, 'student_records'), {
+    classId,
+    className: classInfo?.name || '',
+    subject: classInfo?.subject || '',
+    studentId,
+    studentName: student?.name || '',
+    date: new Date(document.getElementById('recDate').value),
+    attendance: document.getElementById('recAttendance').value,
+    wordScore: Number(document.getElementById('recWordScore').value) || 0,
+    wordTotal: Number(document.getElementById('recWordTotal').value) || 0,
+    wordResult: document.getElementById('recWordResult').value,
+    homeworkStars: Number(document.getElementById('recHomeworkStars').value),
+    progress: document.getElementById('recProgress').value,
+    homeworkComment: document.getElementById('recHomeworkComment').value,
+    attitudeComment: document.getElementById('recAttitudeComment').value,
+    teacherId: currentTeacher.uid,
+    teacherName: currentTeacher.name,
+    createdAt: new Date()
+  });
+  ['recWordScore','recWordTotal','recProgress','recHomeworkComment','recAttitudeComment'].forEach(id => document.getElementById(id).value='');
+  const el = document.getElementById('recSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+};
+
+let schDataTeacher = [];
+let schCalYTeacher = new Date().getFullYear();
+let schCalMTeacher = new Date().getMonth();
+let schSelDateTeacher = null;
+const schTodayT = new Date(); schTodayT.setHours(0,0,0,0);
+
+async function loadScheduleTeacher() {
+  document.getElementById('schListTeacher').innerHTML = '<p style="text-align:center;color:#bbb;padding:20px;">불러오는 중...</p>';
+  try {
+    const res = await fetch('/api/schedule?role=teacher');
+    schDataTeacher = await res.json();
+    renderSchListT();
+  } catch(e) {
+    document.getElementById('schListTeacher').innerHTML = '<p style="text-align:center;color:#bbb;padding:20px;">일정을 불러올 수 없습니다.</p>';
+  }
+}
+
+window.schViewT = (v, btn) => {
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('schListTeacher').style.display = v==='list'?'block':'none';
+  document.getElementById('schCalTeacher').style.display = v==='cal'?'block':'none';
+  if(v==='cal') renderSchCalT();
+};
+
+window.schCalMoveT = (dir) => {
+  schCalMTeacher+=dir;
+  if(schCalMTeacher<0){schCalMTeacher=11;schCalYTeacher--;}
+  if(schCalMTeacher>11){schCalMTeacher=0;schCalYTeacher++;}
+  schSelDateTeacher=null;
+  document.getElementById('schSelTeacher').innerHTML='';
+  renderSchCalT();
+};
+
+window.schSelectDayT = (y,m,d) => {
+  schSelDateTeacher={y,m,d};
+  renderSchCalT();
+  const sel=new Date(y,m,d);sel.setHours(0,0,0,0);
+  const evs=schDataTeacher.filter(s=>{
+    const s1=new Date(s.date.start);s1.setHours(0,0,0,0);
+    const s2=s.date.end?new Date(s.date.end):new Date(s1);s2.setHours(0,0,0,0);
+    return sel>=s1&&sel<=s2;
+  });
+  if(!evs.length){document.getElementById('schSelTeacher').innerHTML='';return;}
+  document.getElementById('schSelTeacher').innerHTML=`<div class="sel-events"><h4>${m+1}월 ${d}일 일정</h4>${evs.map(e=>`<div class="sel-ev-row">📌 ${e.title}</div>`).join('')}</div>`;
+};
+
+function renderSchListT() {
+  const el=document.getElementById('schListTeacher');
+  if(!schDataTeacher.length){el.innerHTML='<p style="text-align:center;color:#bbb;padding:20px;">일정이 없습니다.</p>';return;}
+  const groups={};
+  schDataTeacher.forEach(s=>{const d=new Date(s.date.start);const k=`${d.getFullYear()}년 ${d.getMonth()+1}월`;if(!groups[k])groups[k]=[];groups[k].push(s);});
+  let html='';
+  Object.entries(groups).forEach(([m,its])=>{
+    html+=`<div style="font-size:12px;font-weight:700;color:#1e2a6d;margin:12px 0 6px;padding-left:2px">${m}</div>`;
+    its.forEach(s=>{
+      const d=new Date(s.date.start);
+      const endD=s.date.end&&s.date.end!==s.date.start?new Date(s.date.end):null;
+      html+=`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f5f5f5">
+        <span style="min-width:42px;font-size:12px;font-weight:700;color:#1e2a6d">${d.getMonth()+1}/${d.getDate()}${endD?'~'+endD.getDate():''}일</span>
+        <span style="font-size:13px;color:#222">${s.title}</span>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+function renderSchCalT() {
+  const y=schCalYTeacher,m=schCalMTeacher;
+  document.getElementById('schCalTitleTeacher').textContent=`${y}년 ${m+1}월`;
+  const evMap={};
+  schDataTeacher.forEach(s=>{
+    const s1=new Date(s.date.start),s2=s.date.end?new Date(s.date.end):new Date(s1);
+    for(let d=new Date(s1);d<=s2;d.setDate(d.getDate()+1)){
+      const k=`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+      if(!evMap[k])evMap[k]=[];evMap[k].push(s);
+    }
+  });
+  const fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate(),dp=new Date(y,m,0).getDate();
+  let html='';
+  for(let i=fd-1;i>=0;i--) html+=`<div class="sch-day other"><div class="dn">${dp-i}</div></div>`;
+  for(let d=1;d<=dim;d++){
+    const isT=schTodayT.getFullYear()===y&&schTodayT.getMonth()===m&&schTodayT.getDate()===d;
+    const isS=schSelDateTeacher?.y===y&&schSelDateTeacher?.m===m&&schSelDateTeacher?.d===d;
+    const k=`${y}-${m}-${d}`;const evs=evMap[k]||[];
+    const dots=evs.slice(0,2).map(e=>`<div class="sdot">${e.title}</div>`).join('');
+    html+=`<div class="sch-day${isT?' today':''}${isS?' sel':''}" onclick="schSelectDayT(${y},${m},${d})"><div class="dn">${d}</div>${dots}</div>`;
+  }
+  const rem=(fd+dim)%7;if(rem)for(let d=1;d<=7-rem;d++) html+=`<div class="sch-day other"><div class="dn">${d}</div></div>`;
+  document.getElementById('schCalBodyTeacher').innerHTML=html;
+}
+
+window.submitGrade = async () => {
+  const studentId = document.getElementById('gradeStudent').value;
+  if (!studentId) return alert('학생을 선택해주세요.');
+  const date = document.getElementById('gradeDate').value;
+  await addDoc(collection(db, 'grades'), {
+    studentId,
+    subject: document.getElementById('gradeSubject').value,
+    grade: document.getElementById('gradeValue').value,
+    testName: document.getElementById('gradeTestName').value,
+    date: Timestamp.fromDate(new Date(date)),
+    note: document.getElementById('gradeNote').value,
+    teacherId: currentTeacher.uid,
+    teacherName: currentTeacher.name
+  });
+  showSuccess('gradeSuccess');
+};
+
+window.submitAttendance = async () => {
+  const studentId = document.getElementById('attStudent').value;
+  if (!studentId) return alert('학생을 선택해주세요.');
+  const date = document.getElementById('attDate').value;
+  await addDoc(collection(db, 'attendance'), {
+    studentId,
+    subject: document.getElementById('attSubject').value,
+    status: document.getElementById('attStatus').value,
+    date: Timestamp.fromDate(new Date(date)),
+    note: document.getElementById('attNote').value,
+    teacherId: currentTeacher.uid
+  });
+  showSuccess('attSuccess');
+};
+
+window.submitAttitude = async () => {
+  const studentId = document.getElementById('atiStudent').value;
+  if (!studentId) return alert('학생을 선택해주세요.');
+  const date = document.getElementById('atiDate').value;
+  await addDoc(collection(db, 'attitude'), {
+    studentId,
+    subject: document.getElementById('atiSubject').value,
+    grade: document.getElementById('atiGrade').value,
+    date: Timestamp.fromDate(new Date(date)),
+    note: document.getElementById('atiNote').value,
+    teacherId: currentTeacher.uid
+  });
+  showSuccess('atiSuccess');
+};
+
+window.submitPost = async () => {
+  const title = document.getElementById('postTitle').value;
+  if (!title) return alert('제목을 입력해주세요.');
+  await addDoc(collection(db, 'posts'), {
+    title,
+    content: document.getElementById('postContent').value,
+    target: document.getElementById('postTarget').value,
+    isNotice: document.getElementById('postIsNotice').value === 'true',
+    authorId: currentTeacher.uid,
+    authorName: currentTeacher.name,
+    createdAt: Timestamp.now()
+  });
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postContent').value = '';
+  showSuccess('postSuccess');
+};
+
+async function loadHistory() {
+  const q = query(collection(db, 'grades'), orderBy('date','desc'));
+  const snap = await getDocs(q);
+  const rows = [];
+  snap.forEach(d => {
+    const g = d.data();
+    const student = students.find(s => s.id === g.studentId);
+    const date = g.date?.toDate?.()?.toLocaleDateString('ko-KR') || '-';
+    const badge = `<span class="grade-badge grade-${g.grade}">${g.grade}</span>`;
+    rows.push(`<tr><td>${student?.name||'-'}</td><td>${g.subject==='math'?'수학':'영어'}</td><td>${g.testName||'-'}</td><td>${badge}</td><td>${date}</td></tr>`);
+  });
+  document.getElementById('historyList').innerHTML = rows.length ? rows.join('') : '<tr><td colspan="5" style="text-align:center;color:#bbb;padding:20px;">데이터 없음</td></tr>';
+}
+
+function showSuccess(id) {
+  const el = document.getElementById(id);
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+}
+</script>
+<footer style="background:#1e2a6d;padding:28px 20px;text-align:center;margin-top:40px;">
+  <img src="assets/images/logo/grip-icon.png" style="height:40px;width:40px;object-fit:contain;mix-blend-mode:screen;margin-bottom:10px;display:block;margin-left:auto;margin-right:auto;">
+  <p style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:6px;">서울특별시 서대문구 가재울</p>
+  <p style="margin-bottom:8px;"><a href="tel:02-3152-5678" style="color:#fff;font-size:14px;font-weight:700;text-decoration:none;">02-3152-5678</a></p>
+  <p style="font-size:11px;color:rgba(255,255,255,0.5);">© 2025 매쓰그립 수학학원 · 잉그립 영어학원. All rights reserved.</p>
+</footer>
+</body>
+</html>
