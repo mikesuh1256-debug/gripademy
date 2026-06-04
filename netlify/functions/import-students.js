@@ -66,13 +66,15 @@ exports.handler = async (event) => {
       };
       const pick = (...keys) => { for (const k of keys) { const v = get(k); if (v !== '') return v; } return ''; };
 
-      // 과목: 수학 등록 / 영어 등록 체크박스
+      // 과목: 수학 등록 / 영어 등록 / 논술 등록 체크박스
       const isEng  = p['영어 등록']?.checkbox === true;
       const isMath = p['수학 등록']?.checkbox === true;
-      let course = '';
-      if (isEng && isMath) course = 'both';
-      else if (isEng)      course = 'english';
-      else if (isMath)     course = 'math';
+      const isDisc = p['논술 등록']?.checkbox === true;
+      const courses = [];
+      if (isMath) courses.push('math');
+      if (isEng)  courses.push('english');
+      if (isDisc) courses.push('논술');
+      const course = courses[0] || '';
 
       // 보호자 연락처 쉼표 분리 → phone1 / phone2
       const rawPhone = get('보호자 연락처');
@@ -87,6 +89,7 @@ exports.handler = async (event) => {
         _grade:           pick('학년', '학년(한글수식)', 'Grade'),
         _school:          pick('학교', '학교명', 'School'),
         _course:          course,
+        _courses:         courses,
         _phone:           phone1,
         _phone2:          phone2,
         _studentPhone:    get('학생 연락처'),
