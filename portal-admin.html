@@ -140,13 +140,15 @@ tbody tr:hover td{background:#f0f3ff;}
 /* ── 반 관리 ── */
 .class-create-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:6px;}
 @media(max-width:768px){.class-create-wrap{grid-template-columns:1fr;}}
-.tb-form-grid{display:grid;grid-template-columns:2fr 1fr 80px 80px 120px auto;gap:8px;align-items:end;margin-bottom:8px;}
-@media(max-width:768px){.tb-form-grid{grid-template-columns:1fr 1fr;}.tb-form-grid .form-group:last-child{grid-column:1/-1;}}
+.tb-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+.tb-form-grid .tb-full{grid-column:1/-1;}
 .class-section{border-radius:14px;padding:24px;}
 .class-section-math{border:2.5px solid #1e2a6d;background:#fafbff;}
 .class-section-eng{border:2.5px solid #00391e;background:#f6fffb;}
 .class-section-header{font-size:18px;font-weight:800;color:#fff;display:inline-block;padding:8px 18px;border-radius:8px;margin-bottom:18px;}
 .class-cat-btn{padding:8px 16px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:2px solid #e5e7eb;background:#fff;color:#6b7280;font-family:inherit;transition:all .15s;}
+.class-field-wrap{max-width:66%;}
+@media(min-width:769px){.class-field-wrap{max-width:100%;}}
 .class-cat-btn.active-all{background:#374151;color:#fff;border-color:#374151;}
 .class-cat-btn.math-btn{border-color:#1e2a6d;color:#1e2a6d;}
 .class-cat-btn.math-btn.active{background:#1e2a6d;color:#fff;}
@@ -156,7 +158,7 @@ tbody tr:hover td{background:#f0f3ff;}
 .cat-math{background:#1e2a6d;color:#fff;}
 .cat-eng{background:#00391e;color:#fff;}
 /* 반목록 테이블 래퍼 */
-.class-table-wrap{border:2px solid #e2e6f0;border-radius:14px;overflow:hidden;}
+.class-table-wrap{overflow-x:auto;}
 /* 캘린더 (전체일정) */
 .sch-toggle{display:flex;gap:8px;margin-bottom:18px;}
 .sch-toggle button{padding:9px 22px;border:2px solid #e5e7eb;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;background:#fff;color:#6b7280;font-family:inherit;transition:all .15s;}
@@ -387,7 +389,7 @@ tbody tr:hover td{background:#f0f3ff;}
           <!-- 수학반 -->
           <div class="class-section class-section-math">
             <div class="class-section-header" style="background:#1e2a6d;">📐 수학반 만들기</div>
-            <div class="form-group" style="margin-bottom:10px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>반구분</label>
               <select id="cCatMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
                 <option value="math_elem">초등수학</option>
@@ -399,23 +401,21 @@ tbody tr:hover td{background:#f0f3ff;}
               <label>반명 *</label>
               <input type="text" id="cNameMath" placeholder="예: 화목중등A반, 월수금초등B반">
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
-              <div class="form-group">
-                <label>요일</label>
-                <select id="cDaysMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
-                  <option value="월수금">월수금</option>
-                  <option value="화목">화목</option>
-                  <option value="월화수목금">월~금</option>
-                  <option value="토">토</option>
-                  <option value="금토">금토</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>시간</label>
-                <input type="text" id="cTimeMath" placeholder="예: 15:00~17:00">
-              </div>
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+              <label>요일</label>
+              <select id="cDaysMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="월수금">월수금</option>
+                <option value="화목">화목</option>
+                <option value="월화수목금">월~금</option>
+                <option value="토">토</option>
+                <option value="금토">금토</option>
+              </select>
             </div>
             <div class="form-group" style="margin-bottom:10px;">
+              <label>시간</label>
+              <input type="text" id="cTimeMath" placeholder="예: 15:00~17:00">
+            </div>
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>담임 선생님</label>
               <select id="cTeacherMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
                 <option value="">-- 담임 선택 --</option>
@@ -426,7 +426,7 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option>권유경T</option>
               </select>
             </div>
-            <div class="form-group" style="margin-bottom:14px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:14px;">
               <label>강의실</label>
               <select id="cRoomMath" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
                 <option value="">-- 강의실 선택 --</option>
@@ -451,7 +451,7 @@ tbody tr:hover td{background:#f0f3ff;}
           <!-- 영어반 -->
           <div class="class-section class-section-eng">
             <div class="class-section-header" style="background:#00391e;">📖 영어반 만들기</div>
-            <div class="form-group" style="margin-bottom:10px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>반구분</label>
               <select id="cCatEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
                 <option value="english_elem">초등영어</option>
@@ -463,23 +463,21 @@ tbody tr:hover td{background:#f0f3ff;}
               <label>반명 *</label>
               <input type="text" id="cNameEng" placeholder="예: Reach2, Touch1, Run_B">
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
-              <div class="form-group">
-                <label>요일</label>
-                <select id="cDaysEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
-                  <option value="월수금">월수금</option>
-                  <option value="화목">화목</option>
-                  <option value="월화수목금">월~금</option>
-                  <option value="토">토</option>
-                  <option value="금토">금토</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>시간</label>
-                <input type="text" id="cTimeEng" placeholder="예: 15:00~17:00">
-              </div>
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+              <label>요일</label>
+              <select id="cDaysEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+                <option value="월수금">월수금</option>
+                <option value="화목">화목</option>
+                <option value="월화수목금">월~금</option>
+                <option value="토">토</option>
+                <option value="금토">금토</option>
+              </select>
             </div>
             <div class="form-group" style="margin-bottom:10px;">
+              <label>시간</label>
+              <input type="text" id="cTimeEng" placeholder="예: 15:00~17:00">
+            </div>
+            <div class="form-group class-field-wrap" style="margin-bottom:10px;">
               <label>담임 선생님</label>
               <select id="cTeacherEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
                 <option value="">-- 담임 선택 --</option>
@@ -488,7 +486,7 @@ tbody tr:hover td{background:#f0f3ff;}
                 <option>Jay</option>
               </select>
             </div>
-            <div class="form-group" style="margin-bottom:14px;">
+            <div class="form-group class-field-wrap" style="margin-bottom:14px;">
               <label>강의실</label>
               <select id="cRoomEng" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
                 <option value="">-- 강의실 선택 --</option>
@@ -564,12 +562,12 @@ tbody tr:hover td{background:#f0f3ff;}
       <!-- ③ 학생 배정 -->
       <div class="card">
         <h2>👤 반에 학생 배정</h2>
-        <div class="form-row">
-          <div class="form-group">
+        <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:12px;">
+          <div class="form-group" style="flex:0 0 auto;width:200px;">
             <label>반 선택</label>
             <select id="assignClass"></select>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="flex:0 0 auto;width:160px;">
             <label>학생 선택</label>
             <select id="assignStudent"></select>
           </div>
@@ -642,6 +640,14 @@ tbody tr:hover td{background:#f0f3ff;}
         <h2>📦 교재 입고</h2>
         <div class="tb-form-grid">
           <div class="form-group">
+            <label>과목</label>
+            <select id="tbSubject">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+              <option value="common">공용</option>
+            </select>
+          </div>
+          <div class="form-group tb-full">
             <label>교재명 *</label>
             <input type="text" id="tbName" placeholder="예: 그래머존 Level 1">
           </div>
@@ -656,14 +662,6 @@ tbody tr:hover td{background:#f0f3ff;}
           <div class="form-group">
             <label>단가(원)</label>
             <input type="number" id="tbPrice" min="0" value="0" style="text-align:center;">
-          </div>
-          <div class="form-group">
-            <label>과목</label>
-            <select id="tbSubject">
-              <option value="math">수학</option>
-              <option value="english">영어</option>
-              <option value="common">공용</option>
-            </select>
           </div>
           <div class="form-group">
             <label>&nbsp;</label>
@@ -688,8 +686,8 @@ tbody tr:hover td{background:#f0f3ff;}
       <!-- 반별 교재 배정 -->
       <div class="card">
         <h2>📋 반별 교재 배정</h2>
-        <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;">
-          <div class="form-group" style="flex:1;">
+        <div style="margin-bottom:16px;">
+          <div class="form-group" style="max-width:240px;">
             <label>반 선택</label>
             <select id="tbClassSel" onchange="loadTextbookClassStudents()" style="padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;"></select>
           </div>
