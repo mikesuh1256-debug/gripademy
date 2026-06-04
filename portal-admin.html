@@ -2658,31 +2658,39 @@ window.submitPost = async () => {
   const title = document.getElementById('postTitle').value.trim();
   if (!title) return alert('제목을 입력하세요.');
   const btn = document.querySelector('#tab-board .submit-btn');
-  btn.disabled = true; btn.textContent = '업로드 중...';
+  btn.disabled = true; btn.textContent = '저장 중...';
 
-  const imageURLs = [];
-  for (const file of postImageFiles) {
-    const r = ref(storage, `posts/${Date.now()}_${file.name}`);
-    await uploadBytes(r, file);
-    imageURLs.push(await getDownloadURL(r));
+  try {
+    const imageURLs = [];
+    for (let i = 0; i < postImageFiles.length; i++) {
+      const file = postImageFiles[i];
+      btn.textContent = `이미지 업로드 ${i+1}/${postImageFiles.length}...`;
+      const r = ref(storage, `posts/${Date.now()}_${file.name}`);
+      await uploadBytes(r, file);
+      imageURLs.push(await getDownloadURL(r));
+    }
+
+    btn.textContent = '게시물 저장 중...';
+    await addDoc(collection(db, 'posts'), {
+      title,
+      content: document.getElementById('postContent').value,
+      category: document.getElementById('postCat').value,
+      isPinned: document.getElementById('postPinned').checked,
+      imageURLs,
+      views: 0,
+      createdAt: new Date()
+    });
+
+    resetPostForm();
+    const s = document.getElementById('postSuccess');
+    s.style.display = 'block';
+    setTimeout(() => s.style.display = 'none', 3000);
+    await loadAdminPosts();
+  } catch (err) {
+    alert('오류: ' + err.message + '\n\nFirebase Storage 규칙을 확인하세요.');
+  } finally {
+    btn.disabled = false; btn.textContent = '게시하기';
   }
-
-  await addDoc(collection(db, 'posts'), {
-    title,
-    content: document.getElementById('postContent').value,
-    category: document.getElementById('postCat').value,
-    isPinned: document.getElementById('postPinned').checked,
-    imageURLs,
-    views: 0,
-    createdAt: new Date()
-  });
-
-  btn.disabled = false; btn.textContent = '게시하기';
-  resetPostForm();
-  const s = document.getElementById('postSuccess');
-  s.style.display = 'block';
-  setTimeout(() => s.style.display = 'none', 3000);
-  await loadAdminPosts();
 };
 
 window.resetPostForm = () => {
