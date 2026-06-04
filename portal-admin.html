@@ -748,24 +748,18 @@ window.importAllStudents = async () => {
 
     const studentData = {
       name,
-      // 기본 정보
-      grade:          s._grade  || pick('학년','학년(한글수식)','Grade'),
-      school:         s._school || pick('학교','학교명'),
-      course:         s._course || '',
-      // 개인 정보
-      birthday:       pick('생년월일','생일','Birthday'),
-      gender:         pick('성별','Gender'),
-      address:        pick('주소','집주소','Address'),
-      studentPhone:   pick('학생연락처','학생전화','본인연락처','학생번호'),
-      // 학부모 1
-      phone:          s._phone || pick('연락처','전화번호','핸드폰','학부모연락처','보호자연락처'),
-      parentRelation1: pick('관계','보호자관계','학부모관계','관계1'),
-      // 학부모 2
-      phone2:          pick('연락처2','학부모2연락처','보호자2연락처','핸드폰2','연락처 2'),
-      parentRelation2: pick('관계2','보호자2관계','학부모2관계'),
-      // 메모
-      memo:            pick('메모','비고','특이사항','Memo'),
-      // 상태
+      grade:           s._grade          || '',
+      school:          s._school         || '',
+      course:          s._course         || '',
+      phone:           s._phone          || '',
+      phone2:          s._phone2         || '',
+      studentPhone:    s._studentPhone   || '',
+      birthday:        s._birthday       || '',
+      gender:          s._gender         || '',
+      address:         s._address        || '',
+      parentRelation1: s._parentRelation1|| '',
+      parentRelation2: s._parentRelation2|| '',
+      memo:            s._memo           || '',
       status: '재원',
       notionId: s.notionId,
     };
