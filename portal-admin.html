@@ -55,8 +55,14 @@ tr:last-child td{border-bottom:none;}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;}
 .modal-box{background:#fff;border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
 .modal-header{padding:20px 24px 0;display:flex;align-items:flex-start;gap:16px;}
-.modal-photo{width:80px;height:80px;border-radius:50%;object-fit:cover;background:#e8eaf6;flex-shrink:0;border:3px solid #e8eaf6;cursor:pointer;}
-.modal-photo-placeholder{width:80px;height:80px;border-radius:50%;background:#e8eaf6;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;cursor:pointer;border:3px dashed #c5cae9;}
+.modal-photo{width:100px;height:130px;border-radius:10px;object-fit:cover;background:#e8eaf6;flex-shrink:0;border:2px solid #e0e0e0;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+.modal-photo-placeholder{width:100px;height:130px;border-radius:10px;background:#e8eaf6;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;cursor:pointer;border:2px dashed #c5cae9;}
+/* 크롭 모달 */
+#cropModal{position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:10000;display:none;align-items:center;justify-content:center;}
+.crop-box{background:#fff;border-radius:18px;padding:22px;width:340px;max-width:95vw;}
+.crop-viewport{width:300px;height:300px;overflow:hidden;border-radius:10px;position:relative;margin:0 auto 14px;background:#111;cursor:grab;touch-action:none;}
+.crop-viewport:active{cursor:grabbing;}
+#cropCanvas{display:block;}
 .modal-title{flex:1;}
 .modal-title h2{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
 .modal-title p{font-size:13px;color:#999;}
@@ -604,6 +610,29 @@ tr:last-child td{border-bottom:none;}
         <h2>📅 전체 학사일정 (원장님 전용)</h2>
         <div id="scheduleListAdmin"><p style="text-align:center;color:#bbb;padding:20px;">불러오는 중...</p></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- 사진 크롭 모달 -->
+<div id="cropModal">
+  <div class="crop-box">
+    <h3 style="font-size:15px;font-weight:700;color:#1e2a6d;margin-bottom:14px;">사진 편집</h3>
+    <div class="crop-viewport" id="cropViewport">
+      <canvas id="cropCanvas"></canvas>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:12px;color:#999;white-space:nowrap;">확대/축소</span>
+        <input type="range" id="zoomSlider" min="1" max="5" step="0.05" value="1"
+          oninput="cropZoom(this.value)"
+          style="flex:1;accent-color:#1e2a6d;">
+      </div>
+      <p style="font-size:11px;color:#bbb;margin-top:6px;text-align:center;">드래그로 위치 조정</p>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button onclick="confirmCrop()" style="flex:1;padding:11px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">자르기 & 저장</button>
+      <button onclick="cancelCrop()" style="padding:11px 18px;background:#f0f0f0;color:#666;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">취소</button>
     </div>
   </div>
 </div>
@@ -1185,7 +1214,13 @@ window.switchModalTab = (tab, btn) => {
   btn.classList.add('active');
 };
 
-window.triggerPhotoUpload = (id) => document.getElementById('photoFile').click();
+window.triggerPhotoUpload = (id) => {
+  cropState.studentId = id;
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'image/*';
+  input.onchange = e => { if (e.target.files[0]) openCropModal(e.target.files[0], id); };
+  input.click();
+};
 
 window.toggleCourseLabel = (lbl, onClass) => {
   setTimeout(() => {
@@ -1195,18 +1230,94 @@ window.toggleCourseLabel = (lbl, onClass) => {
   }, 0);
 };
 
-window.uploadStudentPhoto = async (id) => {
-  const file = document.getElementById('photoFile').files[0];
-  if (!file) return;
-  const storageRef = ref(storage, `students/${id}/photo`);
-  await uploadBytes(storageRef, file);
-  const url = await getDownloadURL(storageRef);
-  await updateDoc(doc(db, 'students', id), { photoURL: url });
-  const idx = studentList.findIndex(s => s.id === id);
-  if (idx >= 0) studentList[idx].photoURL = url;
-  document.getElementById('studentModal').remove();
-  openStudentDetail(id);
+// ── 크롭 ──────────────────────────────────────────────
+const cropState = { img:null, studentId:null, scale:1, ox:0, oy:0, SIZE:300, dragging:false, lx:0, ly:0 };
+
+function openCropModal(file, studentId) {
+  cropState.studentId = studentId;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      cropState.img = img;
+      const fit = Math.max(cropState.SIZE / img.width, cropState.SIZE / img.height);
+      cropState.scale = fit;
+      cropState.ox = (cropState.SIZE - img.width * fit) / 2;
+      cropState.oy = (cropState.SIZE - img.height * fit) / 2;
+      const sl = document.getElementById('zoomSlider');
+      sl.min = fit; sl.max = fit * 5; sl.step = fit * 0.05; sl.value = fit;
+      drawCropCanvas();
+      document.getElementById('cropModal').style.display = 'flex';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function drawCropCanvas() {
+  const canvas = document.getElementById('cropCanvas');
+  const { img, scale, ox, oy, SIZE } = cropState;
+  canvas.width = SIZE; canvas.height = SIZE;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#111'; ctx.fillRect(0, 0, SIZE, SIZE);
+  ctx.drawImage(img, ox, oy, img.width * scale, img.height * scale);
+}
+
+window.cropZoom = (val) => {
+  const prev = cropState.scale;
+  cropState.scale = parseFloat(val);
+  const ratio = cropState.scale / prev;
+  cropState.ox = cropState.SIZE/2 - (cropState.SIZE/2 - cropState.ox) * ratio;
+  cropState.oy = cropState.SIZE/2 - (cropState.SIZE/2 - cropState.oy) * ratio;
+  drawCropCanvas();
 };
+
+window.confirmCrop = () => {
+  document.getElementById('cropCanvas').toBlob(async blob => {
+    document.getElementById('cropModal').style.display = 'none';
+    const id = cropState.studentId;
+    const storageRef = ref(storage, `students/${id}/photo`);
+    await uploadBytes(storageRef, blob);
+    const url = await getDownloadURL(storageRef);
+    await updateDoc(doc(db, 'students', id), { photoURL: url });
+    const idx = studentList.findIndex(s => s.id === id);
+    if (idx >= 0) studentList[idx].photoURL = url;
+    document.getElementById('studentModal')?.remove();
+    openStudentDetail(id);
+  }, 'image/jpeg', 0.92);
+};
+
+window.cancelCrop = () => { document.getElementById('cropModal').style.display = 'none'; };
+
+// 드래그
+(function() {
+  let vp;
+  function getVp() { return vp || (vp = document.getElementById('cropViewport')); }
+  document.addEventListener('mousedown', e => {
+    if (!getVp().contains(e.target)) return;
+    cropState.dragging = true; cropState.lx = e.clientX; cropState.ly = e.clientY;
+  });
+  document.addEventListener('mousemove', e => {
+    if (!cropState.dragging) return;
+    cropState.ox += e.clientX - cropState.lx; cropState.oy += e.clientY - cropState.ly;
+    cropState.lx = e.clientX; cropState.ly = e.clientY;
+    drawCropCanvas();
+  });
+  document.addEventListener('mouseup', () => { cropState.dragging = false; });
+  document.addEventListener('touchstart', e => {
+    if (!getVp().contains(e.target)) return;
+    cropState.dragging = true;
+    cropState.lx = e.touches[0].clientX; cropState.ly = e.touches[0].clientY;
+  }, { passive:true });
+  document.addEventListener('touchmove', e => {
+    if (!cropState.dragging) return;
+    cropState.ox += e.touches[0].clientX - cropState.lx;
+    cropState.oy += e.touches[0].clientY - cropState.ly;
+    cropState.lx = e.touches[0].clientX; cropState.ly = e.touches[0].clientY;
+    drawCropCanvas();
+  }, { passive:true });
+  document.addEventListener('touchend', () => { cropState.dragging = false; });
+})();
 
 window.saveStudentInfo = async (id, isNew = false) => {
   const courses = [];
@@ -1769,14 +1880,35 @@ window.registerPending = async (classId) => {
   const btn = document.getElementById(`reg-btn-${classId}`);
   btn.disabled = true; btn.textContent = '저장 중...';
   const c = classList.find(x => x.id === classId);
+  const classSubject = c.subject; // 'math' | 'english'
+
+  // 반 studentIds 업데이트
   const newIds = [...new Set([...(c.studentIds||[]), ...pending])];
   await updateDoc(doc(db, 'classes', classId), { studentIds: newIds });
   const idx = classList.findIndex(x => x.id === classId);
   if (idx >= 0) classList[idx].studentIds = newIds;
+
+  // 추가된 학생들의 수강과목 자동 업데이트
+  for (const studentId of pending) {
+    const s = studentList.find(x => x.id === studentId);
+    if (!s) continue;
+    const courses = [...getCoursesArr(s)];
+    let changed = false;
+    if (classSubject === 'math' && !courses.includes('math')) {
+      courses.push('math'); changed = true;
+    } else if (classSubject === 'english' && !courses.includes('english')) {
+      courses.push('english'); changed = true;
+    }
+    if (changed) {
+      await updateDoc(doc(db, 'students', studentId), { courses, course: courses[0]||'' });
+      s.courses = courses;
+      s.course = courses[0] || '';
+    }
+  }
+
   pending.clear();
-  // 패널 새로고침
-  document.getElementById(`enrolled-pills-${classId}`).innerHTML =
-    enrolledPillsHtml(classId, CAT_IS_MATH(c.category||c.subject||'') ? '#1e2a6d' : '#00391e');
+  const accentColor = CAT_IS_MATH(c.category||c.subject||'') ? '#1e2a6d' : '#00391e';
+  document.getElementById(`enrolled-pills-${classId}`).innerHTML = enrolledPillsHtml(classId, accentColor);
   document.getElementById(`ec-${classId}`).textContent = newIds.length + '명';
   document.getElementById(`stu-results-${classId}`).innerHTML = '';
   document.getElementById(`stu-search-${classId}`).value = '';
