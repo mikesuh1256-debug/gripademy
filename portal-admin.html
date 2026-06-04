@@ -5,115 +5,135 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>그립학원 관리자 포털</title>
 <style>
+/* ── 기반 ── */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#f0f2f5;min-height:100vh;}
-.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
-.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;}
-.login-title{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
-.login-sub{font-size:13px;color:#aaa;margin-bottom:32px;}
-.login-box input{width:100%;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;margin-bottom:12px;outline:none;font-family:inherit;}
-.login-box input:focus{border-color:#1e2a6d;}
-.login-btn{width:100%;padding:14px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
-.login-btn:hover{background:#19b1c6;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;background:#f4f6fb;min-height:100vh;color:#1a1d23;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;}
 
+/* ── 로그인 ── */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#f4f6fb 0%,#e8edf8 100%);}
+.login-box{background:#fff;border-radius:16px;padding:44px 40px;width:100%;max-width:380px;box-shadow:0 4px 24px rgba(30,42,109,.1);text-align:center;}
+.login-title{font-size:22px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#9ca3af;margin-bottom:32px;}
+.login-box input{width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none;font-family:inherit;color:#1a1d23;transition:border-color .15s;}
+.login-box input:focus{border-color:#1e2a6d;box-shadow:0 0 0 3px rgba(30,42,109,.06);}
+.login-btn{width:100%;padding:13px;background:#1e2a6d;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;}
+.login-btn:hover{background:#263580;}
+
+/* ── 앱 ── */
 .app{display:none;min-height:100vh;}
-.header{background:#1e2a6d;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
-.header h1{color:#fff;font-size:16px;font-weight:700;}
-.logout-btn{background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;}
+.header{background:#fff;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:54px;border-bottom:1px solid #e9ecef;position:sticky;top:0;z-index:200;}
+.header h1{color:#1e2a6d;font-size:14px;font-weight:800;display:flex;align-items:center;gap:8px;letter-spacing:-.01em;}
+.logout-btn{background:#f4f6fb;color:#6b7280;border:none;padding:7px 15px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;transition:all .15s;}
+.logout-btn:hover{background:#e9ecef;color:#374151;}
 
-.body{max-width:1000px;margin:0 auto;padding:24px 16px;}
-.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
-.tab{padding:8px 20px;border-radius:20px;border:1.5px solid #e0e0e0;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#999;font-family:inherit;}
-.tab.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+/* ── 바디 ── */
+.body{max-width:1080px;margin:0 auto;padding:22px 20px;}
 
-.card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
-.card h2{font-size:15px;font-weight:700;color:#333;margin-bottom:20px;}
+/* ── 탭 ── */
+.tabs{display:flex;gap:1px;margin-bottom:22px;background:#e9ecef;border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap;}
+.tab{padding:7px 16px;border-radius:7px;border:none;background:transparent;font-size:13px;font-weight:600;cursor:pointer;color:#9ca3af;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.tab.active{background:#fff;color:#1e2a6d;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.tab:hover:not(.active){color:#374151;}
+
+/* ── 카드 ── */
+.card{background:#fff;border-radius:12px;padding:22px 24px;margin-bottom:14px;border:1px solid #e9ecef;}
+.card h2{font-size:14px;font-weight:700;color:#1a1d23;margin-bottom:18px;}
+
+/* ── 폼 ── */
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
-.form-group{display:flex;flex-direction:column;gap:6px;}
-.form-group label{font-size:12px;font-weight:600;color:#666;}
-.form-group select,.form-group input{padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;}
-.form-group select:focus,.form-group input:focus{border-color:#1e2a6d;}
-.submit-btn{padding:11px 24px;background:#1e2a6d;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
-.submit-btn:hover{background:#19b1c6;}
-.success-msg{color:#2e7d32;font-size:13px;margin-top:8px;display:none;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-group label{font-size:12px;font-weight:600;color:#6b7280;}
+.form-group select,.form-group input{padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;font-family:inherit;outline:none;color:#1a1d23;background:#fff;transition:border-color .15s;}
+.form-group select:focus,.form-group input:focus{border-color:#1e2a6d;box-shadow:0 0 0 3px rgba(30,42,109,.06);}
 
+/* ── 버튼 ── */
+.submit-btn{padding:0 18px;background:#1e2a6d;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;height:36px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
+.submit-btn:hover{background:#263580;}
+.submit-btn:disabled{opacity:.45;cursor:default;}
+.success-msg{color:#16a34a;font-size:12px;margin-top:8px;display:none;}
+
+/* ── 테이블 ── */
 table{width:100%;border-collapse:collapse;}
-th{padding:10px 14px;background:#f5f5f5;font-size:12px;color:#999;font-weight:600;text-align:left;}
-td{padding:12px 14px;font-size:14px;color:#333;border-bottom:1px solid #f5f5f5;}
+th{padding:9px 14px;background:#f8f9fc;font-size:11px;color:#9ca3af;font-weight:700;text-align:left;letter-spacing:.04em;border-bottom:1px solid #e9ecef;}
+td{padding:11px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f3f4f6;}
 tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:#f8f9fc;}
 
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
-.badge-math{background:#e3f2fd;color:#1565c0;}
-.badge-eng{background:#e8f5e9;color:#2e7d32;}
-.badge-both{background:#f3e5f5;color:#6a1b9a;}
-.del-btn{background:#ffebee;color:#c62828;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;}
+/* ── 배지·버튼 ── */
+.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+.badge-math{background:#eff6ff;color:#1d4ed8;}
+.badge-eng{background:#f0fdf4;color:#15803d;}
+.del-btn{background:transparent;color:#ef4444;border:1.5px solid #fecaca;padding:3px 9px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;transition:all .15s;height:28px;display:inline-flex;align-items:center;}
+.del-btn:hover{background:#fef2f2;}
 
-@media(max-width:600px){.form-row,.form-row-3{grid-template-columns:1fr;}}
+@media(max-width:600px){.form-row,.form-row-3{grid-template-columns:1fr;}.tabs{width:100%;}}
 
-/* 학생 상세 모달 */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;}
-.modal-box{background:#fff;border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;}
-.modal-header{padding:20px 24px 0;display:flex;align-items:flex-start;gap:16px;}
-.modal-photo{width:100px;height:130px;border-radius:10px;object-fit:cover;background:#e8eaf6;flex-shrink:0;border:2px solid #e0e0e0;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-.modal-photo-placeholder{width:100px;height:130px;border-radius:10px;background:#e8eaf6;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;cursor:pointer;border:2px dashed #c5cae9;}
-/* 크롭 모달 */
-#cropModal{position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:10000;display:none;align-items:center;justify-content:center;}
-.crop-box{background:#fff;border-radius:18px;padding:22px;width:340px;max-width:95vw;}
+/* ── 모달 ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.4);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
+.modal-box{background:#fff;border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.15);}
+.modal-header{padding:20px 24px 0;display:flex;align-items:flex-start;gap:14px;}
+.modal-photo{width:100px;height:130px;border-radius:10px;object-fit:cover;background:#f3f4f6;flex-shrink:0;border:1px solid #e5e7eb;cursor:pointer;}
+.modal-photo-placeholder{width:100px;height:130px;border-radius:10px;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:34px;flex-shrink:0;cursor:pointer;border:2px dashed #d1d5db;}
+#cropModal{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:10000;display:none;align-items:center;justify-content:center;}
+.crop-box{background:#fff;border-radius:16px;padding:22px;width:340px;max-width:95vw;}
 .crop-viewport{width:300px;height:300px;overflow:hidden;border-radius:10px;position:relative;margin:0 auto 14px;background:#111;cursor:grab;touch-action:none;}
 .crop-viewport:active{cursor:grabbing;}
 #cropCanvas{display:block;}
 .modal-title{flex:1;}
-.modal-title h2{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
-.modal-title p{font-size:13px;color:#999;}
-.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#bbb;padding:0;}
-.modal-tabs{display:flex;border-bottom:1.5px solid #f0f0f0;margin-top:16px;padding:0 24px;}
-.modal-tab{padding:10px 16px;font-size:14px;font-weight:600;color:#bbb;cursor:pointer;border-bottom:2.5px solid transparent;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;}
+.modal-title h2{font-size:17px;font-weight:800;color:#1a1d23;margin-bottom:3px;}
+.modal-title p{font-size:12px;color:#9ca3af;}
+.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:#9ca3af;padding:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:6px;transition:all .15s;}
+.modal-close:hover{background:#f3f4f6;color:#374151;}
+.modal-tabs{display:flex;border-bottom:1px solid #e9ecef;margin-top:16px;padding:0 24px;gap:0;}
+.modal-tab{padding:10px 16px;font-size:13px;font-weight:600;color:#9ca3af;cursor:pointer;border-bottom:2px solid transparent;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit;transition:all .15s;}
 .modal-tab.active{color:#1e2a6d;border-bottom-color:#1e2a6d;}
-.modal-body{padding:20px 24px 24px;}
+.modal-body{padding:18px 24px 24px;}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.info-item{background:#f8f9fa;border-radius:10px;padding:12px 14px;}
-.info-label{font-size:11px;color:#aaa;margin-bottom:4px;}
-.info-value{font-size:14px;font-weight:700;color:#222;}
-.info-edit input,.info-edit select{width:100%;padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;}
-.class-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8f9fa;border-radius:10px;margin-bottom:8px;}
-.payment-row{display:grid;grid-template-columns:72px 50px 1fr 80px 60px;gap:6px;align-items:center;padding:10px 0;border-bottom:1px solid #f5f5f5;font-size:13px;}
-.paid-badge{background:#e8f5e9;color:#2e7d32;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
-.unpaid-badge{background:#ffebee;color:#c62828;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.info-item{background:#f8f9fc;border-radius:8px;padding:12px 14px;}
+.info-label{font-size:10px;color:#9ca3af;margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;}
+.info-value{font-size:14px;font-weight:700;color:#1a1d23;}
+.info-edit input,.info-edit select{width:100%;padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;font-family:inherit;outline:none;transition:border-color .15s;}
+.info-edit input:focus,.info-edit select:focus{border-color:#1e2a6d;}
+.class-item{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8f9fc;border-radius:8px;margin-bottom:6px;border:1px solid #f0f2f8;}
+.payment-row{display:grid;grid-template-columns:72px 50px 1fr 80px 60px;gap:6px;align-items:center;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:13px;}
+.paid-badge{background:#f0fdf4;color:#15803d;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+.unpaid-badge{background:#fef2f2;color:#ef4444;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
 
-/* 수강과목 동그라미 */
-.course-dot{display:inline-flex;flex-direction:column;align-items:center;gap:3px;margin-right:6px;}
-.course-dot span{font-size:10px;font-weight:700;color:#999;}
-.course-dot .dot{width:18px;height:18px;border-radius:50%;border:2px solid #ddd;background:#f5f5f5;}
+/* ── 수강과목 ── */
+.course-dot{display:inline-flex;flex-direction:column;align-items:center;gap:3px;margin-right:4px;}
+.course-dot span{font-size:9px;font-weight:700;color:#9ca3af;}
+.course-dot .dot{width:15px;height:15px;border-radius:50%;border:1.5px solid #e5e7eb;background:#f3f4f6;}
 .course-dot .dot.on-math{background:#1e2a6d;border-color:#1e2a6d;}
 .course-dot .dot.on-english{background:#00391e;border-color:#00391e;}
 .course-dot .dot.on-discussion{background:#ec6619;border-color:#ec6619;}
-/* 수강 체크버튼 (모달용) */
-.course-chk{display:flex;gap:8px;flex-wrap:wrap;}
-.course-chk label{display:flex;align-items:center;gap:6px;padding:7px 14px;border:2px solid #e0e0e0;border-radius:20px;cursor:pointer;font-size:13px;font-weight:600;color:#999;transition:all .15s;}
+.course-chk{display:flex;gap:6px;flex-wrap:wrap;}
+.course-chk label{display:flex;align-items:center;gap:5px;padding:6px 13px;border:1.5px solid #e5e7eb;border-radius:7px;cursor:pointer;font-size:12px;font-weight:700;color:#9ca3af;transition:all .15s;}
 .course-chk input[type=checkbox]{display:none;}
 .course-chk label.math-on{background:#1e2a6d;border-color:#1e2a6d;color:#fff;}
 .course-chk label.english-on{background:#00391e;border-color:#00391e;color:#fff;}
 .course-chk label.discussion-on{background:#ec6619;border-color:#ec6619;color:#fff;}
-/* 사진 미니 */
-.photo-mini{width:32px;height:32px;border-radius:50%;object-fit:cover;cursor:pointer;vertical-align:middle;margin-right:6px;border:2px solid #e8eaf6;}
-.photo-mini-placeholder{width:32px;height:32px;border-radius:50%;background:#e8eaf6;display:inline-flex;align-items:center;justify-content:center;font-size:14px;vertical-align:middle;margin-right:6px;cursor:pointer;}
-/* 반 관리 */
-.class-create-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:4px;}
+
+/* ── 사진 미니 (학생 목록) ── */
+.photo-mini{width:28px;height:36px;border-radius:5px;object-fit:cover;cursor:pointer;vertical-align:middle;margin-right:8px;border:1px solid #e5e7eb;}
+.photo-mini-placeholder{width:28px;height:36px;border-radius:5px;background:#f3f4f6;display:inline-flex;align-items:center;justify-content:center;font-size:12px;vertical-align:middle;margin-right:8px;border:1px solid #e5e7eb;}
+
+/* ── 반 관리 ── */
+.class-create-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:4px;}
 @media(max-width:640px){.class-create-wrap{grid-template-columns:1fr;}}
-.class-section{border-radius:14px;padding:18px;}
-.class-section-math{border:2px solid #1e2a6d;}
-.class-section-eng{border:2px solid #00391e;}
-.class-section-header{font-size:12px;font-weight:700;color:#fff;display:inline-block;padding:4px 12px;border-radius:6px;margin-bottom:14px;}
-.class-cat-btn{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#888;font-family:inherit;transition:all .15s;}
-.class-cat-btn.active-all{background:#555;color:#fff;border-color:#555;}
-.class-cat-btn.math-btn{border-color:#1e2a6d;color:#1e2a6d;}
-.class-cat-btn.math-btn.active{background:#1e2a6d;color:#fff;}
-.class-cat-btn.eng-btn{border-color:#00391e;color:#00391e;}
-.class-cat-btn.eng-btn.active{background:#00391e;color:#fff;}
-.cat-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
-.cat-math{background:#e3f2fd;color:#1565c0;}
-.cat-eng{background:#e8f5e9;color:#1b5e20;}
+.class-section{border-radius:10px;padding:16px;}
+.class-section-math{border:1.5px solid #c7d2fe;background:#fafbff;}
+.class-section-eng{border:1.5px solid #bbf7d0;background:#f9fffb;}
+.class-section-header{font-size:12px;font-weight:700;color:#fff;display:inline-block;padding:4px 12px;border-radius:6px;margin-bottom:12px;}
+.class-cat-btn{padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid #e5e7eb;background:#fff;color:#9ca3af;font-family:inherit;transition:all .15s;}
+.class-cat-btn.active-all{background:#374151;color:#fff;border-color:#374151;}
+.class-cat-btn.math-btn{border-color:#c7d2fe;color:#4338ca;}
+.class-cat-btn.math-btn.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+.class-cat-btn.eng-btn{border-color:#bbf7d0;color:#15803d;}
+.class-cat-btn.eng-btn.active{background:#00391e;color:#fff;border-color:#00391e;}
+.cat-badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+.cat-math{background:#eff6ff;color:#1d4ed8;}
+.cat-eng{background:#f0fdf4;color:#15803d;}
 </style>
 </head>
 <body>
@@ -132,7 +152,10 @@ tr:last-child td{border-bottom:none;}
 
 <div class="app" id="app">
   <div class="header">
-    <h1><img src="assets/images/logo/grip-icon.png" style="height:28px;width:28px;object-fit:contain;vertical-align:middle;margin-right:8px;mix-blend-mode:screen;">그립학원 관리자 포털</h1>
+    <h1>
+      <img src="assets/images/logo/grip-icon.png" style="height:26px;width:26px;object-fit:contain;" onerror="this.style.display='none'">
+      그립학원 <span style="font-weight:400;color:#9ca3af;margin-left:6px;font-size:13px;">관리자 포털</span>
+    </h1>
     <button class="logout-btn" onclick="doLogout()">로그아웃</button>
   </div>
 
@@ -215,15 +238,18 @@ tr:last-child td{border-bottom:none;}
 
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
-          <h2 style="margin:0;">👥 전체 학생 목록 <span id="studentCount" style="font-size:13px;color:#aaa;font-weight:400;"></span></h2>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <h2 style="margin:0;">전체 학생</h2>
+            <span id="studentCount" style="font-size:12px;color:#fff;background:#1e2a6d;padding:2px 9px;border-radius:20px;font-weight:700;"></span>
+          </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <input type="text" id="searchStudent" placeholder="이름 검색..." onkeyup="filterStudents()" style="padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;width:140px;">
-            <select id="filterGrade" onchange="filterStudents()" style="padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;">
+            <input type="text" id="searchStudent" placeholder="이름 검색..." onkeyup="filterStudents()" style="padding:7px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;outline:none;width:140px;color:#374151;">
+            <select id="filterGrade" onchange="filterStudents()" style="padding:7px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;outline:none;color:#374151;background:#fff;">
               <option value="">전체 학년</option>
               <option>초1</option><option>초2</option><option>초3</option><option>초4</option><option>초5</option><option>초6</option>
               <option>중1</option><option>중2</option><option>중3</option><option>고1</option>
             </select>
-            <select id="filterCourse" onchange="filterStudents()" style="padding:7px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;outline:none;">
+            <select id="filterCourse" onchange="filterStudents()" style="padding:7px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;outline:none;color:#374151;background:#fff;">
               <option value="">전체 과목</option>
               <option value="math">수학</option>
               <option value="english">영어</option>
@@ -987,15 +1013,15 @@ function studentRowHtml(s) {
 
 function groupHeaderHtml(label, count) {
   return `<tr>
-    <td colspan="6" style="padding:8px 14px;background:#e8eaf6;font-size:12px;font-weight:700;color:#1e2a6d;border-bottom:1px solid #d0d4e8;">
-      ${label} <span style="font-weight:400;color:#666;">(${count}명)</span>
+    <td colspan="6" style="padding:8px 16px;background:#f4f6fb;font-size:11px;font-weight:700;color:#374151;border-bottom:1px solid #e9ecef;letter-spacing:.03em;text-transform:uppercase;">
+      ${label} <span style="font-weight:500;color:#9ca3af;font-size:11px;">${count}명</span>
     </td>
   </tr>`;
 }
 
 function renderStudentTable(list) {
   const data = list || studentList;
-  document.getElementById('studentCount').textContent = `(${data.length}명)`;
+  document.getElementById('studentCount').textContent = `${data.length}명`;
 
   if (!data.length) {
     document.getElementById('studentList').innerHTML =
