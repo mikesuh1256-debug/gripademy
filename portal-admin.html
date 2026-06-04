@@ -481,6 +481,8 @@ tr:last-child td{border-bottom:none;}
         </div>
         <button class="submit-btn" onclick="assignStudentToClass()">배정</button>
         <p class="success-msg" id="assignSuccess">✅ 배정되었습니다!</p>
+        <button onclick="cleanAllClassStudentIds()" style="margin-top:16px;padding:8px 16px;background:#f5f5f5;border:1px solid #ddd;border-radius:8px;font-size:12px;color:#888;cursor:pointer;font-family:inherit;">🧹 잘못된 학생 ID 정리 (1회 실행)</button>
+        <p id="cleanStatus" style="font-size:12px;color:#2e7d32;margin-top:4px;display:none;"></p>
       </div>
 
     </div>
@@ -1616,11 +1618,17 @@ function sortClasses(arr) {
   });
 }
 
+// 실제 studentList에 존재하는 유효한 ID만 필터링
+function validStudentIds(ids) {
+  const validSet = new Set(studentList.map(s => s.id));
+  return (ids || []).filter(id => id && validSet.has(id));
+}
+
 function classRowView(c) {
   const cat = c.category || c.subject || '';
   const isMath = CAT_IS_MATH(cat);
   const label = CAT_LABEL[cat] || cat;
-  const cnt = (c.studentIds || []).length;
+  const cnt = validStudentIds(c.studentIds).length;
   const catBg = isMath ? '#1e2a6d' : '#00391e';
   return `<tr id="row-${c.id}">
     <td style="background:${catBg};color:#fff;font-size:13px;font-weight:700;padding:8px 10px;white-space:nowrap;">${label}</td>
@@ -1658,7 +1666,7 @@ function classRowEdit(c) {
     </td>
     <td><select id="e-teacher-${c.id}" ${inp('')}>${teacherSel}</select></td>
     <td><select id="e-room-${c.id}" ${inp('')}>${roomSel}</select></td>
-    <td style="text-align:center;font-weight:700;">${(c.studentIds||[]).length}</td>
+    <td style="text-align:center;font-weight:700;">${validStudentIds(c.studentIds).length}</td>
     <td style="white-space:nowrap;">
       <button class="submit-btn" style="padding:4px 10px;font-size:12px;margin-right:4px;" onclick="saveClassRow('${c.id}')">확인</button>
       <button class="del-btn" onclick="cancelClassRow('${c.id}')">취소</button>
@@ -1803,7 +1811,7 @@ window.toggleClassStudents = (classId) => {
 
 function enrolledPillsHtml(classId, accentColor) {
   const c = classList.find(x => x.id === classId);
-  const ids = c?.studentIds || [];
+  const ids = validStudentIds(c?.studentIds);
   if (!ids.length) return `<span style="font-size:12px;color:#bbb;">등록된 학생 없음</span>`;
   const enrolled = studentList.filter(s => ids.includes(s.id))
     .sort((a,b) => a.name.localeCompare(b.name,'ko'));
@@ -1819,7 +1827,7 @@ function renderClassDetailRow(classId) {
   if (!c) return;
   const isMath = CAT_IS_MATH(c.category || c.subject || '');
   const accentColor = isMath ? '#1e2a6d' : '#00391e';
-  const enrolledCount = (c.studentIds || []).length;
+  const enrolledCount = validStudentIds(c.studentIds).length;
 
   const detailHtml = `
     <tr id="detail-row-${classId}">
@@ -1958,8 +1966,9 @@ window.registerPending = async (classId) => {
   const c = classList.find(x => x.id === classId);
   const classSubject = c.subject; // 'math' | 'english'
 
-  // 반 studentIds 업데이트
-  const newIds = [...new Set([...(c.studentIds||[]), ...pending])];
+  // 반 studentIds 업데이트 (빈값·유효하지 않은 ID 제거)
+  const validSet = new Set(studentList.map(s => s.id));
+  const newIds = [...new Set([...(c.studentIds||[]), ...pending])].filter(id => id && validSet.has(id));
   await updateDoc(doc(db, 'classes', classId), { studentIds: newIds });
   const idx = classList.findIndex(x => x.id === classId);
   if (idx >= 0) classList[idx].studentIds = newIds;
@@ -1996,14 +2005,35 @@ window.registerPending = async (classId) => {
 // 등록된 학생 제외 (✕)
 window.removeEnrolled = async (classId, studentId) => {
   const c = classList.find(x => x.id === classId);
-  const newIds = (c.studentIds||[]).filter(i => i !== studentId);
+  const validSet = new Set(studentList.map(s => s.id));
+  const newIds = (c.studentIds||[]).filter(i => i && i !== studentId && validSet.has(i));
   await updateDoc(doc(db, 'classes', classId), { studentIds: newIds });
   const idx = classList.findIndex(x => x.id === classId);
   if (idx >= 0) classList[idx].studentIds = newIds;
   const accentColor = CAT_IS_MATH(c.category||c.subject||'') ? '#1e2a6d' : '#00391e';
   document.getElementById(`enrolled-pills-${classId}`).innerHTML = enrolledPillsHtml(classId, accentColor);
-  document.getElementById(`ec-${classId}`).textContent = newIds.length + '명';
+  document.getElementById(`ec-${classId}`).textContent = validStudentIds(newIds).length + '명';
   renderClassTable();
+};
+
+window.cleanAllClassStudentIds = async () => {
+  const statusEl = document.getElementById('cleanStatus');
+  statusEl.style.display = 'block';
+  statusEl.textContent = '정리 중...';
+  const validSet = new Set(studentList.map(s => s.id));
+  let fixed = 0;
+  for (const c of classList) {
+    const original = c.studentIds || [];
+    const cleaned = original.filter(id => id && validSet.has(id));
+    if (cleaned.length !== original.length) {
+      await updateDoc(doc(db, 'classes', c.id), { studentIds: cleaned });
+      const idx = classList.findIndex(x => x.id === c.id);
+      if (idx >= 0) classList[idx].studentIds = cleaned;
+      fixed++;
+    }
+  }
+  renderClassTable();
+  statusEl.textContent = fixed > 0 ? `✅ ${fixed}개 반 정리 완료` : '✅ 이미 깨끗합니다';
 };
 
 window.assignStudentToClass = async () => {
@@ -2012,7 +2042,8 @@ window.assignStudentToClass = async () => {
   if (!classId || !studentId) return;
   const classRef = doc(db, 'classes', classId);
   const classDoc = await getDoc(classRef);
-  const existing = classDoc.data().studentIds || [];
+  const validSet = new Set(studentList.map(s => s.id));
+  const existing = (classDoc.data().studentIds || []).filter(i => i && validSet.has(i));
   if (existing.includes(studentId)) return alert('이미 배정된 학생입니다.');
   await setDoc(classRef, { studentIds: [...existing, studentId] }, { merge: true });
   const el = document.getElementById('assignSuccess');
