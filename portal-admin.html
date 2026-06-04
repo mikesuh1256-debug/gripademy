@@ -117,6 +117,7 @@ tr:last-child td{border-bottom:none;}
     <div class="tabs">
       <button class="tab active" onclick="showTab('students')">👥 학생 관리</button>
       <button class="tab" onclick="showTab('classes')">🏫 반 관리</button>
+      <button class="tab" onclick="showTab('textbooks')">📚 교재 관리</button>
       <button class="tab" onclick="showTab('db')">🗄️ DB 가져오기</button>
       <button class="tab" onclick="showTab('users')">👤 계정 생성</button>
       <button class="tab" onclick="showTab('schedule')">📅 전체 일정</button>
@@ -305,6 +306,7 @@ tr:last-child td{border-bottom:none;}
                 <option>602호</option>
                 <option>603호</option>
                 <option>6층 그립룸</option>
+                <option>7층 그립룸</option>
                 <option>701호</option>
                 <option>702호</option>
                 <option>703호</option>
@@ -366,6 +368,7 @@ tr:last-child td{border-bottom:none;}
                 <option>602호</option>
                 <option>603호</option>
                 <option>6층 그립룸</option>
+                <option>7층 그립룸</option>
                 <option>701호</option>
                 <option>702호</option>
                 <option>703호</option>
@@ -386,7 +389,9 @@ tr:last-child td{border-bottom:none;}
       <!-- ② 반구분 필터 + 반목록 -->
       <div class="card">
         <h2>🏫 반 목록</h2>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;">
+
+        <!-- 1단계: 카테고리 -->
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
           <button class="class-cat-btn active-all" id="catBtn-all" onclick="filterClassCat('all',this)">전체</button>
           <button class="class-cat-btn math-btn" id="catBtn-math_elem" onclick="filterClassCat('math_elem',this)">초등수학</button>
           <button class="class-cat-btn math-btn" id="catBtn-math_mid" onclick="filterClassCat('math_mid',this)">중등수학</button>
@@ -395,11 +400,24 @@ tr:last-child td{border-bottom:none;}
           <button class="class-cat-btn eng-btn" id="catBtn-english_mid" onclick="filterClassCat('english_mid',this)">중등영어</button>
           <button class="class-cat-btn eng-btn" id="catBtn-english_high" onclick="filterClassCat('english_high',this)">고등영어</button>
         </div>
+
+        <!-- 2단계: 요일 서브메뉴 (카테고리 선택 시 표시) -->
+        <div id="dayFilterRow" style="display:none;flex-wrap:wrap;gap:6px;padding:8px 0 8px 12px;border-left:3px solid #e0e0e0;margin-bottom:8px;"></div>
+
+        <!-- 정렬 -->
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:14px;flex-wrap:wrap;">
+          <span style="font-size:11px;font-weight:700;color:#999;">정렬:</span>
+          <button class="class-cat-btn active-all" id="sortBtn-default" onclick="setClassSort('default',this)">기본순</button>
+          <button class="class-cat-btn" id="sortBtn-teacher" onclick="setClassSort('teacher',this)">담임별</button>
+          <button class="class-cat-btn" id="sortBtn-classroom" onclick="setClassSort('classroom',this)">강의실별</button>
+          <button class="class-cat-btn" id="sortBtn-name" onclick="setClassSort('name',this)">반이름순</button>
+        </div>
+
         <div style="overflow-x:auto;">
           <table>
             <thead>
               <tr>
-                <th>반 이름</th><th>구분</th><th>요일/시간</th><th>담임</th><th>강의실</th><th style="text-align:center;">인원</th><th>삭제</th>
+                <th style="min-width:80px;">구분</th><th>반 이름</th><th>요일/시간</th><th>담임</th><th>강의실</th><th style="text-align:center;">인원</th><th>관리</th>
               </tr>
             </thead>
             <tbody id="classList">
@@ -479,6 +497,74 @@ tr:last-child td{border-bottom:none;}
         </a>
       </div>
     <!-- 전체 일정 -->
+    <!-- 교재 관리 -->
+    <div id="tab-textbooks" style="display:none;">
+
+      <!-- 교재 입고 -->
+      <div class="card">
+        <h2>📦 교재 입고</h2>
+        <div style="display:grid;grid-template-columns:2fr 1fr 80px 80px 120px auto;gap:8px;align-items:end;margin-bottom:8px;">
+          <div class="form-group">
+            <label>교재명 *</label>
+            <input type="text" id="tbName" placeholder="예: 그래머존 Level 1">
+          </div>
+          <div class="form-group">
+            <label>출판사</label>
+            <input type="text" id="tbPublisher" placeholder="출판사">
+          </div>
+          <div class="form-group">
+            <label>수량</label>
+            <input type="number" id="tbQty" min="1" value="1" style="text-align:center;">
+          </div>
+          <div class="form-group">
+            <label>단가(원)</label>
+            <input type="number" id="tbPrice" min="0" value="0" style="text-align:center;">
+          </div>
+          <div class="form-group">
+            <label>과목</label>
+            <select id="tbSubject">
+              <option value="math">수학</option>
+              <option value="english">영어</option>
+              <option value="common">공용</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button class="submit-btn" onclick="addTextbook()">입고</button>
+          </div>
+        </div>
+        <p class="success-msg" id="tbSuccess">✅ 입고되었습니다!</p>
+        <div style="overflow-x:auto;margin-top:12px;">
+          <table>
+            <thead>
+              <tr>
+                <th>교재명</th><th>출판사</th><th>과목</th><th style="text-align:center;">재고</th><th style="text-align:right;">단가</th><th style="text-align:center;">입고추가</th><th>삭제</th>
+              </tr>
+            </thead>
+            <tbody id="textbookList">
+              <tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">교재 없음</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 반별 교재 배정 -->
+      <div class="card">
+        <h2>📋 반별 교재 배정</h2>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;">
+          <div class="form-group" style="flex:1;">
+            <label>반 선택</label>
+            <select id="tbClassSel" onchange="loadTextbookClassStudents()" style="padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;"></select>
+          </div>
+        </div>
+        <div id="tbStudentList">
+          <p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">반을 선택하세요</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 전체 일정 -->
     <div id="tab-schedule" style="display:none;">
       <div class="card">
         <h2>📅 전체 학사일정 (원장님 전용)</h2>
@@ -550,14 +636,15 @@ window.doLogin = async () => {
 window.doLogout = () => signOut(auth);
 
 window.showTab = (tab) => {
-  ['students','classes','db','users','schedule'].forEach(t => {
+  ['students','classes','textbooks','db','users','schedule'].forEach(t => {
     document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
   });
   document.querySelectorAll('.tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['students','classes','db','users','schedule'][i] === tab);
+    btn.classList.toggle('active', ['students','classes','textbooks','db','users','schedule'][i] === tab);
   });
   if (tab === 'schedule') loadScheduleAdmin();
   if (tab === 'classes') loadClasses();
+  if (tab === 'textbooks') loadTextbooks();
 };
 
 // ── 노션 학생 DB 가져오기 ──────────────────────────────
@@ -1129,20 +1216,55 @@ async function loadClasses() {
   if (sSel) sSel.innerHTML = studentList.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
 }
 
-const ROOMS = ['','601호','602호','603호','6층 그립룸','701호','702호','703호','704호','705호','706호','707호','708호'];
+const ROOMS = ['','601호','602호','603호','6층 그립룸','7층 그립룸','701호','702호','703호','704호','705호','706호','707호','708호'];
 const MATH_TEACHERS = ['','변선숙T','오미경T','안영균T','박진희T','권유경T'];
 const ENG_TEACHERS  = ['','Emma','Rita','Jay'];
 const DAYS_OPTS = ['월수금','화목','월화수목금','토','금토'];
 
+// 시간 문자열 → 분으로 변환 (정렬용)
+function parseTimeMin(t) {
+  if (!t) return 9999;
+  const m = t.match(/(\d+):(\d+)/);
+  return m ? parseInt(m[1])*60 + parseInt(m[2]) : 9999;
+}
+
+const CAT_ORDER = { math_elem:0, math_mid:1, math_high:2, english_elem:3, english_mid:4, english_high:5, math:6, english:7 };
+const DAY_ORDER = { '월수금':0, '화목':1, '월화수목금':2, '금토':3, '토':4 };
+
+function sortClasses(arr) {
+  return [...arr].sort((a, b) => {
+    if (currentSort === 'teacher') {
+      return (a.teacherName||'').localeCompare(b.teacherName||'', 'ko');
+    }
+    if (currentSort === 'classroom') {
+      return (a.classroom||'').localeCompare(b.classroom||'', 'ko');
+    }
+    if (currentSort === 'name') {
+      return (a.name||'').localeCompare(b.name||'', 'ko');
+    }
+    // 기본: 카테고리 → 요일 → 시간 → 이름
+    const catA = CAT_ORDER[a.category||a.subject] ?? 9;
+    const catB = CAT_ORDER[b.category||b.subject] ?? 9;
+    if (catA !== catB) return catA - catB;
+    const dayA = DAY_ORDER[a.days] ?? 9;
+    const dayB = DAY_ORDER[b.days] ?? 9;
+    if (dayA !== dayB) return dayA - dayB;
+    const timeA = parseTimeMin(a.time);
+    const timeB = parseTimeMin(b.time);
+    if (timeA !== timeB) return timeA - timeB;
+    return (a.name||'').localeCompare(b.name||'', 'ko');
+  });
+}
+
 function classRowView(c) {
   const cat = c.category || c.subject || '';
   const isMath = CAT_IS_MATH(cat);
-  const badgeCls = isMath ? 'cat-math' : 'cat-eng';
   const label = CAT_LABEL[cat] || cat;
   const cnt = (c.studentIds || []).length;
+  const catBg = isMath ? '#1e2a6d' : '#00391e';
   return `<tr id="row-${c.id}">
+    <td style="background:${catBg};color:#fff;font-size:13px;font-weight:700;padding:8px 10px;white-space:nowrap;">${label}</td>
     <td style="font-weight:700;">${c.name}</td>
-    <td><span class="cat-badge ${badgeCls}">${label}</span></td>
     <td style="font-size:13px;">${c.days||''} ${c.time||''}</td>
     <td style="font-size:13px;">${c.teacherName||'-'}</td>
     <td style="font-size:13px;color:#666;">${c.classroom||'-'}</td>
@@ -1161,15 +1283,15 @@ function classRowEdit(c) {
   const catOpts = isMath
     ? ['math_elem','math_mid','math_high']
     : ['english_elem','english_mid','english_high'];
-  const sel = (arr, val) => arr.map(v => `<option${v===val?' selected':''}>${v}</option>`).join('');
   const roomSel = ROOMS.map(r => `<option${r===c.classroom?' selected':''}>${r}</option>`).join('');
   const teacherSel = teachers.map(t => `<option${t===c.teacherName?' selected':''}>${t}</option>`).join('');
   const catSel = catOpts.map(v => `<option value="${v}"${v===cat?' selected':''}>${CAT_LABEL[v]}</option>`).join('');
   const daysSel = DAYS_OPTS.map(d => `<option${d===c.days?' selected':''}>${d}</option>`).join('');
   const inp = s => `style="padding:4px 6px;border:1.5px solid #1e2a6d;border-radius:6px;font-size:12px;font-family:inherit;outline:none;${s}"`;
+  const catBg = isMath ? '#1e2a6d' : '#00391e';
   return `<tr id="row-${c.id}" style="background:#f0f4ff;">
+    <td style="background:${catBg};"><select id="e-cat-${c.id}" ${inp('color:#333;')}>${catSel}</select></td>
     <td><input id="e-name-${c.id}" value="${c.name}" ${inp('width:100px;font-weight:700;')}></td>
-    <td><select id="e-cat-${c.id}" ${inp('')}>${catSel}</select></td>
     <td style="white-space:nowrap;">
       <select id="e-days-${c.id}" ${inp('width:68px;')}>${daysSel}</select>
       <input id="e-time-${c.id}" value="${c.time||''}" placeholder="시간" ${inp('width:80px;margin-left:4px;')}>
@@ -1184,11 +1306,30 @@ function classRowEdit(c) {
   </tr>`;
 }
 
+let currentDay = 'all';
+let currentSort = 'default';
+
+function renderDaySubMenu() {
+  const row = document.getElementById('dayFilterRow');
+  if (!row) return;
+  if (currentCat === 'all') { row.style.display = 'none'; return; }
+  const catFiltered = classList.filter(c => (c.category||c.subject) === currentCat);
+  const days = [...new Set(catFiltered.map(c => c.days).filter(Boolean))];
+  const isMath = CAT_IS_MATH(currentCat);
+  const activeColor = isMath ? '#1e2a6d' : '#00391e';
+  row.style.display = 'flex';
+  row.innerHTML = `
+    <button onclick="filterClassDay('all',this)" style="padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid ${activeColor};${currentDay==='all'?`background:${activeColor};color:#fff`:'background:#fff;color:'+activeColor};">전체</button>
+    ${days.map(d => `<button onclick="filterClassDay('${d}',this)" style="padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid ${activeColor};${currentDay===d?`background:${activeColor};color:#fff`:'background:#fff;color:'+activeColor};">${d}</button>`).join('')}`;
+}
+
 function renderClassTable() {
-  const filtered = currentCat === 'all'
+  let filtered = currentCat === 'all'
     ? classList
-    : classList.filter(c => (c.category || c.subject) === currentCat);
-  const rows = filtered.map(c => classRowView(c));
+    : classList.filter(c => (c.category||c.subject) === currentCat);
+  if (currentDay !== 'all') filtered = filtered.filter(c => c.days === currentDay);
+  const sorted = sortClasses(filtered);
+  const rows = sorted.map(c => classRowView(c));
   document.getElementById('classList').innerHTML = rows.length
     ? rows.join('')
     : `<tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">반 없음</td></tr>`;
@@ -1224,11 +1365,23 @@ window.saveClassRow = async (id) => {
 
 window.filterClassCat = (cat, btn) => {
   currentCat = cat;
-  document.querySelectorAll('.class-cat-btn').forEach(b => {
-    b.classList.remove('active', 'active-all');
-  });
-  if (cat === 'all') btn.classList.add('active-all');
-  else btn.classList.add('active');
+  currentDay = 'all';
+  document.querySelectorAll('.class-cat-btn').forEach(b => b.classList.remove('active','active-all'));
+  btn.classList.add(cat === 'all' ? 'active-all' : 'active');
+  renderDaySubMenu();
+  renderClassTable();
+};
+
+window.filterClassDay = (day, btn) => {
+  currentDay = day;
+  renderDaySubMenu();
+  renderClassTable();
+};
+
+window.setClassSort = (sort, btn) => {
+  currentSort = sort;
+  document.querySelectorAll('[id^="sortBtn-"]').forEach(b => b.classList.remove('active','active-all'));
+  btn.classList.add('active-all');
   renderClassTable();
 };
 
@@ -1279,6 +1432,158 @@ window.assignStudentToClass = async () => {
   const el = document.getElementById('assignSuccess');
   el.style.display = 'block';
   setTimeout(() => el.style.display = 'none', 3000);
+};
+
+// ── 교재 관리 ──────────────────────────────────────
+let textbookList_data = [];
+const SUBJ_LABEL = { math:'수학', english:'영어', common:'공용' };
+
+async function loadTextbooks() {
+  const snap = await getDocs(query(collection(db, 'textbooks'), orderBy('name')));
+  textbookList_data = [];
+  snap.forEach(d => textbookList_data.push({ id: d.id, ...d.data() }));
+  renderTextbookList();
+  // 반 드롭다운 채우기
+  const sel = document.getElementById('tbClassSel');
+  if (sel) sel.innerHTML = '<option value="">-- 반 선택 --</option>' +
+    classList.map(c => `<option value="${c.id}">${c.name} (${CAT_LABEL[c.category||c.subject]||''})</option>`).join('');
+}
+
+function renderTextbookList() {
+  const el = document.getElementById('textbookList');
+  if (!el) return;
+  if (!textbookList_data.length) {
+    el.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">교재 없음</td></tr>';
+    return;
+  }
+  el.innerHTML = textbookList_data.map(t => `
+    <tr>
+      <td style="font-weight:700;">${t.name}</td>
+      <td style="font-size:13px;color:#666;">${t.publisher||'-'}</td>
+      <td><span class="cat-badge ${t.subject==='math'?'cat-math':t.subject==='english'?'cat-eng':''}">
+        ${SUBJ_LABEL[t.subject]||t.subject||'-'}</span></td>
+      <td style="text-align:center;font-weight:700;">${t.stock||0}</td>
+      <td style="text-align:right;">${(t.unitPrice||0).toLocaleString()}원</td>
+      <td style="text-align:center;">
+        <input type="number" id="tbAdd-${t.id}" min="1" value="1" style="width:50px;padding:4px;border:1px solid #ddd;border-radius:6px;text-align:center;font-family:inherit;font-size:12px;">
+        <button class="submit-btn" style="padding:4px 10px;font-size:12px;margin-left:4px;" onclick="addStock('${t.id}')">추가</button>
+      </td>
+      <td><button class="del-btn" onclick="deleteTextbook('${t.id}')">삭제</button></td>
+    </tr>`).join('');
+}
+
+window.addTextbook = async () => {
+  const name = document.getElementById('tbName').value.trim();
+  if (!name) return alert('교재명을 입력하세요.');
+  await addDoc(collection(db, 'textbooks'), {
+    name,
+    publisher: document.getElementById('tbPublisher').value.trim(),
+    stock: Number(document.getElementById('tbQty').value) || 1,
+    unitPrice: Number(document.getElementById('tbPrice').value) || 0,
+    subject: document.getElementById('tbSubject').value,
+    createdAt: new Date()
+  });
+  ['tbName','tbPublisher'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('tbQty').value = 1;
+  document.getElementById('tbPrice').value = 0;
+  await loadTextbooks();
+  const el = document.getElementById('tbSuccess');
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+};
+
+window.addStock = async (id) => {
+  const add = Number(document.getElementById(`tbAdd-${id}`).value) || 0;
+  if (!add) return;
+  const tb = textbookList_data.find(t => t.id === id);
+  await updateDoc(doc(db, 'textbooks', id), { stock: (tb.stock||0) + add });
+  await loadTextbooks();
+};
+
+window.deleteTextbook = async (id) => {
+  if (!confirm('교재를 삭제하시겠습니까?')) return;
+  await deleteDoc(doc(db, 'textbooks', id));
+  await loadTextbooks();
+};
+
+window.loadTextbookClassStudents = async () => {
+  const classId = document.getElementById('tbClassSel').value;
+  const el = document.getElementById('tbStudentList');
+  if (!classId) { el.innerHTML = '<p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">반을 선택하세요</p>'; return; }
+  const cls = classList.find(c => c.id === classId);
+  const studentIds = cls?.studentIds || [];
+  if (!studentIds.length) { el.innerHTML = '<p style="color:#bbb;font-size:13px;text-align:center;padding:20px;">이 반에 학생이 없습니다</p>'; return; }
+
+  // 기존 배정 조회
+  const asnSnap = await getDocs(query(collection(db, 'textbook_assignments'), where('classId','==',classId)));
+  const assignments = {};
+  asnSnap.forEach(d => {
+    const a = d.data();
+    if (!assignments[a.studentId]) assignments[a.studentId] = [];
+    assignments[a.studentId].push({ docId: d.id, ...a });
+  });
+
+  const tbOpts = textbookList_data.map(t => `<option value="${t.id}">${t.name} (재고:${t.stock||0})</option>`).join('');
+  const students = studentList.filter(s => studentIds.includes(s.id));
+
+  el.innerHTML = `
+    <div style="font-size:12px;font-weight:700;color:#999;margin-bottom:8px;">
+      ${cls.name} · ${CAT_LABEL[cls.category||cls.subject]||''} · ${cls.days||''} ${cls.time||''}
+    </div>
+    <table><thead>
+      <tr><th>학생</th><th>학년</th><th>배정된 교재</th><th>교재 추가배정</th></tr>
+    </thead><tbody>
+    ${students.map(s => {
+      const myAsn = assignments[s.id] || [];
+      const asnHtml = myAsn.length
+        ? myAsn.map(a => `<span style="display:inline-flex;align-items:center;gap:4px;background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;margin:2px;">
+            ${a.textbookName}
+            <button onclick="removeAssignment('${a.docId}','${classId}')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#c62828;padding:0;line-height:1;">✕</button>
+          </span>`).join('')
+        : '<span style="color:#bbb;font-size:12px;">없음</span>';
+      return `<tr>
+        <td style="font-weight:700;">${s.name}</td>
+        <td style="font-size:12px;color:#999;">${s.grade||''}</td>
+        <td style="font-size:13px;">${asnHtml}</td>
+        <td>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <select id="tbSel-${s.id}" style="padding:6px 10px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:12px;font-family:inherit;outline:none;flex:1;">
+              <option value="">-- 교재 선택 --</option>${tbOpts}
+            </select>
+            <button class="submit-btn" style="padding:6px 12px;font-size:12px;white-space:nowrap;" onclick="assignTextbook('${s.id}','${s.name}','${classId}','${cls.name}')">배정</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('')}
+    </tbody></table>`;
+};
+
+window.assignTextbook = async (studentId, studentName, classId, className) => {
+  const sel = document.getElementById(`tbSel-${studentId}`);
+  const tbId = sel.value;
+  if (!tbId) return alert('교재를 선택하세요.');
+  const tb = textbookList_data.find(t => t.id === tbId);
+  if (!tb || (tb.stock||0) < 1) return alert('재고가 없습니다.');
+  await addDoc(collection(db, 'textbook_assignments'), {
+    studentId, studentName, classId, className,
+    textbookId: tbId, textbookName: tb.name,
+    assignedAt: new Date()
+  });
+  await updateDoc(doc(db, 'textbooks', tbId), { stock: (tb.stock||0) - 1 });
+  await loadTextbooks();
+  loadTextbookClassStudents();
+};
+
+window.removeAssignment = async (docId, classId) => {
+  if (!confirm('배정을 취소하시겠습니까?')) return;
+  const asnDoc = await getDoc(doc(db, 'textbook_assignments', docId));
+  if (asnDoc.exists()) {
+    const a = asnDoc.data();
+    await updateDoc(doc(db, 'textbooks', a.textbookId), { stock: (textbookList_data.find(t=>t.id===a.textbookId)?.stock||0) + 1 });
+  }
+  await deleteDoc(doc(db, 'textbook_assignments', docId));
+  await loadTextbooks();
+  loadTextbookClassStudents();
 };
 </script>
 <footer style="background:#1e2a6d;padding:28px 20px;text-align:center;margin-top:40px;">
