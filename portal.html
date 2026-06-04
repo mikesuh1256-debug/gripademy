@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그립학원 학부모 포털</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#f0f2f5;min-height:100vh;}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;}
+.login-logo{width:100px;height:100px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;}
+.login-logo img{width:100%;height:100%;object-fit:contain;}
+.login-title{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#aaa;margin-bottom:32px;}
+.login-box input{width:100%;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;margin-bottom:12px;outline:none;transition:border 0.2s;font-family:inherit;}
+.login-box input:focus{border-color:#1e2a6d;}
+.login-btn{width:100%;padding:14px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;}
+.login-btn:hover{background:#19b1c6;}
+.login-error{color:#e53935;font-size:13px;margin-top:8px;}
+
+/* PORTAL */
+.portal{display:none;min-height:100vh;background:#f0f2f5;}
+.portal-header{background:#1e2a6d;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;}
+.portal-header h1{color:#fff;font-size:16px;font-weight:700;}
+.portal-user{color:rgba(255,255,255,0.7);font-size:13px;display:flex;align-items:center;gap:12px;}
+.logout-btn{background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;}
+
+.portal-body{max-width:800px;margin:0 auto;padding:24px 16px;}
+.student-card{background:#fff;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.student-name{font-size:20px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.student-info{font-size:13px;color:#999;margin-bottom:20px;}
+
+.tabs{display:flex;gap:8px;margin-bottom:20px;}
+.tab{padding:8px 20px;border-radius:20px;border:1.5px solid #e0e0e0;background:#fff;font-size:14px;font-weight:600;cursor:pointer;color:#999;font-family:inherit;}
+.tab.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+
+.section-card{background:#fff;border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.section-title{font-size:15px;font-weight:700;color:#333;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+
+table{width:100%;border-collapse:collapse;}
+th{padding:10px 14px;background:#f5f5f5;font-size:12px;color:#999;font-weight:600;text-align:left;border-bottom:1px solid #eee;}
+td{padding:12px 14px;font-size:14px;color:#333;border-bottom:1px solid #f5f5f5;}
+tr:last-child td{border-bottom:none;}
+
+.grade-badge{display:inline-block;width:32px;height:32px;border-radius:8px;text-align:center;line-height:32px;font-weight:800;font-size:16px;}
+.grade-A{background:#e8f5e9;color:#2e7d32;}
+.grade-B{background:#e3f2fd;color:#1565c0;}
+.grade-C{background:#fff3e0;color:#e65100;}
+
+.att-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.att-present{background:#e8f5e9;color:#2e7d32;}
+.att-absent{background:#ffebee;color:#c62828;}
+.att-late{background:#fff3e0;color:#e65100;}
+
+.post-item{padding:14px 0;border-bottom:1px solid #f5f5f5;cursor:pointer;}
+.post-item:last-child{border-bottom:none;}
+.post-title{font-size:14px;font-weight:600;color:#333;margin-bottom:4px;}
+.post-meta{font-size:12px;color:#bbb;}
+.post-content{font-size:14px;color:#555;line-height:1.7;margin-top:10px;display:none;}
+
+.empty{text-align:center;padding:40px;color:#bbb;font-size:14px;}
+
+@media(max-width:600px){
+  .login-box{padding:32px 20px;}
+  .tabs{flex-wrap:wrap;}
+}
+
+/* 일정 캘린더 */
+.sch-toggle{display:flex;gap:0;border:1.5px solid #e0e0e0;border-radius:8px;overflow:hidden;margin-bottom:14px;width:fit-content;}
+.sch-toggle button{padding:6px 16px;background:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;color:#999;font-family:inherit;}
+.sch-toggle button.active{background:#1e2a6d;color:#fff;}
+.sch-cal-nav{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:12px;}
+.sch-cal-nav button{background:none;border:1.5px solid #e0e0e0;border-radius:6px;padding:4px 12px;font-size:15px;cursor:pointer;}
+.sch-cal-nav h3{font-size:15px;font-weight:700;color:#1e2a6d;min-width:110px;text-align:center;}
+.sch-cal{background:#f8f9fa;border-radius:10px;overflow:hidden;}
+.sch-cal-hd{display:grid;grid-template-columns:repeat(7,1fr);border-bottom:1px solid #eee;}
+.sch-cal-hd span{text-align:center;padding:7px 0;font-size:11px;font-weight:700;color:#999;}
+.sch-cal-body{display:grid;grid-template-columns:repeat(7,1fr);}
+.sch-day{border-right:1px solid #f0f0f0;border-bottom:1px solid #f0f0f0;min-height:60px;padding:4px 3px;cursor:pointer;background:#fff;}
+.sch-day:hover{background:#f0f4ff;}
+.sch-day.other{background:#fafafa;}
+.sch-day.other .dn{color:#ddd;}
+.sch-day.today .dn{background:#1e2a6d;color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;}
+.sch-day.sel{background:#eef0fb;}
+.dn{font-size:12px;font-weight:600;color:#333;width:22px;height:22px;display:flex;align-items:center;justify-content:center;margin-bottom:2px;}
+.sch-day:nth-child(7n+1) .dn{color:#e53935;}
+.sch-day:nth-child(7n) .dn{color:#1565c0;}
+.sch-day.other:nth-child(7n+1) .dn,.sch-day.other:nth-child(7n) .dn{color:#ddd;}
+.sdot{font-size:9px;line-height:1.4;padding:0 2px;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:1px;background:#e8eaf6;color:#1e2a6d;}
+.sel-events{margin-top:10px;background:#f8f9fa;border-radius:8px;padding:12px 14px;}
+.sel-events h4{font-size:13px;font-weight:700;color:#1e2a6d;margin-bottom:8px;}
+.sel-ev-row{font-size:13px;color:#333;padding:5px 0;border-bottom:1px solid #eee;}
+.sel-ev-row:last-child{border-bottom:none;}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="assets/images/logo/grip-icon.png" alt="그립학원" onerror="this.style.display='none'">
+    </div>
+    <h1 class="login-title">그립학원 학부모 포털</h1>
+    <p class="login-sub">학부모 계정으로 로그인하세요</p>
+    <input type="email" id="loginEmail" placeholder="이메일">
+    <input type="password" id="loginPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <p class="login-error" id="loginError" style="display:none;">이메일 또는 비밀번호를 확인해주세요.</p>
+  </div>
+</div>
+
+<!-- 포털 -->
+<div class="portal" id="portal">
+  <div class="portal-header">
+    <h1><img src="assets/images/logo/grip-icon.png" style="height:28px;width:28px;object-fit:contain;vertical-align:middle;margin-right:8px;mix-blend-mode:screen;">그립학원 학부모 포털</h1>
+    <div class="portal-user">
+      <span id="userName"></span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="portal-body">
+    <div class="student-card">
+      <div class="student-name" id="studentName">-</div>
+      <div class="student-info" id="studentInfo">-</div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('grades')">📊 성적</button>
+      <button class="tab" onclick="showTab('attendance')">📅 출결</button>
+      <button class="tab" onclick="showTab('attitude')">⭐ 태도</button>
+      <button class="tab" onclick="showTab('board')">📢 게시판</button>
+      <button class="tab" onclick="showTab('schedule')">📅 학사일정</button>
+    </div>
+
+    <!-- 성적 -->
+    <div id="tab-grades">
+      <div class="section-card">
+        <div class="section-title">📐 수학 성적</div>
+        <table>
+          <thead><tr><th>날짜</th><th>시험명</th><th>등급</th><th>메모</th></tr></thead>
+          <tbody id="mathGrades"><tr><td colspan="4" class="empty">데이터 없음</td></tr></tbody>
+        </table>
+      </div>
+      <div class="section-card">
+        <div class="section-title">📖 영어 성적</div>
+        <table>
+          <thead><tr><th>날짜</th><th>시험명</th><th>등급</th><th>메모</th></tr></thead>
+          <tbody id="engGrades"><tr><td colspan="4" class="empty">데이터 없음</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 출결 -->
+    <div id="tab-attendance" style="display:none;">
+      <div class="section-card">
+        <div class="section-title">📅 출결 현황</div>
+        <table>
+          <thead><tr><th>날짜</th><th>과목</th><th>출결</th><th>메모</th></tr></thead>
+          <tbody id="attendanceList"><tr><td colspan="4" class="empty">데이터 없음</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 태도 -->
+    <div id="tab-attitude" style="display:none;">
+      <div class="section-card">
+        <div class="section-title">⭐ 태도 평가</div>
+        <table>
+          <thead><tr><th>날짜</th><th>과목</th><th>등급</th><th>메모</th></tr></thead>
+          <tbody id="attitudeList"><tr><td colspan="4" class="empty">데이터 없음</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 게시판 -->
+    <div id="tab-board" style="display:none;">
+      <div class="section-card">
+        <div class="section-title">📢 공지사항</div>
+        <div id="boardList"><div class="empty">게시물 없음</div></div>
+      </div>
+    </div>
+
+    <!-- 학사일정 -->
+    <div id="tab-schedule" style="display:none;">
+      <div class="section-card">
+        <div class="section-title">📅 학사일정</div>
+        <div class="sch-toggle">
+          <button class="active" onclick="schView('list',this,'portal')">≡ 목록</button>
+          <button onclick="schView('cal',this,'portal')">▦ 캘린더</button>
+        </div>
+        <div id="schListPortal"></div>
+        <div id="schCalPortal" style="display:none;">
+          <div class="sch-cal-nav">
+            <button onclick="schCalMove(-1,'portal')">‹</button>
+            <h3 id="schCalTitlePortal"></h3>
+            <button onclick="schCalMove(1,'portal')">›</button>
+          </div>
+          <div class="sch-cal"><div class="sch-cal-hd"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="sch-cal-body" id="schCalBodyPortal"></div></div>
+          <div id="schSelPortal"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAS9iH2_r33OP3fFazsEk5lcJL-oH0eWbU",
+  authDomain: "gripacademyweb1.firebaseapp.com",
+  projectId: "gripacademyweb1",
+  storageBucket: "gripacademyweb1.firebasestorage.app",
+  messagingSenderId: "202451577041",
+  appId: "1:202451577041:web:de15134759530143173df0"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentStudentId = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (!userDoc.exists()) {
+        showError(`계정 등록 필요. UID: ${user.uid}`);
+        return;
+      }
+      const data = userDoc.data();
+      if (data.role !== 'parent') {
+        showError(`학부모 계정 아님 (역할: ${data.role})`);
+        return;
+      }
+      currentStudentId = data.studentId;
+      document.getElementById('userName').textContent = data.name;
+      await loadStudentInfo(data.studentId);
+      await loadGrades(data.studentId);
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('portal').style.display = 'block';
+    } catch(e) {
+      showError('오류: ' + e.message);
+    }
+  } else {
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('portal').style.display = 'none';
+  }
+});
+
+function showError(msg) {
+  const el = document.getElementById('loginError');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+window.doLogin = async () => {
+  document.getElementById('loginError').style.display = 'none';
+  const email = document.getElementById('loginEmail').value;
+  const pw = document.getElementById('loginPw').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, pw);
+  } catch(e) {
+    showError(e.code === 'auth/wrong-password' || e.code === 'auth/invalid-credential'
+      ? '비밀번호가 틀렸습니다' : '로그인 실패: ' + e.code);
+  }
+};
+
+window.doLogout = () => signOut(auth);
+
+async function loadStudentInfo(studentId) {
+  const snap = await getDoc(doc(db, 'students', studentId));
+  if (snap.exists()) {
+    const d = snap.data();
+    document.getElementById('studentName').textContent = d.name;
+    document.getElementById('studentInfo').textContent = `${d.grade} · ${d.school || ''} · ${d.course === 'both' ? '수학+영어' : d.course === 'math' ? '수학' : '영어'}`;
+  }
+}
+
+async function loadGrades(studentId) {
+  const q = query(collection(db, 'grades'), where('studentId','==',studentId), orderBy('date','desc'));
+  const snap = await getDocs(q);
+  const mathRows = [], engRows = [];
+  snap.forEach(d => {
+    const g = d.data();
+    const date = g.date?.toDate?.()?.toLocaleDateString('ko-KR') || '-';
+    const badge = `<span class="grade-badge grade-${g.grade}">${g.grade}</span>`;
+    const row = `<tr><td>${date}</td><td>${g.testName||'-'}</td><td>${badge}</td><td>${g.note||''}</td></tr>`;
+    if (g.subject === 'math') mathRows.push(row);
+    else engRows.push(row);
+  });
+  document.getElementById('mathGrades').innerHTML = mathRows.length ? mathRows.join('') : '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:20px;">데이터 없음</td></tr>';
+  document.getElementById('engGrades').innerHTML = engRows.length ? engRows.join('') : '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:20px;">데이터 없음</td></tr>';
+}
+
+async function loadAttendance(studentId) {
+  const q = query(collection(db, 'attendance'), where('studentId','==',studentId), orderBy('date','desc'));
+  const snap = await getDocs(q);
+  const rows = [];
+  snap.forEach(d => {
+    const g = d.data();
+    const date = g.date?.toDate?.()?.toLocaleDateString('ko-KR') || '-';
+    const subj = g.subject === 'math' ? '수학' : '영어';
+    const badge = g.status === 'present' ? '<span class="att-badge att-present">출석</span>' : g.status === 'absent' ? '<span class="att-badge att-absent">결석</span>' : '<span class="att-badge att-late">지각</span>';
+    rows.push(`<tr><td>${date}</td><td>${subj}</td><td>${badge}</td><td>${g.note||''}</td></tr>`);
+  });
+  document.getElementById('attendanceList').innerHTML = rows.length ? rows.join('') : '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:20px;">데이터 없음</td></tr>';
+}
+
+async function loadAttitude(studentId) {
+  const q = query(collection(db, 'attitude'), where('studentId','==',studentId), orderBy('date','desc'));
+  const snap = await getDocs(q);
+  const rows = [];
+  snap.forEach(d => {
+    const g = d.data();
+    const date = g.date?.toDate?.()?.toLocaleDateString('ko-KR') || '-';
+    const subj = g.subject === 'math' ? '수학' : '영어';
+    const badge = `<span class="grade-badge grade-${g.grade}">${g.grade}</span>`;
+    rows.push(`<tr><td>${date}</td><td>${subj}</td><td>${badge}</td><td>${g.note||''}</td></tr>`);
+  });
+  document.getElementById('attitudeList').innerHTML = rows.length ? rows.join('') : '<tr><td colspan="4" style="text-align:center;color:#bbb;padding:20px;">데이터 없음</td></tr>';
+}
+
+async function loadBoard() {
+  const q = query(collection(db, 'posts'), orderBy('createdAt','desc'));
+  const snap = await getDocs(q);
+  const items = [];
+  snap.forEach(d => {
+    const g = d.data();
+    const date = g.createdAt?.toDate?.()?.toLocaleDateString('ko-KR') || '-';
+    items.push(`<div class="post-item" onclick="togglePost(this)">
+      <div class="post-title">${g.isNotice ? '📌 ' : ''}${g.title}</div>
+      <div class="post-meta">${g.authorName} · ${date}</div>
+      <div class="post-content">${g.content}</div>
+    </div>`);
+  });
+  document.getElementById('boardList').innerHTML = items.length ? items.join('') : '<div class="empty">게시물 없음</div>';
+}
+
+window.togglePost = (el) => {
+  const content = el.querySelector('.post-content');
+  content.style.display = content.style.display === 'block' ? 'none' : 'block';
+};
+
+window.showTab = async (tab) => {
+  ['grades','attendance','attitude','board','schedule'].forEach(t => {
+    document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach((btn, i) => {
+    btn.classList.toggle('active', ['grades','attendance','attitude','board','schedule'][i] === tab);
+  });
+  if (tab === 'attendance' && currentStudentId) await loadAttendance(currentStudentId);
+  if (tab === 'attitude' && currentStudentId) await loadAttitude(currentStudentId);
+  if (tab === 'board') await loadBoard();
+  if (tab === 'schedule') await loadSchedule();
+};
+
+let schDataPortal = [];
+let schCalYPortal = new Date().getFullYear();
+let schCalMPortal = new Date().getMonth();
+let schSelDatePortal = null;
+const schToday = new Date(); schToday.setHours(0,0,0,0);
+
+async function loadSchedule() {
+  document.getElementById('schListPortal').innerHTML = '<div class="empty">불러오는 중...</div>';
+  try {
+    const res = await fetch('/.netlify/functions/schedule?role=parent');
+    const json = await res.json();
+    if (!Array.isArray(json)) throw new Error('응답 오류');
+    schDataPortal = json;
+    if (!schDataPortal.length) {
+      document.getElementById('schListPortal').innerHTML = '<div class="empty">등록된 일정이 없습니다.</div>';
+      return;
+    }
+    renderSchList('portal');
+  } catch(e) {
+    document.getElementById('schListPortal').innerHTML = `<div class="empty">일정을 불러올 수 없습니다.<br><small style="color:#bbb">${e.message}</small></div>`;
+  }
+}
+
+window.schView = (v, btn, id) => {
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`schList${id.charAt(0).toUpperCase()+id.slice(1)}`).style.display = v==='list'?'block':'none';
+  document.getElementById(`schCal${id.charAt(0).toUpperCase()+id.slice(1)}`).style.display = v==='cal'?'block':'none';
+  if(v==='cal') renderSchCal(id);
+};
+
+window.schCalMove = (dir, id) => {
+  if(id==='portal'){ schCalMPortal+=dir; if(schCalMPortal<0){schCalMPortal=11;schCalYPortal--;}if(schCalMPortal>11){schCalMPortal=0;schCalYPortal++;} schSelDatePortal=null; document.getElementById('schSelPortal').innerHTML=''; renderSchCal('portal'); }
+};
+
+window.schSelectDay = (y,m,d,id) => {
+  if(id==='portal'){schSelDatePortal={y,m,d};}
+  renderSchCal(id);
+  const data = id==='portal'?schDataPortal:schDataTeacher;
+  const sel = new Date(y,m,d); sel.setHours(0,0,0,0);
+  const evs = data.filter(s=>{
+    const s1=new Date(s.date.start);s1.setHours(0,0,0,0);
+    const s2=s.date.end?new Date(s.date.end):new Date(s1);s2.setHours(0,0,0,0);
+    return sel>=s1&&sel<=s2;
+  });
+  const elId = id==='portal'?'schSelPortal':'schSelTeacher';
+  if(!evs.length){document.getElementById(elId).innerHTML='';return;}
+  document.getElementById(elId).innerHTML=`<div class="sel-events"><h4>${m+1}월 ${d}일 일정</h4>${evs.map(e=>`<div class="sel-ev-row">📌 ${e.title}</div>`).join('')}</div>`;
+};
+
+function renderSchList(id) {
+  const data = schDataPortal;
+  const el = document.getElementById('schListPortal');
+  if(!data.length){el.innerHTML='<div class="empty">일정이 없습니다.</div>';return;}
+  const groups={};
+  data.forEach(s=>{const d=new Date(s.date.start);const k=`${d.getFullYear()}년 ${d.getMonth()+1}월`;if(!groups[k])groups[k]=[];groups[k].push(s);});
+  let html='';
+  Object.entries(groups).forEach(([m,its])=>{
+    html+=`<div style="font-size:12px;font-weight:700;color:#1e2a6d;margin:12px 0 6px;padding-left:2px">${m}</div>`;
+    its.forEach(s=>{
+      const d=new Date(s.date.start);
+      const endD=s.date.end&&s.date.end!==s.date.start?new Date(s.date.end):null;
+      html+=`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f5f5f5">
+        <span style="min-width:42px;font-size:12px;font-weight:700;color:#1e2a6d">${d.getMonth()+1}/${d.getDate()}${endD?'~'+endD.getDate():''}일</span>
+        <span style="font-size:13px;color:#222">${s.title}</span>
+      </div>`;
+    });
+  });
+  el.innerHTML=html;
+}
+
+function renderSchCal(id) {
+  const y=schCalYPortal, m=schCalMPortal, selDate=schSelDatePortal, data=schDataPortal;
+  document.getElementById('schCalTitlePortal').textContent=`${y}년 ${m+1}월`;
+  const evMap={};
+  data.forEach(s=>{
+    const s1=new Date(s.date.start),s2=s.date.end?new Date(s.date.end):new Date(s1);
+    for(let d=new Date(s1);d<=s2;d.setDate(d.getDate()+1)){
+      const k=`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+      if(!evMap[k])evMap[k]=[];evMap[k].push(s);
+    }
+  });
+  const fd=new Date(y,m,1).getDay(), dim=new Date(y,m+1,0).getDate(), dp=new Date(y,m,0).getDate();
+  let html='';
+  for(let i=fd-1;i>=0;i--) html+=`<div class="sch-day other"><div class="dn">${dp-i}</div></div>`;
+  for(let d=1;d<=dim;d++){
+    const isT=schToday.getFullYear()===y&&schToday.getMonth()===m&&schToday.getDate()===d;
+    const isS=selDate?.y===y&&selDate?.m===m&&selDate?.d===d;
+    const k=`${y}-${m}-${d}`;
+    const evs=evMap[k]||[];
+    const dots=evs.slice(0,2).map(e=>`<div class="sdot">${e.title}</div>`).join('');
+    html+=`<div class="sch-day${isT?' today':''}${isS?' sel':''}" onclick="schSelectDay(${y},${m},${d},'portal')"><div class="dn">${d}</div>${dots}</div>`;
+  }
+  const rem=(fd+dim)%7; if(rem) for(let d=1;d<=7-rem;d++) html+=`<div class="sch-day other"><div class="dn">${d}</div></div>`;
+  document.getElementById('schCalBodyPortal').innerHTML=html;
+}
+</script>
+<footer style="background:#1e2a6d;padding:28px 20px;text-align:center;margin-top:40px;">
+  <img src="assets/images/logo/grip-icon.png" style="height:40px;width:40px;object-fit:contain;mix-blend-mode:screen;margin-bottom:10px;display:block;margin-left:auto;margin-right:auto;">
+  <p style="font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:6px;">서울특별시 서대문구 가재울</p>
+  <p style="margin-bottom:8px;"><a href="tel:02-3152-5678" style="color:#fff;font-size:14px;font-weight:700;text-decoration:none;">02-3152-5678</a></p>
+  <p style="font-size:11px;color:rgba(255,255,255,0.5);">© 2025 매쓰그립 수학학원 · 잉그립 영어학원. All rights reserved.</p>
+</footer>
+</body>
+</html>
