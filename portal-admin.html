@@ -38,7 +38,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;backg
 
 /* ── 탭 콘텐츠 ── */
 .tab-content-wrap{background:#fff;border:1px solid #e9ecef;border-radius:14px;padding:20px 16px 32px;margin-top:4px;}
-@media(min-width:768px){.tabs{grid-template-columns:repeat(6,1fr);}.tab{font-size:18px;}.tab-content-wrap{padding:24px 28px 36px;}}
+@media(min-width:768px){.tabs{grid-template-columns:repeat(7,1fr);}.tab{font-size:16px;}.tab-content-wrap{padding:24px 28px 36px;}}
 
 /* ── 카드 (섹션) - 박스 없이 구분선만 ── */
 .card{background:transparent;border-radius:0;padding:22px 0;margin-bottom:0;border:none;border-bottom:1px solid #eef0f9;}
@@ -224,6 +224,7 @@ tbody tr:hover td{background:#f0f3ff;}
       <button class="tab" onclick="showTab('db')">🗄️ DB 가져오기</button>
       <button class="tab" onclick="showTab('users')">👤 계정 생성</button>
       <button class="tab" onclick="showTab('schedule')">📅 전체 일정</button>
+      <button class="tab" onclick="showTab('board')">📋 게시판</button>
     </div>
 
     <div class="tab-content-wrap">
@@ -762,6 +763,58 @@ tbody tr:hover td{background:#f0f3ff;}
         </div>
       </div>
     </div>
+
+    <!-- 게시판 관리 -->
+    <div id="tab-board" style="display:none;">
+
+      <!-- 글쓰기 -->
+      <div class="card">
+        <h2>✏️ 새 글 작성</h2>
+        <div class="class-section" style="border:2px solid #e2e6f0;background:#fafbff;max-width:600px;">
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>카테고리</label>
+            <select id="postCat" style="padding:9px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;max-width:180px;">
+              <option value="공지">📢 공지</option>
+              <option value="수업자료">📚 수업자료</option>
+              <option value="수상">🏆 수상</option>
+              <option value="가정통신문">📄 가정통신문</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>제목 *</label>
+            <input type="text" id="postTitle" placeholder="제목을 입력하세요">
+          </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>내용</label>
+            <textarea id="postContent" placeholder="내용을 입력하세요..." style="width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;font-family:inherit;outline:none;height:120px;resize:vertical;line-height:1.6;"></textarea>
+          </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>이미지 (최대 5장)</label>
+            <input type="file" id="postImages" accept="image/*" multiple style="padding:8px 0;font-size:13px;">
+            <div id="postImagePreview" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;font-weight:600;color:#555;">
+              <input type="checkbox" id="postPinned" style="width:16px;height:16px;"> 상단 고정
+            </label>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button class="submit-btn" onclick="submitPost()">게시하기</button>
+            <button onclick="resetPostForm()" style="padding:0 16px;height:48px;background:#f3f4f6;color:#555;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">초기화</button>
+          </div>
+          <p class="success-msg" id="postSuccess">✅ 게시됐습니다!</p>
+        </div>
+      </div>
+
+      <!-- 게시글 목록 -->
+      <div class="card">
+        <h2>📋 게시글 목록</h2>
+        <div id="adminPostList">
+          <p style="color:#bbb;text-align:center;padding:20px;">게시글 없음</p>
+        </div>
+      </div>
+
+    </div>
     </div><!-- /tab-content-wrap -->
   </div>
 </div>
@@ -792,7 +845,7 @@ tbody tr:hover td{background:#f0f3ff;}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, deleteDoc, updateDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, deleteDoc, updateDoc, query, orderBy, where, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 const firebaseConfig = {
@@ -851,15 +904,16 @@ window.doLogin = async () => {
 window.doLogout = () => signOut(auth);
 
 window.showTab = (tab) => {
-  ['students','classes','textbooks','db','users','schedule'].forEach(t => {
+  ['students','classes','textbooks','db','users','schedule','board'].forEach(t => {
     document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
   });
   document.querySelectorAll('.tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['students','classes','textbooks','db','users','schedule'][i] === tab);
+    btn.classList.toggle('active', ['students','classes','textbooks','db','users','schedule','board'][i] === tab);
   });
   if (tab === 'schedule') loadScheduleAdmin();
   if (tab === 'classes') loadClasses();
   if (tab === 'textbooks') loadTextbooks();
+  if (tab === 'board') loadAdminPosts();
 };
 
 // ── 전체 학생 삭제 ──────────────────────────────────────
@@ -2554,6 +2608,123 @@ window.removeAssignment = async (docId, classId) => {
   await deleteDoc(doc(db, 'textbook_assignments', docId));
   await loadTextbooks();
   loadTextbookClassStudents();
+};
+
+// ── 게시판 ──────────────────────────────────────────
+let postList_data = [];
+let postImageFiles = [];
+
+document.getElementById('postImages')?.addEventListener('change', function() {
+  postImageFiles = Array.from(this.files).slice(0, 5);
+  const preview = document.getElementById('postImagePreview');
+  preview.innerHTML = postImageFiles.map((f, i) =>
+    `<div style="position:relative;">
+      <img src="${URL.createObjectURL(f)}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #eee;">
+      <button onclick="removePostImage(${i})" style="position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:11px;cursor:pointer;line-height:20px;padding:0;">✕</button>
+    </div>`
+  ).join('');
+});
+
+window.removePostImage = (i) => {
+  postImageFiles.splice(i, 1);
+  const dt = new DataTransfer();
+  postImageFiles.forEach(f => dt.items.add(f));
+  document.getElementById('postImages').files = dt.files;
+  document.getElementById('postImages').dispatchEvent(new Event('change'));
+};
+
+async function loadAdminPosts() {
+  const snap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc')));
+  postList_data = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderAdminPosts();
+}
+
+function renderAdminPosts() {
+  const el = document.getElementById('adminPostList');
+  if (!postList_data.length) { el.innerHTML = '<p style="color:#bbb;text-align:center;padding:20px;">게시글 없음</p>'; return; }
+  const catColor = { '공지':'#e65100', '수업자료':'#2e7d32', '수상':'#f57f17', '가정통신문':'#1565c0' };
+  el.innerHTML = postList_data.map(p => `
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <span style="background:${catColor[p.category]||'#999'};color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;flex-shrink:0;">${p.category||''}</span>
+      <span style="flex:1;font-size:14px;font-weight:600;color:#1a1d23;">${p.title||''}</span>
+      ${p.isPinned ? '<span style="font-size:12px;color:#999;">📌</span>' : ''}
+      <span style="font-size:12px;color:#aaa;flex-shrink:0;">👁${p.views||0}</span>
+      <button class="del-btn" style="background:#e3f2fd;color:#1565c0;flex-shrink:0;" onclick="editPost('${p.id}')">수정</button>
+      <button class="del-btn" style="flex-shrink:0;" onclick="deletePost('${p.id}')">삭제</button>
+    </div>`).join('');
+}
+
+window.submitPost = async () => {
+  const title = document.getElementById('postTitle').value.trim();
+  if (!title) return alert('제목을 입력하세요.');
+  const btn = document.querySelector('#tab-board .submit-btn');
+  btn.disabled = true; btn.textContent = '업로드 중...';
+
+  const imageURLs = [];
+  for (const file of postImageFiles) {
+    const r = ref(storage, `posts/${Date.now()}_${file.name}`);
+    await uploadBytes(r, file);
+    imageURLs.push(await getDownloadURL(r));
+  }
+
+  await addDoc(collection(db, 'posts'), {
+    title,
+    content: document.getElementById('postContent').value,
+    category: document.getElementById('postCat').value,
+    isPinned: document.getElementById('postPinned').checked,
+    imageURLs,
+    views: 0,
+    createdAt: new Date()
+  });
+
+  btn.disabled = false; btn.textContent = '게시하기';
+  resetPostForm();
+  const s = document.getElementById('postSuccess');
+  s.style.display = 'block';
+  setTimeout(() => s.style.display = 'none', 3000);
+  await loadAdminPosts();
+};
+
+window.resetPostForm = () => {
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postContent').value = '';
+  document.getElementById('postImages').value = '';
+  document.getElementById('postImagePreview').innerHTML = '';
+  document.getElementById('postPinned').checked = false;
+  postImageFiles = [];
+};
+
+window.deletePost = async (id) => {
+  if (!confirm('게시글을 삭제하시겠습니까?')) return;
+  await deleteDoc(doc(db, 'posts', id));
+  await loadAdminPosts();
+};
+
+window.editPost = (id) => {
+  const p = postList_data.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('postTitle').value = p.title || '';
+  document.getElementById('postContent').value = p.content || '';
+  document.getElementById('postCat').value = p.category || '공지';
+  document.getElementById('postPinned').checked = !!p.isPinned;
+  document.getElementById('postImagePreview').innerHTML = (p.imageURLs||[]).map(u =>
+    `<img src="${u}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid #eee;">`
+  ).join('');
+  // 수정 모드: 기존 이미지 유지, 새 이미지 추가 시 덮어씀
+  document.querySelector('#tab-board .submit-btn').textContent = '수정하기';
+  document.querySelector('#tab-board .submit-btn').onclick = async () => {
+    await updateDoc(doc(db, 'posts', id), {
+      title: document.getElementById('postTitle').value.trim(),
+      content: document.getElementById('postContent').value,
+      category: document.getElementById('postCat').value,
+      isPinned: document.getElementById('postPinned').checked,
+    });
+    document.querySelector('#tab-board .submit-btn').textContent = '게시하기';
+    document.querySelector('#tab-board .submit-btn').onclick = submitPost;
+    resetPostForm();
+    await loadAdminPosts();
+  };
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 </script>
 <footer style="background:#1e2a6d;padding:36px 24px;text-align:center;margin-top:40px;">

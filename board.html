@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그립학원 게시판</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',system-ui,sans-serif;background:#f7f8fc;color:#1a1d23;-webkit-font-smoothing:antialiased;}
+
+/* 로그인 */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#f4f6fb,#e8edf8);}
+.login-box{background:#fff;border-radius:16px;padding:40px;width:100%;max-width:360px;box-shadow:0 4px 24px rgba(30,42,109,.1);text-align:center;}
+.login-logo{font-size:28px;font-weight:900;color:#1e2a6d;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#9ca3af;margin-bottom:28px;}
+.login-box input{width:100%;padding:12px 16px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none;font-family:inherit;}
+.login-box input:focus{border-color:#1e2a6d;}
+.login-btn{width:100%;padding:13px;background:#1e2a6d;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.login-err{color:#ef4444;font-size:13px;margin-top:8px;display:none;}
+
+/* 앱 */
+.app{display:none;max-width:640px;margin:0 auto;min-height:100vh;background:#fff;}
+
+/* 헤더 */
+.b-header{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #eee;padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+.b-header-left{display:flex;align-items:center;gap:10px;}
+.b-back{background:none;border:none;font-size:22px;cursor:pointer;color:#333;padding:4px;}
+.b-title-small{font-size:17px;font-weight:800;color:#1a1d23;}
+.b-search-btn{background:none;border:none;font-size:20px;cursor:pointer;color:#555;padding:4px;}
+
+/* 검색바 */
+.search-bar{padding:10px 16px;background:#fff;border-bottom:1px solid #f0f0f0;display:none;}
+.search-bar input{width:100%;padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;outline:none;font-family:inherit;}
+.search-bar input:focus{border-color:#1e2a6d;}
+
+/* 페이지 타이틀 */
+.b-page-title{padding:24px 20px 16px;}
+.b-page-title h1{font-size:26px;font-weight:900;color:#1a1d23;margin-bottom:6px;}
+.b-page-title p{font-size:13px;color:#9ca3af;line-height:1.5;}
+
+/* 카테고리 필터 */
+.cat-bar{padding:0 16px 12px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;}
+.cat-bar::-webkit-scrollbar{display:none;}
+.cat-btn{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#6b7280;cursor:pointer;font-family:inherit;transition:all .15s;}
+.cat-btn.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+
+/* 게시글 카운트 */
+.post-count-bar{padding:0 20px 10px;display:flex;align-items:center;justify-content:space-between;}
+.post-count{font-size:15px;font-weight:700;color:#1a1d23;}
+.post-count span{font-weight:500;color:#9ca3af;font-size:13px;margin-left:4px;}
+
+/* 게시글 목록 */
+.post-list{padding:0 16px;}
+.post-item{display:flex;gap:12px;align-items:flex-start;padding:16px 0;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background .1s;}
+.post-item:last-child{border-bottom:none;}
+.post-item:active{background:#f8f9ff;}
+.post-left{flex:1;min-width:0;}
+.post-badges{display:flex;gap:5px;margin-bottom:6px;flex-wrap:wrap;}
+.badge-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;}
+.badge-공지{background:#fff3e0;color:#e65100;}
+.badge-중요{background:#ffebee;color:#c62828;}
+.badge-수업자료{background:#e8f5e9;color:#2e7d32;}
+.badge-수상{background:#fff8e1;color:#f57f17;}
+.badge-가정통신문{background:#e3f2fd;color:#1565c0;}
+.badge-new{background:#1e2a6d;color:#fff;font-size:10px;padding:1px 6px;border-radius:3px;}
+.post-title{font-size:15px;font-weight:700;color:#1a1d23;margin-bottom:6px;line-height:1.4;word-break:keep-all;}
+.post-meta{display:flex;gap:10px;align-items:center;}
+.post-meta-item{font-size:12px;color:#aaa;display:flex;align-items:center;gap:3px;}
+.post-date{font-size:12px;color:#bbb;margin-left:auto;}
+.post-thumb{width:64px;height:64px;border-radius:8px;object-fit:cover;flex-shrink:0;background:#f3f4f6;}
+.post-thumb-placeholder{width:64px;height:64px;border-radius:8px;background:#f3f4f6;flex-shrink:0;}
+
+/* 고정글 영역 */
+.pinned-section{margin-bottom:4px;}
+.pinned-label{padding:8px 20px 4px;font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.05em;}
+
+/* 상세 모달 */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;display:flex;align-items:flex-end;}
+.post-modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-height:92vh;overflow-y:auto;padding-bottom:40px;}
+.modal-drag{width:40px;height:4px;background:#e0e0e0;border-radius:2px;margin:12px auto 8px;}
+.modal-header{padding:8px 20px 16px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #f0f0f0;}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:#999;padding:4px;}
+.modal-badges{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.modal-title{font-size:20px;font-weight:900;color:#1a1d23;line-height:1.4;margin-bottom:8px;}
+.modal-meta{display:flex;gap:12px;font-size:13px;color:#aaa;}
+.modal-body{padding:20px;}
+.modal-content{font-size:15px;color:#333;line-height:1.8;white-space:pre-wrap;margin-bottom:20px;}
+.modal-images{display:grid;gap:8px;}
+.modal-images img{width:100%;border-radius:10px;object-fit:cover;}
+
+/* 빈 상태 */
+.empty-state{text-align:center;padding:60px 20px;color:#bbb;}
+.empty-state p{font-size:14px;margin-top:8px;}
+
+/* 하단 네비 */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:640px;background:#fff;border-top:1px solid #eee;display:flex;padding:8px 0 20px;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;font-size:10px;color:#aaa;font-weight:600;}
+.nav-item.active{color:#1e2a6d;}
+.nav-item span{font-size:22px;}
+.app-content{padding-bottom:80px;}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">그립학원</div>
+    <div class="login-sub">게시판 로그인</div>
+    <input type="email" id="loginEmail" placeholder="이메일">
+    <input type="password" id="loginPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <p class="login-err" id="loginErr">이메일 또는 비밀번호를 확인하세요.</p>
+  </div>
+</div>
+
+<!-- 앱 -->
+<div class="app" id="app">
+
+  <!-- 헤더 -->
+  <div class="b-header">
+    <div class="b-header-left">
+      <button class="b-back" onclick="history.back()">‹</button>
+      <span class="b-title-small">게시판</span>
+    </div>
+    <button class="b-search-btn" onclick="toggleSearch()">🔍</button>
+  </div>
+
+  <!-- 검색바 -->
+  <div class="search-bar" id="searchBar">
+    <input type="text" placeholder="제목 검색..." id="searchInput" oninput="filterPosts()">
+  </div>
+
+  <div class="app-content">
+    <!-- 페이지 타이틀 -->
+    <div class="b-page-title">
+      <h1>공지사항</h1>
+      <p>그립학원의 공지와 소식을 확인하세요.</p>
+    </div>
+
+    <!-- 카테고리 -->
+    <div class="cat-bar">
+      <button class="cat-btn active" onclick="filterCat('all',this)">전체</button>
+      <button class="cat-btn" onclick="filterCat('공지',this)">📢 공지</button>
+      <button class="cat-btn" onclick="filterCat('수업자료',this)">📚 수업자료</button>
+      <button class="cat-btn" onclick="filterCat('수상',this)">🏆 수상</button>
+      <button class="cat-btn" onclick="filterCat('가정통신문',this)">📄 가정통신문</button>
+    </div>
+
+    <!-- 카운트 -->
+    <div class="post-count-bar">
+      <div class="post-count">전체 <span id="postCountNum">0</span></div>
+    </div>
+
+    <!-- 고정글 -->
+    <div class="pinned-section" id="pinnedSection" style="display:none;">
+      <div class="pinned-label">📌 고정글</div>
+      <div class="post-list" id="pinnedList"></div>
+    </div>
+
+    <!-- 게시글 목록 -->
+    <div class="post-list" id="postList">
+      <div class="empty-state"><span style="font-size:40px;">📋</span><p>게시글이 없습니다.</p></div>
+    </div>
+  </div>
+
+  <!-- 하단 네비 -->
+  <div class="bottom-nav">
+    <div class="nav-item" onclick="location.href='portal.html'"><span>🏠</span>홈</div>
+    <div class="nav-item active"><span>📋</span>게시판</div>
+    <div class="nav-item" onclick="location.href='schedule.html'"><span>📅</span>일정</div>
+    <div class="nav-item" onclick="doLogout()"><span>👤</span>로그아웃</div>
+  </div>
+
+</div>
+
+<!-- 게시글 상세 모달 -->
+<div class="modal-overlay" id="postModal" style="display:none;" onclick="closePostModal(event)">
+  <div class="post-modal" id="postModalContent">
+    <div class="modal-drag"></div>
+    <div class="modal-header">
+      <div style="flex:1;">
+        <div class="modal-badges" id="modalBadges"></div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-meta" id="modalMeta"></div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('postModal').style.display='none'">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-content" id="modalContent"></div>
+      <div class="modal-images" id="modalImages"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, getDocs, doc, updateDoc, increment, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAS9iH2_r33OP3fFazsEk5lcJL-oH0eWbU",
+  authDomain: "gripacademyweb1.firebaseapp.com",
+  projectId: "gripacademyweb1",
+  storageBucket: "gripacademyweb1.firebasestorage.app",
+  messagingSenderId: "202451577041",
+  appId: "1:202451577041:web:de15134759530143173df0"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let allPosts = [];
+let currentCat = 'all';
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    await loadPosts();
+  } else {
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
+
+async function loadPosts() {
+  const snap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc')));
+  allPosts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderPosts();
+}
+
+function isNew(post) {
+  if (!post.createdAt) return false;
+  const ts = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
+  return (Date.now() - ts.getTime()) < 48 * 60 * 60 * 1000;
+}
+
+function timeAgo(post) {
+  if (!post.createdAt) return '';
+  const ts = post.createdAt.toDate ? post.createdAt.toDate() : new Date(post.createdAt);
+  const diff = Math.floor((Date.now() - ts.getTime()) / 1000);
+  if (diff < 3600) return `${Math.floor(diff/60)}분 전`;
+  if (diff < 86400) return `${Math.floor(diff/3600)}시간 전`;
+  if (diff < 604800) return `${Math.floor(diff/86400)}일 전`;
+  if (diff < 2592000) return `${Math.floor(diff/604800)}주 전`;
+  return ts.toLocaleDateString('ko-KR');
+}
+
+function postItemHtml(post) {
+  const newBadge = isNew(post) ? '<span class="badge-tag badge-new">N</span>' : '';
+  const catBadge = post.category ? `<span class="badge-tag badge-${post.category}">${post.category}</span>` : '';
+  const pinBadge = post.isPinned ? '<span class="badge-tag badge-중요">📌 고정</span>' : '';
+  const thumb = post.imageURLs?.[0]
+    ? `<img src="${post.imageURLs[0]}" class="post-thumb" alt="">`
+    : '';
+
+  return `<div class="post-item" onclick="openPost('${post.id}')">
+    <div class="post-left">
+      <div class="post-badges">${pinBadge}${catBadge}${newBadge}</div>
+      <div class="post-title">${post.title||''}</div>
+      <div class="post-meta">
+        <span class="post-meta-item">👁 ${post.views||0}</span>
+        <span class="post-date">${timeAgo(post)}</span>
+      </div>
+    </div>
+    ${thumb}
+  </div>`;
+}
+
+function renderPosts() {
+  const search = (document.getElementById('searchInput')?.value||'').toLowerCase();
+  let filtered = allPosts.filter(p => {
+    if (currentCat !== 'all' && p.category !== currentCat) return false;
+    if (search && !p.title?.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  document.getElementById('postCountNum').textContent = filtered.length;
+
+  const pinned = filtered.filter(p => p.isPinned);
+  const normal = filtered.filter(p => !p.isPinned);
+
+  const pinnedSec = document.getElementById('pinnedSection');
+  pinnedSec.style.display = pinned.length ? '' : 'none';
+  document.getElementById('pinnedList').innerHTML = pinned.map(postItemHtml).join('');
+
+  document.getElementById('postList').innerHTML = normal.length
+    ? normal.map(postItemHtml).join('')
+    : '<div class="empty-state"><span style="font-size:40px;">📋</span><p>게시글이 없습니다.</p></div>';
+}
+
+window.filterCat = (cat, btn) => {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPosts();
+};
+
+window.filterPosts = renderPosts;
+
+window.toggleSearch = () => {
+  const bar = document.getElementById('searchBar');
+  bar.style.display = bar.style.display === 'none' ? 'block' : 'none';
+  if (bar.style.display === 'block') document.getElementById('searchInput').focus();
+};
+
+window.openPost = async (id) => {
+  const post = allPosts.find(p => p.id === id);
+  if (!post) return;
+
+  // 조회수 증가
+  await updateDoc(doc(db, 'posts', id), { views: increment(1) });
+  post.views = (post.views || 0) + 1;
+
+  const catBadge = post.category ? `<span class="badge-tag badge-${post.category}">${post.category}</span>` : '';
+  const pinBadge = post.isPinned ? '<span class="badge-tag badge-중요">📌 고정</span>' : '';
+  document.getElementById('modalBadges').innerHTML = pinBadge + catBadge;
+  document.getElementById('modalTitle').textContent = post.title || '';
+  document.getElementById('modalMeta').innerHTML = `<span>👁 ${post.views}</span><span>${timeAgo(post)}</span>`;
+  document.getElementById('modalContent').textContent = post.content || '';
+  document.getElementById('modalImages').innerHTML = (post.imageURLs||[]).map(url =>
+    `<img src="${url}" alt="">`
+  ).join('');
+
+  document.getElementById('postModal').style.display = 'flex';
+};
+
+window.closePostModal = (e) => {
+  if (e.target === document.getElementById('postModal'))
+    document.getElementById('postModal').style.display = 'none';
+};
+
+window.doLogin = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPw').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, pw);
+  } catch {
+    document.getElementById('loginErr').style.display = 'block';
+  }
+};
+
+window.doLogout = async () => {
+  await signOut(auth);
+};
+</script>
+</body>
+</html>
