@@ -1436,7 +1436,7 @@ function classRowView(c) {
   const catBg = isMath ? '#1e2a6d' : '#00391e';
   return `<tr id="row-${c.id}">
     <td style="background:${catBg};color:#fff;font-size:13px;font-weight:700;padding:8px 10px;white-space:nowrap;">${label}</td>
-    <td style="font-weight:700;">${c.name}</td>
+    <td style="font-weight:700;cursor:pointer;color:#1e2a6d;text-decoration:underline;text-underline-offset:3px;" onclick="toggleClassStudents('${c.id}')">${c.name}</td>
     <td style="font-size:13px;">${c.days||''} ${c.time||''}</td>
     <td style="font-size:13px;">${c.teacherName||'-'}</td>
     <td style="font-size:13px;color:#666;">${c.classroom||'-'}</td>
@@ -1590,6 +1590,127 @@ window.deleteClass = async (id) => {
   if (!confirm('반을 삭제하시겠습니까?')) return;
   await deleteDoc(doc(db, 'classes', id));
   await loadClasses();
+};
+
+// ── 반 학생 아코디언 ──────────────────────────────────
+let openClassDetailId = null;
+
+window.toggleClassStudents = (classId) => {
+  const existing = document.getElementById(`detail-row-${classId}`);
+  if (existing) {
+    existing.remove();
+    openClassDetailId = null;
+    return;
+  }
+  // 다른 열려있는 것 닫기
+  if (openClassDetailId) {
+    const prev = document.getElementById(`detail-row-${openClassDetailId}`);
+    if (prev) prev.remove();
+  }
+  openClassDetailId = classId;
+  renderClassDetailRow(classId);
+};
+
+function renderClassDetailRow(classId) {
+  const c = classList.find(x => x.id === classId);
+  if (!c) return;
+  const isMath = CAT_IS_MATH(c.category || c.subject || '');
+  const accentColor = isMath ? '#1e2a6d' : '#00391e';
+
+  const studentIds = c.studentIds || [];
+  const enrolled = studentList.filter(s => studentIds.includes(s.id))
+    .sort((a,b) => a.name.localeCompare(b.name, 'ko'));
+  const notEnrolled = studentList.filter(s => !studentIds.includes(s.id))
+    .sort((a,b) => a.name.localeCompare(b.name, 'ko'));
+
+  const studentRows = enrolled.length
+    ? enrolled.map(s => {
+        const courses = getCoursesArr(s);
+        const mathOn = courses.includes('math');
+        const engOn  = courses.includes('english');
+        const discOn = courses.includes('논술');
+        return `<tr style="background:#fff;">
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-weight:600;">${s.name}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666;">${s.grade||'-'}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:12px;color:#666;">${s.school||'-'}</td>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
+            <div style="display:inline-flex;gap:4px;">
+              <div class="course-dot"><span>수</span><div class="dot ${mathOn?'on-math':''}"></div></div>
+              <div class="course-dot"><span>영</span><div class="dot ${engOn?'on-english':''}"></div></div>
+              <div class="course-dot"><span>논</span><div class="dot ${discOn?'on-discussion':''}"></div></div>
+            </div>
+          </td>
+          <td style="padding:8px 12px;border-bottom:1px solid #f0f0f0;">
+            <button class="del-btn" onclick="removeStudentFromClass('${classId}','${s.id}')">제외</button>
+          </td>
+        </tr>`;
+      }).join('')
+    : `<tr><td colspan="5" style="padding:16px;text-align:center;color:#bbb;font-size:13px;">등록된 학생 없음</td></tr>`;
+
+  const addOpts = notEnrolled.map(s => `<option value="${s.id}">${s.name} (${s.grade||''})</option>`).join('');
+
+  const detailHtml = `
+    <tr id="detail-row-${classId}">
+      <td colspan="7" style="padding:0;background:#f8faff;border-bottom:2px solid ${accentColor};">
+        <div style="padding:14px 16px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+            <span style="font-size:13px;font-weight:700;color:${accentColor};">📋 ${c.name} — 학생 목록 (${enrolled.length}명)</span>
+            <button onclick="toggleClassStudents('${classId}')" style="background:none;border:none;cursor:pointer;font-size:18px;color:#bbb;line-height:1;">✕</button>
+          </div>
+          <div style="overflow-x:auto;margin-bottom:12px;">
+            <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+              <thead><tr style="background:${accentColor};">
+                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">이름</th>
+                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">학년</th>
+                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">학교</th>
+                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">수강</th>
+                <th style="padding:8px 12px;font-size:11px;color:#fff;text-align:left;font-weight:600;">관리</th>
+              </tr></thead>
+              <tbody>${studentRows}</tbody>
+            </table>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <select id="addStu-${classId}" style="flex:1;padding:8px 12px;border:1.5px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:inherit;outline:none;">
+              <option value="">-- 학생 추가 선택 --</option>${addOpts}
+            </select>
+            <button class="submit-btn" style="background:${accentColor};padding:8px 16px;font-size:13px;" onclick="addStudentToClassInline('${classId}')">추가</button>
+          </div>
+        </div>
+      </td>
+    </tr>`;
+
+  const mainRow = document.getElementById(`row-${classId}`);
+  if (mainRow) mainRow.insertAdjacentHTML('afterend', detailHtml);
+}
+
+window.addStudentToClassInline = async (classId) => {
+  const studentId = document.getElementById(`addStu-${classId}`).value;
+  if (!studentId) return alert('학생을 선택하세요.');
+  const c = classList.find(x => x.id === classId);
+  const ids = [...(c.studentIds || [])];
+  if (ids.includes(studentId)) return alert('이미 등록된 학생입니다.');
+  ids.push(studentId);
+  await updateDoc(doc(db, 'classes', classId), { studentIds: ids });
+  const idx = classList.findIndex(x => x.id === classId);
+  if (idx >= 0) classList[idx].studentIds = ids;
+  renderClassDetailRow(classId);
+  // 기존 detail row 교체
+  const old = document.getElementById(`detail-row-${classId}`);
+  if (old) old.remove();
+  renderClassDetailRow(classId);
+  renderClassTable();
+};
+
+window.removeStudentFromClass = async (classId, studentId) => {
+  const c = classList.find(x => x.id === classId);
+  const ids = (c.studentIds || []).filter(i => i !== studentId);
+  await updateDoc(doc(db, 'classes', classId), { studentIds: ids });
+  const idx = classList.findIndex(x => x.id === classId);
+  if (idx >= 0) classList[idx].studentIds = ids;
+  const old = document.getElementById(`detail-row-${classId}`);
+  if (old) old.remove();
+  renderClassDetailRow(classId);
+  renderClassTable();
 };
 
 window.assignStudentToClass = async () => {
