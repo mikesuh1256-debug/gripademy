@@ -244,7 +244,16 @@ tr:last-child td{border-bottom:none;}
       <div class="card" id="notionPreviewCard" style="display:none;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <h2 style="margin:0;">📋 미리보기 (<span id="notionCount">0</span>명)</h2>
-          <button class="submit-btn" onclick="importAllStudents()" style="background:#2e7d32;">✅ 전체 Firebase에 저장</button>
+          <button class="submit-btn" id="importBtn" onclick="importAllStudents()" style="background:#2e7d32;">✅ 전체 Firebase에 저장</button>
+        </div>
+        <div id="importProgressWrap" style="display:none;margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:6px;">
+            <span id="importProgressText">저장 중...</span>
+            <span id="importProgressPct">0%</span>
+          </div>
+          <div style="background:#e0e0e0;border-radius:20px;height:10px;overflow:hidden;">
+            <div id="importProgressBar" style="height:100%;width:0%;background:#1e2a6d;border-radius:20px;transition:width .2s;"></div>
+          </div>
         </div>
         <p style="font-size:12px;color:#aaa;margin-bottom:12px;">저장할 필드를 확인하세요. 이름, 학년, 학교, 과목, 학부모, 연락처가 자동 매핑됩니다.</p>
         <div style="overflow-x:auto;">
@@ -734,17 +743,33 @@ window.importAllStudents = async () => {
   if (!notionStudentsData.length) return alert('먼저 데이터를 불러오세요.');
   if (!confirm(`${notionStudentsData.length}명을 Firebase에 저장하시겠습니까?\n(기존 학생은 업데이트, 신규는 추가)`)) return;
 
+  const btn = document.getElementById('importBtn');
   const status = document.getElementById('notionStatus');
-  status.textContent = '저장 중...';
+  const wrap = document.getElementById('importProgressWrap');
+  const bar = document.getElementById('importProgressBar');
+  const pText = document.getElementById('importProgressText');
+  const pPct = document.getElementById('importProgressPct');
+
+  btn.disabled = true;
+  btn.textContent = '저장 중...';
+  status.style.display = 'none';
+  wrap.style.display = 'block';
+  bar.style.background = '#1e2a6d';
+
   let count = 0;
   const total = notionStudentsData.length;
+
+  const updateProgress = () => {
+    const pct = Math.round((count / total) * 100);
+    bar.style.width = pct + '%';
+    pText.textContent = `저장 중... ${count} / ${total}명`;
+    pPct.textContent = pct + '%';
+  };
+  updateProgress();
 
   for (const s of notionStudentsData) {
     const name = s._name || s[notionTitleField] || s[notionFieldsData[0]];
     if (!name) continue;
-
-    // 노션 필드 다중 시도 헬퍼
-    const pick = (...keys) => { for (const k of keys) { if (s[k] !== undefined && s[k] !== '') return s[k]; } return ''; };
 
     const studentData = {
       name,
@@ -764,12 +789,10 @@ window.importAllStudents = async () => {
       notionId: s.notionId,
     };
 
-    // 노션 전체 raw 데이터도 함께 저장 (나중에 필드 추가 시 활용)
     const rawNotion = {};
     notionFieldsData.forEach(f => { if (s[f] !== undefined) rawNotion[f] = s[f]; });
     studentData._notionRaw = rawNotion;
 
-    // notionId로 기존 학생 찾아서 업데이트, 없으면 새로 생성
     const existing = await getDocs(query(collection(db, 'students'), where('notionId', '==', s.notionId)));
     if (!existing.empty) {
       await updateDoc(doc(db, 'students', existing.docs[0].id), studentData);
@@ -777,10 +800,29 @@ window.importAllStudents = async () => {
       await addDoc(collection(db, 'students'), { ...studentData, createdAt: new Date() });
     }
     count++;
-    if (count % 20 === 0) status.textContent = `저장 중... (${count}/${total})`;
+    updateProgress();
   }
-  status.textContent = `✅ ${count}명 저장 완료! (학교·학년·과목·연락처 등 전체 필드 저장)`;
+
+  // 완료
+  bar.style.background = '#2e7d32';
+  bar.style.width = '100%';
+  pText.textContent = `✅ ${count}명 저장 완료!`;
+  pPct.textContent = '100%';
+  btn.textContent = '✅ 전체 Firebase에 저장';
+  btn.disabled = false;
+
+  // 학생 목록 갱신 후 학생 관리 탭으로 이동
   await loadStudents();
+  setTimeout(() => {
+    showTab('students');
+    document.querySelectorAll('.tab')[0].click();
+    // 완료 토스트 알림
+    const toast = document.createElement('div');
+    toast.textContent = `✅ ${count}명 학생 정보가 업데이트됐습니다`;
+    toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#2e7d32;color:#fff;padding:12px 24px;border-radius:30px;font-size:14px;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }, 500);
 };
 
 async function loadScheduleAdmin() {
