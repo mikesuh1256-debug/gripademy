@@ -7,7 +7,7 @@
 <style>
 /* ── 기반 ── */
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;background:#f4f6fb;min-height:100vh;color:#1a1d23;font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;background:#f7f8fc;min-height:100vh;color:#1a1d23;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 
 /* ── 로그인 ── */
 .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#f4f6fb 0%,#e8edf8 100%);}
@@ -27,47 +27,49 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;backg
 .logout-btn:hover{background:#e9ecef;color:#374151;}
 
 /* ── 바디 ── */
-.body{max-width:1080px;margin:0 auto;padding:22px 20px;}
+.body{max-width:100%;margin:0;padding:0 20px 32px;}
+@media(min-width:1400px){.body{padding:0 40px 32px;}}
 
 /* ── 탭 ── */
-.tabs{display:flex;gap:1px;margin-bottom:22px;background:#e9ecef;border-radius:10px;padding:4px;width:fit-content;flex-wrap:wrap;}
-.tab{padding:7px 16px;border-radius:7px;border:none;background:transparent;font-size:13px;font-weight:600;cursor:pointer;color:#9ca3af;font-family:inherit;transition:all .15s;white-space:nowrap;}
-.tab.active{background:#fff;color:#1e2a6d;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.tabs{display:flex;gap:1px;padding:14px 0 0;margin-bottom:0;background:transparent;flex-wrap:wrap;border-bottom:2px solid #e9ecef;}
+.tab{padding:10px 20px;border-radius:0;border:none;background:transparent;font-size:14px;font-weight:600;cursor:pointer;color:#9ca3af;font-family:inherit;transition:all .15s;white-space:nowrap;border-bottom:2.5px solid transparent;margin-bottom:-2px;}
+.tab.active{color:#1e2a6d;border-bottom-color:#1e2a6d;background:transparent;}
 .tab:hover:not(.active){color:#374151;}
 
-/* ── 카드 ── */
-.card{background:#fff;border-radius:12px;padding:22px 24px;margin-bottom:14px;border:1px solid #e9ecef;}
-.card h2{font-size:14px;font-weight:700;color:#1a1d23;margin-bottom:18px;}
+/* ── 섹션 (카드 대체) ── */
+.card{background:transparent;border-radius:0;padding:24px 0;margin-bottom:0;border:none;border-bottom:1px solid #e9ecef;}
+.card:last-child{border-bottom:none;}
+.card h2{font-size:16px;font-weight:700;color:#1a1d23;margin-bottom:18px;}
 
 /* ── 폼 ── */
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
-.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
-.form-group{display:flex;flex-direction:column;gap:5px;}
-.form-group label{font-size:12px;font-weight:600;color:#6b7280;}
-.form-group select,.form-group input{padding:9px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:13px;font-family:inherit;outline:none;color:#1a1d23;background:#fff;transition:border-color .15s;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group label{font-size:13px;font-weight:600;color:#6b7280;}
+.form-group select,.form-group input{padding:10px 14px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;font-family:inherit;outline:none;color:#1a1d23;background:#fff;transition:border-color .15s;}
 .form-group select:focus,.form-group input:focus{border-color:#1e2a6d;box-shadow:0 0 0 3px rgba(30,42,109,.06);}
 
 /* ── 버튼 ── */
-.submit-btn{padding:0 18px;background:#1e2a6d;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;height:36px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
+.submit-btn{padding:0 20px;background:#1e2a6d;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .15s;height:42px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
 .submit-btn:hover{background:#263580;}
 .submit-btn:disabled{opacity:.45;cursor:default;}
-.success-msg{color:#16a34a;font-size:12px;margin-top:8px;display:none;}
+.success-msg{color:#16a34a;font-size:14px;margin-top:8px;display:none;}
 
 /* ── 테이블 ── */
 table{width:100%;border-collapse:collapse;}
-th{padding:9px 14px;background:#f8f9fc;font-size:11px;color:#9ca3af;font-weight:700;text-align:left;letter-spacing:.04em;border-bottom:1px solid #e9ecef;}
-td{padding:11px 14px;font-size:13px;color:#374151;border-bottom:1px solid #f3f4f6;}
+th{padding:12px 16px;background:#f4f6fb;font-size:12px;color:#9ca3af;font-weight:700;text-align:left;letter-spacing:.03em;border-bottom:1px solid #e9ecef;}
+td{padding:14px 16px;font-size:15px;color:#374151;border-bottom:1px solid #f0f2f8;}
 tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:#f8f9fc;}
 
 /* ── 배지·버튼 ── */
-.badge{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:700;}
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700;}
 .badge-math{background:#eff6ff;color:#1d4ed8;}
 .badge-eng{background:#f0fdf4;color:#15803d;}
-.del-btn{background:transparent;color:#ef4444;border:1.5px solid #fecaca;padding:3px 9px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit;transition:all .15s;height:28px;display:inline-flex;align-items:center;}
+.del-btn{background:transparent;color:#ef4444;border:1.5px solid #fecaca;padding:5px 13px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;transition:all .15s;height:34px;display:inline-flex;align-items:center;}
 .del-btn:hover{background:#fef2f2;}
 
-@media(max-width:600px){.form-row,.form-row-3{grid-template-columns:1fr;}.tabs{width:100%;}}
+@media(max-width:600px){.form-row,.form-row-3{grid-template-columns:1fr;}.tabs{width:100%;overflow-x:auto;}}
 
 /* ── 모달 ── */
 .modal-overlay{position:fixed;inset:0;background:rgba(17,24,39,.4);z-index:1000;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(3px);}
@@ -255,19 +257,25 @@ tbody tr:hover td{background:#f8f9fc;}
               <option value="english">영어</option>
               <option value="논술">논술</option>
             </select>
+            <select id="filterClass" onchange="filterStudents()" style="padding:8px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:14px;outline:none;color:#374151;background:#fff;">
+              <option value="">전체 반</option>
+            </select>
+            <select id="filterTeacher" onchange="filterStudents()" style="padding:8px 12px;border:1.5px solid #e5e7eb;border-radius:7px;font-size:14px;outline:none;color:#374151;background:#fff;">
+              <option value="">전체 선생님</option>
+            </select>
           </div>
         </div>
         <div style="overflow-x:auto;">
-          <table style="width:100%;border-collapse:collapse;min-width:600px;">
+          <table style="width:100%;border-collapse:collapse;">
             <thead><tr>
-              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">이름</th>
-              <th id="th-grade" onclick="toggleSortMode('grade')" style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;cursor:pointer;user-select:none;">학년 <span id="sort-arrow-grade"></span></th>
-              <th id="th-school" onclick="toggleSortMode('school')" style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;cursor:pointer;user-select:none;">학교 <span id="sort-arrow-school"></span></th>
-              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:center;">수영논</th>
-              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">연락처</th>
-              <th style="padding:10px 12px;background:#f5f5f5;font-size:12px;color:#999;text-align:left;">관리</th>
+              <th>이름</th>
+              <th id="th-grade" onclick="toggleSortMode('grade')" style="cursor:pointer;user-select:none;">학년 <span id="sort-arrow-grade"></span></th>
+              <th id="th-school" onclick="toggleSortMode('school')" style="cursor:pointer;user-select:none;">학교 <span id="sort-arrow-school"></span></th>
+              <th style="text-align:center;">수영논</th>
+              <th>연락처</th>
+              <th>관리</th>
             </tr></thead>
-            <tbody id="studentList"><tr><td colspan="7" style="text-align:center;color:#bbb;padding:20px;">학생 없음</td></tr></tbody>
+            <tbody id="studentList"><tr><td colspan="6" style="text-align:center;color:#bbb;padding:24px;">학생 없음</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -1071,17 +1079,48 @@ function renderStudentTable(list) {
 }
 
 window.filterStudents = () => {
-  const search = document.getElementById('searchStudent').value.toLowerCase();
-  const grade  = document.getElementById('filterGrade').value;
-  const course = document.getElementById('filterCourse').value;
+  const search  = document.getElementById('searchStudent').value.toLowerCase();
+  const grade   = document.getElementById('filterGrade').value;
+  const course  = document.getElementById('filterCourse').value;
+  const classId = document.getElementById('filterClass').value;
+  const teacher = document.getElementById('filterTeacher').value;
+
+  // 반 필터용: 해당 반 studentIds
+  const classStudentIds = classId
+    ? new Set((classList.find(c => c.id === classId)?.studentIds || []))
+    : null;
+  // 선생님 필터용: 해당 선생님이 담임인 반들의 studentIds
+  const teacherStudentIds = teacher
+    ? new Set(classList.filter(c => c.teacherName === teacher).flatMap(c => c.studentIds || []))
+    : null;
+
   const filtered = studentList.filter(s => {
-    const matchName   = !search || s.name.toLowerCase().includes(search);
-    const matchGrade  = !grade  || s.grade === grade;
-    const matchCourse = !course || getCoursesArr(s).includes(course);
-    return matchName && matchGrade && matchCourse;
+    if (!search || s.name.toLowerCase().includes(search)) {} else return false;
+    if (!grade  || s.grade === grade) {} else return false;
+    if (!course || getCoursesArr(s).includes(course)) {} else return false;
+    if (classStudentIds && !classStudentIds.has(s.id)) return false;
+    if (teacherStudentIds && !teacherStudentIds.has(s.id)) return false;
+    return true;
   });
   renderStudentTable(filtered);
 };
+
+// 반/선생님 드롭다운 채우기 (loadClasses 후 호출)
+function populateStudentFilters() {
+  const classSel = document.getElementById('filterClass');
+  const teacherSel = document.getElementById('filterTeacher');
+  if (!classSel || !teacherSel) return;
+  const prevClass = classSel.value;
+  const prevTeacher = teacherSel.value;
+  classSel.innerHTML = '<option value="">전체 반</option>' +
+    [...classList].sort((a,b)=>a.name.localeCompare(b.name,'ko'))
+      .map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  const teachers = [...new Set(classList.map(c=>c.teacherName).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ko'));
+  teacherSel.innerHTML = '<option value="">전체 선생님</option>' +
+    teachers.map(t => `<option value="${t}">${t}</option>`).join('');
+  classSel.value = prevClass;
+  teacherSel.value = prevTeacher;
+}
 
 window.showPhotoLightbox = (url) => {
   const lb = document.createElement('div');
@@ -1602,6 +1641,7 @@ async function loadClasses() {
   if (cSel) cSel.innerHTML = classList.map(c => `<option value="${c.id}">${c.name} (${CAT_LABEL[c.category||c.subject]||'-'})</option>`).join('');
   const sSel = document.getElementById('assignStudent');
   if (sSel) sSel.innerHTML = studentList.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  populateStudentFilters();
 }
 
 const ROOMS = ['','601호','602호','603호','6층 그립룸','7층 그립룸','701호','702호','703호','704호','705호','706호','707호','708호'];
