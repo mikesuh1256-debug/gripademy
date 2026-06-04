@@ -1,267 +1,229 @@
 # 그립학원 웹사이트 — Claude Code 작업 가이드
 
 ## 프로젝트 개요
-매쓰그립 수학학원 + 잉그립 영어학원 통합 웹사이트  
-기존 HTML 프로토타입을 기반으로 **로고 이미지 + 실사 사진** 삽입 작업
+- **학원명**: 매쓰그립 수학학원 + 잉그립 영어학원
+- **도메인**: megrip.com (Netlify 호스팅, 가비아 도메인)
+- **Firebase 프로젝트**: gripacademyweb1
+- **노션 Integration 토큰**: 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
+- **GitHub**: https://github.com/mikesuh1256-debug/gripacademy.git
+- **배포**: GitHub push → Netlify 자동 배포
 
 ---
 
-## 폴더 구조 (이미지 추가 후 완성형)
+## 파일 구조
 
 ```
 gripacademy/
-├── index.html          ← 메인 통합 페이지 (완성)
-├── math.html           ← 매쓰그립 수학 세부 페이지 (완성)
-├── english.html        ← 잉그립 영어 세부 페이지 (완성)
-├── CLAUDE.md           ← 이 파일
-└── assets/
-    ├── images/
-    │   ├── logo/
-    │   │   ├── math-logo-vertical.png     ← 매쓰그립 수직형 로고 (검정배경)
-    │   │   ├── math-logo-horizontal.png   ← 매쓰그립 수평형 로고 (검정배경)
-    │   │   ├── eng-logo-vertical.png      ← 잉그립 수직형 로고 (검정배경)
-    │   │   └── eng-logo-horizontal.png    ← 잉그립 수평형 로고 (검정배경)
-    │   └── photos/
-    │       ├── director.jpg               ← 원장님 사진 (정면, 증명사진 or 강의 중)
-    │       ├── classroom-math.jpg         ← 수학 강의실 / 수업 장면
-    │       ├── classroom-eng.jpg          ← 영어 강의실 / 수업 장면
-    │       ├── students-math.jpg          ← 수학 수업 중 학생들
-    │       ├── students-eng.jpg           ← 영어 수업 중 학생들
-    │       └── campus.jpg                 ← 학원 외관 or 내부 전경
+├── index.html              ← 메인 랜딩페이지
+├── math.html               ← 매쓰그립 수학 세부페이지
+├── english.html            ← 잉그립 영어 세부페이지
+├── admin.html              ← 간단 관리자 (GA링크, ID:mikesuh7)
+├── portal.html             ← 학부모 포털 (Firebase Auth)
+├── teacher.html            ← 선생님 포털 (Firebase Auth)
+├── portal-admin.html       ← 관리자 포털 (Firebase Auth) ★ 주요 작업 파일
+├── schedule.html           ← 학사일정 (노션 연동)
+├── netlify.toml            ← Netlify 설정
+├── netlify/functions/
+│   ├── schedule.js         ← 노션 학사일정 API (±6개월, role 파라미터)
+│   └── import-students.js  ← 노션 학생 DB 가져오기
+└── assets/images/
+    ├── logo/               ← 로고 파일들 (grip-icon.png 포함)
+    └── photos/
 ```
 
 ---
 
-## 작업 목록 (Claude Code에서 순서대로 실행)
+## Firebase 구조 (Firestore Collections)
 
-### TASK 1 — 폴더 생성
-```bash
-mkdir -p assets/images/logo
-mkdir -p assets/images/photos
+| 컬렉션 | 용도 |
+|--------|------|
+| `users` | 로그인 사용자 역할 (admin/teacher/parent) |
+| `students` | 학생 정보 155명 (노션에서 가져옴) |
+| `classes` | 반 정보 (영어/수학 반) |
+| `grades` | 성적 기록 |
+| `attendance` | 출결 기록 |
+| `attitude` | 태도 기록 |
+| `posts` | 게시판 |
+| `class_logs` | 수업일지 |
+| `student_records` | 학생 일일기록 |
+| `payments` | 수납 기록 |
+| `textbooks` | 교재 재고 |
+| `textbook_assignments` | 학생별 교재 배정 |
+
+---
+
+## 계정 정보
+
+| 역할 | 이메일 | 비고 |
+|------|--------|------|
+| 관리자(원장님) | mikesuh1256@gmail.com | Firestore role: admin |
+| 선생님 예시 | gripaca5612@gmail.com | Firestore role: teacher |
+
+---
+
+## 브랜드 컬러
+- 매쓰그립(수학): **#1e2a6d** (포인트 #19b1c6)
+- 잉그립(영어): **#00391e** (포인트 #ec6619)
+- 논술: **#ec6619**
+
+---
+
+## portal-admin.html — 현재 구현된 기능
+
+### 탭 구조 (6개)
+1. **학생 관리** — 학생 목록, 추가, 검색/필터, 상세 모달
+2. **반 관리** — 반 만들기, 반 목록, 학생 배정
+3. **교재 관리** — 교재 입고/재고, 반별 학생 교재 배정
+4. **DB 가져오기** — 노션에서 학생 전체 불러오기, 전체 삭제
+5. **계정 생성** — Firebase Auth 계정 등록
+6. **전체 일정** — 노션 학사일정 목록/캘린더 뷰
+
+---
+
+### 학생 관리
+
+**학생 목록**
+- 이름 옆 사진 미니 썸네일 (직사각형, 클릭 시 라이트박스)
+- 수/영/논 동그라미 수강과목 표시
+- 학교 헤더 클릭 → 학교별 그룹 정렬 (인원수 표시)
+- 학년 헤더 클릭 → 학년별 그룹 정렬
+- 연락처 tel: 링크 (모바일 바로 전화)
+- 필터: 이름검색, 학년, 과목, **반 이름**, **선생님 이름**
+- 관리 버튼: 수정(파란) + 삭제(빨간)
+
+**학생 정보 모달 (3탭)**
+- 상단 "학생 정보 편집" 타이틀
+- 사진: 직사각형(100×130), 클릭→라이트박스, 변경→크롭 모달
+  - 크롭 모달: 드래그 위치조정 + 슬라이더 확대/축소
+- 기본정보: 이름/학년/학교/생년월일/성별/주소/학생연락처/학부모연락처1,2/메모
+- **수강과목**: 수학/영어/논술 개별 토글 버튼 (courses 배열 저장)
+- 반 배정 탭: 수학반/영어반 분리, 담임+요일시간 표시, 최초등록일
+- 수납 탭: 수강료/교재비 구분, 총 수납금액 하단 고정
+
+**학생 데이터 모델 (Firestore students)**
 ```
-
-### TASK 2 — 로고 이미지 삽입
-
-**파일**: `index.html`, `math.html`, `english.html`
-
-#### index.html — NAV 로고 교체
-현재 텍스트로만 된 로고를 이미지로 교체.
-
-```html
-<!-- 교체 전 (현재) -->
-<a href="math.html" class="nav-logo-math">MATH<span>GRIP</span> 수학학원</a>
-
-<!-- 교체 후 -->
-<a href="math.html" class="nav-logo-math">
-  <img src="assets/images/logo/math-logo-horizontal.png"
-       alt="매쓰그립 수학학원"
-       style="height:32px; width:auto; object-fit:contain;">
-</a>
-```
-
-```html
-<!-- 교체 전 (현재) -->
-<a href="english.html" class="nav-logo-eng">ING<span>GRIP</span> 영어학원</a>
-
-<!-- 교체 후 -->
-<a href="english.html" class="nav-logo-eng">
-  <img src="assets/images/logo/eng-logo-horizontal.png"
-       alt="잉그립 영어학원"
-       style="height:32px; width:auto; object-fit:contain;">
-</a>
-```
-
-#### index.html — FOOTER 로고 교체
-```html
-<!-- 교체 전 -->
-<div class="footer-logo-math">MATH<span>GRIP</span> 수학학원</div>
-<div class="footer-logo-eng">ING<span>GRIP</span> 영어학원</div>
-
-<!-- 교체 후 -->
-<img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원"
-     style="height:28px; width:auto; filter:brightness(0) invert(1); opacity:0.8;">
-<img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원"
-     style="height:28px; width:auto; filter:brightness(0) invert(1); opacity:0.8;">
-```
-
-#### math.html — NAV 로고 교체
-```html
-<!-- 교체 전 -->
-<div class="nav-brand-text">MATH<span>GRIP</span> 수학학원</div>
-
-<!-- 교체 후 -->
-<img src="assets/images/logo/math-logo-horizontal.png"
-     alt="매쓰그립 수학학원"
-     style="height:34px; width:auto; object-fit:contain;">
-```
-
-#### english.html — NAV 로고 교체
-```html
-<!-- 교체 전 -->
-<div class="nav-brand-text">ING<span>GRIP</span> 영어학원</div>
-
-<!-- 교체 후 -->
-<img src="assets/images/logo/eng-logo-horizontal.png"
-     alt="잉그립 영어학원"
-     style="height:34px; width:auto; object-fit:contain;">
+name, grade, school, courses[], course(하위호환),
+birthday, gender, address, studentPhone,
+phone, parentRelation1, phone2, parentRelation2,
+memo, status(재원/퇴원), notionId, photoURL, createdAt
 ```
 
 ---
 
-### TASK 3 — 원장님 사진 삽입
+### 반 관리
 
-**파일**: `index.html`  
-**위치**: DIRECTOR 섹션 — 현재 이니셜 원형(`<div class="director-initials">서</div>`) 대체
+**반 만들기**
+- 수학반/영어반 2컬럼 폼
+- 반구분: 초등/중등/고등수학, 초등/중등/고등영어
+- 담임 드롭다운: 수학(변선숙T·오미경T·안영균T·박진희T·권유경T), 영어(Emma·Rita·Jay)
+- 강의실: 601~603호, 6층/7층 그립룸, 701~708호
 
-```html
-<!-- 교체 전 -->
-<div class="director-initials">서</div>
+**반 목록**
+- 2단계 필터: 카테고리 → 요일 서브메뉴
+- 정렬 버튼: 기본순/담임별/강의실별/반이름순
+- 구분 컬럼: 수학=#1e2a6d 배경, 영어=#00391e 배경
+- 수정(인라인): 반명/구분/요일시간/담임/강의실 즉시 편집
+- **반이름 클릭 → 아코디언 학생 관리**
+  - 상단: 현재 등록 학생 pill (✕로 즉시 제외)
+  - 하단: 이름 검색 → 결과 체크(누적) → 등록 버튼
+  - 등록 시: 수학반→수학 과목 자동 추가, 영어반→영어 자동 추가
 
-<!-- 교체 후 -->
-<img src="assets/images/photos/director.jpg"
-     alt="서명은 원장"
-     style="width:120px; height:120px; border-radius:50%;
-            object-fit:cover; object-position:top center;
-            border:3px solid rgba(25,177,198,0.4);
-            margin:0 auto 20px; display:block;">
+**반 데이터 모델 (Firestore classes)**
 ```
+name, subject(math/english), category(math_elem 등),
+days, time, schedule, teacherName, classroom,
+studentIds[], createdAt
+```
+
+**카테고리 매핑**
+- math_elem/math_mid/math_high
+- english_elem/english_mid/english_high
 
 ---
 
-### TASK 4 — 수학 페이지 사진 삽입
+### 교재 관리
 
-**파일**: `math.html`  
-**위치**: HERO 섹션 하단 또는 TRACK 섹션 사이에 배치
-
-HERO 섹션 `</section>` 바로 위에 아래 코드 삽입:
-```html
-<!-- 캠퍼스/수업 사진 배너 -->
-<div style="display:grid; grid-template-columns:1fr 1fr; height:320px; overflow:hidden;">
-  <img src="assets/images/photos/classroom-math.jpg"
-       alt="수학 강의실"
-       style="width:100%; height:100%; object-fit:cover; display:block;">
-  <img src="assets/images/photos/students-math.jpg"
-       alt="수학 수업 장면"
-       style="width:100%; height:100%; object-fit:cover; display:block;">
-</div>
-```
+- 교재 입고: 교재명/출판사/수량/단가/과목 → Firestore textbooks
+- 재고 추가/삭제
+- 반 선택 → 학생 목록 + 배정된 교재 표시
+- 교재 배정 → 재고 자동 차감 / 취소 → 재고 복구
 
 ---
 
-### TASK 5 — 영어 페이지 사진 삽입
+### DB 가져오기 (노션 연동)
 
-**파일**: `english.html`  
-**위치**: HERO 섹션 직후
+**노션 필드명 (실제 확인된 컬럼명)**
+- 이름: title 필드
+- 학교: `학교`
+- 학년: `학년`
+- 수학 등록: `수학 등록` (체크박스)
+- 영어 등록: `영어 등록` (체크박스)
+- 논술 등록: `논술 등록` (체크박스)
+- 보호자 연락처: `보호자 연락처` (쉼표로 phone/phone2 분리)
+- 학생 연락처: `학생 연락처`
 
-HERO `</section>` 바로 다음에 삽입:
-```html
-<div style="display:grid; grid-template-columns:1fr 1fr; height:320px; overflow:hidden;">
-  <img src="assets/images/photos/classroom-eng.jpg"
-       alt="영어 강의실"
-       style="width:100%; height:100%; object-fit:cover; display:block;">
-  <img src="assets/images/photos/students-eng.jpg"
-       alt="영어 수업 장면"
-       style="width:100%; height:100%; object-fit:cover; display:block;">
-</div>
-```
-
----
-
-### TASK 6 — 메인 campus 사진 삽입 (선택)
-
-**파일**: `index.html`  
-**위치**: BANNER 섹션과 PROGRAMS 섹션 사이
-
-```html
-<!-- 학원 전경 풀블리드 사진 -->
-<div style="height:400px; overflow:hidden; position:relative;">
-  <img src="assets/images/photos/campus.jpg"
-       alt="학원 전경"
-       style="width:100%; height:100%; object-fit:cover; object-position:center;
-              filter:brightness(0.7);">
-  <div style="position:absolute; inset:0; display:flex; align-items:center;
-              justify-content:center; flex-direction:column; gap:12px;">
-    <p style="font-size:12px; letter-spacing:4px; color:rgba(255,255,255,0.6);
-              text-transform:uppercase; font-family:'Montserrat',sans-serif;">
-      서울 서대문구 가재울
-    </p>
-    <p style="font-size:28px; font-weight:700; color:#fff; letter-spacing:-0.5px;">
-      15년 전통의 명문 학원
-    </p>
-  </div>
-</div>
-```
+**import 흐름**
+1. 전체 학생 삭제 (빨간 버튼) → Firebase students 전체 삭제
+2. 노션에서 불러오기 → 진행률 바 표시 (1명당 갱신)
+3. 전체 Firebase에 저장 → 완료 시 학생 관리 탭 자동 이동
 
 ---
 
-## 로고 파일 배경 처리 안내
+### 전체 일정
 
-현재 로고 PNG 파일들이 **검정 배경**으로 되어 있음.
-
-### 옵션 A — 배경 제거 (권장)
-로고 PNG를 투명 배경으로 변환 후 사용.  
-무료 도구: [remove.bg](https://www.remove.bg) 또는 Photoshop
-
-### 옵션 B — CSS mix-blend-mode 활용 (즉시 가능)
-배경 제거 없이 검정 배경 로고를 흰 배경에 올릴 때:
-```css
-.nav-logo-math img,
-.nav-logo-eng img {
-  mix-blend-mode: multiply;  /* 흰 배경에서 검정 배경 제거 효과 */
-}
-```
-어두운 배경(HERO, DIRECTOR 섹션)에서는:
-```css
-img.logo-on-dark {
-  filter: brightness(0) invert(1);  /* 검정 로고 → 흰색으로 반전 */
-}
-```
-
-### 옵션 C — CSS filter로 색상 맞추기
-```css
-/* 검정 로고를 매쓰그립 네이비(#1e2a6d)로 */
-img.math-logo {
-  filter: brightness(0) saturate(100%)
-          invert(13%) sepia(52%) saturate(1200%)
-          hue-rotate(210deg) brightness(90%) contrast(95%);
-}
-/* 검정 로고를 잉그립 그린(#00391e)으로 */
-img.eng-logo {
-  filter: brightness(0) saturate(100%)
-          invert(16%) sepia(63%) saturate(900%)
-          hue-rotate(120deg) brightness(85%) contrast(95%);
-}
-```
+- Netlify function: `/.netlify/functions/schedule?role=admin`
+- 날짜 범위: ±6개월
+- **목록 뷰**: 월별 그룹, 날짜블록+일정명+부서뱃지
+- **캘린더 뷰**: 월 그리드, 날짜에 색상 점(●), 클릭 → 해당 월 일정 목록
+- 부서 색상: 원장만=빨강, 영어과=초록, 수학과=파랑, 전체학원=보라
 
 ---
 
-## 브랜드 컬러 정리
+## UI 디자인 현황
 
-| 학원 | 메인 | 포인트 | 서브 |
-|------|------|--------|------|
-| 매쓰그립 수학 | `#1e2a6d` | `#19b1c6` | `#7e7e7f` |
-| 잉그립 영어 | `#00391e` | `#ec6619` | `#7e7e7f` |
+**전체 스타일**
+- 배경: #f7f8fc, 기본 폰트: 15px
+- 탭: 3열(모바일)/6열(데스크탑) 그리드, 활성=남색 박스
+- 콘텐츠: 흰 박스 하나, 내부 섹션은 구분선만
+- 카드 박스 없음 (이전 중첩 박스 제거됨)
 
----
-
-## Claude Code 실행 순서 요약
-
-```
-1. cd gripacademy
-2. mkdir -p assets/images/logo assets/images/photos
-3. 로고 PNG 파일 → assets/images/logo/ 에 복사
-4. 사진 파일 → assets/images/photos/ 에 복사
-5. Claude Code에게 이 CLAUDE.md 파일 읽게 하고 TASK 순서대로 실행 요청
-6. 브라우저에서 index.html 열어서 확인
-```
+**반 관리 섹션**
+- 반만들기: 수학 2.5px 남색 테두리, 영어 2.5px 초록 테두리
+- 반목록: border 박스로 감싸기
 
 ---
 
-## 배포 준비 (옵션)
+## 영어과 반 구조
 
-로컬 확인 완료 후 실제 배포를 원하면:
-- **Vercel**: `vercel deploy` (무료, 빠름)
-- **GitHub Pages**: `git push` 후 자동 배포
-- **카페24/가비아**: FTP로 파일 업로드
+**월수금 3:00-5:00**: Run_B(Emma), Run_C(Rita), Master A-1, Reach1(Jay/Rita), Reach2(Emma/Jay), Touch1(Emma/Rita)  
+**화목 3:30-6:00**: Catch2(Emma/Jay), Hold(Jay/Rita), Touch2(Emma/Rita)
 
-현재 구조는 순수 정적 HTML이므로 **어떤 호스팅이든 그대로 올리면 됨.**
+선생님(영어): Emma, Rita, Jay  
+선생님(수학): 변선숙T, 오미경T, 안영균T, 박진희T, 권유경T
+
+---
+
+## 노션 연동
+
+| 기능 | DB ID |
+|------|-------|
+| 학사일정 | 1b2a6cf4db6a811b9f5ce34f2725857c |
+| 학생 DB | 1b2a6cf4db6a81ee9273ce8e72ec29a7 |
+
+학사일정 role 파라미터:
+- `?role=parent` → 공지대상: 수학/영어학부모/전체학원
+- `?role=teacher` → 해당부서: 영어과/수학과/전체학원
+- `?role=admin` → 전체
+
+---
+
+## 다음 세션 시작 방법
+
+```
+CLAUDE.md 읽고 이어서 작업해줘.
+```
+
+**주의사항**
+- push는 GitHub Desktop 또는 터미널 `git push origin main` 으로 직접 해야 함 (인증 문제)
+- 작업 완료 후 항상 CLAUDE.md 업데이트하기
+- 컨텍스트가 길어지면 새 세션 권장
