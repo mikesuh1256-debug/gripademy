@@ -61,8 +61,8 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;backg
 
 /* ── 테이블 ── */
 table{width:100%;border-collapse:collapse;}
-th{padding:14px 18px;background:#e8edf8;font-size:14px;color:#374151;font-weight:800;text-align:left;border-bottom:2px solid #c7d2fe;}
-td{padding:15px 18px;font-size:16px;color:#1a1d23;border-bottom:1px solid #eef0f9;}
+th{padding:14px 18px;background:#e8edf8;font-size:14px;color:#374151;font-weight:800;text-align:left;border-bottom:2px solid #c7d2fe;white-space:nowrap;}
+td{padding:15px 18px;font-size:16px;color:#1a1d23;border-bottom:1px solid #eef0f9;white-space:nowrap;}
 tr:last-child td{border-bottom:none;}
 tbody tr:hover td{background:#f0f3ff;}
 
@@ -231,7 +231,7 @@ tbody tr:hover td{background:#f0f3ff;}
     <div id="tab-students">
       <div class="card">
         <h2>➕ 학생 추가</h2>
-        <div class="class-section" style="border:2.5px solid #1e2a6d;background:#fafbff;">
+        <div class="class-section" style="border:2.5px solid #1e2a6d;background:#fafbff;max-width:460px;">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
             <div class="class-section-header" style="background:#1e2a6d;margin-bottom:0;">👤 학생 추가</div>
             <button class="submit-btn" onclick="addStudent()">학생 추가</button>
@@ -340,6 +340,37 @@ tbody tr:hover td{background:#f0f3ff;}
         </div>
         </div>
       </div>
+
+      <!-- 퇴원 학생 -->
+      <div class="card" id="withdrawnCard" style="display:none;">
+        <div style="border:2px solid #ffe0e0;border-radius:14px;padding:18px 16px;">
+          <h2 style="color:#c62828;margin-bottom:14px;">🚪 퇴원 학생</h2>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead><tr>
+                <th>이름</th><th>학년</th><th>학교</th><th>퇴원일</th><th>복원</th>
+              </tr></thead>
+              <tbody id="withdrawnList"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 삭제된 학생 -->
+      <div class="card" id="deletedCard" style="display:none;">
+        <div style="border:2px solid #e0e0e0;border-radius:14px;padding:18px 16px;">
+          <h2 style="color:#777;margin-bottom:14px;">🗑️ 삭제된 학생</h2>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;">
+              <thead><tr>
+                <th>이름</th><th>학년</th><th>학교</th><th>삭제일</th><th>복원</th>
+              </tr></thead>
+              <tbody id="deletedList"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <!-- DB 가져오기 -->
@@ -1174,10 +1205,56 @@ async function loadStudents() {
   studentList = [];
   snap.forEach(d => studentList.push({ id: d.id, ...d.data() }));
   renderStudentTable();
+  renderArchivedStudents();
   const sel = document.getElementById('uStudent');
   sel.innerHTML = '<option value="">선택 안함</option>';
-  studentList.forEach(s => sel.innerHTML += `<option value="${s.id}">${s.name}</option>`);
+  studentList.filter(s => s.status !== '삭제').forEach(s => sel.innerHTML += `<option value="${s.id}">${s.name}</option>`);
 }
+
+function renderArchivedStudents() {
+  const fmt = ts => ts?.toDate ? ts.toDate().toLocaleDateString('ko-KR') : (ts ? new Date(ts).toLocaleDateString('ko-KR') : '-');
+  const withdrawn = studentList.filter(s => s.status === '퇴원');
+  const deleted   = studentList.filter(s => s.status === '삭제');
+
+  const wCard = document.getElementById('withdrawnCard');
+  const dCard = document.getElementById('deletedCard');
+  if (wCard) wCard.style.display = withdrawn.length ? '' : 'none';
+  if (dCard) dCard.style.display = deleted.length   ? '' : 'none';
+
+  const wList = document.getElementById('withdrawnList');
+  if (wList) wList.innerHTML = withdrawn.length
+    ? withdrawn.map(s => `<tr>
+        <td style="font-weight:700;">${s.name}</td>
+        <td>${s.grade||'-'}</td><td>${s.school||'-'}</td>
+        <td style="color:#999;">${fmt(s.withdrawnAt)}</td>
+        <td><button class="submit-btn" style="padding:5px 12px;font-size:13px;" onclick="restoreStudent('${s.id}')">복원</button></td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:#bbb;padding:16px;">없음</td></tr>';
+
+  const dList = document.getElementById('deletedList');
+  if (dList) dList.innerHTML = deleted.length
+    ? deleted.map(s => `<tr>
+        <td style="font-weight:700;">${s.name}</td>
+        <td>${s.grade||'-'}</td><td>${s.school||'-'}</td>
+        <td style="color:#999;">${fmt(s.deletedAt)}</td>
+        <td style="white-space:nowrap;">
+          <button class="submit-btn" style="padding:5px 12px;font-size:13px;margin-right:4px;" onclick="restoreStudent('${s.id}')">복원</button>
+          <button class="del-btn" onclick="hardDeleteStudent('${s.id}')">영구삭제</button>
+        </td>
+      </tr>`).join('')
+    : '<tr><td colspan="5" style="text-align:center;color:#bbb;padding:16px;">없음</td></tr>';
+}
+
+window.restoreStudent = async (id) => {
+  await updateDoc(doc(db, 'students', id), { status: '재원', deletedAt: null, withdrawnAt: null });
+  await loadStudents();
+};
+
+window.hardDeleteStudent = async (id) => {
+  if (!confirm('영구 삭제합니다. 복원 불가합니다. 진행하시겠습니까?')) return;
+  await deleteDoc(doc(db, 'students', id));
+  await loadStudents();
+};
 
 // courses 배열 헬퍼 (구버전 course 필드 호환)
 function getCoursesArr(s) {
@@ -1233,7 +1310,7 @@ function groupHeaderHtml(label, count) {
 }
 
 function renderStudentTable(list) {
-  const data = list || studentList;
+  const data = list || studentList.filter(s => s.status !== '삭제' && s.status !== '퇴원');
   document.getElementById('studentCount').textContent = `${data.length}명`;
 
   if (!data.length) {
@@ -1300,6 +1377,7 @@ window.filterStudents = () => {
     : null;
 
   const filtered = studentList.filter(s => {
+    if (s.status === '삭제' || s.status === '퇴원') return false;
     if (!search || s.name.toLowerCase().includes(search)) {} else return false;
     if (!grade  || s.grade === grade) {} else return false;
     if (!course || getCoursesArr(s).includes(course)) {} else return false;
@@ -1710,12 +1788,10 @@ window.withdrawStudent = async (id) => {
   if (!confirm('정말 퇴원 처리하시겠습니까?')) return;
   await updateDoc(doc(db, 'students', id), {
     status: '퇴원',
-    withdrawDate: new Date(),
+    withdrawnAt: new Date(),
     updatedAt: new Date()
   });
-  const idx = studentList.findIndex(s => s.id === id);
-  if (idx >= 0) studentList[idx].status = '퇴원';
-  renderStudentTable();
+  await loadStudents();
   document.getElementById('studentModal').remove();
   alert('퇴원 처리됐습니다.');
 };
@@ -1812,8 +1888,8 @@ window.addStudent = async () => {
 };
 
 window.deleteStudent = async (id) => {
-  if (!confirm('정말 삭제하시겠습니까?')) return;
-  await deleteDoc(doc(db, 'students', id));
+  if (!confirm('삭제 후 복원 가능합니다. 삭제하시겠습니까?')) return;
+  await updateDoc(doc(db, 'students', id), { status: '삭제', deletedAt: new Date() });
   await loadStudents();
 };
 
