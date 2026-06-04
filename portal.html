@@ -46,18 +46,18 @@ body{font-family:'Noto Sans KR',system-ui,sans-serif;background:#f0f2f7;-webkit-
 .menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
 .menu-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;cursor:pointer;border-radius:12px;transition:background .15s;}
 .menu-item:active{background:#f0f2f7;}
-.menu-icon{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;}
+.menu-icon{font-size:46px;line-height:1;display:flex;align-items:center;justify-content:center;height:52px;}
 .menu-label{font-size:12px;font-weight:700;color:#333;text-align:center;line-height:1.3;}
 
-/* 아이콘 색상 */
-.icon-blue{background:linear-gradient(135deg,#4a90e2,#1e2a6d);}
-.icon-green{background:linear-gradient(135deg,#43e97b,#00391e);}
-.icon-orange{background:linear-gradient(135deg,#f7971e,#ffd200);}
-.icon-purple{background:linear-gradient(135deg,#a18cd1,#fbc2eb);}
-.icon-teal{background:linear-gradient(135deg,#19b1c6,#1e2a6d);}
-.icon-red{background:linear-gradient(135deg,#ff6b6b,#c62828);}
-.icon-yellow{background:linear-gradient(135deg,#f6d365,#fda085);}
-.icon-gray{background:linear-gradient(135deg,#bdc3c7,#95a5a6);}
+/* 서브 네비 */
+.sub-nav{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;display:flex;overflow-x:auto;padding:10px 14px;gap:8px;z-index:99;scrollbar-width:none;}
+.sub-nav::-webkit-scrollbar{display:none;}
+.sub-nav-btn{flex-shrink:0;padding:7px 16px;border-radius:20px;border:1.5px solid #e5e7eb;background:#fff;font-size:13px;font-weight:700;color:#555;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s;}
+.sub-nav-btn:active{background:#f0f2f7;}
+.sub-nav-btn.active{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+/* 벨 알림 */
+.bell-wrap{position:relative;}
+.bell-dot{position:absolute;top:2px;right:2px;width:8px;height:8px;background:#ef4444;border-radius:50%;display:none;border:1.5px solid rgba(255,255,255,.8);}
 
 /* ── 최신 공지 ── */
 .section-wrap{margin:0 14px 14px;margin-top:-8px;}
@@ -162,11 +162,15 @@ tr:last-child td{border-bottom:none;}
           <span>그립학원</span>
         </div>
         <div class="header-icons">
+          <div class="bell-wrap">
+            <button class="header-icon-btn" id="bellBtn" onclick="location.href='chat.html'" title="톡방">🔔</button>
+            <div class="bell-dot" id="bellDot"></div>
+          </div>
           <button class="header-icon-btn" onclick="doLogout()" title="로그아웃">🚪</button>
         </div>
       </div>
       <div class="header-greeting">
-        <div class="greeting-name" id="greetingName">안녕하세요!</div>
+        <div class="greeting-name"><span style="font-weight:500;font-size:16px;opacity:.8;">안녕하세요,</span><br><span id="greetingName">학부모님 👋</span></div>
         <div class="greeting-sub">오늘도 함께 성장하는 하루 되세요</div>
         <div class="student-pill">
           <span id="studentPillName">-</span>
@@ -176,39 +180,49 @@ tr:last-child td{border-bottom:none;}
       </div>
     </div>
 
+    <!-- 고정 서브 네비 -->
+    <div class="sub-nav">
+      <button class="sub-nav-btn active" onclick="showPage('home')">🏠 홈</button>
+      <button class="sub-nav-btn" onclick="showMyTab('grades')">👤 마이페이지</button>
+      <button class="sub-nav-btn" onclick="location.href='board.html'">📢 공지사항</button>
+      <button class="sub-nav-btn" onclick="location.href='chat.html'">💬 톡방</button>
+      <button class="sub-nav-btn" id="subBlogBtn">📝 블로그</button>
+      <button class="sub-nav-btn" id="subYoutubeBtn">▶ 유튜브</button>
+    </div>
+
     <!-- 아이콘 메뉴 카드 -->
     <div class="menu-card">
       <div class="menu-grid">
         <div class="menu-item" onclick="location.href='board.html'">
-          <div class="menu-icon icon-blue">📢</div>
+          <div class="menu-icon">📢</div>
           <span class="menu-label">공지사항</span>
         </div>
         <div class="menu-item" onclick="location.href='chat.html'">
-          <div class="menu-icon icon-green">💬</div>
+          <div class="menu-icon">💬</div>
           <span class="menu-label">톡방</span>
         </div>
         <div class="menu-item" onclick="location.href='schedule.html'">
-          <div class="menu-icon icon-orange">📅</div>
+          <div class="menu-icon">📅</div>
           <span class="menu-label">학사일정</span>
         </div>
         <div class="menu-item" onclick="location.href='board.html'">
-          <div class="menu-icon icon-purple">📚</div>
+          <div class="menu-icon">📚</div>
           <span class="menu-label">수업자료</span>
         </div>
         <div class="menu-item" onclick="location.href='board.html'">
-          <div class="menu-icon icon-yellow">🏆</div>
+          <div class="menu-icon">🏆</div>
           <span class="menu-label">수상</span>
         </div>
         <div class="menu-item" onclick="showMyTab('grades')">
-          <div class="menu-icon icon-teal">📊</div>
+          <div class="menu-icon">📊</div>
           <span class="menu-label">성적</span>
         </div>
         <div class="menu-item" onclick="showMyTab('attendance')">
-          <div class="menu-icon icon-red">📋</div>
+          <div class="menu-icon">📋</div>
           <span class="menu-label">출결</span>
         </div>
         <div class="menu-item" onclick="showPage('my')">
-          <div class="menu-icon icon-gray">👤</div>
+          <div class="menu-icon">👤</div>
           <span class="menu-label">내 정보</span>
         </div>
       </div>
@@ -302,7 +316,7 @@ tr:last-child td{border-bottom:none;}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAS9iH2_r33OP3fFazsEk5lcJL-oH0eWbU",
@@ -329,6 +343,7 @@ onAuthStateChanged(auth, async (user) => {
       await loadGrades(data.studentId);
       await loadRecentPosts();
       await loadRecentSchedule();
+      watchChatUnread(user.uid);
       document.getElementById('loginWrap').style.display = 'none';
       document.getElementById('app').style.display = 'block';
     } catch(e) { showErr('오류: ' + e.message); }
@@ -353,6 +368,18 @@ window.doLogin = async () => {
 };
 window.doLogout = () => signOut(auth);
 
+function watchChatUnread(uid) {
+  const lastSeen = parseInt(localStorage.getItem('chatLastSeen') || '0');
+  const q = query(collection(db, 'chatRooms'), where('participantIds', 'array-contains', uid));
+  onSnapshot(q, (snap) => {
+    const hasUnread = snap.docs.some(d => {
+      const t = d.data().lastMessageAt?.seconds * 1000 || 0;
+      return t > lastSeen;
+    });
+    document.getElementById('bellDot').style.display = hasUnread ? 'block' : 'none';
+  });
+}
+
 async function loadStudentInfo(sid) {
   if (!sid) return;
   const snap = await getDoc(doc(db, 'students', sid));
@@ -360,6 +387,7 @@ async function loadStudentInfo(sid) {
   const d = snap.data();
   const courses = d.courses?.length ? d.courses.map(c => c==='math'?'수학':c==='english'?'영어':c).join('+') : (d.course==='both'?'수학+영어':d.course==='math'?'수학':'영어');
   document.getElementById('greetingName').textContent = `${d.name} 학부모님 👋`;
+  document.getElementById('myStudentName').textContent = d.name + ' 학생';
   document.getElementById('studentPillName').textContent = d.name;
   document.getElementById('studentPillInfo').textContent = `${d.grade||''} · ${courses}`;
   document.getElementById('myStudentName').textContent = d.name;
@@ -429,7 +457,7 @@ async function loadRecentPosts() {
 async function loadRecentSchedule() {
   const el = document.getElementById('recentSchedule');
   try {
-    const res = await fetch('/api/schedule?role=parent');
+    const res = await fetch('/api/schedule?role=admin');
     const data = await res.json();
     if (!Array.isArray(data) || !data.length) { el.innerHTML = '<div style="text-align:center;color:#bbb;padding:16px;font-size:13px;">일정 없음</div>'; return; }
     const today = new Date(); today.setHours(0,0,0,0);
@@ -475,7 +503,7 @@ const schToday = new Date(); schToday.setHours(0,0,0,0);
 async function loadScheduleData() {
   document.getElementById('schListPortal').innerHTML = '<div style="text-align:center;color:#bbb;padding:20px;font-size:13px;">불러오는 중...</div>';
   try {
-    const res = await fetch('/api/schedule?role=parent');
+    const res = await fetch('/api/schedule?role=admin');
     schData = await res.json();
     renderSchList();
   } catch { document.getElementById('schListPortal').innerHTML = '<div style="text-align:center;color:#bbb;padding:16px;font-size:13px;">불러올 수 없습니다.</div>'; }
