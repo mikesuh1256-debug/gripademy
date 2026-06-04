@@ -32,6 +32,11 @@ module.exports = async (req, res) => {
 
     const data = await response.json();
 
+    if (data.status === 401 || data.code === 'unauthorized') {
+      res.status(500).json({ error: 'Notion 토큰이 만료됐습니다. Vercel 환경변수 NOTION_TOKEN을 업데이트하세요.' });
+      return;
+    }
+
     let schedules = (data.results || []).map(page => ({
       id: page.id,
       title: page.properties['일정명']?.title?.[0]?.plain_text || '',

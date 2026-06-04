@@ -209,13 +209,16 @@ tbody tr:hover td{background:#f0f3ff;}
 </div>
 
 <div class="app" id="app">
-  <div class="header">
-    <h1>
-      <img src="assets/images/logo/grip-icon.png" style="height:38px;width:38px;object-fit:contain;filter:brightness(10);" onerror="this.style.display='none'">
-      그립학원
-      <span>관리자 포털</span>
-    </h1>
-    <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+  <div class="header" style="flex-direction:column;align-items:stretch;height:auto;padding:16px 24px 20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+      <h1>
+        <img src="assets/images/logo/grip-icon.png" style="height:34px;width:34px;object-fit:contain;filter:brightness(10);" onerror="this.style.display='none'">
+        그립학원
+        <span>관리자 포털</span>
+      </h1>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+    <div id="adminGreeting" style="font-size:18px;font-weight:900;color:#fff;">안녕하세요? 원장님 👋</div>
   </div>
   <!-- 서브 네비 -->
   <div style="background:#fff;border-bottom:1px solid #eee;display:flex;overflow-x:auto;padding:10px 14px;gap:8px;position:sticky;top:70px;z-index:150;scrollbar-width:none;">
@@ -916,6 +919,9 @@ onAuthStateChanged(auth, async (user) => {
       showError(`권한 없음 (현재 역할: ${userDoc.data().role})`);
       return;
     }
+    const adminName = userDoc.data().name || '';
+    const adminGreet = document.getElementById('adminGreeting');
+    if (adminGreet) adminGreet.textContent = `안녕하세요? ${adminName} 원장님 👋`;
     document.getElementById('loginWrap').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     await loadStudents();
