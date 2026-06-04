@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그립학원 톡방</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',system-ui,sans-serif;background:#f0f2f7;-webkit-font-smoothing:antialiased;}
+
+/* 로그인 */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;background:linear-gradient(160deg,#1e2a6d,#19b1c6);}
+.login-box{background:#fff;border-radius:24px;padding:40px 32px;width:100%;max-width:340px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);}
+.login-box h2{font-size:20px;font-weight:900;color:#1e2a6d;margin-bottom:20px;}
+.login-box input{width:100%;padding:12px 14px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:14px;margin-bottom:10px;outline:none;font-family:inherit;}
+.login-box input:focus{border-color:#1e2a6d;}
+.login-btn{width:100%;padding:13px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.login-err{color:#ef4444;font-size:12px;margin-top:6px;display:none;}
+
+/* 앱 */
+.app{display:none;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;background:#fff;}
+
+/* 화면 전환 */
+.screen{display:none;flex:1;flex-direction:column;overflow:hidden;}
+.screen.active{display:flex;}
+
+/* ── 방 목록 ── */
+.rooms-header{background:linear-gradient(160deg,#1e2a6d,#19b1c6);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.rooms-header h1{font-size:18px;font-weight:900;color:#fff;}
+.rooms-header-right{display:flex;gap:8px;}
+.hdr-btn{background:rgba(255,255,255,.15);border:none;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:#fff;}
+.rooms-list{flex:1;overflow-y:auto;}
+.room-item{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #f3f4f6;cursor:pointer;transition:background .1s;}
+.room-item:active{background:#f5f7ff;}
+.room-avatar{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#1e2a6d,#19b1c6);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.room-info{flex:1;min-width:0;}
+.room-name{font-size:15px;font-weight:800;color:#1a1d23;margin-bottom:3px;}
+.room-last{font-size:13px;color:#aaa;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.room-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.room-time{font-size:11px;color:#bbb;}
+.room-unread{background:#1e2a6d;color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:2px 7px;min-width:18px;text-align:center;}
+.rooms-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#bbb;gap:10px;}
+.rooms-empty span{font-size:48px;}
+.rooms-empty p{font-size:14px;}
+
+/* ── 채팅방 ── */
+.chat-header{background:#1e2a6d;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;}
+.chat-back{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;padding:2px 6px;}
+.chat-header-info{flex:1;}
+.chat-room-name{font-size:16px;font-weight:800;color:#fff;}
+.chat-room-sub{font-size:12px;color:rgba(255,255,255,.6);}
+.chat-messages{flex:1;overflow-y:auto;padding:16px 12px;background:#f0f2f7;display:flex;flex-direction:column;gap:10px;}
+.msg-group{display:flex;gap:8px;align-items:flex-end;}
+.msg-group.mine{flex-direction:row-reverse;}
+.msg-avatar{width:34px;height:34px;border-radius:10px;background:#1e2a6d;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;flex-shrink:0;align-self:flex-start;}
+.msg-body{display:flex;flex-direction:column;gap:3px;max-width:72%;}
+.msg-group.mine .msg-body{align-items:flex-end;}
+.msg-sender{font-size:11px;color:#888;font-weight:600;margin-bottom:2px;}
+.msg-bubble{padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.6;word-break:break-word;}
+.msg-bubble.other{background:#fff;color:#1a1d23;border-radius:4px 16px 16px 16px;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.msg-bubble.mine{background:#1e2a6d;color:#fff;border-radius:16px 4px 16px 16px;}
+.msg-bubble img{max-width:200px;border-radius:10px;display:block;margin-top:4px;}
+.msg-bubble video{max-width:200px;border-radius:10px;display:block;margin-top:4px;}
+.msg-time{font-size:10px;color:#bbb;}
+.msg-date-divider{text-align:center;font-size:12px;color:#bbb;background:#e0e4ec;padding:4px 14px;border-radius:20px;align-self:center;margin:4px 0;}
+
+/* 입력창 */
+.chat-input-wrap{background:#fff;border-top:1px solid #eee;padding:10px 12px;display:flex;align-items:flex-end;gap:8px;flex-shrink:0;}
+.chat-attach-btn{background:none;border:none;font-size:22px;cursor:pointer;padding:4px;flex-shrink:0;}
+.chat-input{flex:1;border:1.5px solid #e5e7eb;border-radius:20px;padding:10px 16px;font-size:14px;font-family:inherit;outline:none;resize:none;max-height:120px;line-height:1.5;}
+.chat-input:focus{border-color:#1e2a6d;}
+.chat-send{background:#1e2a6d;color:#fff;border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;transition:background .15s;}
+.chat-send:hover{background:#19b1c6;}
+#chatFileInput{display:none;}
+
+/* 하단 네비 */
+.bottom-nav{background:#fff;border-top:1px solid #eee;display:flex;padding:8px 0 env(safe-area-inset-bottom,8px);flex-shrink:0;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;border:none;background:none;font-family:inherit;}
+.nav-btn span.ico{font-size:22px;}
+.nav-btn span.lbl{font-size:10px;font-weight:700;color:#aaa;}
+.nav-btn.active span.lbl{color:#1e2a6d;}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <h2>그립학원 톡방</h2>
+    <input type="email" id="loginEmail" placeholder="이메일">
+    <input type="password" id="loginPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <p class="login-err" id="loginErr">이메일 또는 비밀번호를 확인하세요.</p>
+  </div>
+</div>
+
+<!-- 앱 -->
+<div class="app" id="app">
+
+  <!-- 방 목록 화면 -->
+  <div class="screen active" id="screen-rooms">
+    <div class="rooms-header">
+      <h1>💬 톡방</h1>
+      <div class="rooms-header-right">
+        <button class="hdr-btn" onclick="location.href='portal.html'" title="홈">🏠</button>
+      </div>
+    </div>
+    <div class="rooms-list" id="roomsList">
+      <div class="rooms-empty"><span>💬</span><p>참여 중인 톡방이 없습니다.</p></div>
+    </div>
+    <div class="bottom-nav">
+      <button class="nav-btn" onclick="location.href='portal.html'"><span class="ico">🏠</span><span class="lbl">홈</span></button>
+      <button class="nav-btn active"><span class="ico">💬</span><span class="lbl">톡방</span></button>
+      <button class="nav-btn" onclick="location.href='board.html'"><span class="ico">📋</span><span class="lbl">게시판</span></button>
+      <button class="nav-btn" onclick="location.href='schedule.html'"><span class="ico">📅</span><span class="lbl">일정</span></button>
+      <button class="nav-btn" onclick="location.href='portal.html#my'"><span class="ico">👤</span><span class="lbl">MY</span></button>
+    </div>
+  </div>
+
+  <!-- 채팅방 화면 -->
+  <div class="screen" id="screen-chat">
+    <div class="chat-header">
+      <button class="chat-back" onclick="showRooms()">‹</button>
+      <div class="chat-header-info">
+        <div class="chat-room-name" id="chatRoomName">-</div>
+        <div class="chat-room-sub" id="chatRoomSub">-</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-wrap">
+      <input type="file" id="chatFileInput" accept="image/*,video/*" onchange="sendFile()">
+      <button class="chat-attach-btn" onclick="document.getElementById('chatFileInput').click()">📎</button>
+      <textarea class="chat-input" id="chatInput" placeholder="메시지를 입력하세요..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"
+        oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+      <button class="chat-send" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs, addDoc, onSnapshot, updateDoc, serverTimestamp, limit } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAS9iH2_r33OP3fFazsEk5lcJL-oH0eWbU",
+  authDomain: "gripacademyweb1.firebaseapp.com",
+  projectId: "gripacademyweb1",
+  storageBucket: "gripacademyweb1.firebasestorage.app",
+  messagingSenderId: "202451577041",
+  appId: "1:202451577041:web:de15134759530143173df0"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null, currentUserName = '', currentRoomId = null, unsubMsg = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    try {
+      const udoc = await getDoc(doc(db, 'users', user.uid));
+      if (!udoc.exists()) return;
+      currentUser = user;
+      currentUserName = udoc.data().name || user.email;
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('app').style.display = 'flex';
+      await loadRooms(user.uid);
+    } catch(e) { console.error(e); }
+  } else {
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+});
+
+window.doLogin = async () => {
+  document.getElementById('loginErr').style.display = 'none';
+  try {
+    await signInWithEmailAndPassword(auth,
+      document.getElementById('loginEmail').value,
+      document.getElementById('loginPw').value);
+  } catch { document.getElementById('loginErr').style.display = 'block'; }
+};
+window.doLogout = () => signOut(auth);
+
+async function loadRooms(uid) {
+  const snap = await getDocs(query(collection(db, 'chatRooms'), where('participantIds', 'array-contains', uid)));
+  const rooms = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  rooms.sort((a,b) => (b.lastMessageAt?.seconds||0) - (a.lastMessageAt?.seconds||0));
+  const el = document.getElementById('roomsList');
+  if (!rooms.length) {
+    el.innerHTML = '<div class="rooms-empty"><span>💬</span><p>참여 중인 톡방이 없습니다.</p></div>';
+    return;
+  }
+  const icons = ['💬','👥','📢','📚','🏆','📌'];
+  el.innerHTML = rooms.map((r, i) => {
+    const ts = r.lastMessageAt?.toDate?.();
+    const timeStr = ts ? timeAgo(ts) : '';
+    return `<div class="room-item" onclick="openRoom('${r.id}','${escHtml(r.name)}',${r.participantIds?.length||0})">
+      <div class="room-avatar">${icons[i%icons.length]}</div>
+      <div class="room-info">
+        <div class="room-name">${r.name||'톡방'}</div>
+        <div class="room-last">${r.lastMessage||'메시지 없음'}</div>
+      </div>
+      <div class="room-right">
+        <span class="room-time">${timeStr}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(str) { return (str||'').replace(/'/g, "\\'"); }
+
+function timeAgo(date) {
+  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diff < 60) return '방금';
+  if (diff < 3600) return `${Math.floor(diff/60)}분 전`;
+  if (diff < 86400) return date.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+  return date.toLocaleDateString('ko-KR',{month:'short',day:'numeric'});
+}
+
+window.openRoom = (roomId, roomName, count) => {
+  currentRoomId = roomId;
+  document.getElementById('chatRoomName').textContent = roomName;
+  document.getElementById('chatRoomSub').textContent = `참여자 ${count}명`;
+  document.getElementById('screen-rooms').classList.remove('active');
+  document.getElementById('screen-chat').classList.add('active');
+  loadMessages(roomId);
+};
+
+window.showRooms = () => {
+  if (unsubMsg) { unsubMsg(); unsubMsg = null; }
+  currentRoomId = null;
+  document.getElementById('screen-chat').classList.remove('active');
+  document.getElementById('screen-rooms').classList.add('active');
+};
+
+function loadMessages(roomId) {
+  if (unsubMsg) unsubMsg();
+  const el = document.getElementById('chatMessages');
+  el.innerHTML = '';
+  const q = query(collection(db, 'chatRooms', roomId, 'messages'), orderBy('createdAt', 'asc'));
+  let lastDateStr = '';
+  unsubMsg = onSnapshot(q, (snap) => {
+    const newMsgs = [];
+    snap.docChanges().forEach(change => {
+      if (change.type === 'added') newMsgs.push({ id: change.doc.id, ...change.doc.data() });
+    });
+    newMsgs.forEach(msg => {
+      const ts = msg.createdAt?.toDate?.() || new Date();
+      const dateStr = ts.toLocaleDateString('ko-KR');
+      if (dateStr !== lastDateStr) {
+        lastDateStr = dateStr;
+        const div = document.createElement('div');
+        div.className = 'msg-date-divider';
+        div.textContent = dateStr;
+        el.appendChild(div);
+      }
+      el.appendChild(buildMsgEl(msg));
+    });
+    el.scrollTop = el.scrollHeight;
+  });
+}
+
+function buildMsgEl(msg) {
+  const isMine = msg.senderId === currentUser?.uid;
+  const ts = msg.createdAt?.toDate?.() || new Date();
+  const timeStr = ts.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});
+  const initial = (msg.senderName||'?')[0].toUpperCase();
+
+  let content = '';
+  if (msg.mediaURL) {
+    const isVideo = msg.mediaURL.includes('/video/') || /\.(mp4|mov|webm)/i.test(msg.mediaURL);
+    content = isVideo
+      ? `<video src="${msg.mediaURL}" controls style="max-width:200px;border-radius:10px;"></video>`
+      : `<img src="${msg.mediaURL}" style="max-width:200px;border-radius:10px;" onclick="window.open('${msg.mediaURL}')">`;
+  } else {
+    content = msg.text || '';
+  }
+
+  const wrap = document.createElement('div');
+  wrap.className = `msg-group ${isMine ? 'mine' : ''}`;
+  wrap.innerHTML = isMine
+    ? `<span class="msg-time">${timeStr}</span>
+       <div class="msg-body"><div class="msg-bubble mine">${content}</div></div>`
+    : `<div class="msg-avatar">${initial}</div>
+       <div class="msg-body">
+         <span class="msg-sender">${msg.senderName||''}</span>
+         <div class="msg-bubble other">${content}</div>
+         <span class="msg-time">${timeStr}</span>
+       </div>`;
+  return wrap;
+}
+
+window.sendMessage = async () => {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !currentRoomId) return;
+  input.value = '';
+  input.style.height = 'auto';
+  await addDoc(collection(db, 'chatRooms', currentRoomId, 'messages'), {
+    text, senderId: currentUser.uid, senderName: currentUserName, createdAt: serverTimestamp()
+  });
+  await updateDoc(doc(db, 'chatRooms', currentRoomId), {
+    lastMessage: text, lastMessageAt: serverTimestamp()
+  });
+};
+
+window.sendFile = async () => {
+  const file = document.getElementById('chatFileInput').files[0];
+  if (!file || !currentRoomId) return;
+  const btn = document.querySelector('.chat-attach-btn');
+  btn.textContent = '⏳';
+  try {
+    const isVideo = file.type.startsWith('video/');
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', 'gripacademy');
+    const res = await fetch(`https://api.cloudinary.com/v1_1/dca7oczdy/${isVideo?'video':'image'}/upload`, {method:'POST',body:fd});
+    const data = await res.json();
+    await addDoc(collection(db, 'chatRooms', currentRoomId, 'messages'), {
+      text: '', mediaURL: data.secure_url, senderId: currentUser.uid, senderName: currentUserName, createdAt: serverTimestamp()
+    });
+    await updateDoc(doc(db, 'chatRooms', currentRoomId), {
+      lastMessage: isVideo ? '📹 동영상' : '🖼 사진', lastMessageAt: serverTimestamp()
+    });
+  } catch(e) { alert('업로드 실패: ' + e.message); }
+  btn.textContent = '📎';
+  document.getElementById('chatFileInput').value = '';
+};
+</script>
+</body>
+</html>

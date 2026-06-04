@@ -38,7 +38,7 @@ body{font-family:'Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;backg
 
 /* ── 탭 콘텐츠 ── */
 .tab-content-wrap{background:#fff;border:1px solid #e9ecef;border-radius:14px;padding:20px 16px 32px;margin-top:4px;}
-@media(min-width:768px){.tabs{grid-template-columns:repeat(7,1fr);}.tab{font-size:16px;}.tab-content-wrap{padding:24px 28px 36px;}}
+@media(min-width:768px){.tabs{grid-template-columns:repeat(4,1fr);}.tab{font-size:15px;}.tab-content-wrap{padding:24px 28px 36px;}}
 
 /* ── 카드 (섹션) - 박스 없이 구분선만 ── */
 .card{background:transparent;border-radius:0;padding:22px 0;margin-bottom:0;border:none;border-bottom:1px solid #eef0f9;}
@@ -225,6 +225,7 @@ tbody tr:hover td{background:#f0f3ff;}
       <button class="tab" onclick="showTab('users')">👤 계정 생성</button>
       <button class="tab" onclick="showTab('schedule')">📅 전체 일정</button>
       <button class="tab" onclick="showTab('board')">📋 게시판</button>
+      <button class="tab" onclick="showTab('chat')">💬 톡방 관리</button>
     </div>
 
     <div class="tab-content-wrap">
@@ -815,6 +816,33 @@ tbody tr:hover td{background:#f0f3ff;}
       </div>
 
     </div>
+    <!-- 톡방 관리 -->
+    <div id="tab-chat" style="display:none;">
+      <div class="card">
+        <h2>💬 톡방 만들기</h2>
+        <div class="class-section" style="border:2px solid #e2e6f0;background:#fafbff;max-width:500px;">
+          <div class="form-group class-field-wrap" style="margin-bottom:10px;">
+            <label>방 이름 *</label>
+            <input type="text" id="roomName" placeholder="예: 초등반 공지방, 영어반 학부모방">
+          </div>
+          <div class="form-group" style="margin-bottom:10px;">
+            <label>참여 학생 선택 (학부모에게 공개)</label>
+            <div id="roomStudentPicker" style="max-height:200px;overflow-y:auto;border:1.5px solid #e5e7eb;border-radius:8px;padding:8px;background:#fff;font-size:13px;">
+              학생 목록 로딩 중...
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:4px;">
+            <button class="submit-btn" onclick="createChatRoom()">방 만들기</button>
+            <span style="font-size:12px;color:#aaa;">관리자도 자동 포함됩니다</span>
+          </div>
+          <p class="success-msg" id="roomSuccess">✅ 톡방이 만들어졌습니다!</p>
+        </div>
+      </div>
+      <div class="card">
+        <h2>💬 톡방 목록</h2>
+        <div id="adminRoomList"><p style="color:#bbb;text-align:center;padding:20px;">톡방 없음</p></div>
+      </div>
+    </div>
     </div><!-- /tab-content-wrap -->
   </div>
 </div>
@@ -904,16 +932,17 @@ window.doLogin = async () => {
 window.doLogout = () => signOut(auth);
 
 window.showTab = (tab) => {
-  ['students','classes','textbooks','db','users','schedule','board'].forEach(t => {
+  ['students','classes','textbooks','db','users','schedule','board','chat'].forEach(t => {
     document.getElementById(`tab-${t}`).style.display = t === tab ? 'block' : 'none';
   });
   document.querySelectorAll('.tab').forEach((btn, i) => {
-    btn.classList.toggle('active', ['students','classes','textbooks','db','users','schedule','board'][i] === tab);
+    btn.classList.toggle('active', ['students','classes','textbooks','db','users','schedule','board','chat'][i] === tab);
   });
   if (tab === 'schedule') loadScheduleAdmin();
   if (tab === 'classes') loadClasses();
   if (tab === 'textbooks') loadTextbooks();
   if (tab === 'board') loadAdminPosts();
+  if (tab === 'chat') loadAdminRooms();
 };
 
 // ── 전체 학생 삭제 ──────────────────────────────────────
@@ -2608,6 +2637,74 @@ window.removeAssignment = async (docId, classId) => {
   await deleteDoc(doc(db, 'textbook_assignments', docId));
   await loadTextbooks();
   loadTextbookClassStudents();
+};
+
+// ── 톡방 관리 ────────────────────────────────────────
+let adminRoomList = [];
+
+async function loadAdminRooms() {
+  const snap = await getDocs(query(collection(db, 'chatRooms'), orderBy('createdAt', 'desc')));
+  adminRoomList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderAdminRooms();
+  renderRoomStudentPicker();
+}
+
+function renderAdminRooms() {
+  const el = document.getElementById('adminRoomList');
+  if (!adminRoomList.length) { el.innerHTML = '<p style="color:#bbb;text-align:center;padding:20px;">톡방 없음</p>'; return; }
+  el.innerHTML = adminRoomList.map(r => `
+    <div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f3f4f6;">
+      <span style="font-size:22px;">💬</span>
+      <span style="flex:1;font-size:14px;font-weight:700;">${r.name||''}</span>
+      <span style="font-size:12px;color:#aaa;">👥 ${r.participantIds?.length||0}명</span>
+      <span style="font-size:12px;color:#bbb;">${r.lastMessage||'메시지 없음'}</span>
+      <button class="del-btn" onclick="deleteChatRoom('${r.id}')">삭제</button>
+    </div>`).join('');
+}
+
+function renderRoomStudentPicker() {
+  const el = document.getElementById('roomStudentPicker');
+  const active = studentList.filter(s => s.status !== '삭제' && s.status !== '퇴원');
+  el.innerHTML = active.map(s =>
+    `<label style="display:flex;align-items:center;gap:8px;padding:5px 4px;cursor:pointer;">
+      <input type="checkbox" value="${s.id}" data-name="${s.name}" style="width:16px;height:16px;">
+      <span>${s.name} (${s.grade||''} · ${s.school||''})</span>
+    </label>`
+  ).join('') || '학생 없음';
+}
+
+window.createChatRoom = async () => {
+  const name = document.getElementById('roomName').value.trim();
+  if (!name) return alert('방 이름을 입력하세요.');
+  const checked = [...document.querySelectorAll('#roomStudentPicker input:checked')];
+  const studentIds = checked.map(c => c.value);
+
+  // 각 학생의 학부모 uid 찾기
+  const snap = await getDocs(query(collection(db, 'users'), where('role', '==', 'parent')));
+  const parentUids = [];
+  snap.forEach(d => { if (studentIds.includes(d.data().studentId)) parentUids.push(d.id); });
+
+  // 관리자 uid 추가
+  const adminSnap = await getDocs(query(collection(db, 'users'), where('role', '==', 'admin')));
+  adminSnap.forEach(d => parentUids.push(d.id));
+
+  await addDoc(collection(db, 'chatRooms'), {
+    name, participantIds: [...new Set(parentUids)],
+    studentIds, lastMessage: '', createdAt: new Date()
+  });
+
+  document.getElementById('roomName').value = '';
+  document.querySelectorAll('#roomStudentPicker input').forEach(c => c.checked = false);
+  const s = document.getElementById('roomSuccess');
+  s.style.display = 'block';
+  setTimeout(() => s.style.display = 'none', 3000);
+  await loadAdminRooms();
+};
+
+window.deleteChatRoom = async (id) => {
+  if (!confirm('톡방을 삭제하시겠습니까?')) return;
+  await deleteDoc(doc(db, 'chatRooms', id));
+  await loadAdminRooms();
 };
 
 // ── 게시판 ──────────────────────────────────────────
