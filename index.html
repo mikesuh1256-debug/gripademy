@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>매쓰그립 수학학원 · 잉그립 영어학원</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V08TZZS1C8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V08TZZS1C8');
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -18,6 +25,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .nav-logo-eng{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#00391e;letter-spacing:-0.5px;cursor:pointer;text-decoration:none;}
 .nav-logo-eng span{color:#ec6619;}
 .nav-divider{width:1px;height:20px;background:#ddd;}
+.nav-logo-img{height:32px;width:auto;object-fit:contain;display:block;}
 .nav-menu{display:flex;align-items:center;gap:32px;}
 .nav-menu a{font-size:13px;font-weight:500;color:#555;text-decoration:none;letter-spacing:0.3px;transition:color 0.2s;}
 .nav-menu a:hover{color:#1e2a6d;}
@@ -57,7 +65,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* BANNER */
 .banner{background:#fff;padding:64px 40px;border-top:1px solid #eee;}
 .banner-inner{max-width:960px;margin:0 auto;}
-.banner-title{text-align:center;font-size:12px;font-weight:500;letter-spacing:3px;color:#bbb;text-transform:uppercase;margin-bottom:44px;}
+.banner-title{text-align:center;font-size:22px;font-weight:800;letter-spacing:1px;color:#1a1a1a;margin-bottom:44px;}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#f0f0f0;border:1px solid #f0f0f0;border-radius:14px;overflow:hidden;}
 .stat-item{background:#fff;padding:36px 20px;text-align:center;}
 .stat-num{font-family:'Montserrat',sans-serif;font-size:38px;font-weight:800;margin-bottom:8px;line-height:1;}
@@ -118,20 +126,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .facilities{padding:80px 40px;background:#f9f9f7;}
 .facilities-inner{max-width:960px;margin:0 auto;text-align:center;}
 .facilities-title{font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:12px;}
-.facilities-sub{font-size:15px;color:#aaa;margin-bottom:48px;font-weight:300;}
+.facilities-sub{font-size:17px;color:#333;margin-bottom:48px;font-weight:700;}
 .facilities-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
 .facility-card{background:#fff;border:1px solid #e8e8e8;border-radius:16px;padding:28px 16px;transition:transform 0.25s,box-shadow 0.25s;}
 .facility-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08);}
 .facility-icon{font-size:32px;margin-bottom:14px;}
-.facility-name{font-size:14px;font-weight:700;color:#1a1a1a;margin-bottom:6px;}
-.facility-desc{font-size:12px;color:#aaa;line-height:1.5;}
-@media(max-width:768px){.facilities-grid{grid-template-columns:repeat(2,1fr);}.facility-card:last-child{grid-column:1/-1;}}
+.facility-name{font-size:16px;font-weight:800;color:#1a1a1a;margin-bottom:6px;}
+.facility-desc{font-size:14px;color:#444;line-height:1.5;font-weight:600;}
+@media(max-width:768px){.facilities-grid{grid-template-columns:1fr;}}
 
 /* CONTACT */
 .contact{padding:80px 40px;background:#f9f9f7;}
 .contact-inner{max-width:960px;margin:0 auto;text-align:center;}
 .contact-title{font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:12px;}
-.contact-sub{font-size:15px;color:#aaa;margin-bottom:48px;font-weight:300;}
+.contact-sub{font-size:17px;color:#333;margin-bottom:48px;font-weight:700;}
 .contact-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:640px;margin:0 auto;}
 .contact-card{padding:36px 32px;border-radius:16px;border:1px solid #e8e8e8;background:#fff;transition:transform 0.25s,box-shadow 0.25s;}
 .contact-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08);}
@@ -141,7 +149,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .contact-name{font-size:16px;font-weight:700;margin-bottom:6px;}
 .contact-card-math .contact-name{color:#1e2a6d;}
 .contact-card-eng .contact-name{color:#00391e;}
-.contact-desc{font-size:12px;color:#bbb;margin-bottom:22px;line-height:1.6;}
+.contact-desc{font-size:15px;color:#444;margin-bottom:22px;line-height:1.6;font-weight:600;}
 .contact-cta{display:inline-block;padding:11px 26px;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;transition:all 0.2s;}
 .contact-card-math .contact-cta{background:#1e2a6d;color:#fff;}
 .contact-card-math .contact-cta:hover{background:#19b1c6;}
@@ -166,26 +174,86 @@ footer{background:#111;padding:40px;}
 .fade-up:nth-child(2){transition-delay:0.1s;}
 .fade-up:nth-child(3){transition-delay:0.2s;}
 .fade-up:nth-child(4){transition-delay:0.3s;}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:10px 16px;height:auto;min-height:56px;justify-content:flex-end;}
+  .nav-menu a:not(.nav-cta){display:none;}
+  .nav-cta{padding:8px 12px;font-size:13px;}
+  .nav-menu{gap:8px;}
+  .hero-half:first-child{padding-top:180px;}
+
+  .hero{flex-direction:column;height:auto;min-height:100vh;}
+  .hero-half{flex:none;width:100%;padding:60px 24px 48px;}
+  .hero-half:hover{flex:none;}
+  .hero-divider{width:100%;height:3px;}
+  .hero-name{font-size:42px;}
+  .hero-slogan{font-size:17px;letter-spacing:2px;}
+  .hero-btn{font-size:16px;padding:15px 32px;}
+  .hero-stats{gap:20px;}
+  .hero-stat-num{font-size:26px;}
+  .hero-stat-label{font-size:13px;}
+
+  .banner{padding:48px 20px;}
+  .banner-title{font-size:14px;}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  .stat-num{font-size:36px;}
+  .stat-label{font-size:15px;}
+
+  .programs{padding:56px 20px;}
+  .programs-grid{grid-template-columns:1fr;}
+  .section-title{font-size:26px;}
+  .section-tag{font-size:13px;}
+  .card-title{font-size:28px;}
+  .card-subtitle{font-size:15px;}
+  .card-features li{font-size:16px;}
+  .card-btn{font-size:15px;padding:13px 24px;}
+
+  .director{padding:56px 20px;}
+  .director-inner{grid-template-columns:1fr;gap:32px;}
+  .director-name{font-size:34px;}
+  .director-role{font-size:16px;}
+  .director-quote{font-size:17px;}
+  .director-years{font-size:60px;}
+  .director-years-sub{font-size:16px;}
+  .d-badge{font-size:15px;padding:10px 14px;}
+  .career-item{font-size:16px;}
+
+  .facilities{padding:56px 20px;}
+  .facilities-title{font-size:26px;}
+  .facilities-sub{font-size:16px;}
+  .facility-name{font-size:16px;}
+  .facility-desc{font-size:14px;}
+
+  .contact{padding:56px 20px;}
+  .contact-cards{grid-template-columns:1fr;max-width:100%;}
+  .contact-title{font-size:26px;}
+  .contact-sub{font-size:16px;}
+  .contact-name{font-size:18px;}
+  .contact-desc{font-size:14px;}
+  .contact-cta{font-size:15px;padding:13px 28px;}
+
+  footer{padding:32px 20px;}
+  .footer-logos{gap:20px;flex-wrap:wrap;justify-content:center;}
+  .footer-logos img{height:32px;}
+  .footer-address{font-size:14px;}
+  .footer-copy{font-size:13px;}
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logos">
-    <a href="math.html" class="nav-logo-math">
-      <img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원" style="height:32px; width:auto; object-fit:contain; display:block;">
-    </a>
-    <div class="nav-divider"></div>
-    <a href="english.html" class="nav-logo-eng">
-      <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원" style="height:32px; width:auto; object-fit:contain; display:block;">
-    </a>
-  </div>
-  <div class="nav-menu">
+  <div class="nav-menu" style="margin-left:auto;">
     <a href="#programs">프로그램</a>
     <a href="#director">원장소개</a>
     <a href="#contact">상담문의</a>
-    <a href="#contact" class="nav-cta">무료상담 →</a>
+    <a href="https://talk.naver.com/W5XRAC" target="_blank" class="nav-cta" style="background:#03C75A;font-size:15px;padding:10px 16px;display:flex;align-items:center;gap:5px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+      네이버톡상담
+    </a>
+    <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="nav-cta" style="font-size:15px;padding:10px 16px;">무료입학상담 →</a>
   </div>
 </nav>
 
@@ -254,6 +322,7 @@ footer{background:#111;padding:40px;}
       <div class="stat-item">
         <div class="stat-num c-cyan" data-count="125" data-suffix="명">0명</div>
         <div class="stat-label">특목고·국제중<br>합격생</div>
+        <div style="font-size:11px;color:#bbb;margin-top:6px;">원장님 총 커리어 합계</div>
       </div>
       <div class="stat-item">
         <div class="stat-num c-green" data-count="94" data-suffix="%">0%</div>
@@ -315,15 +384,9 @@ footer{background:#111;padding:40px;}
 <section class="director" id="director">
   <div class="director-inner">
     <div class="director-visual fade-up">
-      <img src="assets/images/photos/suhmyungeun_photo.JPG" alt="서명은 원장" style="width:120px; height:120px; border-radius:50%; object-fit:cover; object-position:top center; border:3px solid rgba(25,177,198,0.4); margin:0 auto 20px; display:block;">
-      <div class="director-years">15</div>
+      <img src="assets/images/photos/suhmyungeun_photo.JPG" alt="서명은 원장" style="width:150px; height:150px; border-radius:50%; object-fit:cover; object-position:top center; border:3px solid rgba(25,177,198,0.4); margin:0 auto 20px; display:block;">
+      <div class="director-years">25</div>
       <div class="director-years-sub">년 교육 경력</div>
-      <div class="director-years-badges">
-        <div class="d-badge">연세대 행정학 석사</div>
-        <div class="d-badge">고려대 영어교육 전공</div>
-        <div class="d-badge">특목고 합격 125명</div>
-        <div class="d-badge">저서 3권 집필</div>
-      </div>
     </div>
     <div class="fade-up">
       <p class="director-label">Director</p>
@@ -355,26 +418,31 @@ footer{background:#111;padding:40px;}
         <div class="facility-icon">🖥️</div>
         <div class="facility-name">스마트 교실</div>
         <div class="facility-desc">최신 디지털 장비로 구성된 학습 공간</div>
+        <img src="assets/images/photos/facility-smart.jpg" alt="스마트 교실" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-top:14px;display:block;">
       </div>
       <div class="facility-card">
         <div class="facility-icon">📚</div>
         <div class="facility-name">자습실</div>
         <div class="facility-desc">집중 학습을 위한 전용 자습 공간</div>
+        <img src="assets/images/photos/facility-study.jpg" alt="자습실" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-top:14px;display:block;">
       </div>
       <div class="facility-card">
         <div class="facility-icon">🛋️</div>
         <div class="facility-name">학생 대기공간</div>
         <div class="facility-desc">수업 전후 편안하게 쉴 수 있는 공간</div>
+        <img src="assets/images/photos/facility-waiting.jpg" alt="학생 대기공간" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-top:14px;display:block;">
       </div>
       <div class="facility-card">
         <div class="facility-icon">📷</div>
         <div class="facility-name">CCTV 완비</div>
         <div class="facility-desc">24시간 안전한 학원 환경 관리</div>
+        <img src="assets/images/photos/facility-cctv.png" alt="CCTV 완비" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-top:14px;display:block;">
       </div>
       <div class="facility-card">
         <div class="facility-icon">🚌</div>
         <div class="facility-name">셔틀버스</div>
         <div class="facility-desc">등하원 편의를 위한 셔틀버스 운행</div>
+        <img src="assets/images/photos/facility-shuttle.jpg" alt="셔틀버스" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-top:14px;display:block;">
       </div>
     </div>
   </div>
@@ -387,17 +455,29 @@ footer{background:#111;padding:40px;}
     <p class="contact-sub fade-up">궁금한 점은 언제든지 편하게 문의해 주세요</p>
     <div class="contact-cards fade-up">
       <div class="contact-card contact-card-math">
-        <div class="contact-icon">📐</div>
+        <img src="assets/images/logo/math-logo-vertical.png" alt="매쓰그립 수학학원" style="height:120px;width:auto;object-fit:contain;margin:0 auto 12px;display:block;">
         <div class="contact-name">매쓰그립 수학학원</div>
         <div class="contact-desc">수학 프로그램 · 레벨테스트<br>수업 일정 안내</div>
         <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-cta">네이버 톡 상담 →</a>
+        <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-cta" style="margin-top:10px;background:#19b1c6;">입학상담 신청 →</a>
       </div>
       <div class="contact-card contact-card-eng">
-        <div class="contact-icon">📖</div>
+        <img src="assets/images/logo/eng-logo-vertical.png" alt="잉그립 영어학원" style="height:120px;width:auto;object-fit:contain;margin:0 auto 12px;display:block;">
         <div class="contact-name">잉그립 영어학원</div>
         <div class="contact-desc">영어 프로그램 · 레벨테스트<br>수업 일정 안내</div>
         <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-cta">네이버 톡 상담 →</a>
+        <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-cta" style="margin-top:10px;background:#ec6619;">입학상담 신청 →</a>
       </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:32px;">
+      <a href="https://naver.me/FgH5Mo7h" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+        네이버 플레이스
+      </a>
+      <a href="https://blog.naver.com/mikesuh7" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+        네이버 블로그
+      </a>
     </div>
   </div>
 </section>
@@ -405,12 +485,8 @@ footer{background:#111;padding:40px;}
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logos">
-      <img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원" style="height:28px; width:auto; background:white; padding:4px 8px; border-radius:4px;">
-      <div class="footer-div"></div>
-      <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원" style="height:28px; width:auto; background:white; padding:4px 8px; border-radius:4px;">
-    </div>
-    <p class="footer-address">서울특별시 서대문구 가재울 · 문의: 네이버 톡</p>
+    <p class="footer-address">서울특별시 서대문구 가재울</p>
+    <p style="margin-bottom:10px;"><a href="tel:02-3152-5678" style="color:#aaa;font-size:16px;font-weight:700;text-decoration:none;letter-spacing:1px;">📞 02-3152-5678</a></p>
     <p class="footer-copy">© 2025 매쓰그립 수학학원 · 잉그립 영어학원. All rights reserved.</p>
   </div>
 </footer>

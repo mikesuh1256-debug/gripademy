@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>매쓰그립 수학학원 — 손에 잡히는 수학</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V08TZZS1C8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V08TZZS1C8');
+</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -117,6 +124,56 @@ footer{background:#111;padding:32px 40px;text-align:center;}
 /* ANIM */
 .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 16px;height:80px;}
+  .nav-brand img{height:48px;}
+  .nav-back{font-size:13px;}
+  .nav-menu a:not(.nav-cta){display:none;}
+  .nav-cta{padding:8px 16px;font-size:14px;}
+
+  .hero{padding:100px 20px 60px;}
+  .hero-title{font-size:42px;letter-spacing:-1px;}
+  .hero-slogan{font-size:17px;}
+  .hero-tag{font-size:13px;}
+  .hero-metrics{flex-direction:column;gap:20px;}
+  .hero-metric-num{font-size:36px;}
+  .hero-metric-label{font-size:15px;}
+
+  .section{padding:56px 20px;}
+  .section-title{font-size:26px;}
+  .section-sub{font-size:16px;}
+  .section-tag{font-size:13px;}
+
+  .philo-grid{grid-template-columns:1fr;}
+  .philo-title{font-size:22px;}
+  .philo-desc{font-size:15px;}
+
+  .track-grid{grid-template-columns:1fr;}
+  .track-head-title{font-size:22px;}
+  .track-step-text{font-size:15px;}
+  .track-step-text strong{font-size:16px;}
+
+  .manage-grid{grid-template-columns:1fr;}
+  .manage-text h4{font-size:16px;}
+  .manage-text p{font-size:14px;}
+
+  .results-grid{grid-template-columns:1fr;}
+  .result-num{font-size:44px;}
+  .result-label{font-size:15px;}
+  .scores-table th,.scores-table td{font-size:14px;padding:12px 14px;}
+
+  .contact-box{padding:32px 20px;}
+  .contact-title{font-size:22px;}
+  .contact-sub{font-size:15px;}
+  .contact-btn{font-size:16px;padding:15px 32px;}
+
+  footer{padding:28px 20px;}
+  .footer-brand{font-size:16px;}
+  .footer-links a{font-size:14px;}
+  .footer-copy{font-size:13px;}
+}
 </style>
 </head>
 <body>
@@ -130,7 +187,11 @@ footer{background:#111;padding:32px 40px;text-align:center;}
     <a href="#philosophy">교육철학</a>
     <a href="#track">프로그램</a>
     <a href="#results">성과</a>
-    <a href="#contact" class="nav-cta">무료상담 →</a>
+    <a href="https://talk.naver.com/W5XRAC" target="_blank" class="nav-cta" style="background:#03C75A;font-size:15px;padding:10px 16px;display:flex;align-items:center;gap:5px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+      네이버톡상담
+    </a>
+    <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="nav-cta" style="font-size:15px;padding:10px 16px;">무료입학상담 →</a>
   </div>
 </nav>
 
@@ -330,18 +391,30 @@ footer{background:#111;padding:32px 40px;text-align:center;}
     <h2 class="contact-title">매쓰그립 수학 무료상담</h2>
     <p class="contact-sub">수학 프로그램, 레벨 테스트, 수업 일정 등<br>궁금한 점을 편하게 문의해 주세요</p>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn">네이버 톡으로 상담하기 →</a>
+    <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-btn" style="background:#19b1c6;">입학상담 신청 →</a>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap;">
+      <a href="https://naver.me/FgH5Mo7h" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+        네이버 플레이스
+      </a>
+      <a href="https://blog.naver.com/mikesuh7" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+        네이버 블로그
+      </a>
+    </div>
     <p class="contact-hint">상담 완료 시 첫 달 교재비 50% 지원 혜택</p>
   </div>
 </section>
 
 <footer>
-  <div class="footer-brand">MATH<span>GRIP</span> 수학학원</div>
   <div class="footer-links">
     <a href="index.html">메인으로</a>
     <a href="english.html">잉그립 영어학원</a>
     <a href="#contact">상담문의</a>
   </div>
-  <p class="footer-copy">© 2025 매쓰그립 수학학원. All rights reserved. | 서울특별시 서대문구 가재울</p>
+  <p class="footer-address" style="font-size:13px;color:#555;margin-bottom:8px;">서울특별시 서대문구 가재울</p>
+  <p style="margin-bottom:10px;"><a href="tel:02-3152-5678" style="color:#aaa;font-size:16px;font-weight:700;text-decoration:none;letter-spacing:1px;">📞 02-3152-5678</a></p>
+  <p class="footer-copy">© 2025 매쓰그립 수학학원. All rights reserved.</p>
 </footer>
 
 <script>

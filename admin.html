@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>그립학원 관리자</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Apple SD Gothic Neo',sans-serif;background:#f0f2f5;min-height:100vh;}
+
+/* LOGIN */
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;}
+.login-box{background:#fff;border-radius:20px;padding:48px 40px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.12);text-align:center;}
+.login-logo{margin-bottom:8px;font-size:28px;}
+.login-title{font-size:22px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.login-sub{font-size:13px;color:#aaa;margin-bottom:32px;}
+.login-box input{width:100%;padding:14px 16px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:15px;margin-bottom:12px;outline:none;transition:border 0.2s;}
+.login-box input:focus{border-color:#1e2a6d;}
+.login-btn{width:100%;padding:14px;background:#1e2a6d;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;transition:background 0.2s;}
+.login-btn:hover{background:#19b1c6;}
+.login-error{color:#e53935;font-size:13px;margin-top:8px;display:none;}
+
+/* DASHBOARD */
+.dashboard{display:none;min-height:100vh;background:#f0f2f5;}
+.dash-header{background:#1e2a6d;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;}
+.dash-header h1{color:#fff;font-size:18px;font-weight:700;}
+.dash-header span{color:rgba(255,255,255,0.6);font-size:13px;}
+.logout-btn{background:rgba(255,255,255,0.15);color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;}
+.logout-btn:hover{background:rgba(255,255,255,0.25);}
+
+.dash-body{max-width:960px;margin:0 auto;padding:32px 20px;}
+
+.dash-section{margin-bottom:32px;}
+.dash-section h2{font-size:16px;font-weight:700;color:#333;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #e0e0e0;}
+
+.stats-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.stat-card{background:#fff;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.stat-card .num{font-size:32px;font-weight:800;color:#1e2a6d;margin-bottom:4px;}
+.stat-card .label{font-size:13px;color:#999;}
+
+.ga-link{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 2px 12px rgba(0,0,0,0.06);text-decoration:none;color:#333;transition:transform 0.2s,box-shadow 0.2s;margin-bottom:12px;}
+.ga-link:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,0.1);}
+.ga-link .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.ga-link .icon.ga{background:#fff3e0;}
+.ga-link .icon.naver{background:#e8f5e9;}
+.ga-link .text h3{font-size:15px;font-weight:700;margin-bottom:2px;}
+.ga-link .text p{font-size:12px;color:#aaa;}
+.ga-link .arrow{margin-left:auto;color:#ccc;font-size:20px;}
+
+.site-links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.site-link{background:#fff;border-radius:12px;padding:16px;text-align:center;text-decoration:none;color:#333;box-shadow:0 2px 8px rgba(0,0,0,0.06);transition:all 0.2s;font-size:14px;font-weight:600;}
+.site-link:hover{background:#1e2a6d;color:#fff;}
+
+@media(max-width:600px){
+  .stats-cards{grid-template-columns:1fr 1fr;}
+  .site-links{grid-template-columns:1fr;}
+  .login-box{padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- 로그인 -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-logo">🔐</div>
+    <h1 class="login-title">그립학원 관리자</h1>
+    <p class="login-sub">관리자 계정으로 로그인하세요</p>
+    <input type="text" id="userId" placeholder="아이디" autocomplete="off">
+    <input type="password" id="userPw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">로그인</button>
+    <p class="login-error" id="loginError">아이디 또는 비밀번호가 올바르지 않습니다.</p>
+  </div>
+</div>
+
+<!-- 대시보드 -->
+<div class="dashboard" id="dashboard">
+  <div class="dash-header">
+    <h1>📊 그립학원 관리자 대시보드</h1>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span id="loginTime"></span>
+      <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+
+    <div class="dash-section">
+      <h2>📈 방문자 통계 (Google Analytics)</h2>
+      <a href="https://analytics.google.com" target="_blank" class="ga-link">
+        <div class="icon ga">📊</div>
+        <div class="text">
+          <h3>Google Analytics 대시보드</h3>
+          <p>실시간 방문자, 페이지별 통계, 유입 경로 확인</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://analytics.google.com/analytics/web/#/p$(GA_ID)/reports/reportinghub" target="_blank" class="ga-link">
+        <div class="icon ga">📅</div>
+        <div class="text">
+          <h3>기간별 방문자 리포트</h3>
+          <p>날짜별 방문자 수, 페이지뷰, 평균 체류시간</p>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <div class="dash-section">
+      <h2>🔗 빠른 링크</h2>
+      <div class="site-links">
+        <a href="index.html" target="_blank" class="site-link">🏠 메인 페이지</a>
+        <a href="math.html" target="_blank" class="site-link">📐 매쓰그립</a>
+        <a href="english.html" target="_blank" class="site-link">📖 잉그립</a>
+        <a href="https://talk.naver.com/W5XRAC" target="_blank" class="site-link">💬 네이버톡</a>
+        <a href="https://naver.me/FgH5Mo7h" target="_blank" class="site-link">📍 네이버 플레이스</a>
+        <a href="https://blog.naver.com/mikesuh7" target="_blank" class="site-link">✍️ 네이버 블로그</a>
+      </div>
+    </div>
+
+    <div class="dash-section">
+      <h2>ℹ️ 사이트 정보</h2>
+      <div class="ga-link" style="cursor:default;">
+        <div class="icon" style="background:#e3f2fd;">🌐</div>
+        <div class="text">
+          <h3>megrip.com</h3>
+          <p>Google Analytics ID: G-V08TZZS1C8 · Netlify 호스팅</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const ADMIN_ID = 'mikesuh7';
+const ADMIN_PW = 'Chan0714**';
+
+function doLogin() {
+  const id = document.getElementById('userId').value;
+  const pw = document.getElementById('userPw').value;
+  if (id === ADMIN_ID && pw === ADMIN_PW) {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    const now = new Date();
+    document.getElementById('loginTime').textContent =
+      now.toLocaleDateString('ko-KR') + ' ' + now.toLocaleTimeString('ko-KR', {hour:'2-digit',minute:'2-digit'});
+    sessionStorage.setItem('admin', 'true');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('admin');
+  document.getElementById('loginWrap').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('userId').value = '';
+  document.getElementById('userPw').value = '';
+}
+
+if (sessionStorage.getItem('admin') === 'true') {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+}
+</script>
+</body>
+</html>
