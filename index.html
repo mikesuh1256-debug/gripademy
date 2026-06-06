@@ -136,34 +136,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 @media(max-width:768px){.facilities-grid{grid-template-columns:1fr;}}
 
 /* CONTACT */
-.contact{padding:80px 40px;background:#f9f9f7;}
-.contact-inner{max-width:960px;margin:0 auto;text-align:center;}
-.contact-title{font-size:30px;font-weight:700;color:#1a1a1a;margin-bottom:12px;}
-.contact-sub{font-size:17px;color:#333;margin-bottom:40px;font-weight:700;}
-.contact-unified{background:#fff;border:1px solid #e8e8e8;border-radius:24px;padding:60px 80px;max-width:860px;margin:0 auto;box-shadow:0 8px 40px rgba(0,0,0,0.06);}
-.contact-logos{display:flex;align-items:center;justify-content:center;gap:40px;margin-bottom:28px;}
-.contact-logo-divider{width:1px;height:80px;background:#eee;}
-.contact-unified-desc{font-size:17px;color:#666;font-weight:500;margin-bottom:36px;letter-spacing:0.3px;}
-.contact-btns{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
-.contact-btn-naver{display:inline-flex;align-items:center;gap:10px;background:#03C75A;color:#fff;padding:16px 36px;border-radius:10px;font-size:16px;font-weight:700;text-decoration:none;transition:background 0.2s;}
-.contact-btn-naver:hover{background:#02a84e;}
-.contact-btn-main{display:inline-flex;align-items:center;gap:8px;background:#1e2a6d;color:#fff;padding:16px 36px;border-radius:10px;font-size:16px;font-weight:700;text-decoration:none;transition:background 0.2s;}
-.contact-btn-main:hover{background:#19b1c6;}
+.contact{padding:0;background:transparent;}
+.contact-hero{padding:140px 40px;text-align:center;background:linear-gradient(135deg,#0d1b5e 0%,#1e2a6d 50%,#1a4a60 100%);position:relative;overflow:hidden;}
+.contact-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(25,177,198,0.18) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(25,177,198,0.1) 0%,transparent 50%);pointer-events:none;}
+.contact-hero-inner{position:relative;z-index:1;}
+.contact-hero-tag{font-family:'Montserrat',sans-serif;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:28px;font-weight:600;}
+.contact-hero-title{font-size:60px;font-weight:900;color:#fff;line-height:1.15;margin-bottom:20px;letter-spacing:-2px;}
+.contact-hero-desc{font-size:18px;color:rgba(255,255,255,0.55);margin-bottom:64px;font-weight:300;line-height:1.8;}
+.contact-phone-wrap{margin-bottom:48px;}
+.contact-phone-label{font-size:14px;color:rgba(255,255,255,0.4);display:block;margin-bottom:10px;letter-spacing:2px;text-transform:uppercase;}
+.contact-phone-num{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;color:#fff;text-decoration:none;letter-spacing:-1px;transition:color 0.2s;}
+.contact-phone-num:hover{color:#19b1c6;}
+.contact-hero-btn{display:inline-flex;align-items:center;gap:8px;background:#19b1c6;color:#fff;padding:20px 56px;border-radius:12px;font-size:18px;font-weight:700;text-decoration:none;transition:all 0.2s;box-shadow:0 8px 32px rgba(25,177,198,0.35);}
+.contact-hero-btn:hover{background:#fff;color:#1e2a6d;box-shadow:0 8px 32px rgba(255,255,255,0.2);}
 
 /* FOOTER */
 footer{background:#111;padding:0;}
 .footer-inner{max-width:960px;margin:0 auto;text-align:center;}
 .footer-quicklinks{display:flex;justify-content:center;gap:0;border-bottom:1px solid rgba(255,255,255,0.06);}
-.fql-item{flex:1;max-width:200px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:36px 20px;text-decoration:none;color:#fff;transition:background 0.2s;border-right:1px solid rgba(255,255,255,0.06);}
+.fql-item{flex:1;max-width:240px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:36px 20px;text-decoration:none;color:#fff;transition:background 0.2s;border-right:1px solid rgba(255,255,255,0.06);}
 .fql-item:last-child{border-right:none;}
 .fql-item:hover{background:rgba(255,255,255,0.04);}
 .fql-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
-.fql-item:nth-child(1) .fql-icon{background:#03C75A;}
-.fql-item:nth-child(2) .fql-icon{background:#1e2a6d;}
-.fql-item:nth-child(3) .fql-icon{background:#1e2a6d;}
-.fql-item:nth-child(4) .fql-icon{background:#00391e;}
+.fql-item:nth-child(1) .fql-icon{background:#1e2a6d;}
+.fql-item:nth-child(2) .fql-icon{background:#00391e;}
 .fql-label{font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5;text-align:center;font-weight:500;}
-.footer-bottom{padding:28px 40px;text-align:center;}
+.footer-logo-row{display:flex;justify-content:center;align-items:center;gap:28px;padding:28px 40px 16px;}
+.footer-logo-row img{height:28px;width:auto;object-fit:contain;opacity:0.7;}
+.footer-bottom{padding:0 40px 28px;text-align:center;}
 .footer-address{font-size:12px;color:#555;margin-bottom:8px;}
 .footer-copy{font-size:11px;color:#444;}
 
@@ -302,21 +302,16 @@ footer{background:#111;padding:0;}
   .facility-name{font-size:16px;}
   .facility-desc{font-size:14px;}
 
-  .contact{padding:56px 20px;}
-  .contact-unified{padding:36px 24px;}
-  .contact-logos{gap:20px;}
-  .contact-logo-divider{height:60px;}
-  .contact-btns{flex-direction:column;align-items:center;}
-  .contact-btn-naver,.contact-btn-main{width:100%;max-width:280px;justify-content:center;}
-  .contact-title{font-size:26px;}
-  .contact-sub{font-size:16px;}
+  .contact-hero{padding:80px 24px;}
+  .contact-hero-title{font-size:36px;letter-spacing:-1px;}
+  .contact-hero-desc{font-size:16px;margin-bottom:40px;}
+  .contact-phone-num{font-size:36px;}
+  .contact-hero-btn{font-size:16px;padding:16px 36px;}
 
-  .footer-quicklinks{flex-wrap:wrap;}
-  .fql-item{min-width:calc(50% - 1px);max-width:none;padding:28px 16px;}
-  .fql-item:nth-child(2){border-right:none;}
-  .fql-item:nth-child(3){border-top:1px solid rgba(255,255,255,0.06);}
-  .fql-item:nth-child(4){border-top:1px solid rgba(255,255,255,0.06);border-right:none;}
-  .footer-bottom{padding:24px 20px;}
+  .footer-quicklinks{flex-direction:row;}
+  .fql-item{flex:1;max-width:none;padding:24px 12px;}
+  .footer-logo-row{padding:20px 20px 12px;}
+  .footer-bottom{padding:0 20px 24px;}
   .footer-address{font-size:14px;}
   .footer-copy{font-size:13px;}
 
@@ -609,33 +604,16 @@ footer{background:#111;padding:0;}
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="contact-inner">
-    <h2 class="contact-title fade-up">무료 상담 신청</h2>
-    <p class="contact-sub fade-up">궁금한 점은 언제든지 편하게 문의해 주세요</p>
-    <div class="contact-unified fade-up">
-      <div class="contact-logos">
-        <img src="assets/images/logo/math-logo-vertical.png" alt="매쓰그립 수학학원" style="height:120px;width:auto;object-fit:contain;">
-        <div class="contact-logo-divider"></div>
-        <img src="assets/images/logo/eng-logo-vertical.png" alt="잉그립 영어학원" style="height:120px;width:auto;object-fit:contain;">
+  <div class="contact-hero fade-up">
+    <div class="contact-hero-inner">
+      <p class="contact-hero-tag">Student Consultation</p>
+      <h2 class="contact-hero-title">우리아이에게 맞는 상담,<br>지금 신청하세요</h2>
+      <p class="contact-hero-desc">남겨주신 내용을 확인후 업무시간에 순차적으로 연락드립니다.</p>
+      <div class="contact-phone-wrap">
+        <span class="contact-phone-label">빠른 전화상담</span>
+        <a href="tel:010-5612-5673" class="contact-phone-num">010-5612-5673</a>
       </div>
-      <div class="contact-unified-desc">프로그램 · 레벨테스트 · 수업문의</div>
-      <div class="contact-btns">
-        <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn-naver">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-          네이버톡 상담
-        </a>
-        <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-btn-main">입학상담 신청 →</a>
-      </div>
-    </div>
-    <div style="display:flex;justify-content:center;gap:16px;margin-top:24px;">
-      <a href="https://naver.me/FgH5Mo7h" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-        네이버 플레이스
-      </a>
-      <a href="https://blog.naver.com/mikesuh7" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-        네이버 블로그
-      </a>
+      <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-hero-btn">입학상담 신청서 작성 →</a>
     </div>
   </div>
 </section>
@@ -666,7 +644,7 @@ footer{background:#111;padding:0;}
           <span class="chat-chip" onclick="askFaq('location')">📍 위치</span>
           <span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span>
           <span class="chat-chip" onclick="askFaq('fee')">💰 수강료</span>
-          <span class="chat-chip" onclick="askFaq('level')">📝 레벨테스트</span>
+          <span class="chat-chip" onclick="askFaq('level')">📝 레벨테스트 신청</span>
           <span class="chat-chip" onclick="askFaq('shuttle')">🚌 셔틀버스</span>
           <span class="chat-chip" onclick="askFaq('register')">✅ 등록방법</span>
         </div>
@@ -712,17 +690,12 @@ footer{background:#111;padding:0;}
 
 <!-- FOOTER -->
 <footer>
+  <div class="footer-logo-row">
+    <img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원">
+    <div style="width:1px;height:20px;background:#333;"></div>
+    <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원">
+  </div>
   <div class="footer-quicklinks">
-    <a href="https://talk.naver.com/W5XRAC" target="_blank" class="fql-item">
-      <div class="fql-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-      </div>
-      <div class="fql-label">네이버톡<br>상담</div>
-    </a>
-    <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="fql-item">
-      <div class="fql-icon">📋</div>
-      <div class="fql-label">입학상담<br>신청</div>
-    </a>
     <a href="math.html" class="fql-item">
       <div class="fql-icon">📐</div>
       <div class="fql-label">수학프로그램<br>소개</div>
@@ -787,7 +760,7 @@ const FAQ = {
   },
   level: {
     q: '📝 레벨테스트는 어떻게 하나요?',
-    a: '레벨테스트는 무료로 진행됩니다! 원하시는 날짜에 방문하시거나 네이버 톡으로 예약하시면 됩니다. 결과에 따라 최적의 반을 배정해 드립니다. ✅'
+    a: '레벨테스트는 현재 무료 진행중입니다. 아래 신청서를 작성해주시면 확인후 연락드립니다. 결과에 따라 최적의 반을 배치해드립니다. 📋'
   },
   shuttle: {
     q: '🚌 셔틀버스가 있나요?',
@@ -835,10 +808,11 @@ function askFaq(type) {
   if (!faq) return;
   addMsg(faq.q, 'user');
   setTimeout(() => {
-    const hasConsult = ['fee', 'level', 'register'].includes(type);
-    const extra = hasConsult
-      ? `<br><br><a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;margin-top:6px;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`
-      : '';
+    const extra = type === 'level'
+      ? `<br><br><a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" style="display:inline-block;margin-top:6px;padding:8px 16px;background:#1e2a6d;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">레벨테스트 신청하기 →</a>`
+      : (['fee', 'register'].includes(type)
+        ? `<br><br><a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;margin-top:6px;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`
+        : '');
     addMsg(faq.a + extra, 'bot',
       `<span class="chat-chip" onclick="askFaq('location')">📍 위치</span>
        <span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span>
