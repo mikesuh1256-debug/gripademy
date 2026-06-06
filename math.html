@@ -30,7 +30,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .hero::before{content:'x ÷ √ π Σ ∫';font-family:'Montserrat',sans-serif;font-size:120px;font-weight:800;color:rgba(255,255,255,0.04);position:absolute;top:20px;left:-20px;white-space:nowrap;pointer-events:none;letter-spacing:20px;}
 .hero::after{content:'';position:absolute;bottom:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(25,177,198,0.15) 0%,transparent 70%);pointer-events:none;}
 .hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
-.hero-tag{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#19b1c6;margin-bottom:24px;}
+.hero-tag{font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
+.hero-slogan{font-size:20px;color:rgba(255,255,255,0.5);font-weight:300;margin-bottom:16px;letter-spacing:2px;}
 .hero-title{font-size:68px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:20px;letter-spacing:-2px;}
 .hero-title span{color:#19b1c6;}
 .hero-desc{font-size:18px;color:rgba(255,255,255,0.6);font-weight:300;line-height:1.9;margin-bottom:56px;max-width:560px;}
@@ -49,165 +50,153 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .photo-banner img:hover{transform:scale(1.04);}
 
 .w-inner{max-width:1100px;margin:0 auto;}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
-.eyebrow-dim{color:rgba(255,255,255,0.4);}
+.eyebrow{font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
+.eyebrow-dim{color:rgba(255,255,255,0.5);}
+.eyebrow-lg{font-size:32px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:#19b1c6;margin-bottom:20px;}
+.eyebrow-lg-dim{color:rgba(255,255,255,0.5);}
+.eyebrow-xl{font-size:22px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
 .heading{font-size:42px;font-weight:900;color:#1a1a1a;line-height:1.2;margin-bottom:16px;letter-spacing:-1.5px;}
 .heading-w{color:#fff;}
-.lead{font-size:17px;color:#888;font-weight:300;line-height:1.9;margin-bottom:48px;max-width:600px;}
-.lead-w{color:rgba(255,255,255,0.5);}
+.lead{font-size:20px;color:#666;font-weight:700;line-height:1.9;margin-bottom:48px;max-width:700px;}
+.lead-w{color:rgba(255,255,255,0.6);}
 
 /* STORY */
 .story{background:#111;padding:100px 40px;}
 .story-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.story-q{font-size:26px;font-weight:700;color:#fff;line-height:1.6;margin-bottom:24px;}
+.story-q{font-size:28px;font-weight:700;color:#fff;line-height:1.6;margin-bottom:24px;}
 .story-q em{color:#19b1c6;font-style:normal;}
-.story-body{font-size:16px;color:rgba(255,255,255,0.55);line-height:1.9;margin-bottom:28px;}
-.story-hl{background:rgba(25,177,198,0.1);border-left:3px solid #19b1c6;padding:20px 24px;border-radius:0 10px 10px 0;font-size:15px;color:#19b1c6;font-weight:500;line-height:1.7;}
+.story-body{font-size:18px;color:rgba(255,255,255,0.65);line-height:1.9;margin-bottom:28px;font-weight:500;}
+.story-hl{background:rgba(25,177,198,0.1);border-left:4px solid #19b1c6;padding:20px 24px;border-radius:0 10px 10px 0;font-size:17px;color:#19b1c6;font-weight:600;line-height:1.7;}
 .story-stats{display:flex;flex-direction:column;gap:24px;}
 .story-stat{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:32px 36px;}
 .story-stat-num{font-family:'Montserrat',sans-serif;font-size:48px;font-weight:800;color:#19b1c6;line-height:1;margin-bottom:8px;}
-.story-stat-lbl{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;}
+.story-stat-lbl{font-size:16px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:500;}
 
 /* COMPARE */
 .compare-sec{background:#fff;padding:100px 40px;}
-.compare-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;border:1px solid #eee;margin-top:0;}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:24px;overflow:hidden;border:1px solid #eee;}
 .cmp-bad{background:#f7f7f5;padding:60px 56px;}
 .cmp-good{background:#1e2a6d;padding:60px 56px;}
-.cmp-lbl{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;}
-.cmp-lbl-bad{color:#ccc;}
+.cmp-lbl{font-size:28px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:block;}
+.cmp-lbl-bad{color:#aaa;}
 .cmp-lbl-good{color:#19b1c6;}
+.cmp-img{width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;}
 .cmp-icon{font-size:52px;margin-bottom:20px;}
-.cmp-title{font-size:28px;font-weight:800;margin-bottom:16px;}
+.cmp-title{font-size:36px;font-weight:900;margin-bottom:16px;}
 .cmp-title-bad{color:#1a1a1a;}
 .cmp-title-good{color:#fff;}
-.cmp-desc{font-size:15px;line-height:1.9;}
-.cmp-desc-bad{color:#888;}
-.cmp-desc-good{color:rgba(255,255,255,0.6);}
-.cmp-list{margin-top:24px;display:flex;flex-direction:column;gap:10px;}
-.cmp-item{display:flex;align-items:center;gap:12px;font-size:14px;}
-.cmp-x{color:#ccc;font-weight:700;}
-.cmp-o{color:#19b1c6;font-weight:700;}
-.cmp-item-bad{color:#aaa;}
-.cmp-item-good{color:rgba(255,255,255,0.75);}
+.cmp-desc{font-size:18px;line-height:1.9;font-weight:600;}
+.cmp-desc-bad{color:#666;}
+.cmp-desc-good{color:rgba(255,255,255,0.75);}
+.cmp-list{margin-top:24px;display:flex;flex-direction:column;gap:12px;}
+.cmp-item{display:flex;align-items:flex-start;gap:12px;font-size:20px;font-weight:700;line-height:1.5;}
+.cmp-x{color:#ccc;font-weight:900;flex-shrink:0;}
+.cmp-o{color:#19b1c6;font-weight:900;flex-shrink:0;}
+.cmp-item-bad{color:#888;}
+.cmp-item-good{color:rgba(255,255,255,0.85);}
 
 /* BRAIN */
 .brain-sec{background:#f5f5f3;padding:100px 40px;}
 .brain-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
 .brain-visual{background:#1e2a6d;border-radius:24px;padding:56px 48px;}
-.brain-vis-title{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;color:#19b1c6;margin-bottom:28px;text-transform:uppercase;}
-.brain-areas{display:flex;flex-direction:column;gap:14px;}
-.brain-area{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:14px;}
-.brain-area-icon{font-size:22px;}
-.brain-area-name{font-size:13px;font-weight:600;color:#19b1c6;margin-bottom:2px;}
-.brain-area-desc{font-size:12px;color:rgba(255,255,255,0.4);}
-.brain-result{margin-top:20px;background:rgba(25,177,198,0.1);border:1px solid rgba(25,177,198,0.2);border-radius:12px;padding:18px;text-align:center;font-size:14px;color:#19b1c6;font-weight:600;}
-.brain-heading{font-size:42px;font-weight:900;color:#1a1a1a;line-height:1.2;margin-bottom:24px;letter-spacing:-1px;}
-.brain-body{font-size:16px;color:#777;line-height:1.9;margin-bottom:24px;}
+.brain-vis-title{font-size:24px;font-weight:800;color:#fff;margin-bottom:28px;}
+.brain-areas{display:flex;flex-direction:column;gap:16px;}
+.brain-area{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:22px 24px;display:flex;align-items:center;gap:16px;}
+.brain-area-icon{font-size:28px;}
+.brain-area-name{font-size:22px;font-weight:700;color:#19b1c6;margin-bottom:4px;}
+.brain-area-desc{font-size:16px;color:rgba(255,255,255,0.5);font-weight:500;}
+.brain-result{margin-top:20px;background:rgba(25,177,198,0.12);border:1px solid rgba(25,177,198,0.25);border-radius:12px;padding:20px;text-align:center;font-size:20px;color:#19b1c6;font-weight:800;}
+.brain-heading{font-size:48px;font-weight:900;color:#1a1a1a;line-height:1.2;margin-bottom:24px;letter-spacing:-1px;}
+.brain-body{font-size:22px;color:#555;line-height:1.9;margin-bottom:24px;font-weight:700;}
 .brain-quote{background:#1e2a6d;border-radius:16px;padding:32px 36px;}
-.brain-quote-text{font-size:18px;font-weight:700;color:#fff;line-height:1.6;margin-bottom:8px;}
-.brain-quote-sub{font-size:13px;color:rgba(255,255,255,0.4);}
+.brain-quote-text{font-size:20px;font-weight:700;color:#fff;line-height:1.6;margin-bottom:8px;}
+.brain-quote-sub{font-size:15px;color:rgba(255,255,255,0.45);}
 
 /* GRIP */
 .grip-sec{background:#1e2a6d;padding:100px 40px;}
 .grip-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-radius:20px;overflow:hidden;}
-.grip-step{background:rgba(255,255,255,0.04);padding:48px 32px;border-right:1px solid rgba(255,255,255,0.06);position:relative;transition:background 0.3s;}
+.grip-step{background:rgba(255,255,255,0.04);padding:56px 36px;border-right:1px solid rgba(255,255,255,0.06);position:relative;transition:background 0.3s;}
 .grip-step:last-child{border-right:none;}
 .grip-step:hover{background:rgba(255,255,255,0.09);}
-.grip-letter{font-family:'Montserrat',sans-serif;font-size:72px;font-weight:900;color:rgba(25,177,198,0.1);position:absolute;top:20px;right:20px;line-height:1;}
-.grip-num{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.25);margin-bottom:20px;text-transform:uppercase;}
-.grip-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px;}
-.grip-sub{font-size:12px;color:#19b1c6;font-weight:600;margin-bottom:14px;letter-spacing:0.5px;}
-.grip-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.8;}
+.grip-letter{font-family:'Montserrat',sans-serif;font-size:160px;font-weight:900;color:rgba(255,255,255,0.15);position:absolute;top:10px;right:10px;line-height:1;}
+.grip-num{font-family:'Montserrat',sans-serif;font-size:44px;font-weight:900;color:#fff;margin-bottom:20px;letter-spacing:-1px;position:relative;z-index:1;}
+.grip-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:6px;position:relative;z-index:1;}
+.grip-sub{font-size:14px;color:#19b1c6;font-weight:600;margin-bottom:18px;letter-spacing:0.5px;position:relative;z-index:1;}
+.grip-desc{font-size:20px;color:rgba(255,255,255,0.65);line-height:1.8;font-weight:600;position:relative;z-index:1;}
 
 /* TWC */
 .twc-sec{background:#fff;padding:100px 40px;}
 .twc-intro{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-bottom:72px;}
 .twc-img{border-radius:20px;overflow:hidden;aspect-ratio:4/3;}
 .twc-img img{width:100%;height:100%;object-fit:cover;}
-.twc-intro-body{font-size:15px;color:#666;line-height:1.9;}
+.twc-intro-body{font-size:18px;color:#555;line-height:1.9;font-weight:600;}
 .twc-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .twc-card{border-radius:20px;overflow:hidden;}
 .twc-card-head{padding:40px 36px 28px;}
-.twc-letter{font-family:'Montserrat',sans-serif;font-size:80px;font-weight:900;line-height:1;margin-bottom:14px;opacity:0.12;}
-.twc-num{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
-.twc-name{font-size:24px;font-weight:800;margin-bottom:6px;}
-.twc-sub{font-size:13px;font-weight:500;opacity:0.7;}
-.twc-card-body{padding:24px 36px 40px;background:rgba(0,0,0,0.04);}
-.twc-card-body p{font-size:14px;line-height:1.9;}
+.twc-letter{font-family:'Montserrat',sans-serif;font-size:80px;font-weight:900;line-height:1;margin-bottom:14px;opacity:0.15;}
+.twc-num{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
+.twc-name{font-size:28px;font-weight:900;margin-bottom:6px;}
+.twc-sub{font-size:16px;font-weight:600;opacity:0.8;}
+.twc-card-body{padding:28px 36px 44px;background:rgba(0,0,0,0.04);}
+.twc-card-body p{font-size:18px;line-height:1.9;font-weight:700;}
 .twc-card.think{background:#1e2a6d;}
 .twc-card.think .twc-letter,.twc-card.think .twc-name,.twc-card.think .twc-sub{color:#fff;}
 .twc-card.think .twc-num{color:#19b1c6;}
 .twc-card.think .twc-card-body{background:rgba(255,255,255,0.05);}
-.twc-card.think .twc-card-body p{color:rgba(255,255,255,0.6);}
+.twc-card.think .twc-card-body p{color:rgba(255,255,255,0.8);}
 .twc-card.write{background:#19b1c6;}
 .twc-card.write .twc-letter,.twc-card.write .twc-name,.twc-card.write .twc-sub{color:#fff;}
 .twc-card.write .twc-num{color:rgba(255,255,255,0.7);}
 .twc-card.write .twc-card-body{background:rgba(0,0,0,0.08);}
-.twc-card.write .twc-card-body p{color:rgba(255,255,255,0.85);}
+.twc-card.write .twc-card-body p{color:rgba(255,255,255,0.9);}
 .twc-card.check{background:#f5f5f3;}
 .twc-card.check .twc-letter,.twc-card.check .twc-name{color:#1e2a6d;}
 .twc-card.check .twc-sub{color:#19b1c6;}
 .twc-card.check .twc-num{color:#bbb;}
-.twc-card.check .twc-card-body p{color:#777;}
+.twc-card.check .twc-card-body p{color:#555;}
 .twc-class{margin-top:56px;background:#1e2a6d;border-radius:24px;padding:52px 60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-.twc-class-lbl{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#19b1c6;margin-bottom:14px;}
+.twc-class-lbl{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#19b1c6;margin-bottom:14px;}
 .twc-class-title{font-size:32px;font-weight:900;color:#fff;margin-bottom:14px;line-height:1.3;}
-.twc-class-desc{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.9;}
+.twc-class-desc{font-size:17px;color:rgba(255,255,255,0.65);line-height:1.9;font-weight:500;}
 .twc-periods{display:flex;flex-direction:column;gap:16px;}
-.twc-period{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:22px 28px;display:flex;align-items:center;gap:20px;}
+.twc-period{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:14px;padding:22px 28px;display:flex;align-items:center;gap:20px;}
 .twc-period-num{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:800;color:#19b1c6;min-width:44px;}
-.twc-period h4{font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
-.twc-period p{font-size:13px;color:rgba(255,255,255,0.4);}
-.twc-period.required{border-color:rgba(25,177,198,0.3);background:rgba(25,177,198,0.07);}
-.twc-period.required h4::after{content:' 필수';color:#19b1c6;font-size:11px;font-weight:700;letter-spacing:1px;}
-
-/* BADGE */
-.badge-sec{background:#f9f9f7;padding:100px 40px;}
-.badge-track{display:flex;gap:0;margin-top:60px;position:relative;}
-.badge-track::before{content:'';position:absolute;top:48px;left:60px;right:60px;height:2px;background:linear-gradient(90deg,#d0d4e8,#1e2a6d,#19b1c6);z-index:0;}
-.badge-item{flex:1;text-align:center;position:relative;z-index:1;}
-.badge-circle{width:96px;height:96px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;transition:transform 0.3s;box-shadow:0 4px 16px rgba(0,0,0,0.1);}
-.badge-circle:hover{transform:scale(1.12);}
-.badge-item:nth-child(1) .badge-circle{background:#e8e8e8;color:#999;}
-.badge-item:nth-child(2) .badge-circle{background:#c8dff0;color:#1e6a8a;}
-.badge-item:nth-child(3) .badge-circle{background:#1e2a6d;color:#19b1c6;}
-.badge-item:nth-child(4) .badge-circle{background:#19b1c6;color:#fff;}
-.badge-item:nth-child(5) .badge-circle{background:linear-gradient(135deg,#1e2a6d,#19b1c6);color:#fff;}
-.badge-name{font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:3px;}
-.badge-grade{font-size:10px;color:#aaa;margin-bottom:8px;font-family:'Montserrat',sans-serif;letter-spacing:1px;text-transform:uppercase;}
-.badge-desc{font-size:12px;color:#888;line-height:1.6;max-width:120px;margin:0 auto;}
+.twc-period h4{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;}
+.twc-period p{font-size:15px;color:rgba(255,255,255,0.5);}
+.twc-period.required{border-color:rgba(25,177,198,0.35);background:rgba(25,177,198,0.08);}
+.twc-period.required h4::after{content:' 필수';color:#19b1c6;font-size:13px;font-weight:700;letter-spacing:1px;}
 
 /* TRACK */
-.track-sec{background:#fff;padding:100px 40px;}
+.track-sec{background:#f9f9f7;padding:100px 40px;}
 .track-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
 .track-card{border-radius:20px;overflow:hidden;border:1px solid #e0e0e0;}
 .track-head{padding:36px 40px;background:#1e2a6d;}
-.track-head-lbl{font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:10px;}
+.track-head-lbl{font-size:12px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.35);text-transform:uppercase;margin-bottom:10px;}
 .track-head-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:6px;}
 .track-head-title span{color:#19b1c6;}
-.track-head-sub{font-size:14px;color:rgba(255,255,255,0.45);}
-.track-body{padding:36px 40px;background:#fafafa;}
-.track-flow{display:flex;flex-direction:column;gap:14px;}
-.track-step{display:flex;align-items:flex-start;gap:16px;padding:16px 18px;background:#fff;border-radius:12px;border:1px solid #f0f0f0;}
-.track-step-n{width:32px;height:32px;border-radius:50%;background:#1e2a6d;color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.track-step-text strong{display:block;font-size:15px;color:#1e2a6d;margin-bottom:3px;font-weight:700;}
-.track-step-text{font-size:13px;color:#666;line-height:1.7;}
+.track-head-sub{font-size:16px;color:rgba(255,255,255,0.5);}
+.track-body{padding:36px 40px;background:#fff;}
+.track-flow{display:flex;flex-direction:column;gap:16px;}
+.track-step{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;background:#f9f9f7;border-radius:12px;border:1px solid #f0f0f0;}
+.track-step-n{width:36px;height:36px;border-radius:50%;background:#1e2a6d;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.track-step-text strong{display:block;font-size:22px;color:#1e2a6d;margin-bottom:4px;font-weight:800;}
+.track-step-text{font-size:18px;color:#555;line-height:1.7;font-weight:600;}
 
 /* MANAGE */
-.manage-sec{background:#f5f5f3;padding:100px 40px;}
+.manage-sec{background:#fff;padding:100px 40px;}
 .manage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.manage-item{padding:32px;border-radius:16px;background:#fff;border:1px solid #eee;display:flex;align-items:flex-start;gap:16px;transition:border-color 0.2s,transform 0.2s;}
+.manage-item{padding:36px;border-radius:16px;background:#f9f9f7;border:1px solid #eee;display:flex;align-items:flex-start;gap:16px;transition:border-color 0.2s,transform 0.2s;}
 .manage-item:hover{border-color:#19b1c6;transform:translateY(-4px);}
-.manage-icon{width:48px;height:48px;border-radius:12px;background:#1e2a6d;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.manage-text h4{font-size:15px;font-weight:700;color:#1e2a6d;margin-bottom:6px;}
-.manage-text p{font-size:13px;color:#999;line-height:1.7;}
+.manage-icon{width:52px;height:52px;border-radius:12px;background:#1e2a6d;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.manage-text h4{font-size:22px;font-weight:800;color:#1e2a6d;margin-bottom:8px;}
+.manage-text p{font-size:17px;color:#777;line-height:1.7;font-weight:600;}
 
 /* RESULTS */
 .results-sec{background:#1e2a6d;padding:100px 40px;}
 .results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:48px;}
 .result-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:36px;text-align:center;}
 .result-num{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;color:#19b1c6;line-height:1;margin-bottom:10px;}
-.result-lbl{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6;}
+.result-lbl{font-size:16px;color:rgba(255,255,255,0.5);line-height:1.6;font-weight:500;}
 
 /* CONTACT */
 .contact-sec{padding:100px 40px;background:#f9f9f7;text-align:center;}
@@ -228,35 +217,67 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 .fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
 .fade-up.visible{opacity:1;transform:translateY(0);}
 
+/* FLOATING */
+.floating-consult{position:fixed;right:20px;bottom:120px;z-index:999;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.floating-naver{width:52px;height:52px;background:#03C75A;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,199,90,0.4);text-decoration:none;transition:transform 0.2s;animation:pulse-green 2.5s infinite;}
+.floating-naver:hover{transform:scale(1.1);}
+.floating-label{font-size:10px;font-weight:600;color:#555;background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:2px 8px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+@keyframes pulse-green{0%,100%{box-shadow:0 4px 16px rgba(3,199,90,0.4);}50%{box-shadow:0 4px 24px rgba(3,199,90,0.7);}}
+
+/* CHATBOT */
+.chatbot-wrap{position:fixed;right:20px;bottom:20px;z-index:1000;}
+.chatbot-btn{width:56px;height:56px;background:linear-gradient(135deg,#1e2a6d,#19b1c6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(30,42,109,0.35);border:none;font-size:24px;color:#fff;transition:transform 0.2s;}
+.chatbot-btn:hover{transform:scale(1.08);}
+.chatbot-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;background:#ff4757;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;}
+.chatbot-window{position:absolute;bottom:70px;right:0;width:320px;background:#fff;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.18);overflow:hidden;display:none;flex-direction:column;max-height:480px;}
+.chatbot-window.open{display:flex;}
+.chatbot-header{background:linear-gradient(135deg,#1e2a6d,#19b1c6);padding:16px 18px;display:flex;align-items:center;gap:10px;}
+.chatbot-avatar{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.chatbot-header-info{flex:1;}
+.chatbot-header-name{font-size:14px;font-weight:700;color:#fff;}
+.chatbot-header-status{font-size:11px;color:rgba(255,255,255,0.7);}
+.chatbot-close{background:none;border:none;color:rgba(255,255,255,0.8);font-size:18px;cursor:pointer;line-height:1;padding:0;}
+.chatbot-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.chat-msg{max-width:85%;font-size:13px;line-height:1.6;}
+.chat-msg.bot{align-self:flex-start;}
+.chat-msg.user{align-self:flex-end;}
+.chat-bubble{padding:10px 14px;border-radius:14px;word-break:keep-all;}
+.chat-msg.bot .chat-bubble{background:#f1f3f8;color:#333;border-bottom-left-radius:4px;}
+.chat-msg.user .chat-bubble{background:#1e2a6d;color:#fff;border-bottom-right-radius:4px;}
+.chat-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.chat-chip{background:#fff;border:1px solid #d0d7e8;border-radius:20px;padding:6px 12px;font-size:12px;color:#1e2a6d;cursor:pointer;transition:all 0.15s;font-weight:500;}
+.chat-chip:hover{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+.chatbot-footer{padding:10px 14px;border-top:1px solid #f0f0f0;display:flex;gap:8px;}
+.chatbot-input{flex:1;border:1px solid #e0e0e0;border-radius:20px;padding:8px 14px;font-size:13px;outline:none;font-family:'Noto Sans KR',sans-serif;}
+.chatbot-input:focus{border-color:#19b1c6;}
+.chatbot-send{width:34px;height:34px;background:#1e2a6d;border:none;border-radius:50%;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;flex-shrink:0;}
+.chatbot-send:hover{background:#19b1c6;}
+
 @media(max-width:900px){
   nav{padding:0 16px;height:80px;}
   .nav-menu a:not(.nav-cta){display:none;}
-  .nav-cta{padding:8px 12px;font-size:12px;}
   .hero{padding:100px 20px 60px;}
-  .hero-title{font-size:44px;letter-spacing:-1px;}
-  .hero-desc{font-size:15px;}
-  .hero-metrics{gap:32px;}
-  .hero-ctas{flex-direction:column;}
+  .hero-title{font-size:44px;}
+  .hero-slogan{font-size:16px;}
   .photo-banner{height:220px;}
-  .story,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.badge-sec,.track-sec,.manage-sec,.results-sec,.contact-sec{padding:64px 20px;}
+  .story,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.manage-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .story-layout{grid-template-columns:1fr;}
   .compare-grid{grid-template-columns:1fr;}
   .cmp-bad,.cmp-good{padding:40px 28px;}
+  .cmp-item{font-size:16px;}
   .brain-layout{grid-template-columns:1fr;}
   .grip-steps{grid-template-columns:1fr 1fr;}
+  .grip-num{font-size:32px;}
   .twc-intro{grid-template-columns:1fr;}
   .twc-steps{grid-template-columns:1fr;}
   .twc-class{grid-template-columns:1fr;padding:36px 24px;}
-  .badge-track{flex-direction:column;gap:20px;}
-  .badge-track::before{display:none;}
-  .badge-item{display:flex;align-items:center;gap:20px;text-align:left;}
-  .badge-circle{margin:0;flex-shrink:0;width:72px;height:72px;}
-  .badge-desc{max-width:none;}
   .track-grid{grid-template-columns:1fr;}
   .manage-grid{grid-template-columns:1fr;}
   .results-grid{grid-template-columns:1fr;}
-  .contact-box{padding:36px 20px;}
   .heading{font-size:32px;}
+  .contact-box{padding:36px 20px;}
+  .chatbot-window{width:calc(100vw - 40px);right:0;}
+  .floating-consult{right:16px;bottom:100px;}
 }
 @media(max-width:480px){
   .grip-steps{grid-template-columns:1fr;}
@@ -287,6 +308,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="hero">
   <div class="hero-inner">
     <p class="hero-tag">Math Program</p>
+    <p class="hero-slogan">손에 잡히는 수학</p>
     <h1 class="hero-title">수학은 <span>손으로</span><br>잡는 것입니다</h1>
     <p class="hero-desc">점수보다 변화, 순간보다 성장.<br>10년간 3,000명의 학생과 함께 발견한 진짜 수학 실력의 비밀</p>
     <div class="hero-metrics">
@@ -324,39 +346,40 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       <div>
         <p class="eyebrow eyebrow-dim">10년의 깨달음</p>
         <h2 class="story-q">왜 어떤 아이는 금방 이해하고,<br><em>왜 어떤 아이는 아무리 해도 안 될까?</em></h2>
-        <p class="story-body">10년 동안 15,000시간, 누적 3,000명의 학생을 가르치며 우리는 그 차이를 발견했습니다. 같은 교재, 같은 시간, 같은 선생님 앞에서도 결과는 달랐습니다. 그 비밀은 바로 <strong style="color:#19b1c6;">지식을 손에 쥐는 방식</strong>에 있었습니다.</p>
+        <p class="story-body">10년 동안 15,000시간, 누적 3,000명의 학생을 가르치며 우리는 그 차이를 발견했습니다. 그 비밀은 바로 <strong style="color:#19b1c6;">지식을 손에 쥐는 방식</strong>에 있었습니다.</p>
         <div class="story-hl">
           "모든 학생이 수학의 기쁨을 손안에 쥐게 한다"<br>
-          <span style="font-size:12px;color:rgba(25,177,198,0.6);margin-top:4px;display:block;">— 그립학원의 약속</span>
+          <span style="font-size:14px;color:rgba(25,177,198,0.6);margin-top:4px;display:block;">— 그립학원의 약속</span>
         </div>
       </div>
       <div class="story-stats">
         <div class="story-stat">
           <div class="story-stat-num">10년</div>
-          <div class="story-stat-lbl">매쓰그립 수학의 교육 경험<br>현장에서 쌓은 진짜 데이터</div>
+          <div class="story-stat-lbl">매쓰그립 수학의 교육 경험</div>
         </div>
         <div class="story-stat">
           <div class="story-stat-num">15,000H</div>
-          <div class="story-stat-lbl">직접 학생과 마주한 수업 시간<br>강의실이 아닌 교실에서</div>
+          <div class="story-stat-lbl">직접 학생과 마주한 수업 시간</div>
         </div>
         <div class="story-stat">
           <div class="story-stat-num">3,000명</div>
-          <div class="story-stat-lbl">누적 재원 학생 수<br>한 명 한 명의 변화를 기억합니다</div>
+          <div class="story-stat-lbl">누적 재원 학생 수</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- COMPARE: 비누 vs 돌멩이 -->
+<!-- COMPARE -->
 <section class="compare-sec">
   <div class="w-inner">
-    <p class="eyebrow">지식의 두 가지 형태</p>
-    <h2 class="heading">비누 같은 지식 vs<br>돌멩이 같은 지식</h2>
+    <p class="eyebrow-lg">지식의 두 가지 형태</p>
+    <h2 class="heading">비누 같은 지식 vs 돌멩이 같은 지식</h2>
     <p class="lead">중간층 아이들은 왜 열심히 해도 성적이 오르지 않을까요?<br>그 답은 지식이 손에 잡히는 방식의 차이에 있습니다.</p>
     <div class="compare-grid fade-up">
       <div class="cmp-bad">
-        <p class="cmp-lbl cmp-lbl-bad">대부분의 학생</p>
+        <span class="cmp-lbl cmp-lbl-bad">대부분의 학생</span>
+        <img src="assets/images/photos/1763705263.708003IMG_9253.jpeg" alt="수업 장면" class="cmp-img">
         <div class="cmp-icon">🧼</div>
         <h3 class="cmp-title cmp-title-bad">비누 같은 지식</h3>
         <p class="cmp-desc cmp-desc-bad">배웠지만 시험 때 생각나지 않고, 풀었지만 다음 단원에서 다시 막힙니다. 손을 적시면 미끄러지는 비누처럼, 머릿속에만 있는 지식은 결정적 순간에 미끄러집니다.</p>
@@ -368,7 +391,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         </div>
       </div>
       <div class="cmp-good">
-        <p class="cmp-lbl cmp-lbl-good">그립학원 학생</p>
+        <span class="cmp-lbl cmp-lbl-good">그립학원 학생</span>
         <div class="cmp-icon">🪨</div>
         <h3 class="cmp-title cmp-title-good">돌멩이 같은 지식</h3>
         <p class="cmp-desc cmp-desc-good">한번 잡으면 놓치지 않고, 지식이 연결되어 쌓여갑니다. 손으로 직접 써서 각인된 지식은 뇌에 단단하게 자리잡아 어떤 상황에서도 꺼낼 수 있습니다.</p>
@@ -415,7 +438,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <div class="brain-result">3개 영역 동시 활성화 = 기억력 3배</div>
       </div>
       <div>
-        <p class="eyebrow">뇌과학으로 증명된 학습법</p>
+        <p class="eyebrow-xl">뇌과학으로 증명된 학습법</p>
         <h2 class="brain-heading">손은<br>제2의 뇌입니다</h2>
         <p class="brain-body">손으로 쓸 때 우리 뇌에서는 운동피질, 감각피질, 시각피질이 동시에 활성화됩니다. 단순히 보거나 듣는 것과 달리, 쓰는 행위는 뇌의 여러 영역을 동시에 깨웁니다.</p>
         <p class="brain-body">그것이 바로 강의를 100번 듣는 것보다 손으로 한 번 쓰는 것이 더 오래 기억되는 이유입니다.</p>
@@ -432,7 +455,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="grip-sec">
   <div class="w-inner">
     <p class="eyebrow eyebrow-dim">GRIP 시스템</p>
-    <h2 class="heading heading-w">G·R·I·P<br>4단계 성장 시스템</h2>
+    <h2 class="heading heading-w">G·R·I·P 4단계 성장 시스템</h2>
     <p class="lead lead-w">진단에서 유지까지, 끊기지 않는 성장의 사이클</p>
     <div class="grip-steps fade-up">
       <div class="grip-step">
@@ -461,7 +484,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <p class="grip-num">04 / PROGRESS</p>
         <h3 class="grip-title">유지</h3>
         <p class="grip-sub">Progress — 꺾이지 않게</p>
-        <p class="grip-desc">올라간 실력이 꺾이지 않도록 지속 관리합니다. 점수가 올랐다고 끝이 아닙니다. 유지가 진짜 실력입니다.</p>
+        <p class="grip-desc">올라간 실력이 꺾이지 않도록 지속 관리합니다. 유지가 진짜 실력입니다.</p>
       </div>
     </div>
   </div>
@@ -472,7 +495,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   <div class="w-inner">
     <div class="twc-intro fade-up">
       <div>
-        <p class="eyebrow">매쓰그립 시그니처</p>
+        <p class="eyebrow-xl">매쓰그립 시그니처</p>
         <h2 class="heading">TWC 시스템</h2>
         <p class="lead" style="margin-bottom:24px;">Think → Write → Check<br>수학을 손에 쥐는 3단계 학습법</p>
         <p class="twc-intro-body">매쓰그립의 모든 수업은 TWC 순서로 진행됩니다. 머릿속에서 그치는 것이 아니라, 손으로 쓰면서 완전한 이해로 완성됩니다. 생각하고, 쓰고, 확인하는 이 과정이 반복될수록 수학 실력은 손에 단단히 잡힙니다.</p>
@@ -519,8 +542,8 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <div class="twc-class fade-up">
       <div>
         <p class="twc-class-lbl">수업 구조</p>
-        <h3 class="twc-class-title">매쓰그립의<br>2교시 수업 시스템</h3>
-        <p class="twc-class-desc">손으로 쓰는 것이 선택이 아닌 필수입니다. 매쓰그립의 2교시는 단순한 숙제가 아닙니다. 뇌가 개념을 완전히 흡수하기 위한 필수 과정입니다.</p>
+        <h3 class="twc-class-title">매쓰그립의 2교시 수업 시스템</h3>
+        <p class="twc-class-desc">손으로 쓰는 것이 선택이 아닌 필수입니다. 뇌가 개념을 완전히 흡수하기 위한 필수 과정입니다.</p>
       </div>
       <div class="twc-periods">
         <div class="twc-period">
@@ -542,52 +565,11 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   </div>
 </section>
 
-<!-- GRIP BADGE -->
-<section class="badge-sec" id="badge">
-  <div class="w-inner">
-    <p class="eyebrow">성장 추적 시스템</p>
-    <h2 class="heading">GRIP 배지 시스템</h2>
-    <p class="lead">G1부터 G5까지, 학생의 성장을 눈에 보이는 배지로 인정합니다.<br>배지는 단순한 보상이 아니라 실력의 객관적 기준입니다.</p>
-    <div class="badge-track fade-up">
-      <div class="badge-item">
-        <div class="badge-circle">G1</div>
-        <p class="badge-name">BUILDER</p>
-        <p class="badge-grade">기초 단계</p>
-        <p class="badge-desc">기초 개념을 손으로 쓰며 기반을 다지는 단계</p>
-      </div>
-      <div class="badge-item">
-        <div class="badge-circle">G2</div>
-        <p class="badge-name">WRITER</p>
-        <p class="badge-grade">쓰기 습관</p>
-        <p class="badge-desc">TWC 습관이 완성되어 풀이를 체계적으로 쓰는 단계</p>
-      </div>
-      <div class="badge-item">
-        <div class="badge-circle">G3</div>
-        <p class="badge-name">PLANNER</p>
-        <p class="badge-grade">자기계획</p>
-        <p class="badge-desc">스스로 학습 계획을 세우고 실행하는 단계</p>
-      </div>
-      <div class="badge-item">
-        <div class="badge-circle">G4</div>
-        <p class="badge-name">THINKER</p>
-        <p class="badge-grade">심화 사고</p>
-        <p class="badge-desc">개념을 연결하여 심화 문제를 스스로 해결하는 단계</p>
-      </div>
-      <div class="badge-item">
-        <div class="badge-circle">G5</div>
-        <p class="badge-name">MASTER</p>
-        <p class="badge-grade">자기주도 완성</p>
-        <p class="badge-desc">자기주도 학습 완성, 최상위권 유지 단계</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- TRACK -->
 <section class="track-sec" id="track">
   <div class="w-inner">
     <p class="eyebrow">프로그램</p>
-    <h2 class="heading">DD반 + PT반<br>2-Track 시스템</h2>
+    <h2 class="heading">DD반 + PT반 2-Track 시스템</h2>
     <p class="lead">학생 수준과 목표에 따라 최적의 반을 선택합니다</p>
     <div class="track-grid fade-up">
       <div class="track-card">
@@ -644,8 +626,8 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="manage-sec">
   <div class="w-inner">
     <p class="eyebrow">관리 시스템</p>
-    <h2 class="heading">6가지 체계적<br>관리 시스템</h2>
-    <p class="lead">성적 향상을 위한 촘촘한 학습 관리. 수업 밖에서도 성장은 계속됩니다.</p>
+    <h2 class="heading">6가지 체계적 관리 시스템</h2>
+    <p class="lead">성적 향상을 위한 촘촘한 학습 관리</p>
     <div class="manage-grid fade-up">
       <div class="manage-item">
         <div class="manage-icon">💬</div>
@@ -724,16 +706,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <p class="contact-sub">수학 프로그램, 레벨 테스트, 수업 일정 등<br>궁금한 점을 편하게 문의해 주세요</p>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn">네이버 톡으로 상담하기 →</a>
     <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-btn" style="background:#19b1c6;">입학상담 신청 →</a>
-    <div style="display:flex;justify-content:center;gap:16px;margin-top:20px;flex-wrap:wrap;">
-      <a href="https://naver.me/FgH5Mo7h" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-        네이버 플레이스
-      </a>
-      <a href="https://blog.naver.com/mikesuh7" target="_blank" style="display:flex;align-items:center;gap:8px;background:#03C75A;color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-        네이버 블로그
-      </a>
-    </div>
     <p class="contact-hint">상담 완료 시 첫 달 교재비 50% 지원 혜택</p>
   </div>
 </section>
@@ -749,11 +721,109 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   <p class="footer-copy">© 2025 매쓰그립 수학학원. All rights reserved.</p>
 </footer>
 
+<!-- FLOATING NAVER -->
+<div class="floating-consult">
+  <a href="https://talk.naver.com/W5XRAC" target="_blank" class="floating-naver" title="네이버톡 상담">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+  </a>
+  <span class="floating-label">무료상담</span>
+</div>
+
+<!-- CHATBOT -->
+<div class="chatbot-wrap" id="chatbotWrap">
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">🎓</div>
+      <div class="chatbot-header-info">
+        <div class="chatbot-header-name">그립학원 상담봇</div>
+        <div class="chatbot-header-status">● 온라인 · 즉시 답변</div>
+      </div>
+      <button class="chatbot-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chatbot-body" id="chatbotBody">
+      <div class="chat-msg bot">
+        <div class="chat-bubble">안녕하세요! 👋 매쓰그립 수학학원에 오신 것을 환영합니다. 무엇이 궁금하신가요?</div>
+        <div class="chat-chips">
+          <span class="chat-chip" onclick="askFaq('location')">📍 위치</span>
+          <span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span>
+          <span class="chat-chip" onclick="askFaq('fee')">💰 수강료</span>
+          <span class="chat-chip" onclick="askFaq('level')">📝 레벨테스트 신청</span>
+          <span class="chat-chip" onclick="askFaq('shuttle')">🚌 셔틀버스</span>
+          <span class="chat-chip" onclick="askFaq('register')">✅ 등록방법</span>
+        </div>
+      </div>
+    </div>
+    <div class="chatbot-footer">
+      <input class="chatbot-input" id="chatbotInput" placeholder="질문을 입력하세요..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chatbot-send" onclick="sendChat()">➤</button>
+    </div>
+  </div>
+  <button class="chatbot-btn" onclick="toggleChat()" id="chatbotBtn">
+    💬
+    <span class="chatbot-badge" id="chatbotBadge">1</span>
+  </button>
+</div>
+
 <script>
 const obs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
 }, {threshold:0.1});
 document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+const FAQ = {
+  location:{q:'📍 위치가 어디인가요?',a:'서울 서대문구 가재울미래로 17, 7층에 위치해 있습니다. 가재울역 근처라 교통이 편리합니다! 🏢'},
+  time:{q:'🕐 수업 시간은 어떻게 되나요?',a:'수학은 평일 오후 3시~9시 운영합니다. 자세한 시간표는 상담 후 안내 드립니다! 📅'},
+  fee:{q:'💰 수강료는 얼마인가요?',a:'수강료는 학년, 수업 방식(DD반/PT반)에 따라 다릅니다. 레벨테스트 후 맞춤 상담을 통해 정확히 안내해 드릴게요. 😊'},
+  level:{q:'📝 레벨테스트는 어떻게 하나요?',a:'레벨테스트는 현재 무료 진행중입니다. 아래 신청서를 작성해주시면 확인후 연락드립니다. 결과에 따라 최적의 반을 배치해드립니다. 📋'},
+  shuttle:{q:'🚌 셔틀버스가 있나요?',a:'네, 등하원 셔틀버스를 운행하고 있습니다! 운행 노선은 상담 시 자세히 안내해 드리겠습니다. 🚌'},
+  register:{q:'✅ 등록은 어떻게 하나요?',a:'레벨테스트 → 상담 → 수업 배정 순서로 진행됩니다. 아래로 연락 주시면 바로 안내해 드립니다! 🎯'}
+};
+const KEYWORD_MAP=[
+  {keys:['위치','어디','주소','가재울'],type:'location'},
+  {keys:['시간','몇 시','수업 시간','스케줄'],type:'time'},
+  {keys:['수강료','비용','가격','얼마','학원비'],type:'fee'},
+  {keys:['레벨','테스트','레벨테스트','시험'],type:'level'},
+  {keys:['셔틀','버스','차'],type:'shuttle'},
+  {keys:['등록','신청','입학','가입'],type:'register'},
+];
+function toggleChat(){
+  const win=document.getElementById('chatbotWindow');
+  const badge=document.getElementById('chatbotBadge');
+  win.classList.toggle('open');
+  if(badge)badge.style.display='none';
+}
+function addMsg(text,type,chips){
+  const body=document.getElementById('chatbotBody');
+  const div=document.createElement('div');
+  div.className=`chat-msg ${type}`;
+  div.innerHTML=`<div class="chat-bubble">${text}</div>`;
+  if(chips){const chipDiv=document.createElement('div');chipDiv.className='chat-chips';chipDiv.innerHTML=chips;div.appendChild(chipDiv);}
+  body.appendChild(div);
+  body.scrollTop=body.scrollHeight;
+}
+function askFaq(type){
+  const faq=FAQ[type];
+  if(!faq)return;
+  addMsg(faq.q,'user');
+  setTimeout(()=>{
+    const extra=type==='level'
+      ?`<br><br><a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" style="display:inline-block;margin-top:6px;padding:8px 16px;background:#1e2a6d;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">레벨테스트 신청하기 →</a>`
+      :(['fee','register'].includes(type)?`<br><br><a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;margin-top:6px;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`:'');
+    addMsg(faq.a+extra,'bot',`<span class="chat-chip" onclick="askFaq('location')">📍 위치</span><span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span><span class="chat-chip" onclick="askFaq('fee')">💰 수강료</span>`);
+  },400);
+}
+function sendChat(){
+  const input=document.getElementById('chatbotInput');
+  const text=input.value.trim();
+  if(!text)return;
+  addMsg(text,'user');
+  input.value='';
+  setTimeout(()=>{
+    const matched=KEYWORD_MAP.find(k=>k.keys.some(kw=>text.includes(kw)));
+    if(matched){askFaq(matched.type);}
+    else{addMsg('죄송합니다, 담당 선생님께서 직접 답변 드릴게요! 아래로 연락 주시면 빠르게 도움드리겠습니다. 😊','bot',`<a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`);}
+  },400);
+}
 </script>
 </body>
 </html>
