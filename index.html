@@ -175,6 +175,84 @@ footer{background:#111;padding:40px;}
 .fade-up:nth-child(3){transition-delay:0.2s;}
 .fade-up:nth-child(4){transition-delay:0.3s;}
 
+/* REVIEWS */
+.reviews{padding:80px 40px;background:#fff;}
+.reviews-inner{max-width:960px;margin:0 auto;text-align:center;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:32px;}
+.review-card{background:#f9f9f7;border-radius:16px;padding:28px 24px;text-align:left;border:1px solid #ececec;transition:transform 0.25s,box-shadow 0.25s;}
+.review-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.08);}
+.review-stars{color:#ffb800;font-size:14px;margin-bottom:12px;letter-spacing:1px;}
+.review-text{font-size:14px;color:#444;line-height:1.75;margin-bottom:16px;word-break:keep-all;}
+.review-author{display:flex;align-items:center;gap:10px;}
+.review-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1e2a6d,#19b1c6);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.review-meta{font-size:12px;color:#999;}
+.review-meta strong{color:#555;font-size:13px;display:block;}
+.reviews-more{display:inline-flex;align-items:center;gap:6px;padding:12px 28px;border-radius:8px;background:#03C75A;color:#fff;font-size:14px;font-weight:600;text-decoration:none;transition:background 0.2s;}
+.reviews-more:hover{background:#02a84e;}
+.reviews-summary{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:40px;}
+.reviews-score{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;color:#1e2a6d;line-height:1;}
+.reviews-info{text-align:left;}
+.reviews-stars-big{color:#ffb800;font-size:20px;letter-spacing:2px;}
+.reviews-count{font-size:13px;color:#999;margin-top:4px;}
+
+/* FLOATING BTN */
+.floating-consult{position:fixed;right:20px;bottom:120px;z-index:999;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.floating-naver{width:52px;height:52px;background:#03C75A;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,199,90,0.4);text-decoration:none;transition:transform 0.2s;animation:pulse-green 2.5s infinite;}
+.floating-naver:hover{transform:scale(1.1);}
+.floating-naver svg{display:block;}
+.floating-label{font-size:10px;font-weight:600;color:#555;background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:2px 8px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+@keyframes pulse-green{0%,100%{box-shadow:0 4px 16px rgba(3,199,90,0.4);}50%{box-shadow:0 4px 24px rgba(3,199,90,0.7);}}
+
+/* CHATBOT */
+.chatbot-wrap{position:fixed;right:20px;bottom:20px;z-index:1000;}
+.chatbot-btn{width:56px;height:56px;background:linear-gradient(135deg,#1e2a6d,#19b1c6);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 20px rgba(30,42,109,0.35);border:none;font-size:24px;color:#fff;transition:transform 0.2s;}
+.chatbot-btn:hover{transform:scale(1.08);}
+.chatbot-badge{position:absolute;top:-2px;right:-2px;width:18px;height:18px;background:#ff4757;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;}
+.chatbot-window{position:absolute;bottom:70px;right:0;width:320px;background:#fff;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.18);overflow:hidden;display:none;flex-direction:column;max-height:480px;}
+.chatbot-window.open{display:flex;}
+.chatbot-header{background:linear-gradient(135deg,#1e2a6d,#19b1c6);padding:16px 18px;display:flex;align-items:center;gap:10px;}
+.chatbot-avatar{width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.chatbot-header-info{flex:1;}
+.chatbot-header-name{font-size:14px;font-weight:700;color:#fff;}
+.chatbot-header-status{font-size:11px;color:rgba(255,255,255,0.7);}
+.chatbot-close{background:none;border:none;color:rgba(255,255,255,0.8);font-size:18px;cursor:pointer;line-height:1;padding:0;}
+.chatbot-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.chat-msg{max-width:85%;font-size:13px;line-height:1.6;}
+.chat-msg.bot{align-self:flex-start;}
+.chat-msg.user{align-self:flex-end;}
+.chat-bubble{padding:10px 14px;border-radius:14px;word-break:keep-all;}
+.chat-msg.bot .chat-bubble{background:#f1f3f8;color:#333;border-bottom-left-radius:4px;}
+.chat-msg.user .chat-bubble{background:#1e2a6d;color:#fff;border-bottom-right-radius:4px;}
+.chat-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.chat-chip{background:#fff;border:1px solid #d0d7e8;border-radius:20px;padding:6px 12px;font-size:12px;color:#1e2a6d;cursor:pointer;transition:all 0.15s;font-weight:500;}
+.chat-chip:hover{background:#1e2a6d;color:#fff;border-color:#1e2a6d;}
+.chatbot-footer{padding:10px 14px;border-top:1px solid #f0f0f0;display:flex;gap:8px;}
+.chatbot-input{flex:1;border:1px solid #e0e0e0;border-radius:20px;padding:8px 14px;font-size:13px;outline:none;font-family:'Noto Sans KR',sans-serif;}
+.chatbot-input:focus{border-color:#19b1c6;}
+.chatbot-send{width:34px;height:34px;background:#1e2a6d;border:none;border-radius:50%;color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;flex-shrink:0;}
+.chatbot-send:hover{background:#19b1c6;}
+
+/* EXIT POPUP */
+.exit-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+.exit-overlay.show{display:flex;}
+.exit-modal{background:#fff;border-radius:20px;max-width:400px;width:100%;overflow:hidden;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes popIn{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
+.exit-modal-top{background:linear-gradient(135deg,#1e2a6d,#19b1c6);padding:32px 28px 28px;text-align:center;}
+.exit-emoji{font-size:40px;margin-bottom:12px;}
+.exit-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3;}
+.exit-sub{font-size:14px;color:rgba(255,255,255,0.75);line-height:1.6;}
+.exit-modal-body{padding:24px 28px;}
+.exit-benefits{list-style:none;margin-bottom:24px;}
+.exit-benefits li{font-size:14px;color:#444;padding:7px 0;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f5f5f5;}
+.exit-benefits li:last-child{border-bottom:none;}
+.exit-check{color:#19b1c6;font-weight:700;}
+.exit-btns{display:flex;flex-direction:column;gap:10px;}
+.exit-btn-main{display:block;text-align:center;padding:14px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;background:#1e2a6d;color:#fff;transition:background 0.2s;}
+.exit-btn-main:hover{background:#19b1c6;}
+.exit-btn-naver{display:block;text-align:center;padding:14px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;background:#03C75A;color:#fff;}
+.exit-btn-close{background:none;border:none;font-size:13px;color:#bbb;cursor:pointer;text-align:center;width:100%;padding:8px 0;margin-top:4px;}
+.exit-btn-close:hover{color:#888;}
+
 /* MOBILE */
 @media(max-width:768px){
   nav{padding:10px 16px;height:auto;min-height:56px;justify-content:flex-end;}
@@ -238,6 +316,13 @@ footer{background:#111;padding:40px;}
   .footer-logos img{height:32px;}
   .footer-address{font-size:14px;}
   .footer-copy{font-size:13px;}
+
+  .reviews{padding:56px 20px;}
+  .reviews-grid{grid-template-columns:1fr;}
+  .reviews-score{font-size:42px;}
+  .chatbot-window{width:calc(100vw - 40px);right:0;}
+  .floating-consult{right:16px;bottom:100px;}
+  .exit-modal{max-width:100%;}
 }
 </style>
 </head>
@@ -408,6 +493,77 @@ footer{background:#111;padding:40px;}
   </div>
 </section>
 
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="reviews-inner">
+    <div class="section-header fade-up">
+      <p class="section-tag">학부모 후기</p>
+      <h2 class="section-title">학부모님들의 진심 어린 이야기</h2>
+    </div>
+    <div class="reviews-summary fade-up">
+      <div class="reviews-score">5.0</div>
+      <div class="reviews-info">
+        <div class="reviews-stars-big">★★★★★</div>
+        <div class="reviews-count">네이버 플레이스 리뷰 106개 기준</div>
+      </div>
+    </div>
+    <div class="reviews-grid fade-up">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"아이가 수학을 너무 싫어했는데 선생님들이 기초부터 차근차근 잡아주셔서 이제는 수학을 즐기게 됐어요. 원장님이 직접 관리해주시는 게 느껴져서 정말 믿음이 갑니다."</p>
+        <div class="review-author">
+          <div class="review-avatar">가</div>
+          <div class="review-meta"><strong>가**님</strong>네이버 플레이스 리뷰</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"선생님들이 아이 개개인에 맞춰서 가르쳐주셔서 성적이 확연히 올랐어요. 3개월 만에 20점 이상 향상됐습니다. 꼼꼼한 관리에 너무 만족합니다."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#00391e,#ec6619)">박</div>
+          <div class="review-meta"><strong>박**님</strong>네이버 플레이스 리뷰</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"학원 시설이 정말 깔끔하고 선생님들이 너무 친절해요. 아이가 학원 가는 걸 좋아할 정도니 더 말이 필요 없죠. 강력 추천합니다!"</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#1e2a6d,#ec6619)">김</div>
+          <div class="review-meta"><strong>김**님</strong>네이버 플레이스 리뷰</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"원장님이 수시로 아이 상태를 알려주시고 학부모 소통이 정말 잘 되어서 좋아요. 아이가 무엇이 부족한지 정확히 짚어주시는 게 인상적이었습니다."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#19b1c6,#1e2a6d)">이</div>
+          <div class="review-meta"><strong>이**님</strong>네이버 플레이스 리뷰</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"수학 실력도 많이 늘었고 무엇보다 수학에 대한 자신감이 생겼어요. 선생님들이 아이 눈높이에 맞게 설명해주셔서 이해가 빠릅니다."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#ec6619,#00391e)">최</div>
+          <div class="review-meta"><strong>최**님</strong>네이버 플레이스 리뷰</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"영어도 수학도 체계적으로 관리해주셔서 너무 좋아요. 두 과목을 한 학원에서 책임지고 관리해주시니 학부모 입장에서 너무 편하고 믿음직스럽습니다."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#1e2a6d,#00391e)">정</div>
+          <div class="review-meta"><strong>정**님</strong>네이버 플레이스 리뷰</div>
+        </div>
+      </div>
+    </div>
+    <a href="https://naver.me/xmrt1YsR" target="_blank" class="reviews-more fade-up">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+      네이버 플레이스에서 106개 후기 모두 보기 →
+    </a>
+  </div>
+</section>
+
 <!-- FACILITIES -->
 <section class="facilities">
   <div class="facilities-inner">
@@ -482,6 +638,76 @@ footer{background:#111;padding:40px;}
   </div>
 </section>
 
+<!-- FLOATING CONSULT BTN -->
+<div class="floating-consult">
+  <a href="https://talk.naver.com/W5XRAC" target="_blank" class="floating-naver" title="네이버톡 상담">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+  </a>
+  <span class="floating-label">무료상담</span>
+</div>
+
+<!-- CHATBOT -->
+<div class="chatbot-wrap" id="chatbotWrap">
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">🎓</div>
+      <div class="chatbot-header-info">
+        <div class="chatbot-header-name">그립학원 상담봇</div>
+        <div class="chatbot-header-status">● 온라인 · 즉시 답변</div>
+      </div>
+      <button class="chatbot-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chatbot-body" id="chatbotBody">
+      <div class="chat-msg bot">
+        <div class="chat-bubble">안녕하세요! 👋 매쓰그립 · 잉그립 학원에 오신 것을 환영합니다. 무엇이 궁금하신가요?</div>
+        <div class="chat-chips">
+          <span class="chat-chip" onclick="askFaq('location')">📍 위치</span>
+          <span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span>
+          <span class="chat-chip" onclick="askFaq('fee')">💰 수강료</span>
+          <span class="chat-chip" onclick="askFaq('level')">📝 레벨테스트</span>
+          <span class="chat-chip" onclick="askFaq('shuttle')">🚌 셔틀버스</span>
+          <span class="chat-chip" onclick="askFaq('register')">✅ 등록방법</span>
+        </div>
+      </div>
+    </div>
+    <div class="chatbot-footer">
+      <input class="chatbot-input" id="chatbotInput" placeholder="질문을 입력하세요..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chatbot-send" onclick="sendChat()">➤</button>
+    </div>
+  </div>
+  <button class="chatbot-btn" onclick="toggleChat()" id="chatbotBtn">
+    💬
+    <span class="chatbot-badge" id="chatbotBadge">1</span>
+  </button>
+</div>
+
+<!-- EXIT POPUP -->
+<div class="exit-overlay" id="exitOverlay">
+  <div class="exit-modal">
+    <div class="exit-modal-top">
+      <div class="exit-emoji">🎯</div>
+      <div class="exit-title">잠깐! 아직 결정하지 않으셨나요?</div>
+      <div class="exit-sub">지금 무료 입학상담을 신청하시면<br>아이 맞춤 학습 플랜을 제안해 드립니다.</div>
+    </div>
+    <div class="exit-modal-body">
+      <ul class="exit-benefits">
+        <li><span class="exit-check">✓</span> 무료 레벨테스트 제공</li>
+        <li><span class="exit-check">✓</span> 1:1 맞춤 학습 상담</li>
+        <li><span class="exit-check">✓</span> 부담 없는 체험 수업</li>
+        <li><span class="exit-check">✓</span> 25년 경력 원장 직접 상담</li>
+      </ul>
+      <div class="exit-btns">
+        <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="exit-btn-main" onclick="closeExit()">무료 입학상담 신청하기 →</a>
+        <a href="https://talk.naver.com/W5XRAC" target="_blank" class="exit-btn-naver" onclick="closeExit()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white" style="vertical-align:middle;margin-right:6px;"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+          네이버 톡으로 바로 문의
+        </a>
+        <button class="exit-btn-close" onclick="closeExit()">괜찮아요, 그냥 볼게요</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -520,6 +746,143 @@ const countObserver = new IntersectionObserver((entries) => {
   });
 }, {threshold:0.3});
 document.querySelectorAll('.stats-grid').forEach(el => countObserver.observe(el));
+
+// =====================
+// CHATBOT
+// =====================
+const FAQ = {
+  location: {
+    q: '📍 위치가 어디인가요?',
+    a: '서울 서대문구 가재울미래로 17, 7층에 위치해 있습니다. 가재울역 근처라 교통이 편리합니다! 🏢'
+  },
+  time: {
+    q: '🕐 수업 시간은 어떻게 되나요?',
+    a: '수학은 평일 오후 3시~9시 운영하며, 영어는 월·수·금 3-5시 / 화·목 3:30-6시 수업이 있습니다. 자세한 시간표는 상담 후 안내 드립니다! 📅'
+  },
+  fee: {
+    q: '💰 수강료는 얼마인가요?',
+    a: '수강료는 학년, 수업 방식(DD반/PT반)에 따라 다릅니다. 레벨테스트 후 맞춤 상담을 통해 정확히 안내해 드릴게요. 무료 상담 신청해 주세요! 😊'
+  },
+  level: {
+    q: '📝 레벨테스트는 어떻게 하나요?',
+    a: '레벨테스트는 무료로 진행됩니다! 원하시는 날짜에 방문하시거나 네이버 톡으로 예약하시면 됩니다. 결과에 따라 최적의 반을 배정해 드립니다. ✅'
+  },
+  shuttle: {
+    q: '🚌 셔틀버스가 있나요?',
+    a: '네, 등하원 셔틀버스를 운행하고 있습니다! 운행 노선은 상담 시 자세히 안내해 드리겠습니다. 🚌'
+  },
+  register: {
+    q: '✅ 등록은 어떻게 하나요?',
+    a: '레벨테스트 → 상담 → 수업 배정 순서로 진행됩니다. 아래 입학상담 신청 또는 네이버 톡으로 연락 주시면 바로 안내해 드립니다! 🎯'
+  }
+};
+
+const KEYWORD_MAP = [
+  { keys: ['위치', '어디', '주소', '가재울', '오는 길'], type: 'location' },
+  { keys: ['시간', '몇 시', '수업 시간', '운영', '스케줄'], type: 'time' },
+  { keys: ['수강료', '비용', '가격', '얼마', '월비', '학원비'], type: 'fee' },
+  { keys: ['레벨', '테스트', '레벨테스트', '시험'], type: 'level' },
+  { keys: ['셔틀', '버스', '차'], type: 'shuttle' },
+  { keys: ['등록', '신청', '입학', '가입', '어떻게'], type: 'register' },
+];
+
+function toggleChat() {
+  const win = document.getElementById('chatbotWindow');
+  const badge = document.getElementById('chatbotBadge');
+  win.classList.toggle('open');
+  if (badge) badge.style.display = 'none';
+}
+
+function addMsg(text, type, chips) {
+  const body = document.getElementById('chatbotBody');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${type}`;
+  div.innerHTML = `<div class="chat-bubble">${text}</div>`;
+  if (chips) {
+    const chipDiv = document.createElement('div');
+    chipDiv.className = 'chat-chips';
+    chipDiv.innerHTML = chips;
+    div.appendChild(chipDiv);
+  }
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function askFaq(type) {
+  const faq = FAQ[type];
+  if (!faq) return;
+  addMsg(faq.q, 'user');
+  setTimeout(() => {
+    const hasConsult = ['fee', 'level', 'register'].includes(type);
+    const extra = hasConsult
+      ? `<br><br><a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;margin-top:6px;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`
+      : '';
+    addMsg(faq.a + extra, 'bot',
+      `<span class="chat-chip" onclick="askFaq('location')">📍 위치</span>
+       <span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span>
+       <span class="chat-chip" onclick="askFaq('fee')">💰 수강료</span>`
+    );
+  }, 400);
+}
+
+function sendChat() {
+  const input = document.getElementById('chatbotInput');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg(text, 'user');
+  input.value = '';
+  setTimeout(() => {
+    const lower = text;
+    const matched = KEYWORD_MAP.find(k => k.keys.some(kw => lower.includes(kw)));
+    if (matched) {
+      askFaq(matched.type);
+    } else {
+      addMsg(
+        '죄송합니다, 해당 질문은 담당 선생님께서 직접 답변 드릴게요! 아래로 연락 주시면 빠르게 도움드리겠습니다. 😊',
+        'bot',
+        `<a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`
+      );
+    }
+  }, 400);
+}
+
+// =====================
+// EXIT INTENT POPUP
+// =====================
+let exitShown = false;
+
+function showExit() {
+  if (exitShown || sessionStorage.getItem('exitShown')) return;
+  exitShown = true;
+  sessionStorage.setItem('exitShown', '1');
+  document.getElementById('exitOverlay').classList.add('show');
+}
+
+function closeExit() {
+  document.getElementById('exitOverlay').classList.remove('show');
+}
+
+// Desktop: mouse leaves toward top
+document.addEventListener('mouseleave', (e) => {
+  if (e.clientY < 20) showExit();
+});
+
+// Mobile: rapid scroll up
+let lastScrollY = window.scrollY;
+let lastScrollTime = Date.now();
+window.addEventListener('scroll', () => {
+  const now = Date.now();
+  const delta = lastScrollY - window.scrollY;
+  const timeDiff = now - lastScrollTime;
+  if (delta > 80 && timeDiff < 300 && window.scrollY > 300) showExit();
+  lastScrollY = window.scrollY;
+  lastScrollTime = now;
+}, { passive: true });
+
+// Close on overlay click
+document.getElementById('exitOverlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) closeExit();
+});
 </script>
 </body>
 </html>
