@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/apply", "destination": "https://staff.megrip.com/apply", "permanent": false },
+    { "source": "/consult", "destination": "https://staff.megrip.com/apply", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/$1" }
   ]
