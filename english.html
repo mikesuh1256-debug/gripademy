@@ -307,7 +307,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
       네이버톡상담
     </a>
-    <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="nav-cta">무료입학상담 →</a>
+    <a href="/apply" target="_blank" class="nav-cta">무료입학상담 →</a>
   </div>
 </nav>
 
@@ -334,7 +334,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     </div>
     <div class="hero-ctas">
       <a href="https://talk.naver.com/W5XRAC" target="_blank" class="hero-btn hero-btn-p">네이버톡 상담 →</a>
-      <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="hero-btn hero-btn-s">무료 입학상담 신청</a>
+      <a href="/apply" target="_blank" class="hero-btn hero-btn-s">무료 입학상담 신청</a>
     </div>
   </div>
 </section>
@@ -714,7 +714,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <h2 class="contact-title">잉그립 영어 무료상담</h2>
     <p class="contact-sub">영어 프로그램, 레벨 테스트, 수업 일정 등<br>궁금한 점을 편하게 문의해 주세요</p>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn">네이버 톡으로 상담하기 →</a>
-    <a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" class="contact-btn" style="background:#ec6619;">입학상담 신청 →</a>
+    <a href="/apply" target="_blank" class="contact-btn" style="background:#ec6619;">입학상담 신청 →</a>
     <p class="contact-hint">상담 완료 시 첫 달 교재비 50% 지원 혜택</p>
   </div>
 </section>
@@ -816,7 +816,7 @@ function askFaq(type){
   addMsg(faq.q,'user');
   setTimeout(()=>{
     const extra=type==='level'
-      ?`<br><br><a href="https://mikesuh.notion.site/269a6cf4db6a8060a55cef6f0076d209" target="_blank" style="display:inline-block;margin-top:6px;padding:8px 16px;background:#00391e;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">레벨테스트 신청하기 →</a>`
+      ?`<br><br><a href="/apply" target="_blank" style="display:inline-block;margin-top:6px;padding:8px 16px;background:#00391e;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">레벨테스트 신청하기 →</a>`
       :(['fee','register'].includes(type)?`<br><br><a href="https://talk.naver.com/W5XRAC" target="_blank" style="display:inline-block;margin-top:6px;padding:6px 14px;background:#03C75A;color:#fff;border-radius:16px;font-size:12px;font-weight:600;text-decoration:none;">네이버 톡 상담 →</a>`:'');
     addMsg(faq.a+extra,'bot',`<span class="chat-chip" onclick="askFaq('location')">📍 위치</span><span class="chat-chip" onclick="askFaq('time')">🕐 수업시간</span><span class="chat-chip" onclick="askFaq('fee')">💰 수강료</span>`);
   },400);
