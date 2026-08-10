@@ -26,24 +26,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .nav-cta{background:#1e2a6d;color:#fff !important;padding:8px 18px;border-radius:6px;transition:background 0.2s;}
 .nav-cta:hover{background:#19b1c6 !important;}
 
-.hero{background:#1e2a6d;padding:140px 40px 100px;position:relative;overflow:hidden;}
+.hero{background:#1e2a6d;padding:126px 40px 86px;position:relative;overflow:hidden;}
 .hero::before{content:'x ÷ √ π Σ ∫';font-family:'Montserrat',sans-serif;font-size:120px;font-weight:800;color:rgba(255,255,255,0.04);position:absolute;top:20px;left:-20px;white-space:nowrap;pointer-events:none;letter-spacing:20px;}
 .hero::after{content:'';position:absolute;bottom:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(25,177,198,0.15) 0%,transparent 70%);pointer-events:none;}
-.hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1;}
+.hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1;}
+.hero-layout{display:grid;grid-template-columns:minmax(0,0.86fr) minmax(480px,1.14fr);grid-template-areas:'copy-top video' 'copy-bottom video';column-gap:64px;align-items:center;}
+.hero-copy-top{grid-area:copy-top;align-self:end;}
+.hero-copy-bottom{grid-area:copy-bottom;align-self:start;}
 .hero-tag{font-size:14px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
 .hero-slogan{font-size:20px;color:rgba(255,255,255,0.5);font-weight:300;margin-bottom:16px;letter-spacing:2px;}
-.hero-title{font-size:68px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:20px;letter-spacing:-2px;}
+.hero-title{font-size:60px;font-weight:900;color:#fff;line-height:1.05;margin-bottom:20px;letter-spacing:-2px;}
 .hero-title span{color:#19b1c6;}
-.hero-desc{font-size:18px;color:rgba(255,255,255,0.6);font-weight:300;line-height:1.9;margin-bottom:56px;max-width:560px;}
-.hero-metrics{display:flex;gap:56px;flex-wrap:wrap;}
-.hero-metric-num{font-family:'Montserrat',sans-serif;font-size:44px;font-weight:800;color:#19b1c6;line-height:1;}
+.hero-desc{font-size:17px;color:rgba(255,255,255,0.6);font-weight:300;line-height:1.9;margin-bottom:38px;max-width:560px;}
+.hero-metrics{display:flex;gap:36px;flex-wrap:wrap;}
+.hero-metric-num{font-family:'Montserrat',sans-serif;font-size:38px;font-weight:800;color:#19b1c6;line-height:1;}
 .hero-metric-label{font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px;}
-.hero-ctas{display:flex;gap:14px;margin-top:48px;flex-wrap:wrap;}
+.hero-ctas{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap;}
 .hero-btn{display:inline-flex;align-items:center;gap:8px;padding:15px 30px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.2s;}
 .hero-btn-p{background:#19b1c6;color:#fff;}
 .hero-btn-p:hover{background:#16a0b3;}
 .hero-btn-s{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);}
 .hero-btn-s:hover{background:rgba(255,255,255,0.2);}
+.hero-video-card{grid-area:video;align-self:center;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:22px;padding:14px;box-shadow:0 28px 70px rgba(7,13,54,0.32);backdrop-filter:blur(8px);}
+.hero-video-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:4px 6px 12px;}
+.hero-video-heading strong{font-size:15px;color:#fff;letter-spacing:-0.2px;}
+.hero-video-heading span{font-size:12px;color:#19b1c6;font-weight:700;white-space:nowrap;}
+.hero-video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;background:#111;}
+.hero-video-foot{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 6px 3px;}
+.hero-video-foot p{font-size:12px;color:rgba(255,255,255,0.58);line-height:1.5;}
+.hero-video-apply{flex-shrink:0;color:#fff;font-size:13px;font-weight:700;text-decoration:none;background:#19b1c6;border-radius:8px;padding:10px 14px;transition:background 0.2s,transform 0.2s;}
+.hero-video-apply:hover{background:#16a0b3;transform:translateY(-1px);}
 
 .photo-banner{display:grid;grid-template-columns:1fr 1fr 1fr;height:380px;overflow:hidden;}
 .photo-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;}
@@ -257,8 +269,12 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   nav{padding:0 16px;height:80px;}
   .nav-menu a:not(.nav-cta){display:none;}
   .hero{padding:100px 20px 60px;}
+  .hero-layout{grid-template-columns:1fr;grid-template-areas:'copy-top' 'video' 'copy-bottom';gap:30px;}
   .hero-title{font-size:44px;}
   .hero-slogan{font-size:16px;}
+  .hero-desc{margin-bottom:0;}
+  .hero-video-card{width:100%;max-width:720px;margin:0 auto;}
+  .hero-copy-bottom{width:100%;}
   .photo-banner{height:220px;}
   .story,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.manage-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .story-layout{grid-template-columns:1fr;}
@@ -282,6 +298,15 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 @media(max-width:480px){
   .grip-steps{grid-template-columns:1fr;}
   .hero-title{font-size:36px;}
+  .hero-video-card{padding:9px;border-radius:16px;}
+  .hero-video-heading{padding:4px 4px 9px;}
+  .hero-video-heading strong{font-size:14px;}
+  .hero-video-heading span{font-size:11px;}
+  .hero-video{border-radius:10px;}
+  .hero-video-foot{align-items:flex-start;flex-direction:column;padding:10px 4px 3px;gap:10px;}
+  .hero-video-apply{width:100%;text-align:center;}
+  .hero-metrics{gap:24px;}
+  .hero-metric-num{font-size:32px;}
 }
 </style>
 </head>
@@ -307,28 +332,49 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <p class="hero-tag">Math Program</p>
-    <p class="hero-slogan">손에 잡히는 수학</p>
-    <h1 class="hero-title">수학은 <span>손으로</span><br>잡는 것입니다</h1>
-    <p class="hero-desc">점수보다 변화, 순간보다 성장.<br>10년간 3,000명의 학생과 함께 발견한 진짜 수학 실력의 비밀</p>
-    <div class="hero-metrics">
-      <div class="hero-metric">
-        <div class="hero-metric-num">18.5점</div>
-        <div class="hero-metric-label">재원생 평균 성적 향상</div>
+    <div class="hero-layout">
+      <div class="hero-copy-top">
+        <p class="hero-tag">Math Program</p>
+        <p class="hero-slogan">손에 잡히는 수학</p>
+        <h1 class="hero-title">수학은 <span>손으로</span><br>잡는 것입니다</h1>
+        <p class="hero-desc">점수보다 변화, 순간보다 성장.<br>10년간 3,000명의 학생과 함께 발견한 진짜 수학 실력의 비밀</p>
       </div>
-      <div class="hero-metric">
-        <div class="hero-metric-num">95%</div>
-        <div class="hero-metric-label">학생 만족도</div>
+
+      <div class="hero-video-card">
+        <div class="hero-video-heading">
+          <strong>2분 19초로 알아보는 매쓰그립</strong>
+          <span>온라인 입학설명회</span>
+        </div>
+        <video class="hero-video" controls playsinline preload="metadata" poster="assets/video/math-grip-intro-2026-poster.png" aria-label="매쓰그립 온라인 입학설명회 영상">
+          <source src="assets/video/math-grip-intro-2026.mp4" type="video/mp4">
+          사용 중인 브라우저에서는 영상을 재생할 수 없습니다.
+        </video>
+        <div class="hero-video-foot">
+          <p>재생 버튼을 누르면 음성과 함께<br>매쓰그립의 수업 과정을 확인할 수 있습니다.</p>
+          <a href="/apply" target="_blank" class="hero-video-apply">입학상담 신청 →</a>
+        </div>
       </div>
-      <div class="hero-metric">
-        <div class="hero-metric-num">94%</div>
-        <div class="hero-metric-label">높은 재등록률</div>
+
+      <div class="hero-copy-bottom">
+        <div class="hero-metrics">
+          <div class="hero-metric">
+            <div class="hero-metric-num">18.5점</div>
+            <div class="hero-metric-label">재원생 평균 성적 향상</div>
+          </div>
+          <div class="hero-metric">
+            <div class="hero-metric-num">95%</div>
+            <div class="hero-metric-label">학생 만족도</div>
+          </div>
+          <div class="hero-metric">
+            <div class="hero-metric-num">94%</div>
+            <div class="hero-metric-label">높은 재등록률</div>
+          </div>
+        </div>
+        <div class="hero-ctas">
+          <a href="https://talk.naver.com/W5XRAC" target="_blank" class="hero-btn hero-btn-p">네이버톡 상담 →</a>
+          <a href="/apply" target="_blank" class="hero-btn hero-btn-s">무료 입학상담 신청</a>
+        </div>
       </div>
-    </div>
-    <div class="hero-ctas">
-      <a href="/math-grip-guide.html" class="hero-btn hero-btn-p">2분 온라인 설명회 ▶</a>
-      <a href="https://talk.naver.com/W5XRAC" target="_blank" class="hero-btn hero-btn-p">네이버톡 상담 →</a>
-      <a href="/apply" target="_blank" class="hero-btn hero-btn-s">무료 입학상담 신청</a>
     </div>
   </div>
 </section>
