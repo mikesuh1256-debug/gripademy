@@ -350,5 +350,16 @@ window.doLogout = async () => {
   await signOut(auth);
 };
 </script>
+<script>
+/* 방문 통계 (그립허브 원장용 '홈페이지 통계' 메뉴에서 집계) */
+(function(){try{
+if(/bot|crawler|spider/i.test(navigator.userAgent))return;
+var v=localStorage.getItem('mgvid');
+if(!v){v=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('mgvid',v);}
+var p=JSON.stringify({path:location.pathname,ref:document.referrer||'',vid:v,ua:navigator.userAgent});
+if(navigator.sendBeacon){navigator.sendBeacon('https://staff.megrip.com/api/track',p);}
+else{fetch('https://staff.megrip.com/api/track',{method:'POST',body:p,mode:'no-cors',keepalive:true});}
+}catch(e){}})();
+</script>
 </body>
 </html>

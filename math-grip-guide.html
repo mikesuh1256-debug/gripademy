@@ -67,5 +67,16 @@
     document.addEventListener('keydown',e=>{if(transcriptSheet.classList.contains('open')&&e.key==='Escape'){toggleScript(false);return}if(e.key==='ArrowRight')goTo(index+1,true);if(e.key==='ArrowLeft')goTo(index-1,true);if(e.code==='Space'&&e.target.tagName!=='BUTTON'&&e.target.tagName!=='A'){e.preventDefault();playBtn.click()}});
     el('startBtn').addEventListener('click',async()=>{started=true;audio.muted=false;audio.volume=1;el('startLayer').classList.add('hidden');updateUI();await loadAndPlay(true)});el('fullscreenBtn').addEventListener('click',()=>{if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()});updateUI();loadAndPlay(false);
   </script>
+<script>
+/* 방문 통계 (그립허브 원장용 '홈페이지 통계' 메뉴에서 집계) */
+(function(){try{
+if(/bot|crawler|spider/i.test(navigator.userAgent))return;
+var v=localStorage.getItem('mgvid');
+if(!v){v=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('mgvid',v);}
+var p=JSON.stringify({path:location.pathname,ref:document.referrer||'',vid:v,ua:navigator.userAgent});
+if(navigator.sendBeacon){navigator.sendBeacon('https://staff.megrip.com/api/track',p);}
+else{fetch('https://staff.megrip.com/api/track',{method:'POST',body:p,mode:'no-cors',keepalive:true});}
+}catch(e){}})();
+</script>
 </body>
 </html>
