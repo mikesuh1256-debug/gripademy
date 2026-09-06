@@ -70,9 +70,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .hero-video-apply{flex-shrink:0;color:#fff;font-size:13px;font-weight:700;text-decoration:none;background:#ec6619;border-radius:8px;padding:10px 14px;transition:background 0.2s,transform 0.2s;}
 .hero-video-apply:hover{background:#d45a14;transform:translateY(-1px);}
 
-.photo-banner{display:grid;grid-template-columns:1fr 1fr 1fr;height:380px;overflow:hidden;}
-.photo-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;}
-.photo-banner img:hover{transform:scale(1.04);}
 
 .w-inner{max-width:1100px;margin:0 auto;}
 .eyebrow{font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#ec6619;margin-bottom:16px;}
@@ -104,7 +101,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .cmp-lbl{font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:block;}
 .cmp-lbl-bad{color:#aaa;}
 .cmp-lbl-good{color:#ec6619;}
-.cmp-img{width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;}
 .cmp-icon{font-size:52px;margin-bottom:20px;}
 .cmp-title{font-size:26px;font-weight:900;margin-bottom:16px;}
 .cmp-title-bad{color:#1a1a1a;}
@@ -151,8 +147,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* MBA */
 .smba-sec{background:#fff;padding:100px 40px;}
 .smba-intro{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;margin-bottom:72px;max-width:820px;}
-.smba-img{border-radius:20px;overflow:hidden;aspect-ratio:16/7;}
-.smba-img img{width:100%;height:100%;object-fit:cover;}
+.smba-img{border-radius:20px;overflow:hidden;aspect-ratio:16/8;background:#f5f5f3;}
+.smba-img img{width:100%;height:100%;object-fit:cover;object-position:top;}
 .smba-intro-body{font-size:16px;color:#555;line-height:1.9;font-weight:600;}
 .smba-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .smba-card{border-radius:20px;overflow:hidden;}
@@ -222,8 +218,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .evidence-sec{background:#fff;padding:100px 40px;}
 .evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px;}
 .evidence-card{overflow:hidden;border:1px solid #dfe8e2;border-radius:20px;background:#fff;box-shadow:0 14px 36px rgba(0,57,30,.08);}
-.evidence-thumb{aspect-ratio:16/9;overflow:hidden;background:#eef4f0;}
-.evidence-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s;}
+.evidence-thumb{aspect-ratio:4/5;overflow:hidden;background:#eef4f0;}
+.evidence-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .35s;}
 .evidence-card:hover .evidence-thumb img{transform:scale(1.025);}
 .evidence-body{padding:24px 24px 26px;}
 .evidence-kicker{font-size:12px;font-weight:800;color:#ec6619;letter-spacing:1.4px;margin-bottom:8px;}
@@ -327,7 +323,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
   .hero-btn{justify-content:center;padding:13px 10px;text-align:center;}
-  .photo-banner{height:220px;}
   .story,.compare-sec,.brain-sec,.grip-sec,.smba-sec,.imprint-sec,.blank-sec,.exam-sec,.evidence-sec,.programs-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .story-layout{grid-template-columns:1fr;}
   .compare-grid{grid-template-columns:1fr;}
@@ -448,13 +443,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   </div>
 </section>
 
-<!-- PHOTO BANNER -->
-<div class="photo-banner">
-  <img src="assets/images/evidence/english-blank-test.png" alt="잉그립 백지테스트 작성 사례">
-  <img src="assets/images/evidence/english-learning-record.png" alt="잉그립 학습 기록과 피드백 구조">
-  <img src="assets/images/evidence/english-exam-4weeks.png" alt="잉그립 학교별 4주 내신관리 구조">
-</div>
-
 <!-- STORY -->
 <section class="story" id="philosophy">
   <div class="w-inner">
@@ -486,7 +474,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <div class="compare-grid fade-up">
       <div class="cmp-bad">
         <span class="cmp-lbl cmp-lbl-bad">대부분의 학생</span>
-        <img src="assets/images/evidence/english-learning-record.png" alt="잉그립 학습 기록 예시" class="cmp-img">
         <div class="cmp-icon">🧼</div>
         <h3 class="cmp-title cmp-title-bad">비누 같은 영어</h3>
         <p class="cmp-desc cmp-desc-bad">배웠지만 시험 때 생각나지 않고, 읽었지만 다음 날 잊어버립니다. 듣고 보기만 하는 영어는 결정적 순간에 손에서 미끄러집니다.</p>
@@ -608,7 +595,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <p class="smba-intro-body">먼저 문장 구조와 어휘를 충분히 이해한 뒤, 일정 레벨 이상 학생에게 MBA를 적용합니다. 모든 반에 일괄 적용하지 않으며, 학생의 현재 실력과 소화 가능성을 확인해 암기·백지증명·응용의 강도를 조절합니다.</p>
       </div>
       <div class="smba-img">
-        <img src="assets/images/evidence/english-blank-test.png" alt="잉그립 MBA 백지테스트 작성 사례">
+        <img src="assets/images/evidence/english-blank-grammar.webp" alt="잉그립 MBA 백지테스트 문법 학습지" loading="lazy">
       </div>
     </div>
     <div class="smba-steps fade-up">
@@ -737,19 +724,19 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   <div class="w-inner">
     <p class="eyebrow">말이 아니라 기록으로 확인</p>
     <h2 class="heading">잉그립 수업의 증거자료</h2>
-    <p class="lead">백지테스트 작성 사례, 학생별 학습 기록, 학교별 내신 준비 과정을 상담 전에 먼저 확인하세요.</p>
+    <p class="lead">교재를 덮고 직접 써 본 결과와 채점 흔적을 확인하세요. 학생 이름은 노출하지 않았습니다.</p>
     <div class="evidence-grid fade-up">
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/evidence/english-blank-test.png" alt="백지테스트 실제 작성 사례"></div>
-        <div class="evidence-body"><p class="evidence-kicker">BLANK TEST</p><h3 class="evidence-title">백지테스트 작성 사례</h3><p class="evidence-note">일정 레벨 이상 학생이 배운 문장을 보지 않고 직접 재현하며 자기화 정도를 확인합니다.</p></div>
+        <div class="evidence-thumb"><img src="assets/images/evidence/english-blank-template.webp" alt="잉그립 백지테스트 기준 학습지" loading="lazy"></div>
+        <div class="evidence-body"><p class="evidence-kicker">TEST FORMAT</p><h3 class="evidence-title">백지테스트 기준 학습지</h3><p class="evidence-note">개념과 영작 문장을 한 장에 구성해 무엇을 기억하고 써야 하는지 분명하게 제시합니다.</p></div>
       </article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/evidence/english-learning-record.png" alt="학습 기록과 피드백 구조"></div>
-        <div class="evidence-body"><p class="evidence-kicker">LEARNING RECORD</p><h3 class="evidence-title">학습 기록·피드백 구조</h3><p class="evidence-note">어휘·문법·독해·쓰기의 현재 수준과 보완 과정을 기록해 학부모님께 성장 방향을 설명합니다.</p></div>
+        <div class="evidence-thumb"><img src="assets/images/evidence/english-blank-sample-01.webp" alt="잉그립 백지테스트 작성 및 채점 사례 1" loading="lazy"></div>
+        <div class="evidence-body"><p class="evidence-kicker">ACTUAL SAMPLE 01</p><h3 class="evidence-title">직접 쓴 문장과 채점 흔적</h3><p class="evidence-note">학생이 기억한 내용을 손으로 재현하고, 틀린 표현은 표시해 다시 보완합니다.</p></div>
       </article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/evidence/english-exam-4weeks.png" alt="학교별 4주 내신 준비 구조"></div>
-        <div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 4주 준비 구조</h3><p class="evidence-note">본문·문법·서술형의 학교별 차이를 분석해 범위 확인부터 직전보강까지 주차별로 연결합니다.</p></div>
+        <div class="evidence-thumb"><img src="assets/images/evidence/english-blank-sample-02.webp" alt="잉그립 백지테스트 작성 및 채점 사례 2" loading="lazy"></div>
+        <div class="evidence-body"><p class="evidence-kicker">ACTUAL SAMPLE 02</p><h3 class="evidence-title">완성될 때까지 다시 확인</h3><p class="evidence-note">백지에서 막힌 부분을 확인하고, 이해와 암기를 보완한 뒤 다시 재현합니다.</p></div>
       </article>
     </div>
     <a class="evidence-cta" href="/apply?subject=english&amp;source=homepage&amp;program=evidence" target="_blank">우리 아이 영어 진단 상담신청 →</a>

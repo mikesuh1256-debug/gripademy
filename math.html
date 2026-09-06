@@ -70,9 +70,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .hero-video-apply{flex-shrink:0;color:#fff;font-size:13px;font-weight:700;text-decoration:none;background:#19b1c6;border-radius:8px;padding:10px 14px;transition:background 0.2s,transform 0.2s;}
 .hero-video-apply:hover{background:#16a0b3;transform:translateY(-1px);}
 
-.photo-banner{display:grid;grid-template-columns:1fr 1fr 1fr;height:380px;overflow:hidden;}
-.photo-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;}
-.photo-banner img:hover{transform:scale(1.04);}
 
 .w-inner{max-width:1100px;margin:0 auto;}
 .eyebrow{font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#19b1c6;margin-bottom:16px;}
@@ -105,7 +102,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .cmp-lbl{font-size:20px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;display:block;}
 .cmp-lbl-bad{color:#aaa;}
 .cmp-lbl-good{color:#19b1c6;}
-.cmp-img{width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:20px;}
 .cmp-icon{font-size:52px;margin-bottom:20px;}
 .cmp-title{font-size:26px;font-weight:900;margin-bottom:16px;}
 .cmp-title-bad{color:#1a1a1a;}
@@ -152,8 +148,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* TWC */
 .twc-sec{background:#fff;padding:100px 40px;}
 .twc-intro{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;margin-bottom:72px;max-width:820px;}
-.twc-img{border-radius:20px;overflow:hidden;aspect-ratio:16/7;}
-.twc-img img{width:100%;height:100%;object-fit:cover;}
 .twc-intro-body{font-size:16px;color:#555;line-height:1.9;font-weight:600;}
 .twc-steps{display:grid;grid-template-columns:1fr;gap:16px;max-width:820px;}
 .twc-card{border-radius:20px;overflow:hidden;}
@@ -321,7 +315,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
   .hero-btn{justify-content:center;padding:13px 10px;text-align:center;}
-  .photo-banner{height:220px;}
   .story,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.manage-sec,.exam-sec,.evidence-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .story-layout{grid-template-columns:1fr;}
   .compare-grid{grid-template-columns:1fr;}
@@ -443,13 +436,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   </div>
 </section>
 
-<!-- PHOTO BANNER -->
-<div class="photo-banner">
-  <img src="assets/images/evidence/math-twc-class.png" alt="매쓰그립 TWC 실제 수업 장면">
-  <img src="assets/images/evidence/math-learning-record.png" alt="매쓰그립 학습 기록과 피드백 예시">
-  <img src="assets/images/evidence/math-exam-4weeks.png" alt="매쓰그립 학교별 4주 내신관리 구조">
-</div>
-
 <!-- STORY -->
 <section class="story" id="philosophy">
   <div class="w-inner">
@@ -481,7 +467,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <div class="compare-grid fade-up">
       <div class="cmp-bad">
         <span class="cmp-lbl cmp-lbl-bad">대부분의 학생</span>
-        <img src="assets/images/evidence/math-learning-record.png" alt="매쓰그립 학습 기록 예시" class="cmp-img">
         <div class="cmp-icon">🧼</div>
         <h3 class="cmp-title cmp-title-bad">비누 같은 지식</h3>
         <p class="cmp-desc cmp-desc-bad">배웠지만 시험 때 생각나지 않고, 풀었지만 다음 단원에서 다시 막힙니다. 손을 적시면 미끄러지는 비누처럼, 머릿속에만 있는 지식은 결정적 순간에 미끄러집니다.</p>
@@ -601,9 +586,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <h2 class="heading">TWC 시스템</h2>
         <p class="lead" style="margin-bottom:24px;">Think → Write → Check<br>수학을 손에 쥐는 3단계 학습법</p>
         <p class="twc-intro-body">매쓰그립의 모든 수업은 TWC 순서로 진행됩니다. 머릿속에서 그치는 것이 아니라, 손으로 쓰면서 완전한 이해로 완성됩니다. 생각하고, 쓰고, 확인하는 이 과정이 반복될수록 수학 실력은 손에 단단히 잡힙니다.</p>
-      </div>
-      <div class="twc-img">
-        <img src="assets/images/evidence/math-twc-class.png" alt="매쓰그립 TWC 실제 수업 장면">
       </div>
     </div>
     <div class="twc-steps fade-up">
@@ -749,16 +731,11 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <h2 class="heading">매쓰그립 수업의 증거자료</h2>
     <p class="lead">수업 장면, 학생별 학습 기록, 학교별 내신 준비 과정을 상담 전에 먼저 확인하세요.</p>
     <div class="evidence-grid fade-up">
+      <article class="evidence-card"><div class="evidence-body"><p class="evidence-kicker">TWC CLASS</p><h3 class="evidence-title">생각과 풀이 과정 확인</h3><p class="evidence-note">학생이 풀이를 쓰고 설명하면 선생님이 질문으로 사고 과정을 점검합니다.</p></div></article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/evidence/math-twc-class.png" alt="TWC 실제 수업 장면"></div>
-        <div class="evidence-body"><p class="evidence-kicker">ACTUAL CLASS</p><h3 class="evidence-title">TWC 실제 수업 장면</h3><p class="evidence-note">풀이를 쓰고, 설명하고, 선생님의 질문으로 사고 과정을 점검하는 수업입니다.</p></div>
-      </article>
-      <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/evidence/math-learning-record.png" alt="오답과 풀이 기록 예시"></div>
         <div class="evidence-body"><p class="evidence-kicker">LEARNING RECORD</p><h3 class="evidence-title">오답·풀이 기록 예시</h3><p class="evidence-note">무엇을 틀렸는지만 남기지 않고, 틀린 이유와 다시 풀어낸 과정까지 기록합니다.</p></div>
       </article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/evidence/math-exam-4weeks.png" alt="학교별 4주 내신 준비 구조"></div>
         <div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 4주 준비 구조</h3><p class="evidence-note">기출·범위 분석부터 유형훈련, 전 범위 실전, 오답·직전보강까지 주차별로 연결합니다.</p></div>
       </article>
     </div>
