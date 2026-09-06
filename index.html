@@ -4,15 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="naver-site-verification" content="449d1a0014e10ad893cfbed02ce80d0241050d43" />
-<meta name="description" content="서울 서대문구 그립학원 — 매쓰그립 수학학원과 잉그립 영어학원. 손으로 잡는 공부법으로 10년간 3,000명의 실력을 키웠습니다. 무료 레벨테스트 및 입학상담 진행 중. ☎ 010-5612-5673">
+<meta name="description" content="서울 서대문구 그립학원 — 매쓰그립수학·잉그립영어. 진단, 복습, 자기화, 학교별 4주 내신관리까지 학습 전 과정을 연결합니다. 무료 레벨테스트 및 입학상담 ☎ 010-5612-5673">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.megrip.com/">
 <meta property="og:title" content="매쓰그립 수학학원 · 잉그립 영어학원 | 그립학원">
-<meta property="og:description" content="서울 서대문구 그립학원 — 손으로 잡는 공부법으로 10년간 3,000명의 실력을 키웠습니다. 무료 레벨테스트 및 입학상담 진행 중. ☎ 010-5612-5673">
+<meta property="og:description" content="매쓰그립수학·잉그립영어 — 진단부터 학교별 4주 내신관리와 MyGrip 성장보고까지 연결합니다.">
 <meta property="og:image" content="https://www.megrip.com/assets/images/photos/1763705263.7576299IMG_9252.jpeg">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="그립학원">
 <title>매쓰그립 수학학원 · 잉그립 영어학원</title>
+<link rel="icon" href="assets/images/logo/grip-icon.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V08TZZS1C8"></script>
 <script>
@@ -51,6 +52,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .hero-eng::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%, rgba(236,102,25,0.15) 0%, transparent 60%);}
 .hero-divider{width:3px;background:linear-gradient(to bottom,#19b1c6,#ec6619);z-index:2;flex-shrink:0;}
 .hero-content{position:relative;z-index:1;text-align:center;}
+.hero-logo-wrap{display:flex;align-items:center;justify-content:center;width:210px;height:64px;padding:8px 18px;margin:0 auto 18px;background:rgba(255,255,255,0.96);border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.14);}
+.hero-logo-wrap img{width:100%;height:100%;object-fit:contain;}
 .hero-symbol{font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;opacity:0.08;color:#fff;position:absolute;top:-50px;left:50%;transform:translateX(-50%);white-space:nowrap;pointer-events:none;}
 .hero-badge{display:inline-block;font-size:11px;font-weight:500;letter-spacing:2px;padding:4px 14px;border-radius:20px;margin-bottom:20px;text-transform:uppercase;}
 .hero-math .hero-badge{background:rgba(25,177,198,0.15);color:#19b1c6;border:1px solid rgba(25,177,198,0.3);}
@@ -263,8 +266,11 @@ footer{background:#111;padding:0;}
 
 /* MOBILE */
 @media(max-width:768px){
-  nav{padding:10px 16px;height:auto;min-height:56px;justify-content:flex-end;}
+  nav{padding:10px 16px;height:auto;min-height:56px;justify-content:space-between;}
+  .nav-logos{gap:8px;}
+  .nav-logo-img{height:26px;}
   .nav-menu a:not(.nav-cta){display:none;}
+  .nav-menu a[href*="talk.naver.com"]{display:none !important;}
   .nav-cta{padding:8px 12px;font-size:13px;}
   .nav-menu{gap:8px;}
   .hero-half:first-child{padding-top:180px;}
@@ -337,6 +343,9 @@ footer{background:#111;padding:0;}
 
 <!-- NAV -->
 <nav>
+  <div class="nav-logos">
+    <a href="index.html" aria-label="그립학원"><img class="nav-logo-img" src="assets/images/logo/grip-academy-wordmark.png" alt="그립학원"></a>
+  </div>
   <div class="nav-menu" style="margin-left:auto;">
     <a href="#programs">프로그램</a>
     <a href="#director">원장소개</a>
@@ -354,6 +363,7 @@ footer{background:#111;padding:0;}
   <a href="math.html" class="hero-half hero-math">
     <div class="hero-symbol">x ÷ √ π</div>
     <div class="hero-content">
+      <div class="hero-logo-wrap"><img src="assets/images/logo/math-logo-wordmark.png" alt="매쓰그립수학 로고"></div>
       <div class="hero-badge">Math Program</div>
       <h1 class="hero-name">
         <span>매쓰그립</span>
@@ -363,12 +373,12 @@ footer{background:#111;padding:0;}
       <div class="hero-btn">프로그램 보기 →</div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <div class="hero-stat-num">18.5점</div>
-          <div class="hero-stat-label">평균 성적 향상</div>
+          <div class="hero-stat-num">GRIP</div>
+          <div class="hero-stat-label">4단계 성장관리</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num">95%</div>
-          <div class="hero-stat-label">학생 만족도</div>
+          <div class="hero-stat-num">TWC</div>
+          <div class="hero-stat-label">생각·쓰기·확인</div>
         </div>
       </div>
     </div>
@@ -380,6 +390,7 @@ footer{background:#111;padding:0;}
   <a href="english.html" class="hero-half hero-eng">
     <div class="hero-symbol">R G L V</div>
     <div class="hero-content">
+      <div class="hero-logo-wrap"><img src="assets/images/logo/eng-logo-wordmark.png" alt="잉그립영어 로고"></div>
       <div class="hero-badge">English Program</div>
       <h1 class="hero-name">
         <span>잉그립</span>
@@ -389,12 +400,12 @@ footer{background:#111;padding:0;}
       <div class="hero-btn">프로그램 보기 →</div>
       <div class="hero-stats">
         <div class="hero-stat">
-          <div class="hero-stat-num">94%</div>
-          <div class="hero-stat-label">재등록률</div>
+          <div class="hero-stat-num">GRIP</div>
+          <div class="hero-stat-label">4단계 성장관리</div>
         </div>
         <div class="hero-stat">
-          <div class="hero-stat-num">28개월</div>
-          <div class="hero-stat-label">평균 재원기간</div>
+          <div class="hero-stat-num">SMBA</div>
+          <div class="hero-stat-label">학습·암기·증명·적용</div>
         </div>
       </div>
     </div>
@@ -405,24 +416,23 @@ footer{background:#111;padding:0;}
 <!-- BANNER -->
 <section class="banner">
   <div class="banner-inner">
-    <p class="banner-title">15년이 증명하는 숫자들</p>
+    <p class="banner-title">진단에서 학부모 성장보고까지, 한 흐름으로 관리합니다</p>
     <div class="stats-grid fade-up">
       <div class="stat-item">
-        <div class="stat-num c-navy" data-count="15" data-suffix="년">0년</div>
-        <div class="stat-label">검증된<br>교육 전통</div>
+        <div class="stat-num c-navy">G</div>
+        <div class="stat-label">Grasp<br>현재 상태 진단</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num c-cyan" data-count="125" data-suffix="명">0명</div>
-        <div class="stat-label">특목고·국제중<br>합격생</div>
-        <div style="font-size:11px;color:#bbb;margin-top:6px;">원장님 총 커리어 합계</div>
+        <div class="stat-num c-cyan">R</div>
+        <div class="stat-label">Review<br>오답 복습</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num c-green" data-count="94" data-suffix="%">0%</div>
-        <div class="stat-label">높은<br>재등록률</div>
+        <div class="stat-num c-green">I</div>
+        <div class="stat-label">Internalize<br>학생의 자기화</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num c-orange" data-count="28" data-suffix="개월">0개월</div>
-        <div class="stat-label">평균<br>재원 기간</div>
+        <div class="stat-num c-orange">P</div>
+        <div class="stat-label">Prove<br>학교 시험 증명</div>
       </div>
     </div>
   </div>
@@ -439,15 +449,15 @@ footer{background:#111;padding:0;}
       <div class="card-header card-header-math">
         <p class="card-tag">수학 프로그램</p>
         <h3 class="card-title"><span>매쓰그립</span><span>수학학원</span></h3>
-        <p class="card-subtitle">DD반 + PT반 2-Track 시스템</p>
+        <p class="card-subtitle">GRIP 성장관리 · TWC 수업 · DD/PT 맞춤운영</p>
       </div>
       <div class="card-body">
         <ul class="card-features">
           <li><span class="feat-dot feat-dot-math"></span>DD반 — 강의식 수업 + 반복 훈련</li>
           <li><span class="feat-dot feat-dot-math"></span>PT반 — 1:1 과외식 맞춤 수업</li>
           <li><span class="feat-dot feat-dot-math"></span>3자 학습톡방 (학생-학부모-원장)</li>
-          <li><span class="feat-dot feat-dot-math"></span>주간 리포트 + 월말 평가</li>
-          <li><span class="feat-dot feat-dot-math"></span>학교별 내신 대비 맞춤 교재</li>
+          <li><span class="feat-dot feat-dot-math"></span>MyGrip 주간 리포트 + 월말 성장평가</li>
+          <li><span class="feat-dot feat-dot-math"></span>학교별 기출분석 + 4주 내신관리</li>
         </ul>
         <span class="card-btn card-btn-math">자세히 보기 →</span>
       </div>
@@ -456,7 +466,7 @@ footer{background:#111;padding:0;}
       <div class="card-header card-header-eng">
         <p class="card-tag">영어 프로그램</p>
         <h3 class="card-title"><span>잉그립</span><span>영어학원</span></h3>
-        <p class="card-subtitle">원장 직강 · 3단계 체계적 학습</p>
+        <p class="card-subtitle">GRIP 성장관리 · SMBA 문장각인 · 학교별 내신</p>
       </div>
       <div class="card-body">
         <ul class="card-features">
@@ -464,7 +474,7 @@ footer{background:#111;padding:0;}
           <li><span class="feat-dot feat-dot-eng"></span>중등부 내신 특화 프로그램</li>
           <li><span class="feat-dot feat-dot-eng"></span>특목고·국제중 입시 대비</li>
           <li><span class="feat-dot feat-dot-eng"></span>백지테스트 시그니처 프로그램</li>
-          <li><span class="feat-dot feat-dot-eng"></span>학교별 기출 분석 + 4주 시험 대비</li>
+          <li><span class="feat-dot feat-dot-eng"></span>MyGrip 주간 리포트 + 학교별 4주 내신 관리</li>
         </ul>
         <span class="card-btn card-btn-eng">자세히 보기 →</span>
       </div>
@@ -493,7 +503,7 @@ footer{background:#111;padding:0;}
         <div class="career-item"><span class="career-dot"></span>연세대학교 행정학 석사 / 고려대학교 대학원 영어교육 전공</div>
         <div class="career-item"><span class="career-dot"></span>전) 청담어학원 목동 원장</div>
         <div class="career-item"><span class="career-dot"></span>전) 아발론교육 강서캠퍼스 대표원장</div>
-        <div class="career-item"><span class="career-dot"></span>15년 경력, 특목고·국제중·명문대 합격생 다수 배출</div>
+        <div class="career-item"><span class="career-dot"></span>25년 교육·학원 운영 경험</div>
         <div class="career-item"><span class="career-dot"></span>교육 관련 저서 3권 집필</div>
       </div>
     </div>
@@ -508,10 +518,10 @@ footer{background:#111;padding:0;}
       <h2 class="section-title">학부모님들의 진심 어린 이야기</h2>
     </div>
     <div class="reviews-summary fade-up">
-      <div class="reviews-score">5.0</div>
+      <div class="reviews-score">후기</div>
       <div class="reviews-info">
         <div class="reviews-stars-big">★★★★★</div>
-        <div class="reviews-count">네이버 플레이스 리뷰 106개 기준</div>
+        <div class="reviews-count">네이버 플레이스에서 실제 학부모 후기를 확인하세요</div>
       </div>
     </div>
     <div class="reviews-grid fade-up">
@@ -564,9 +574,9 @@ footer{background:#111;padding:0;}
         </div>
       </div>
     </div>
-    <a href="https://naver.me/xmrt1YsR" target="_blank" class="reviews-more fade-up">
+    <a href="https://naver.me/FgH5Mo7h" target="_blank" class="reviews-more fade-up">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
-      네이버 플레이스에서 106개 후기 모두 보기 →
+      네이버 플레이스에서 실제 후기 확인하기 →
     </a>
   </div>
 </section>
@@ -700,9 +710,9 @@ footer{background:#111;padding:0;}
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo-row">
-    <img src="assets/images/logo/math-logo-horizontal.png" alt="매쓰그립 수학학원">
+    <img src="assets/images/logo/math-logo-wordmark.png" alt="매쓰그립 수학학원">
     <div style="width:1px;height:20px;background:#333;"></div>
-    <img src="assets/images/logo/eng-logo-horizontal.png" alt="잉그립 영어학원">
+    <img src="assets/images/logo/eng-logo-wordmark.png" alt="잉그립 영어학원">
   </div>
   <div class="footer-quicklinks">
     <a href="math.html" class="fql-item">
