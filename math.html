@@ -184,7 +184,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .twc-period h4{font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;}
 .twc-period p{font-size:15px;color:rgba(255,255,255,0.5);}
 .twc-period.required{border-color:rgba(25,177,198,0.35);background:rgba(25,177,198,0.08);}
-.twc-period.required h4::after{content:' 필수';color:#19b1c6;font-size:13px;font-weight:700;letter-spacing:1px;}
+.twc-period-note{margin-top:14px;font-size:12px;color:rgba(255,255,255,.45);line-height:1.7;}
 
 /* SCHOOL EXAM 4 WEEKS */
 .exam-sec{background:#f4f7fb;padding:100px 40px;}
@@ -551,28 +551,28 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <p class="grip-num">01 / GRASP</p>
         <h3 class="grip-title">진단</h3>
         <p class="grip-sub">Grasp — 손에 잡다</p>
-        <p class="grip-desc">지금 어디서 막혔는지 정확하게 파악합니다. 막연한 '부족함'이 아닌, 구체적인 빈틈을 찾아냅니다.</p>
+        <p class="grip-desc">레벨테스트와 최근 시험·오답을 함께 봅니다. 개념, 연산, 풀이 과정과 학습 습관까지 확인해 가장 먼저 보완할 순서를 정합니다.</p>
       </div>
       <div class="grip-step">
         <span class="grip-letter">R</span>
         <p class="grip-num">02 / REVIEW</p>
         <h3 class="grip-title">오답 복습</h3>
         <p class="grip-sub">Review — 다시 보다</p>
-        <p class="grip-desc">틀린 이유를 확인하고 다시 풉니다. 유사 유형과 재시험으로 같은 실수를 줄입니다.</p>
+        <p class="grip-desc">오답은 그날 다시 풀고 설명합니다. TWC의 Check와 유사 유형 재시험으로 같은 실수가 반복되지 않게 합니다.</p>
       </div>
       <div class="grip-step">
         <span class="grip-letter">I</span>
         <p class="grip-num">03 / INTERNALIZE</p>
         <h3 class="grip-title">학생의 자기화</h3>
         <p class="grip-sub">Internalize — 내 것으로 만들다</p>
-        <p class="grip-desc">TWC로 풀이를 손으로 쓰고 자신의 말로 설명합니다. 아는 척이 아니라 꺼내 쓸 수 있는 지식으로 바꿉니다.</p>
+        <p class="grip-desc">TWC의 Think·Write로 풀이를 보지 않고 재현합니다. 이해한 개념을 변형 문제에도 적용하며 꺼내 쓸 수 있는 지식으로 바꿉니다.</p>
       </div>
       <div class="grip-step">
         <span class="grip-letter">P</span>
         <p class="grip-num">04 / PROVE</p>
         <h3 class="grip-title">학교 시험 증명</h3>
         <p class="grip-sub">Prove — 결과로 확인하다</p>
-        <p class="grip-desc">학교별 기출분석과 4주 내신관리로 배운 내용을 시험에서 꺼내 쓰게 합니다. 결과는 다음 진단으로 연결됩니다.</p>
+        <p class="grip-desc">일일테스트·월말평가·학교 시험 결과를 학부모님과 공유합니다. 확인된 결과는 다시 다음 진단과 보완 계획으로 연결됩니다.</p>
       </div>
     </div>
   </div>
@@ -627,24 +627,32 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <div class="twc-class fade-up">
       <div>
         <p class="twc-class-lbl">수업 구조</p>
-        <h3 class="twc-class-title">매쓰그립의 2교시 수업 시스템</h3>
-        <p class="twc-class-desc">손으로 쓰는 것이 선택이 아닌 필수입니다. 뇌가 개념을 완전히 흡수하기 위한 필수 과정입니다.</p>
+        <h3 class="twc-class-title">모든 수업에 적용하는 TWC 수업 구조</h3>
+        <p class="twc-class-desc">개념을 이해하는 시간과 스스로 생각하고 쓰고 확인하는 시간을 분리해, 배운 것을 학생의 실력으로 완성합니다.</p>
       </div>
       <div class="twc-periods">
         <div class="twc-period">
           <div class="twc-period-num">1교시</div>
           <div>
-            <h4>개념 학습 + 문제 풀이</h4>
-            <p>강의 + TWC 방식으로 문제에 접근합니다</p>
+            <h4>개념수업 · 90분</h4>
+            <p>원리 중심의 설명과 대표 문제로 오늘 배울 개념의 구조를 정확히 이해합니다.</p>
           </div>
         </div>
         <div class="twc-period required">
           <div class="twc-period-num">2교시</div>
           <div>
-            <h4>노트 정리</h4>
-            <p>배운 개념을 손으로 완전히 재정리. 이 단계가 지식을 손에 각인시킵니다.</p>
+            <h4>TWC 집중훈련 · 90분</h4>
+            <p>Think → Write → Check로 풀이를 스스로 완성하고 선생님의 피드백을 받습니다.</p>
           </div>
         </div>
+        <div class="twc-period">
+          <div class="twc-period-num">금/토</div>
+          <div>
+            <h4>오답·재시험 · 60분</h4>
+            <p>오답·풀이노트를 보완하고 유사 유형 재시험으로 같은 실수를 다시 확인합니다.</p>
+          </div>
+        </div>
+        <p class="twc-period-note">※ 1·2교시의 순서는 반 운영에 따라 조정될 수 있으며, TWC 과정은 모든 수업에 공통 적용됩니다.</p>
       </div>
     </div>
   </div>
@@ -661,21 +669,21 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <div class="track-head">
           <p class="track-head-lbl">Track 01</p>
           <h3 class="track-head-title">DD반<span> — Deep Drill</span></h3>
-          <p class="track-head-sub">강의식 수업 + TWC 반복 훈련</p>
+          <p class="track-head-sub">레벨별 그룹 심화 · 초5~중2 · 상위 30% 권장</p>
         </div>
         <div class="track-body">
           <div class="track-flow">
             <div class="track-step">
               <div class="track-step-n">1</div>
-              <div class="track-step-text"><strong>개념 설명</strong>원리 중심의 명확한 강의. 왜 이 공식이 성립하는지부터 이해합니다.</div>
+              <div class="track-step-text"><strong>레벨별 그룹 티칭</strong>비슷한 수준의 학생이 공통 진도로 원리와 개념을 함께 배웁니다.</div>
             </div>
             <div class="track-step">
               <div class="track-step-n">2</div>
-              <div class="track-step-text"><strong>TWC 적용 훈련</strong>Think-Write-Check 방식으로 동일 유형을 반복 훈련합니다.</div>
+              <div class="track-step-text"><strong>현행 심화 + 1년 선행</strong>현행 학년의 깊이를 확보하면서 다음 과정까지 균형 있게 연결합니다.</div>
             </div>
             <div class="track-step">
               <div class="track-step-n">3</div>
-              <div class="track-step-text"><strong>노트 완성 확인</strong>2교시 노트가 완성되었는지 선생님이 직접 확인합니다.</div>
+              <div class="track-step-text"><strong>TWC 적용 훈련</strong>생각과 풀이를 손으로 남기고, 오답·재시험까지 선생님이 직접 확인합니다.</div>
             </div>
           </div>
         </div>
@@ -684,21 +692,21 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <div class="track-head">
           <p class="track-head-lbl">Track 02</p>
           <h3 class="track-head-title">PT반<span> — Personalized Teaching</span></h3>
-          <p class="track-head-sub">1:1 과외식 맞춤 수업</p>
+          <p class="track-head-sub">1:1 개인 맞춤 · 초2~중3 · 기초 보강부터 최상위 선행</p>
         </div>
         <div class="track-body">
           <div class="track-flow">
             <div class="track-step">
               <div class="track-step-n">1</div>
-              <div class="track-step-text"><strong>개인별 진도</strong>학생 수준에 맞는 맞춤형 커리큘럼. 빠르지도 느리지도 않게.</div>
+              <div class="track-step-text"><strong>학생별 개별 진도</strong>진단 결과와 목표에 맞춰 1:1 과외식으로 학습 순서와 속도를 설계합니다.</div>
             </div>
             <div class="track-step">
               <div class="track-step-n">2</div>
-              <div class="track-step-text"><strong>약점 집중 보완</strong>오답 분석 후 취약 개념 집중 반복. 빈틈 없이 메웁니다.</div>
+              <div class="track-step-text"><strong>기초 보강 또는 빠른 선행</strong>기초가 부족한 학생은 빈틈부터, 최상위권은 2년 이상 선행까지 맞춥니다.</div>
             </div>
             <div class="track-step">
               <div class="track-step-n">3</div>
-              <div class="track-step-text"><strong>심화 학습</strong>목표 수준까지 단계적 심화. DD반 전환도 자연스럽게.</div>
+              <div class="track-step-text"><strong>개인별 TWC 피드백</strong>학생이 쓴 풀이를 기준으로 막힌 지점을 바로 교정하고 재시험까지 연결합니다.</div>
             </div>
           </div>
         </div>
@@ -752,24 +760,31 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <p class="lead">성적 향상을 위한 촘촘한 학습 관리</p>
     <div class="manage-grid fade-up">
       <div class="manage-item">
-        <div class="manage-icon">💬</div>
+        <div class="manage-icon">📊</div>
         <div class="manage-text">
-          <h4>3자 학습톡방</h4>
-          <p>학생·학부모·원장이 함께하는 실시간 소통. 숙제, 성과, 공지를 즉시 공유합니다.</p>
+          <h4>학생별 마이그립 리포트</h4>
+          <p>매 수업의 학습·오답·재시험 기록과 월말평가 결과를 학부모님께 공유합니다.</p>
+        </div>
+      </div>
+      <div class="manage-item">
+        <div class="manage-icon">🧩</div>
+        <div class="manage-text">
+          <h4>맞춤 문항·유사 유형</h4>
+          <p>학생이 막힌 개념과 유형에 맞는 문항을 다시 제시해 빈틈을 구체적으로 보완합니다.</p>
+        </div>
+      </div>
+      <div class="manage-item">
+        <div class="manage-icon">✅</div>
+        <div class="manage-text">
+          <h4>일일테스트·월말평가</h4>
+          <p>매 수업의 이해도를 확인하고 월말평가로 누적 실력과 다음 학습 방향을 점검합니다.</p>
         </div>
       </div>
       <div class="manage-item">
         <div class="manage-icon">📝</div>
         <div class="manage-text">
-          <h4>개인별 노트 관리</h4>
-          <p>TWC 노트와 오답노트를 체계적으로 관리. 손으로 쓴 기록이 실력의 증거입니다.</p>
-        </div>
-      </div>
-      <div class="manage-item">
-        <div class="manage-icon">📊</div>
-        <div class="manage-text">
-          <h4>주간 리포트</h4>
-          <p>매주 학습 현황과 월말 평가를 제공. 어디서 성장했는지 데이터로 확인합니다.</p>
+          <h4>오답·풀이노트 관리</h4>
+          <p>답만 고치지 않고 틀린 이유와 다시 풀어낸 과정을 손으로 남겨 자기화합니다.</p>
         </div>
       </div>
       <div class="manage-item">
@@ -780,17 +795,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         </div>
       </div>
       <div class="manage-item">
-        <div class="manage-icon">✅</div>
+        <div class="manage-icon">🔔</div>
         <div class="manage-text">
           <h4>철저한 출결 관리</h4>
-          <p>빠짐없는 출석 및 결석 케어. 한 번 빠진 수업도 놓치지 않도록 보완합니다.</p>
-        </div>
-      </div>
-      <div class="manage-item">
-        <div class="manage-icon">📚</div>
-        <div class="manage-text">
-          <h4>학교별 내신 대비</h4>
-          <p>학교 맞춤 기출 교재로 내신을 집중 준비. 다니는 학교에 맞게, 정확하게.</p>
+          <p>앱 출결 알림과 결석 보완으로 빠진 학습이 생기지 않도록 확인합니다.</p>
         </div>
       </div>
     </div>
@@ -810,7 +818,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       </div>
       <div class="result-card">
         <div class="result-num">MyGrip</div>
-        <div class="result-lbl">수업·오답·재시험<br>주간·월말 성장보고</div>
+        <div class="result-lbl">수업·오답·재시험<br>매 수업·월말 성장보고</div>
       </div>
       <div class="result-card">
         <div class="result-num">내신</div>
@@ -824,11 +832,11 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="contact-sec" id="contact">
   <div class="contact-box fade-up">
     <div class="contact-icon">📐</div>
-    <h2 class="contact-title">매쓰그립 수학 무료상담</h2>
-    <p class="contact-sub">수학 프로그램, 레벨 테스트, 수업 일정 등<br>궁금한 점을 편하게 문의해 주세요</p>
+    <h2 class="contact-title">상담은 우리 아이의 다음 단계를 설계하는 시간입니다</h2>
+    <p class="contact-sub">개념·연산·문제해결·풀이과정을 진단하고<br>TWC와 DD·PT, 학교별 4주 내신 계획을 제안합니다.</p>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn">네이버 톡으로 상담하기 →</a>
-    <a href="/apply?subject=math&amp;source=homepage" target="_blank" class="contact-btn" style="background:#19b1c6;">수학 상담신청 →</a>
-    <p class="contact-hint">진단 결과에 맞춰 필요한 수업과 준비 과정을 안내합니다.</p>
+    <a href="/apply?subject=math&amp;source=homepage" target="_blank" class="contact-btn" style="background:#19b1c6;">우리 아이 수학 진단 상담신청 →</a>
+    <p class="contact-hint">사전 정보 확인 → 영역별 진단 → 결과 상담 순서로 진행합니다.</p>
   </div>
 </section>
 
@@ -857,7 +865,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <div class="chatbot-header">
       <div class="chatbot-avatar">🎓</div>
       <div class="chatbot-header-info">
-        <div class="chatbot-header-name">그립학원 상담봇</div>
+        <div class="chatbot-header-name">매쓰그립 상담봇</div>
         <div class="chatbot-header-status">● 온라인 · 즉시 답변</div>
       </div>
       <button class="chatbot-close" onclick="toggleChat()">✕</button>
