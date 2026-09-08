@@ -186,8 +186,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* MBA */
 .mba-sec{background:#fff;padding:100px 40px;}
 .mba-intro{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;margin-bottom:72px;max-width:820px;}
-.mba-img{border-radius:20px;overflow:hidden;aspect-ratio:16/8;background:#f5f5f3;}
-.mba-img img{width:100%;height:100%;object-fit:cover;object-position:top;}
 .mba-intro-body{font-size:16px;color:#555;line-height:1.9;font-weight:600;}
 .mba-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 .mba-card{border-radius:20px;overflow:hidden;}
@@ -237,9 +235,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .blank-result{margin-top:20px;background:rgba(236,102,25,0.12);border:1px solid rgba(236,102,25,0.3);border-radius:12px;padding:20px;text-align:center;font-size:13px;color:#ec6619;font-weight:800;}
 .blank-heading{font-size:28px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:20px;}
 .blank-body{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.9;font-weight:500;margin-bottom:20px;}
-.blank-evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:44px;}
+.blank-evidence-grid{display:grid;grid-template-columns:1fr;gap:24px;margin-top:44px;}
 .blank-evidence-card{overflow:hidden;border-radius:18px;background:#fff;border:1px solid rgba(255,255,255,.15);}
-.blank-evidence-card.wide{grid-column:1/-1;}
 .blank-evidence-photo{aspect-ratio:4/3;overflow:hidden;background:#eef3ef;}
 .blank-evidence-card.wide .blank-evidence-photo{aspect-ratio:16/8.6;}
 .blank-evidence-photo img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -312,6 +309,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .feedback-card h3{font-size:19px;color:#00391e;margin-bottom:10px;}
 .feedback-card p{font-size:14px;line-height:1.75;color:#667085;font-weight:500;}
 .feedback-note{margin-top:24px;padding:20px 24px;background:#00391e;color:rgba(255,255,255,.78);border-radius:14px;font-size:15px;line-height:1.75;font-weight:600;}
+.mygrip-overview{display:grid;grid-template-columns:1.08fr .92fr;gap:22px;align-items:stretch;margin-top:36px;}
+.mygrip-panel{background:#fff;border:1px solid #dfe8e2;border-radius:22px;padding:34px;box-shadow:0 14px 36px rgba(0,57,30,.07);}
+.mygrip-panel-dark{background:#00391e;border-color:#00391e;color:#fff;}
+.mygrip-label{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;letter-spacing:1.5px;color:#ec6619;margin-bottom:12px;}
+.mygrip-title{font-size:27px;font-weight:900;line-height:1.35;color:#00391e;margin-bottom:14px;letter-spacing:-.7px;}
+.mygrip-panel-dark .mygrip-title{color:#fff;}
+.mygrip-copy{font-size:15px;line-height:1.85;color:#60756a;font-weight:600;}
+.mygrip-panel-dark .mygrip-copy{color:rgba(255,255,255,.72);}
+.mygrip-points{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:24px;}
+.mygrip-point{border-radius:12px;padding:16px;background:#f0f6f2;}
+.mygrip-point strong{display:block;font-size:14px;color:#00391e;margin-bottom:5px;}
+.mygrip-point span{font-size:12px;line-height:1.6;color:#667b70;font-weight:600;}
+.mygrip-flow{margin-top:25px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);font-size:14px;font-weight:800;line-height:1.8;color:#fff;}
+.mygrip-flow span{color:#ec6619;}
+.mygrip-link{display:inline-flex;margin-top:22px;padding:12px 18px;border-radius:9px;background:#ec6619;color:#fff;text-decoration:none;font-size:13px;font-weight:800;}
+.mygrip-link:hover{background:#00391e;}
+.mygrip-gallery-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:66px 0 24px;}
+.mygrip-gallery-head h3{font-size:30px;color:#00391e;line-height:1.35;letter-spacing:-.8px;}
+.mygrip-gallery-head p{max-width:460px;font-size:14px;color:#65776d;line-height:1.75;font-weight:600;text-align:right;}
+.mygrip-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.mygrip-shot{background:#fff;border:1px solid #dfe8e2;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(0,57,30,.07);}
+.mygrip-shot img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;}
+.mygrip-shot figcaption{padding:18px 18px 20px;}
+.mygrip-shot strong{display:block;font-size:16px;color:#00391e;margin-bottom:6px;}
+.mygrip-shot span{display:block;font-size:13px;color:#687a70;line-height:1.65;font-weight:600;}
+.mygrip-source{margin-top:18px;font-size:12px;color:#849289;text-align:right;}
 
 /* RESULTS */
 .results-sec{background:#00391e;padding:100px 40px;}
@@ -418,6 +441,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .blank-layout{grid-template-columns:1fr;}
   .program-grid{grid-template-columns:1fr;}
   .feedback-grid{grid-template-columns:1fr 1fr;}
+  .mygrip-overview{grid-template-columns:1fr;}
+  .mygrip-gallery{grid-template-columns:repeat(2,1fr);}
+  .mygrip-gallery-head{align-items:flex-start;flex-direction:column;}
+  .mygrip-gallery-head p{text-align:left;}
   .exam-grid{grid-template-columns:1fr 1fr;}
   .evidence-grid{grid-template-columns:1fr;}
   .classroom-grid{grid-template-columns:1fr;}
@@ -438,6 +465,8 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .mba-steps{grid-template-columns:1fr;}
   .exam-grid{grid-template-columns:1fr;}
   .feedback-grid{grid-template-columns:1fr;}
+  .mygrip-points{grid-template-columns:1fr;}
+  .mygrip-gallery{grid-template-columns:1fr;}
   .system-map-grid{grid-template-columns:1fr;}
   .system-map-card{min-height:250px;}
   .system-map-card .system-map-arrow{display:flex !important;right:50%;top:auto;bottom:-13px;transform:translateX(50%) rotate(90deg);}
@@ -759,9 +788,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <p class="lead" style="margin-bottom:24px;">Memorize → Blank Test → Apply<br>일정 레벨 이상 학생의 영어 자기화 루틴</p>
         <p class="mba-intro-body">먼저 문장 구조와 어휘를 충분히 이해한 뒤, 일정 레벨 이상 학생에게 MBA를 적용합니다. 모든 반에 일괄 적용하지 않으며, 학생의 현재 실력과 소화 가능성을 확인해 암기·백지증명·응용의 강도를 조절합니다.</p>
       </div>
-      <div class="mba-img">
-        <img src="assets/images/evidence/english-blank-grammar.webp" alt="잉그립 MBA 백지테스트 문법 학습지" loading="lazy">
-      </div>
     </div>
     <div class="mba-steps fade-up">
       <div class="mba-card memorize">
@@ -1019,16 +1045,40 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       <p class="system-chapter-index">03 · PARENT REPORT</p>
       <div><h2 class="system-chapter-term">MyGrip</h2><p class="system-chapter-title">모든 학생의 학습 기록을 학부모님과 공유</p></div>
     </div>
-    <p class="eyebrow">학부모 피드백</p>
-    <h2 class="heading">아이의 하루를 네 사람이 함께 봅니다</h2>
-    <p class="lead">원장·담임·학부모·학생이 같은 기록을 확인해야 작은 미통과가 큰 학습 결손으로 남지 않습니다.</p>
-    <div class="feedback-grid fade-up">
-      <article class="feedback-card"><p class="feedback-num">01</p><h3>수업 당일 기록</h3><p>어휘·문법·독해·쓰기의 학습 범위와 이해도를 수업 단위로 남깁니다.</p></article>
-      <article class="feedback-card"><p class="feedback-num">02</p><h3>미통과 재학습</h3><p>테스트 미통과 항목은 보완 학습과 재시험을 연결하고 완료 여부를 확인합니다.</p></article>
-      <article class="feedback-card"><p class="feedback-num">03</p><h3>학부모 성장보고</h3><p>수업 기록과 월말 결과를 바탕으로 현재 위치와 다음 보완 방향을 설명합니다.</p></article>
-      <article class="feedback-card"><p class="feedback-num">04</p><h3>정기 상담</h3><p>원장과 담임이 학습 기록을 함께 검토해 반·교재·MBA 적용 강도를 조정합니다.</p></article>
+    <p class="lead">오늘 무엇을 배웠는지, 어디에서 막혔는지, 다음에 무엇을 보완할지 수업 기록과 성장 변화로 학부모님께 투명하게 보여드립니다.</p>
+    <div class="mygrip-overview fade-up">
+      <article class="mygrip-panel">
+        <p class="mygrip-label">MYGRIP PARENT REPORT</p>
+        <h3 class="mygrip-title">오늘 무엇을 배우고,<br>다음에 무엇을 할지 보입니다</h3>
+        <p class="mygrip-copy">수업이 끝난 뒤 학부모님은 MyGrip에서 어휘·문법·독해·쓰기 진도와 숙제, 이해도와 태도, MBA·백지테스트 결과와 선생님의 관찰 기록을 확인합니다. 월말에는 누적 변화와 다음 학습 방향까지 한 장으로 받아보실 수 있습니다.</p>
+        <div class="mygrip-points">
+          <div class="mygrip-point"><strong>매 수업 일일리포트</strong><span>진도·이해도·태도·숙제·교사 코멘트</span></div>
+          <div class="mygrip-point"><strong>숙제 사진 제출</strong><span>학습 사진 업로드 후 확인·점수·피드백</span></div>
+          <div class="mygrip-point"><strong>1:1 소통</strong><span>표정 이모지와 댓글로 바로 묻고 답하기</span></div>
+          <div class="mygrip-point"><strong>월말 성장보고</strong><span>누적 기록·학습 습관·다음 달 지도 방향</span></div>
+        </div>
+        <a class="mygrip-link" href="https://my.megrip.com" target="_blank" rel="noopener noreferrer">MyGrip 바로가기 →</a>
+      </article>
+      <article class="mygrip-panel mygrip-panel-dark">
+        <p class="mygrip-label">ONE RECORD, NEXT ACTION</p>
+        <h3 class="mygrip-title">학부모에게 알리는 데서 끝나지 않습니다</h3>
+        <p class="mygrip-copy">같은 기록을 학생·학부모·담임이 함께 보고 필요한 다음 행동을 정합니다. 잘한 점은 구체적으로 칭찬하고, 부족한 어휘·문법·독해·쓰기 영역은 보완 범위와 확인 시점을 분명히 약속합니다.</p>
+        <p class="mygrip-flow"><span>기록 → 발견 → 처방 → 동행</span><br>매일의 작은 기록이 아이에게 맞는 수업과 상담의 근거가 됩니다.</p>
+      </article>
     </div>
-    <p class="feedback-note">학생의 결과가 다르면 보완 내용도 달라져야 합니다. 잉그립은 기록 → 피드백 → 재학습 → 완료 확인의 흐름을 끊지 않습니다.</p>
+    <div class="mygrip-gallery-head">
+      <h3>학부모님이 실제로 확인하는<br>MyGrip 화면입니다</h3>
+      <p>실제 운영 화면에서 학생 이름만 가린 예시입니다. 수업 내용과 숙제 피드백, 월말 변화까지 어떤 방식으로 전달되는지 먼저 확인해 보세요.</p>
+    </div>
+    <div class="mygrip-gallery fade-up">
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-01.png" alt="마이그립 학부모 홈 화면" loading="lazy"><figcaption><strong>한눈에 보는 오늘</strong><span>출석·학습 기록·숙제 제출과 주요 메뉴를 첫 화면에서 확인합니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-04.png" alt="마이그립 출결 이해도 태도 숙제 관리지표" loading="lazy"><figcaption><strong>4대 관리지표</strong><span>출결·이해도·수업태도·숙제 수행을 직관적으로 확인합니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-07.png" alt="마이그립 숙제 사진 제출과 교사 피드백 화면" loading="lazy"><figcaption><strong>숙제 사진 피드백</strong><span>학습 내용을 사진으로 제출하면 선생님의 확인과 보완 안내가 이어집니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-08.png" alt="마이그립 월말 성장보고 화면" loading="lazy"><figcaption><strong>월말 성장보고</strong><span>한 달의 출결·태도·숙제와 관찰 기록을 다음 계획으로 연결합니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-09.png" alt="마이그립 리포트 이모지와 댓글 소통 화면" loading="lazy"><figcaption><strong>리포트에 바로 답하기</strong><span>표정 이모지와 댓글로 궁금한 점을 선생님께 바로 전합니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-10.png" alt="마이그립 공지와 알림장 화면" loading="lazy"><figcaption><strong>공지·알림장 통합</strong><span>학원 공지, 반별 안내와 개인 알림을 한곳에서 놓치지 않습니다.</span></figcaption></figure>
+    </div>
+    <p class="mygrip-source">※ 공개용 예시 화면이며 학생 이름은 비식별 처리했습니다.</p>
   </div>
 </section>
 
