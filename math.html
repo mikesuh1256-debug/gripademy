@@ -245,11 +245,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .track-head-title span{color:#19b1c6;}
 .track-head-sub{font-size:16px;color:rgba(255,255,255,0.5);}
 .track-body{padding:36px 40px;background:#fff;}
+.track-body-grid{display:grid;grid-template-columns:minmax(220px,.8fr) 1.2fr;gap:24px;align-items:stretch;}
+.track-photo{position:relative;min-height:100%;overflow:hidden;border-radius:14px;background:#eaf0f8;}
+.track-photo img{display:block;width:100%;height:100%;min-height:360px;object-fit:cover;}
+.track-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 18px 18px;background:linear-gradient(transparent,rgba(10,17,54,.9));color:#fff;font-size:13px;font-weight:800;line-height:1.55;}
 .track-flow{display:flex;flex-direction:column;gap:16px;}
 .track-step{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;background:#f9f9f7;border-radius:12px;border:1px solid #f0f0f0;}
 .track-step-n{width:36px;height:36px;border-radius:50%;background:#1e2a6d;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
 .track-step-text strong{display:block;font-size:15px;color:#1e2a6d;margin-bottom:4px;font-weight:800;}
 .track-step-text{font-size:13px;color:#555;line-height:1.7;font-weight:600;}
+.track-program-proof{display:grid;grid-template-columns:1.1fr .9fr;gap:0;max-width:820px;margin-top:24px;overflow:hidden;border-radius:20px;background:#1e2a6d;}
+.track-program-proof img{display:block;width:100%;height:100%;min-height:260px;object-fit:cover;}
+.track-program-copy{display:flex;flex-direction:column;justify-content:center;padding:34px;color:#fff;}
+.track-program-copy strong{font-size:20px;line-height:1.45;margin-bottom:10px;}
+.track-program-copy span{font-size:14px;line-height:1.8;color:rgba(255,255,255,.67);font-weight:600;}
 
 /* GPA + MYGRIP */
 .gpa-sec{background:#eef3fb;padding:100px 40px;}
@@ -396,6 +405,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .twc-steps{grid-template-columns:1fr;}
   .twc-class{grid-template-columns:1fr;padding:36px 24px;}
   .track-grid{grid-template-columns:1fr;}
+  .track-body-grid{grid-template-columns:1fr;}
+  .track-photo img{height:auto;min-height:0;aspect-ratio:4/3;object-position:center 35%;}
+  .track-program-proof{grid-template-columns:1fr;}
+  .track-program-proof img{min-height:0;aspect-ratio:16/9;}
   .gpa-grid{grid-template-columns:1fr;}
   .mygrip-gallery{grid-template-columns:repeat(2,1fr);}
   .mygrip-gallery-head{align-items:flex-start;flex-direction:column;}
@@ -787,7 +800,9 @@ footer{background:#111;padding:36px 40px;text-align:center;}
           <p class="track-head-sub">레벨별 그룹 심화 · 초5~중2 · 상위 30% 권장</p>
         </div>
         <div class="track-body">
-          <div class="track-flow">
+          <div class="track-body-grid">
+            <figure class="track-photo"><img src="assets/images/math-evidence/dd-class-group.jpg" alt="비슷한 수준의 학생들이 함께 공부하고 선생님이 풀이를 확인하는 DD반 실제 수업" loading="lazy"><figcaption>DD반 실제 수업 · 레벨별 그룹 심화와 개별 풀이 확인</figcaption></figure>
+            <div class="track-flow">
             <div class="track-step">
               <div class="track-step-n">1</div>
               <div class="track-step-text"><strong>레벨별 그룹 티칭</strong>비슷한 수준의 학생이 공통 진도로 원리와 개념을 함께 배웁니다.</div>
@@ -800,6 +815,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
               <div class="track-step-n">3</div>
               <div class="track-step-text"><strong>TWC 적용 훈련</strong>생각과 풀이를 손으로 남기고, 오답·재시험까지 선생님이 직접 확인합니다.</div>
             </div>
+            </div>
           </div>
         </div>
       </div>
@@ -810,7 +826,9 @@ footer{background:#111;padding:36px 40px;text-align:center;}
           <p class="track-head-sub">1:1 개인 맞춤 · 초2~중3 · 기초 보강부터 최상위 선행</p>
         </div>
         <div class="track-body">
-          <div class="track-flow">
+          <div class="track-body-grid">
+            <figure class="track-photo"><img src="assets/images/math-evidence/pt-class-personal.jpg" alt="선생님이 학생별 풀이를 가까이에서 확인하고 지도하는 PT반 실제 수업" loading="lazy"><figcaption>PT반 실제 수업 · 학생별 진도와 풀이에 맞춘 개인 피드백</figcaption></figure>
+            <div class="track-flow">
             <div class="track-step">
               <div class="track-step-n">1</div>
               <div class="track-step-text"><strong>학생별 개별 진도</strong>진단 결과와 목표에 맞춰 1:1 과외식으로 학습 순서와 속도를 설계합니다.</div>
@@ -823,10 +841,15 @@ footer{background:#111;padding:36px 40px;text-align:center;}
               <div class="track-step-n">3</div>
               <div class="track-step-text"><strong>개인별 TWC 피드백</strong>학생이 쓴 풀이를 기준으로 막힌 지점을 바로 교정하고 재시험까지 연결합니다.</div>
             </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <figure class="track-program-proof fade-up">
+      <img src="assets/images/math-evidence/pt-dw-program.jpg" alt="개념수업 PT와 문제풀이 DW로 이어지는 수업 운영을 설명하는 모습" loading="lazy">
+      <figcaption class="track-program-copy"><strong>배운 내용을 그날 자기 것으로</strong><span>개념수업 PT와 문제풀이 DW가 분리되지 않고 이어지는 실제 운영 구조도 학부모 설명에서 투명하게 안내합니다.</span></figcaption>
+    </figure>
   </div>
 </section>
 
