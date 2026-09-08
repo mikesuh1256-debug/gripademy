@@ -113,6 +113,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .reality-head-copy{max-width:700px;}
 .reality-head-note{max-width:340px;font-size:14px;color:#697790;line-height:1.8;font-weight:600;text-align:right;}
 .reality-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.reality-grid.all-photos{grid-template-columns:repeat(3,minmax(0,1fr));}
 .reality-card{position:relative;min-width:0;overflow:hidden;border-radius:20px;background:#1e2a6d;box-shadow:0 14px 34px rgba(30,42,109,.12);}
 .reality-card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .35s ease;}
 .reality-card:hover img{transform:scale(1.025);}
@@ -398,6 +399,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .reality-head{align-items:flex-start;flex-direction:column;}
   .reality-head-note{text-align:left;}
   .reality-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .reality-grid.all-photos{grid-template-columns:repeat(2,minmax(0,1fr));}
   .compare-grid{grid-template-columns:1fr;}
   .cmp-bad,.cmp-good{padding:40px 28px;}
   .cmp-item{font-size:16px;}
@@ -433,6 +435,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .solution-title{font-size:25px;}
   .solution-grid{grid-template-columns:1fr;}
   .reality-grid{grid-template-columns:1fr;}
+  .reality-grid.all-photos{grid-template-columns:1fr;}
   .reality-card img{aspect-ratio:4/3;}
   .grip-steps{grid-template-columns:1fr;}
   .exam-grid{grid-template-columns:1fr;}
@@ -567,25 +570,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <article class="solution-card"><p class="solution-num">06</p><h3 class="solution-name">MyGrip 학부모 피드백</h3><p class="solution-desc">수업, 과제, 시험, 보완 과정을 기록해 학부모님이 성장 과정을 직접 확인합니다.</p></article>
       </div>
       <p class="solution-promise">매쓰그립은 문제를 더 많이 풀리는 학원이 아니라,<br><strong>성적이 오르지 않는 원인을 찾아 끝까지 해결하는 학원</strong>입니다.</p>
-    </div>
-  </div>
-</section>
-
-<!-- REAL CLASSROOM -->
-<section class="reality-sec" aria-labelledby="reality-title">
-  <div class="w-inner">
-    <div class="reality-head">
-      <div class="reality-head-copy">
-        <p class="eyebrow">설명보다 먼저 보여드리는 실제 수업</p>
-        <h2 class="heading" id="reality-title">아이의 손이 움직이고,<br>선생님의 확인이 이어집니다</h2>
-      </div>
-      <p class="reality-head-note">연출된 홍보 이미지가 아니라 매쓰그립 교실에서 실제로 진행된 풀이·질문·피드백 장면입니다.</p>
-    </div>
-    <div class="reality-grid fade-up">
-      <figure class="reality-card"><img src="assets/images/math-evidence/classroom-feedback-01.jpg" alt="선생님이 학생의 수학 풀이를 확인하며 피드백하는 실제 수업" loading="lazy"><figcaption class="reality-caption"><strong>풀이를 보며 바로 질문</strong><span>정답보다 생각의 과정을 확인합니다</span></figcaption></figure>
-      <figure class="reality-card"><img src="assets/images/math-evidence/student-solving.jpg" alt="학생이 수학 문제의 풀이 과정을 손으로 작성하는 모습" loading="lazy"><figcaption class="reality-caption"><strong>혼자 끝까지 써보는 시간</strong><span>배운 개념을 자기 풀이로 완성합니다</span></figcaption></figure>
-      <figure class="reality-card"><img src="assets/images/math-evidence/teacher-coaching.jpg" alt="선생님이 학생의 수학 문제 풀이를 옆에서 코칭하는 실제 수업" loading="lazy"><figcaption class="reality-caption"><strong>막힌 지점을 짚는 코칭</strong><span>학생마다 필요한 질문과 보완이 다릅니다</span></figcaption></figure>
-      <figure class="reality-card"><img src="assets/images/math-evidence/morning-study.jpg" alt="학생이 교실에서 수학 문제를 집중해 풀고 있는 모습" loading="lazy"><figcaption class="reality-caption"><strong>공부 리듬을 만드는 시간</strong><span>꾸준히 앉아 손으로 푸는 습관을 만듭니다</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -805,8 +789,8 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <div class="track-body">
           <div class="track-body-grid">
             <div class="track-photo-stack">
-              <figure class="track-photo"><img src="assets/images/math-evidence/dd-class-group.jpg" alt="비슷한 수준의 학생들이 함께 공부하고 선생님이 풀이를 확인하는 DD반 실제 수업" loading="lazy"><figcaption>DD반 실제 수업 · 레벨별 그룹 심화와 개별 풀이 확인</figcaption></figure>
-              <figure class="track-photo"><img src="assets/images/math-evidence/dd-deep-drill-writing.jpg" alt="학생이 풀이 과정을 직접 쓰며 문제를 깊이 있게 해결하는 DD반 Deep Drill 수업" loading="lazy"><figcaption>Deep Drill · 배운 개념을 자기 풀이로 깊게 완성합니다</figcaption></figure>
+              <figure class="track-photo"><img src="assets/images/math-evidence/dd-class-wide.jpg" alt="여러 학생이 함께 개념 설명을 듣고 각자 문제를 풀고 있는 DD반 그룹수업" loading="lazy"><figcaption>DD반 그룹수업 · 함께 개념을 배우고 각자의 풀이를 완성합니다</figcaption></figure>
+              <figure class="track-photo"><img src="assets/images/math-evidence/dd-class-students.jpg" alt="세 학생이 각자의 교재로 문제를 해결하고 있는 DD반 Deep Drill 수업" loading="lazy"><figcaption>Deep Drill · 같은 목표 아래 각자의 문제를 끝까지 해결합니다</figcaption></figure>
             </div>
             <div class="track-flow">
             <div class="track-step">
@@ -833,7 +817,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         </div>
         <div class="track-body">
           <div class="track-body-grid">
-            <figure class="track-photo"><img src="assets/images/math-evidence/pt-class-personal.jpg" alt="선생님이 학생별 풀이를 가까이에서 확인하고 지도하는 PT반 실제 수업" loading="lazy"><figcaption>PT반 실제 수업 · 학생별 진도와 풀이에 맞춘 개인 피드백</figcaption></figure>
+            <div class="track-photo-stack">
+              <figure class="track-photo"><img src="assets/images/math-evidence/pt-class-personal.jpg" alt="선생님이 학생별 풀이를 가까이에서 확인하고 지도하는 PT반 실제 수업" loading="lazy"><figcaption>PT반 실제 수업 · 학생별 진도와 풀이에 맞춘 개인 피드백</figcaption></figure>
+              <figure class="track-photo"><img src="assets/images/math-evidence/teacher-coaching.jpg" alt="선생님이 학생의 수학 풀이를 옆에서 확인하는 PT반 개별 코칭" loading="lazy"><figcaption>PT반 개별 코칭 · 학생이 쓴 풀이에서 막힌 지점을 바로 확인합니다</figcaption></figure>
+            </div>
             <div class="track-flow">
             <div class="track-step">
               <div class="track-step-n">1</div>
@@ -856,6 +843,27 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       <img src="assets/images/math-evidence/dd-class-wide.jpg" alt="여러 학생이 함께 개념 설명을 듣고 각자 문제를 풀고 있는 실제 수업" loading="lazy">
       <figcaption class="track-program-copy"><strong>배운 내용을 그날 자기 것으로</strong><span>함께 개념을 배우고 각자의 풀이를 손으로 완성합니다. 수업 안에서 설명과 문제풀이가 끊기지 않도록 바로 연결합니다.</span></figcaption>
     </figure>
+  </div>
+</section>
+
+<!-- REAL CLASSROOM -->
+<section class="reality-sec" aria-labelledby="reality-title">
+  <div class="w-inner">
+    <div class="reality-head">
+      <div class="reality-head-copy">
+        <p class="eyebrow">실제 수업 더 보기</p>
+        <h2 class="heading" id="reality-title">아이의 손이 움직이고,<br>선생님의 확인이 이어집니다</h2>
+      </div>
+      <p class="reality-head-note">연출된 홍보 이미지가 아니라 매쓰그립 교실에서 실제로 진행된 풀이·질문·피드백 장면입니다.</p>
+    </div>
+    <div class="reality-grid all-photos fade-up">
+      <figure class="reality-card"><img src="assets/images/math-evidence/classroom-feedback-01.jpg" alt="선생님이 학생의 수학 풀이를 확인하며 피드백하는 실제 수업" loading="lazy"><figcaption class="reality-caption"><strong>풀이를 보며 바로 질문</strong><span>정답보다 생각의 과정을 확인합니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/student-solving.jpg" alt="학생이 수학 문제의 풀이 과정을 손으로 작성하는 모습" loading="lazy"><figcaption class="reality-caption"><strong>혼자 끝까지 써보는 시간</strong><span>배운 개념을 자기 풀이로 완성합니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/morning-study.jpg" alt="학생이 교실에서 수학 문제를 집중해 풀고 있는 모습" loading="lazy"><figcaption class="reality-caption"><strong>공부 리듬을 만드는 시간</strong><span>꾸준히 앉아 손으로 푸는 습관을 만듭니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/dd-class-group.jpg" alt="선생님이 학생의 풀이 과정을 가까이에서 확인하는 수업" loading="lazy"><figcaption class="reality-caption"><strong>풀이 과정 밀착 확인</strong><span>학생이 적은 풀이를 기준으로 다음 질문을 이어갑니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/dd-deep-drill-writing.jpg" alt="학생이 수학 문제의 풀이 과정을 집중해서 작성하는 모습" loading="lazy"><figcaption class="reality-caption"><strong>손으로 남기는 이해</strong><span>설명을 들은 뒤 자기 풀이로 다시 완성합니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/pt-dw-program.jpg" alt="개념수업 PT와 문제풀이 DW 운영을 설명하는 모습" loading="lazy"><figcaption class="reality-caption"><strong>수업 구조도 투명하게</strong><span>배운 내용과 문제풀이가 어떻게 연결되는지 안내합니다</span></figcaption></figure>
+    </div>
   </div>
 </section>
 
