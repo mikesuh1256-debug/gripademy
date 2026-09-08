@@ -160,6 +160,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .brain-quote-text{font-size:15px;font-weight:700;color:#fff;line-height:1.6;margin-bottom:8px;}
 .brain-quote-sub{font-size:13px;color:rgba(255,255,255,0.45);}
 
+/* SYSTEM MAP */
+.system-map{background:#fff;padding:110px 40px;}
+.system-map-head{max-width:850px;margin-bottom:48px;}
+.system-map-title{font-size:44px;font-weight:900;line-height:1.25;letter-spacing:-1.5px;color:#1e2a6d;margin-bottom:22px;}
+.system-map-intro{font-size:20px;line-height:1.85;color:#4f5d76;font-weight:700;word-break:keep-all;}
+.system-map-intro strong{color:#1e2a6d;}
+.system-map-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.system-map-card{position:relative;display:flex;min-width:0;min-height:310px;flex-direction:column;padding:30px 24px;border:1px solid #dfe5ef;border-radius:20px;background:#f7f9fc;text-decoration:none;transition:transform .25s,border-color .25s,box-shadow .25s;}
+.system-map-card:hover{transform:translateY(-5px);border-color:#19b1c6;box-shadow:0 16px 36px rgba(30,42,109,.11);}
+.system-map-card:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;z-index:2;width:26px;height:26px;border-radius:50%;background:#19b1c6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;transform:translateY(-50%);}
+.system-map-num{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;color:#19b1c6;margin-bottom:24px;}
+.system-map-term{font-family:'Montserrat',sans-serif;font-size:38px;font-weight:800;line-height:1;color:#1e2a6d;letter-spacing:-1.5px;margin-bottom:16px;}
+.system-map-role{font-size:20px;font-weight:900;color:#1e2a6d;margin-bottom:15px;}
+.system-map-desc{font-size:14px;line-height:1.75;color:#637089;font-weight:600;word-break:keep-all;}
+.system-map-link{margin-top:auto;padding-top:22px;font-size:12px;font-weight:800;color:#19b1c6;}
+.system-map-loop{margin-top:24px;padding:20px 24px;border-radius:14px;background:#1e2a6d;color:#fff;text-align:center;font-size:16px;line-height:1.7;font-weight:800;}
+.system-map-loop strong{color:#19b1c6;}
+
+/* SHARED SYSTEM CHAPTER */
+.system-chapter{margin-bottom:50px;max-width:840px;}
+.system-chapter-kicker{display:flex;align-items:center;gap:14px;margin-bottom:16px;font-size:14px;font-weight:900;color:#19b1c6;letter-spacing:1.5px;}
+.system-chapter-kicker::after{content:'';width:64px;height:2px;background:#19b1c6;}
+.system-chapter-row{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;margin-bottom:18px;}
+.system-chapter-term{font-family:'Montserrat',sans-serif;font-size:72px;font-weight:800;line-height:.95;letter-spacing:-3px;color:#1e2a6d;}
+.system-chapter-role{font-size:28px;font-weight:900;color:#1e2a6d;letter-spacing:-.8px;}
+.system-chapter-summary{font-size:18px;line-height:1.85;color:#5f6d84;font-weight:700;word-break:keep-all;}
+.system-chapter-dark .system-chapter-term,.system-chapter-dark .system-chapter-role{color:#fff;}
+.system-chapter-dark .system-chapter-summary{color:rgba(255,255,255,.65);}
+.mygrip-chapter{margin-top:86px;scroll-margin-top:90px;}
+
 /* GRIP */
 .grip-sec{background:#1e2a6d;padding:100px 40px;}
 .grip-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:56px;border-radius:20px;overflow:hidden;}
@@ -418,7 +448,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
   .hero-btn{justify-content:center;padding:13px 10px;text-align:center;}
-  .story,.reality-sec,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.gpa-sec,.manage-sec,.exam-sec,.evidence-sec,.award-sec,.results-sec,.contact-sec{padding:64px 20px;}
+  .story,.reality-sec,.compare-sec,.brain-sec,.system-map,.grip-sec,.twc-sec,.track-sec,.gpa-sec,.manage-sec,.exam-sec,.evidence-sec,.award-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .problem-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .solution-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .solution-head{align-items:flex-start;flex-direction:column;}
@@ -431,6 +461,8 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .cmp-bad,.cmp-good{padding:40px 28px;}
   .cmp-item{font-size:16px;}
   .brain-layout{grid-template-columns:1fr;}
+  .system-map-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .system-map-card:not(:last-child)::after{display:none;}
   .grip-steps{grid-template-columns:1fr 1fr;}
   .grip-num{font-size:32px;}
   .twc-intro{grid-template-columns:1fr;}
@@ -458,6 +490,14 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 }
 @media(max-width:480px){
   .problem-question{font-size:30px;}
+  .system-map-title{font-size:32px;}
+  .system-map-intro{font-size:17px;}
+  .system-map-grid{grid-template-columns:1fr;}
+  .system-map-card{min-height:0;padding:26px 22px;}
+  .system-map-term{font-size:34px;}
+  .system-chapter-term{font-size:50px;letter-spacing:-2px;}
+  .system-chapter-role{font-size:23px;}
+  .system-chapter-summary{font-size:16px;}
   .problem-grid{grid-template-columns:1fr;}
   .problem-card{min-height:0;}
   .solution-wrap{padding:30px 20px;}
@@ -502,9 +542,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <img src="assets/images/logo/math-logo-wordmark.png" alt="매쓰그립" style="height:32px;width:auto;object-fit:contain;display:block;">
   </a>
   <div class="nav-menu">
-    <a href="#philosophy">교육철학</a>
-    <a href="#twc">TWC시스템</a>
-    <a href="#gpa">GPA·마이그립</a>
+    <a href="#system-map">4가지 시스템</a>
+    <a href="#grip">GRIP</a>
+    <a href="#twc">TWC</a>
+    <a href="#gpa">GPA·MyGrip</a>
     <a href="#exam4">4주 내신관리</a>
     <a href="#evidence">증거자료</a>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="nav-cta" style="background:#03C75A;display:flex;align-items:center;gap:5px;">
@@ -686,12 +727,56 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   </div>
 </section>
 
-<!-- GRIP 4단계 -->
-<section class="grip-sec">
+<!-- FOUR SYSTEMS MAP -->
+<section class="system-map" id="system-map">
   <div class="w-inner">
-    <p class="eyebrow eyebrow-dim">GRIP 시스템</p>
-    <h2 class="heading heading-w">G·R·I·P 4단계 성장 시스템</h2>
-    <p class="lead lead-w">진단하고, 다시 보고, 자기 것으로 만들고, 학교 시험에서 증명합니다</p>
+    <div class="system-map-head">
+      <p class="eyebrow">매쓰그립 시스템 한눈에 보기</p>
+      <h2 class="system-map-title">매쓰그립은 이렇게<br>아이의 성장을 만듭니다</h2>
+      <p class="system-map-intro">매쓰그립의 네 가지 용어는 서로 다른 프로그램이 아닙니다. 아이의 성장을 <strong>설계하고, 수업으로 실행하고, 변화로 측정하고, 학부모님께 공유하는</strong> 하나의 연결된 시스템입니다.</p>
+    </div>
+    <div class="system-map-grid fade-up" aria-label="매쓰그립 4가지 핵심 시스템 목차">
+      <a class="system-map-card" href="#grip">
+        <span class="system-map-num">01 · GROWTH FRAMEWORK</span>
+        <strong class="system-map-term">GRIP</strong>
+        <span class="system-map-role">성장 설계</span>
+        <span class="system-map-desc">어디서 막혔는지 진단하고, 학교 시험에서 증명할 때까지 계획합니다.</span>
+        <span class="system-map-link">자세히 보기 ↓</span>
+      </a>
+      <a class="system-map-card" href="#twc">
+        <span class="system-map-num">02 · LESSON METHOD</span>
+        <strong class="system-map-term">TWC</strong>
+        <span class="system-map-role">수업 실행</span>
+        <span class="system-map-desc">생각한 것을 손으로 쓰고 확인하며, 배운 내용을 자기 것으로 만듭니다.</span>
+        <span class="system-map-link">자세히 보기 ↓</span>
+      </a>
+      <a class="system-map-card" href="#gpa">
+        <span class="system-map-num">03 · GROWTH MEASURE</span>
+        <strong class="system-map-term">GPA</strong>
+        <span class="system-map-role">성장 측정</span>
+        <span class="system-map-desc">점수뿐 아니라 출결·숙제·태도·평가까지 종합해 변화의 원인을 찾습니다.</span>
+        <span class="system-map-link">자세히 보기 ↓</span>
+      </a>
+      <a class="system-map-card" href="#mygrip">
+        <span class="system-map-num">04 · PARENT REPORT</span>
+        <strong class="system-map-term">MyGrip</strong>
+        <span class="system-map-role">학부모 공유</span>
+        <span class="system-map-desc">오늘의 수업과 변화, 다음 계획을 학부모님께 투명하게 보여드립니다.</span>
+        <span class="system-map-link">자세히 보기 ↓</span>
+      </a>
+    </div>
+    <p class="system-map-loop">GRIP으로 설계하고 → TWC로 실행하고 → GPA로 측정하고 → MyGrip으로 공유합니다.<br><strong>기록된 결과는 다시 다음 진단과 계획으로 연결됩니다.</strong></p>
+  </div>
+</section>
+
+<!-- GRIP 4단계 -->
+<section class="grip-sec" id="grip">
+  <div class="w-inner">
+    <div class="system-chapter system-chapter-dark">
+      <p class="system-chapter-kicker">01 · GROWTH FRAMEWORK</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">GRIP</h2><p class="system-chapter-role">성장 설계</p></div>
+      <p class="system-chapter-summary">어디서 막혔는지 진단하고, 다시 풀고, 자기 것으로 만든 뒤 학교 시험에서 증명할 때까지 연결하는 매쓰그립의 전체 성장 구조입니다.</p>
+    </div>
     <div class="grip-steps fade-up">
       <div class="grip-step">
         <span class="grip-letter">G</span>
@@ -728,13 +813,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <!-- TWC SYSTEM -->
 <section class="twc-sec" id="twc">
   <div class="w-inner">
-    <div class="twc-intro fade-up">
-      <div>
-        <p class="eyebrow-xl">매쓰그립 시그니처</p>
-        <h2 class="heading">TWC 시스템</h2>
-        <p class="lead" style="margin-bottom:24px;">Think → Write → Check<br>수학을 손에 쥐는 3단계 학습법</p>
-        <p class="twc-intro-body">매쓰그립의 모든 수업은 TWC 순서로 진행됩니다. 머릿속에서 그치는 것이 아니라, 손으로 쓰면서 완전한 이해로 완성됩니다. 생각하고, 쓰고, 확인하는 이 과정이 반복될수록 수학 실력은 손에 단단히 잡힙니다.</p>
-      </div>
+    <div class="system-chapter fade-up">
+      <p class="system-chapter-kicker">02 · LESSON METHOD</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">TWC</h2><p class="system-chapter-role">수업 실행</p></div>
+      <p class="system-chapter-summary">Think → Write → Check. 생각한 것을 손으로 쓰고 이해 여부를 확인하며, 배운 내용을 학생의 실력으로 완성하는 매쓰그립의 공통 수업법입니다.</p>
     </div>
     <div class="twc-steps fade-up">
       <div class="twc-card think">
@@ -902,10 +984,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <!-- GPA + MYGRIP -->
 <section class="gpa-sec" id="gpa">
   <div class="w-inner">
-    <div class="gpa-intro">
-      <p class="eyebrow">과정을 기록하고, 필요한 도움을 바로 연결</p>
-      <h2 class="heading">시험 점수만 보지 않고<br>성적을 만드는 과정까지 관리합니다</h2>
-      <p class="lead">GPA는 아이의 학습 습관을 읽는 기준이고, MyGrip은 그 기록과 다음 계획을 학부모님께 투명하게 보여 드리는 창입니다.</p>
+    <div class="system-chapter">
+      <p class="system-chapter-kicker">03 · GROWTH MEASURE</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">GPA</h2><p class="system-chapter-role">성장 측정</p></div>
+      <p class="system-chapter-summary">시험 점수 하나가 아니라 출결·숙제·수업태도·월말평가·DW와 테스트를 함께 보며, 성적 변화의 원인과 필요한 도움을 찾는 그립성취점수입니다.</p>
     </div>
 
     <div class="gpa-grid">
@@ -935,7 +1017,15 @@ footer{background:#111;padding:36px 40px;text-align:center;}
           <div class="gpa-weight"><strong>15%</strong><span>DW·테스트</span></div>
         </div>
       </article>
+    </div>
 
+    <div class="system-chapter mygrip-chapter" id="mygrip">
+      <p class="system-chapter-kicker">04 · PARENT REPORT</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">MyGrip</h2><p class="system-chapter-role">학부모 공유</p></div>
+      <p class="system-chapter-summary">오늘 무엇을 배웠는지, 어디에서 막혔는지, 다음에 무엇을 보완할지 수업 기록과 성장 변화로 학부모님께 투명하게 보여드리는 소통 창구입니다.</p>
+    </div>
+
+    <div class="gpa-grid">
       <article class="gpa-panel">
         <p class="gpa-label">MYGRIP PARENT REPORT</p>
         <h3 class="gpa-title">오늘 무엇을 배우고, 다음에 무엇을 할지 보입니다</h3>
