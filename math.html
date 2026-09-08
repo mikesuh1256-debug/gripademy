@@ -107,6 +107,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .solution-promise{margin-top:28px;background:#1e2a6d;border-radius:14px;padding:20px 24px;text-align:center;color:#fff;font-size:17px;font-weight:800;line-height:1.65;word-break:keep-all;}
 .solution-promise strong{color:#19b1c6;}
 
+/* REAL CLASSROOM */
+.reality-sec{background:#f4f7fb;padding:100px 40px;}
+.reality-head{display:flex;align-items:flex-end;justify-content:space-between;gap:36px;margin-bottom:42px;}
+.reality-head-copy{max-width:700px;}
+.reality-head-note{max-width:340px;font-size:14px;color:#697790;line-height:1.8;font-weight:600;text-align:right;}
+.reality-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
+.reality-card{position:relative;min-width:0;overflow:hidden;border-radius:20px;background:#1e2a6d;box-shadow:0 14px 34px rgba(30,42,109,.12);}
+.reality-card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:transform .35s ease;}
+.reality-card:hover img{transform:scale(1.025);}
+.reality-caption{position:absolute;left:0;right:0;bottom:0;padding:54px 22px 22px;background:linear-gradient(transparent,rgba(10,17,54,.9));color:#fff;}
+.reality-caption strong{display:block;font-size:17px;font-weight:900;line-height:1.45;margin-bottom:4px;}
+.reality-caption span{display:block;font-size:12px;color:rgba(255,255,255,.72);line-height:1.6;font-weight:600;}
+
 /* COMPARE */
 .compare-sec{background:#fff;padding:100px 40px;}
 .compare-grid{display:grid;grid-template-columns:1fr;border-radius:24px;overflow:hidden;border:1px solid #eee;max-width:820px;}
@@ -365,11 +378,14 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
   .hero-btn{justify-content:center;padding:13px 10px;text-align:center;}
-  .story,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.gpa-sec,.manage-sec,.exam-sec,.evidence-sec,.results-sec,.contact-sec{padding:64px 20px;}
+  .story,.reality-sec,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.gpa-sec,.manage-sec,.exam-sec,.evidence-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .problem-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .solution-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .solution-head{align-items:flex-start;flex-direction:column;}
   .solution-summary{text-align:left;}
+  .reality-head{align-items:flex-start;flex-direction:column;}
+  .reality-head-note{text-align:left;}
+  .reality-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .compare-grid{grid-template-columns:1fr;}
   .cmp-bad,.cmp-good{padding:40px 28px;}
   .cmp-item{font-size:16px;}
@@ -400,6 +416,8 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .solution-wrap{padding:30px 20px;}
   .solution-title{font-size:25px;}
   .solution-grid{grid-template-columns:1fr;}
+  .reality-grid{grid-template-columns:1fr;}
+  .reality-card img{aspect-ratio:4/3;}
   .grip-steps{grid-template-columns:1fr;}
   .exam-grid{grid-template-columns:1fr;}
   .gpa-panel{padding:26px 20px;}
@@ -533,6 +551,25 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <article class="solution-card"><p class="solution-num">06</p><h3 class="solution-name">MyGrip 학부모 피드백</h3><p class="solution-desc">수업, 과제, 시험, 보완 과정을 기록해 학부모님이 성장 과정을 직접 확인합니다.</p></article>
       </div>
       <p class="solution-promise">매쓰그립은 문제를 더 많이 풀리는 학원이 아니라,<br><strong>성적이 오르지 않는 원인을 찾아 끝까지 해결하는 학원</strong>입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REAL CLASSROOM -->
+<section class="reality-sec" aria-labelledby="reality-title">
+  <div class="w-inner">
+    <div class="reality-head">
+      <div class="reality-head-copy">
+        <p class="eyebrow">설명보다 먼저 보여드리는 실제 수업</p>
+        <h2 class="heading" id="reality-title">아이의 손이 움직이고,<br>선생님의 확인이 이어집니다</h2>
+      </div>
+      <p class="reality-head-note">연출된 홍보 이미지가 아니라 매쓰그립 교실에서 실제로 진행된 풀이·질문·피드백 장면입니다.</p>
+    </div>
+    <div class="reality-grid fade-up">
+      <figure class="reality-card"><img src="assets/images/math-evidence/classroom-feedback-01.jpg" alt="선생님이 학생의 수학 풀이를 확인하며 피드백하는 실제 수업" loading="lazy"><figcaption class="reality-caption"><strong>풀이를 보며 바로 질문</strong><span>정답보다 생각의 과정을 확인합니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/student-solving.jpg" alt="학생이 수학 문제의 풀이 과정을 손으로 작성하는 모습" loading="lazy"><figcaption class="reality-caption"><strong>혼자 끝까지 써보는 시간</strong><span>배운 개념을 자기 풀이로 완성합니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/teacher-coaching.jpg" alt="선생님이 학생의 수학 문제 풀이를 옆에서 코칭하는 실제 수업" loading="lazy"><figcaption class="reality-caption"><strong>막힌 지점을 짚는 코칭</strong><span>학생마다 필요한 질문과 보완이 다릅니다</span></figcaption></figure>
+      <figure class="reality-card"><img src="assets/images/math-evidence/morning-study.jpg" alt="학생이 교실에서 수학 문제를 집중해 풀고 있는 모습" loading="lazy"><figcaption class="reality-caption"><strong>공부 리듬을 만드는 시간</strong><span>꾸준히 앉아 손으로 푸는 습관을 만듭니다</span></figcaption></figure>
     </div>
   </div>
 </section>
@@ -894,12 +931,12 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <h2 class="heading">매쓰그립 수업의 증거자료</h2>
     <p class="lead">수업 장면, 학생별 학습 기록, 학교별 내신 준비 과정을 상담 전에 먼저 확인하세요.</p>
     <div class="evidence-grid fade-up">
-      <article class="evidence-card"><div class="evidence-body"><p class="evidence-kicker">TWC CLASS</p><h3 class="evidence-title">생각과 풀이 과정 확인</h3><p class="evidence-note">학생이 풀이를 쓰고 설명하면 선생님이 질문으로 사고 과정을 점검합니다.</p></div></article>
+      <article class="evidence-card"><div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-workbook.jpg" alt="학생이 틀린 문제와 풀이 흔적이 남은 수학 실전 모의고사" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">TWC · CHECK</p><h3 class="evidence-title">틀린 문제에서 시작합니다</h3><p class="evidence-note">채점 결과만 보지 않고, 어떤 생각과 계산에서 막혔는지 풀이 흔적을 확인합니다.</p></div></article>
       <article class="evidence-card">
-        <div class="evidence-body"><p class="evidence-kicker">LEARNING RECORD</p><h3 class="evidence-title">오답·풀이 기록 예시</h3><p class="evidence-note">무엇을 틀렸는지만 남기지 않고, 틀린 이유와 다시 풀어낸 과정까지 기록합니다.</p></div>
+        <div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-materials.jpg" alt="학생별 오답을 표시하고 다시 풀이한 여러 권의 수학 교재" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">REVIEW · RETEST</p><h3 class="evidence-title">오답을 다시 풀어 증명합니다</h3><p class="evidence-note">답만 고치는 것이 아니라 다시 풀고, 유사 유형과 재시험으로 같은 실수를 확인합니다.</p></div>
       </article>
       <article class="evidence-card">
-        <div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 4주 준비 구조</h3><p class="evidence-note">기출·범위 분석부터 유형훈련, 전 범위 실전, 오답·직전보강까지 주차별로 연결합니다.</p></div>
+        <div class="evidence-thumb"><img src="assets/images/math-evidence/school-exam-analysis.jpg" alt="학교 교과서와 시험 범위에 맞춰 분석한 수학 내신 대비 자료" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 자료에서 출발합니다</h3><p class="evidence-note">교과서·범위·기출을 분석하고 유형훈련부터 실전, 오답·직전보강까지 연결합니다.</p></div>
       </article>
     </div>
     <a class="evidence-cta" href="/apply?subject=math&amp;source=homepage&amp;program=evidence" target="_blank">우리 아이 수학 진단 상담신청 →</a>
