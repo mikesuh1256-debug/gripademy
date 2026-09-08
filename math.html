@@ -249,6 +249,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .track-photo{position:relative;min-height:100%;overflow:hidden;border-radius:14px;background:#eaf0f8;}
 .track-photo img{display:block;width:100%;height:100%;min-height:360px;object-fit:cover;}
 .track-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 18px 18px;background:linear-gradient(transparent,rgba(10,17,54,.9));color:#fff;font-size:13px;font-weight:800;line-height:1.55;}
+.track-wide-photo{position:relative;margin:0 40px 36px;overflow:hidden;border-radius:14px;background:#eaf0f8;}
+.track-wide-photo img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.track-wide-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:54px 20px 20px;background:linear-gradient(transparent,rgba(10,17,54,.9));color:#fff;font-size:14px;font-weight:800;line-height:1.55;}
 .track-flow{display:flex;flex-direction:column;gap:16px;}
 .track-step{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;background:#f9f9f7;border-radius:12px;border:1px solid #f0f0f0;}
 .track-step-n{width:36px;height:36px;border-radius:50%;background:#1e2a6d;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
@@ -407,6 +410,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .track-grid{grid-template-columns:1fr;}
   .track-body-grid{grid-template-columns:1fr;}
   .track-photo img{height:auto;min-height:0;aspect-ratio:4/3;object-position:center 35%;}
+  .track-wide-photo{margin:0 20px 24px;}
   .track-program-proof{grid-template-columns:1fr;}
   .track-program-proof img{min-height:0;aspect-ratio:16/9;}
   .gpa-grid{grid-template-columns:1fr;}
@@ -818,6 +822,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
             </div>
           </div>
         </div>
+        <figure class="track-wide-photo"><img src="assets/images/math-evidence/dd-class-wide.jpg" alt="여러 학생이 함께 개념 설명을 듣고 각자 문제를 풀고 있는 DD반 그룹수업" loading="lazy"><figcaption>DD반 그룹수업 · 함께 개념을 배우고 각자의 풀이를 완성합니다</figcaption></figure>
       </div>
       <div class="track-card">
         <div class="track-head">
