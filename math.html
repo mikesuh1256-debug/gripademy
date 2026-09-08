@@ -221,6 +221,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .exam-card h3{font-size:20px;color:#1e2a6d;margin-bottom:14px;line-height:1.35;}
 .exam-card p{font-size:14px;color:#667085;line-height:1.8;font-weight:500;}
 .exam-note{margin-top:28px;padding:22px 26px;border-left:4px solid #19b1c6;background:#fff;font-size:15px;color:#44506a;line-height:1.8;font-weight:600;}
+.exam-materials{margin-top:24px;padding:30px;border-radius:18px;background:#1e2a6d;color:#fff;display:grid;grid-template-columns:.82fr 1.18fr;gap:30px;align-items:center;}
+.exam-materials h3{font-size:24px;line-height:1.4;margin-bottom:10px;}
+.exam-materials p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.66);font-weight:600;}
+.exam-material-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.exam-material-item{padding:18px 14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.06);}
+.exam-material-item b{display:block;font-size:14px;color:#19b1c6;margin-bottom:7px;}
+.exam-material-item span{font-size:12px;line-height:1.55;color:rgba(255,255,255,.74);font-weight:700;}
 
 /* EVIDENCE */
 .evidence-sec{background:#fff;padding:100px 40px;}
@@ -235,6 +242,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .evidence-note{font-size:14px;line-height:1.75;color:#667085;font-weight:500;}
 .evidence-cta{display:inline-flex;margin-top:28px;padding:14px 24px;border-radius:10px;background:#1e2a6d;color:#fff;text-decoration:none;font-size:14px;font-weight:800;}
 .evidence-cta:hover{background:#19b1c6;}
+
+/* PRESENTATION + AWARDS */
+.award-sec{background:#1e2a6d;padding:100px 40px;color:#fff;}
+.award-layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:46px;align-items:center;}
+.award-photo{margin:0;overflow:hidden;border-radius:22px;background:#fff;box-shadow:0 24px 58px rgba(4,9,35,.3);}
+.award-photo img{display:block;width:100%;height:auto;}
+.award-copy .heading{color:#fff;}
+.award-copy .lead{color:rgba(255,255,255,.67);}
+.award-count{margin:25px 0 22px;padding:22px 24px;border-left:4px solid #19b1c6;background:rgba(255,255,255,.07);font-size:18px;line-height:1.65;font-weight:900;}
+.award-count strong{color:#19b1c6;}
+.award-tags{display:flex;flex-wrap:wrap;gap:9px;}
+.award-tag{padding:10px 13px;border:1px solid rgba(255,255,255,.16);border-radius:999px;color:rgba(255,255,255,.82);font-size:12px;font-weight:800;}
+.presentation-block{margin-top:70px;padding-top:56px;border-top:1px solid rgba(255,255,255,.14);}
+.presentation-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:end;margin-bottom:28px;}
+.presentation-head h3{font-size:31px;line-height:1.35;letter-spacing:-.8px;}
+.presentation-head p{font-size:15px;line-height:1.85;color:rgba(255,255,255,.67);font-weight:600;}
+.presentation-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+.presentation-shot{margin:0;overflow:hidden;border-radius:18px;background:#101846;}
+.presentation-shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
+.presentation-shot figcaption{padding:17px 20px;font-size:13px;line-height:1.65;color:rgba(255,255,255,.74);font-weight:700;}
 
 /* TRACK */
 .track-sec{background:#f9f9f7;padding:100px 40px;}
@@ -391,7 +418,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
   .hero-btn{justify-content:center;padding:13px 10px;text-align:center;}
-  .story,.reality-sec,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.gpa-sec,.manage-sec,.exam-sec,.evidence-sec,.results-sec,.contact-sec{padding:64px 20px;}
+  .story,.reality-sec,.compare-sec,.brain-sec,.grip-sec,.twc-sec,.track-sec,.gpa-sec,.manage-sec,.exam-sec,.evidence-sec,.award-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .problem-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .solution-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .solution-head{align-items:flex-start;flex-direction:column;}
@@ -420,7 +447,9 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .mygrip-gallery-head p{text-align:left;}
   .manage-grid{grid-template-columns:1fr;}
   .exam-grid{grid-template-columns:1fr 1fr;}
+  .exam-materials{grid-template-columns:1fr;}
   .evidence-grid{grid-template-columns:1fr;}
+  .award-layout,.presentation-head{grid-template-columns:1fr;}
   .results-grid{grid-template-columns:1fr;}
   .heading{font-size:32px;}
   .contact-box{padding:36px 20px;}
@@ -439,6 +468,9 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .reality-card img{aspect-ratio:4/3;}
   .grip-steps{grid-template-columns:1fr;}
   .exam-grid{grid-template-columns:1fr;}
+  .exam-materials{padding:24px 20px;}
+  .exam-material-list,.presentation-gallery{grid-template-columns:1fr;}
+  .award-count{font-size:16px;}
   .gpa-panel{padding:26px 20px;}
   .gpa-title{font-size:23px;}
   .gpa-weights{grid-template-columns:repeat(2,1fr);}
@@ -958,6 +990,17 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       <article class="exam-card"><p class="exam-week">WEEK 4 · D-7</p><h3>오답·직전보강</h3><p>개인별 반복 오답을 다시 풀고, 부족한 단원은 시험 직전 보강과 재시험으로 마무리합니다.</p></article>
     </div>
     <p class="exam-note">비시험 기간에는 선행과 현행, 수행평가를 관리하고 시험 4주 전부터 학교별 내신 집중 모드로 전환합니다. 결과는 MyGrip 리포트와 다음 학습 계획에 반영합니다.</p>
+    <div class="exam-materials fade-up">
+      <div>
+        <h3>학교별 내신자료도<br>한 장으로 끝나지 않습니다</h3>
+        <p>학교가 실제로 가르친 범위와 출제 방식을 분석한 뒤, 준비 단계마다 필요한 자료를 다시 구성합니다.</p>
+      </div>
+      <div class="exam-material-list">
+        <div class="exam-material-item"><b>① 분석자료</b><span>교과서·프린트·기출에서 출제 포인트 추출</span></div>
+        <div class="exam-material-item"><b>② 훈련자료</b><span>학교별 대표유형·서술형·취약단원 반복</span></div>
+        <div class="exam-material-item"><b>③ 직전자료</b><span>전 범위 실전지·개인 오답·재시험으로 완성</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -965,7 +1008,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="evidence-sec" id="evidence">
   <div class="w-inner">
     <p class="eyebrow">말이 아니라 기록으로 확인</p>
-    <h2 class="heading">매쓰그립 수업의 증거자료</h2>
+    <h2 class="heading">오답·풀이·학교별 내신자료까지</h2>
     <p class="lead">수업 장면, 학생별 학습 기록, 학교별 내신 준비 과정을 상담 전에 먼저 확인하세요.</p>
     <div class="evidence-grid fade-up">
       <article class="evidence-card"><div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-workbook.jpg" alt="학생이 틀린 문제와 풀이 흔적이 남은 수학 실전 모의고사" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">TWC · CHECK</p><h3 class="evidence-title">틀린 문제에서 시작합니다</h3><p class="evidence-note">채점 결과만 보지 않고, 어떤 생각과 계산에서 막혔는지 풀이 흔적을 확인합니다.</p></div></article>
@@ -973,10 +1016,38 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-materials.jpg" alt="학생별 오답을 표시하고 다시 풀이한 여러 권의 수학 교재" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">REVIEW · RETEST</p><h3 class="evidence-title">오답을 다시 풀어 증명합니다</h3><p class="evidence-note">답만 고치는 것이 아니라 다시 풀고, 유사 유형과 재시험으로 같은 실수를 확인합니다.</p></div>
       </article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/math-evidence/school-exam-analysis.jpg" alt="학교 교과서와 시험 범위에 맞춰 분석한 수학 내신 대비 자료" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 자료에서 출발합니다</h3><p class="evidence-note">교과서·범위·기출을 분석하고 유형훈련부터 실전, 오답·직전보강까지 연결합니다.</p></div>
+        <div class="evidence-thumb"><img src="assets/images/math-evidence/school-exam-analysis.jpg" alt="학교 교과서와 시험 범위에 맞춰 분석한 수학 내신 대비 자료" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 기출·직전대비 자료</h3><p class="evidence-note">교과서·프린트·범위·기출을 분석하고, 학교별 유형훈련부터 실전지와 개인 오답 직전보강까지 연결합니다.</p></div>
       </article>
     </div>
     <a class="evidence-cta" href="/apply?subject=math&amp;source=homepage&amp;program=evidence" target="_blank">우리 아이 수학 진단 상담신청 →</a>
+  </div>
+</section>
+
+<!-- PRESENTATION + AWARDS -->
+<section class="award-sec" id="awards">
+  <div class="w-inner">
+    <div class="award-layout fade-up">
+      <figure class="award-photo"><img src="assets/images/math-evidence/award-students-blurred.jpg" alt="매쓰그립 월말평가와 학습 경진대회 시상 학생들" loading="lazy"></figure>
+      <div class="award-copy">
+        <p class="eyebrow">성취를 발견하고 과정까지 시상</p>
+        <h2 class="heading">잘한 결과뿐 아니라<br>좋은 공부 습관도 인정합니다</h2>
+        <p class="lead">점수만 칭찬하면 점수만 남습니다. 매쓰그립은 설명하는 힘, 오답을 고치는 태도, 풀이를 정리하는 습관까지 발견하고 공개적으로 인정합니다.</p>
+        <p class="award-count">월말평가와 네 가지 학습 경진대회를 통해<br><strong>매년 수백 명의 학생이 시상</strong>받습니다.</p>
+        <div class="award-tags">
+          <span class="award-tag">월말평가</span><span class="award-tag">수학발표대회</span><span class="award-tag">오답노트 경진대회</span><span class="award-tag">풀이노트 경진대회</span><span class="award-tag">바인더 경진대회</span>
+        </div>
+      </div>
+    </div>
+    <div class="presentation-block fade-up">
+      <div class="presentation-head">
+        <h3>풀이를 말로 설명할 때,<br>배운 수학이 자기 것이 됩니다</h3>
+        <p>수학발표대회에서는 답을 맞히는 데서 멈추지 않고 조건을 읽은 방법, 식을 세운 이유, 계산 과정을 학생이 직접 설명합니다. 선생님이 아는 수학이 아니라 학생이 설명할 수 있는 수학으로 바꾸는 과정입니다.</p>
+      </div>
+      <div class="presentation-gallery">
+        <figure class="presentation-shot"><img src="assets/images/math-evidence/math-presentation-01.jpg" alt="학생이 직사각형 문제의 풀이 과정을 발표하는 수학발표대회" loading="lazy"><figcaption>조건을 그림과 식으로 바꾸고, 풀이 순서를 직접 설명합니다.</figcaption></figure>
+        <figure class="presentation-shot"><img src="assets/images/math-evidence/math-presentation-02.jpg" alt="학생이 비율 문제 풀이를 발표하는 수학발표대회" loading="lazy"><figcaption>친구 앞에서 설명하며 자신감과 논리적인 표현력을 함께 기릅니다.</figcaption></figure>
+      </div>
+    </div>
   </div>
 </section>
 
