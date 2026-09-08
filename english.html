@@ -150,7 +150,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .system-map{background:#fff;padding:110px 40px;border-top:1px solid #edf2ee;border-bottom:1px solid #dfe8e2;}
 .system-map-intro{max-width:860px;margin-bottom:52px;}
 .system-map-note{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 16px;border-radius:999px;background:#fff3ec;color:#c84f0d;font-size:14px;font-weight:800;}
-.system-map-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.system-map-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
 .system-map-card{position:relative;display:block;min-height:300px;padding:30px 26px;border:1px solid #dfe8e2;border-radius:20px;background:#f7faf8;text-decoration:none;transition:transform .2s,border-color .2s,box-shadow .2s;}
 .system-map-card:hover{transform:translateY(-5px);border-color:#ec6619;box-shadow:0 16px 36px rgba(0,57,30,.09);}
 .system-map-num{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#ec6619;letter-spacing:1.5px;margin-bottom:28px;}
@@ -237,6 +237,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .blank-result{margin-top:20px;background:rgba(236,102,25,0.12);border:1px solid rgba(236,102,25,0.3);border-radius:12px;padding:20px;text-align:center;font-size:13px;color:#ec6619;font-weight:800;}
 .blank-heading{font-size:28px;font-weight:900;color:#fff;line-height:1.3;margin-bottom:20px;}
 .blank-body{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.9;font-weight:500;margin-bottom:20px;}
+.blank-evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:44px;}
+.blank-evidence-card{overflow:hidden;border-radius:18px;background:#fff;border:1px solid rgba(255,255,255,.15);}
+.blank-evidence-card.wide{grid-column:1/-1;}
+.blank-evidence-photo{aspect-ratio:4/3;overflow:hidden;background:#eef3ef;}
+.blank-evidence-card.wide .blank-evidence-photo{aspect-ratio:16/8.6;}
+.blank-evidence-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.blank-evidence-caption{padding:20px 22px 22px;}
+.blank-evidence-caption strong{display:block;font-size:17px;color:#00391e;margin-bottom:6px;}
+.blank-evidence-caption span{font-size:13px;line-height:1.7;color:#667085;font-weight:600;}
 
 /* PROGRAMS */
 .exam-sec{background:#f6f8f6;padding:100px 40px;}
@@ -386,7 +395,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-video-heading{min-width:0;overflow:hidden;}
   .hero-video-heading strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .hero-copy-bottom{width:100%;}
-  .hero-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;width:100%;}
+  .hero-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%;}
   .hero-metric-num{font-size:28px;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
@@ -433,6 +442,9 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .system-map-card{min-height:250px;}
   .system-map-card .system-map-arrow{display:flex !important;right:50%;top:auto;bottom:-13px;transform:translateX(50%) rotate(90deg);}
   .system-map-card:last-child .system-map-arrow{display:none !important;}
+  .blank-evidence-grid{grid-template-columns:1fr;}
+  .blank-evidence-card.wide{grid-column:auto;}
+  .blank-evidence-card.wide .blank-evidence-photo{aspect-ratio:4/3;}
   .system-chapter{display:block;}
   .system-chapter-index{padding-top:0;margin-bottom:12px;}
   .system-chapter-term{font-size:48px;letter-spacing:-2px;}
@@ -450,7 +462,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .hero-video-foot{align-items:flex-start;flex-direction:column;padding:10px 4px 3px;gap:10px;}
   .hero-video-apply{width:100%;text-align:center;}
   .hero-metrics{gap:24px;}
-  .hero-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}
   .hero-metric-num{font-size:32px;}
 }
 </style>
@@ -463,7 +474,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <img src="assets/images/logo/eng-logo-wordmark.png" alt="잉그립" style="height:32px;width:auto;object-fit:contain;display:block;">
   </a>
   <div class="nav-menu">
-    <a href="#system-map">4가지 시스템</a>
+    <a href="#system-map">3가지 시스템</a>
     <a href="#grip">GRIP</a>
     <a href="#mba">MBA</a>
     <a href="#mygrip">MyGrip</a>
@@ -522,10 +533,6 @@ footer{background:#111;padding:36px 40px;text-align:center;}
             <div class="hero-metric-label">일정 레벨 이상 심화</div>
           </div>
           <div class="hero-metric">
-            <div class="hero-metric-num">백지</div>
-            <div class="hero-metric-label">문장을 스스로 재현</div>
-          </div>
-          <div class="hero-metric">
             <div class="hero-metric-num">MyGrip</div>
             <div class="hero-metric-label">학습 기록·다음 계획 공유</div>
           </div>
@@ -565,7 +572,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
     <div class="story-layout fade-up">
       <div>
         <p class="eyebrow eyebrow-dim">성장을 바꾸는 원리</p>
-        <h2 class="story-q">왜 영어학원을 다녀도<br><em>말 한마디 못하는 걸까?</em></h2>
+        <h2 class="story-q">왜 영어학원을 몇 년 다녀도<br><em>쓰기를 정확히 못하는 것일까?</em></h2>
         <p class="story-body">읽고 이해한 영어도 시험장에서 직접 쓰지 못하면 내 것이 아닙니다. 배운 문장을 반복해 쓰고, 보지 않고 재현하고, 실제 문제에 적용할 때 비로소 <strong style="color:#ec6619;">꺼내 쓸 수 있는 영어</strong>가 됩니다.</p>
         <div class="story-hl">
           "모든 학생이 영어를 손안에 쥐게 한다"<br>
@@ -666,9 +673,9 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   <div class="w-inner">
     <div class="system-map-intro fade-up">
       <p class="eyebrow">학부모님이 먼저 보실 잉그립 학습 지도</p>
-      <h2 class="heading">네 가지 용어는 서로 다른 프로그램이 아니라<br>한 아이의 성장을 잇는 하나의 흐름입니다</h2>
-      <p class="lead" style="margin-bottom:0;">모든 학생은 GRIP에 따라 현재 수준을 진단하고 기본기를 쌓습니다. 기초가 충분한 일정 레벨 이상 학생은 MBA와 백지테스트로 배운 영어를 자기화하고, 모든 과정과 다음 계획은 MyGrip으로 학부모님께 공유합니다.</p>
-      <p class="system-map-note">● MBA·백지테스트는 일정 레벨 이상 학생에게 적용합니다</p>
+      <h2 class="heading">세 가지 큰 개념이<br>한 아이의 성장을 하나로 연결합니다</h2>
+      <p class="lead" style="margin-bottom:0;">모든 학생은 GRIP에 따라 현재 수준을 진단하고 기본기를 쌓습니다. 기초가 충분한 일정 레벨 이상 학생은 MBA로 배운 영어를 자기화하고, 모든 과정과 다음 계획은 MyGrip으로 학부모님께 공유합니다.</p>
+      <p class="system-map-note">● MBA는 Memorize → Blank Test → Apply로 이루어진 심화 과정입니다</p>
     </div>
     <div class="system-map-grid fade-up">
       <a class="system-map-card" href="#grip">
@@ -682,18 +689,11 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <p class="system-map-num">02 · ADVANCED ROUTINE</p>
         <h3 class="system-map-term">MBA</h3>
         <p class="system-map-title">심화 자기화</p>
-        <p class="system-map-desc">Memorize·Blank Test·Apply로 이해한 문장을 꺼내 쓸 수 있는 영어로 바꿉니다.</p>
+        <p class="system-map-desc">Memorize → Blank Test → Apply로 이해한 문장을 꺼내 쓸 수 있는 영어로 바꿉니다.</p>
         <span class="system-map-scope">일정 레벨 이상</span><span class="system-map-arrow">→</span>
       </a>
-      <a class="system-map-card" href="#blank">
-        <p class="system-map-num">03 · LEARNING PROOF</p>
-        <h3 class="system-map-term">Blank Test</h3>
-        <p class="system-map-title">학습 증명</p>
-        <p class="system-map-desc">교재를 덮고 백지에서 배운 내용을 직접 재현해 진짜 이해와 기억을 확인합니다.</p>
-        <span class="system-map-scope">MBA 핵심 단계</span><span class="system-map-arrow">→</span>
-      </a>
       <a class="system-map-card" href="#mygrip">
-        <p class="system-map-num">04 · PARENT REPORT</p>
+        <p class="system-map-num">03 · PARENT REPORT</p>
         <h3 class="system-map-term">MyGrip</h3>
         <p class="system-map-title">학부모 공유</p>
         <p class="system-map-desc">수업·재시험·백지테스트·다음 계획을 하나의 기록으로 연결해 공유합니다.</p>
@@ -834,7 +834,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="blank-sec" id="blank">
   <div class="w-inner">
     <div class="system-chapter dark">
-      <p class="system-chapter-index">03 · LEARNING PROOF</p>
+      <p class="system-chapter-index">MBA · CORE STEP</p>
       <div><h2 class="system-chapter-term">Blank Test</h2><p class="system-chapter-title">배운 영어를 백지에서 증명</p></div>
     </div>
     <div class="blank-layout fade-up">
@@ -866,6 +866,20 @@ footer{background:#111;padding:36px 40px;text-align:center;}
         <p class="blank-body">일정 레벨 이상 학생의 심화 수업은 백지테스트로 학습 결과를 확인합니다. 배운 문장을 아무 도움 없이 백지에 쓸 수 있어야 진짜 내 것입니다. 완성되지 않은 부분은 다시 보완하고 재도전합니다.</p>
         <p class="blank-body">"할 수 있다"고 느끼는 것이 아니라, "썼다"로 증명하는 것. 그것이 잉그립의 방식입니다.</p>
       </div>
+    </div>
+    <div class="blank-evidence-grid fade-up">
+      <article class="blank-evidence-card">
+        <div class="blank-evidence-photo"><img src="assets/images/english-evidence/blank-test-adjective-comparison.jpg" alt="형용사 모범답안과 학생 백지테스트 답안 비교" loading="lazy"></div>
+        <div class="blank-evidence-caption"><strong>형용사 · 모범답안과 학생답안</strong><span>정리된 개념을 그대로 다시 써 보고, 빠진 부분과 잘못 이해한 부분을 표시합니다.</span></div>
+      </article>
+      <article class="blank-evidence-card">
+        <div class="blank-evidence-photo"><img src="assets/images/english-evidence/blank-test-adverb-comparison.jpg" alt="부사 모범답안과 학생 백지테스트 답안 비교" loading="lazy"></div>
+        <div class="blank-evidence-caption"><strong>부사 · 모범답안과 학생답안</strong><span>개념·형태·위치·영작까지 학생이 직접 재현하고 선생님이 구체적으로 교정합니다.</span></div>
+      </article>
+      <article class="blank-evidence-card wide">
+        <div class="blank-evidence-photo"><img src="assets/images/english-evidence/blank-test-to-problem.jpg" alt="백지테스트 개념을 실제 영어 문제풀이에 적용한 사례" loading="lazy"></div>
+        <div class="blank-evidence-caption"><strong>백지테스트에서 실제 문제풀이까지</strong><span>백지로 정리한 문법 개념이 시험 문제를 해석하고 정답을 판단하는 근거로 이어집니다.</span></div>
+      </article>
     </div>
   </div>
 </section>
@@ -1002,7 +1016,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
 <section class="feedback-sec" id="mygrip">
   <div class="w-inner">
     <div class="system-chapter">
-      <p class="system-chapter-index">04 · PARENT REPORT</p>
+      <p class="system-chapter-index">03 · PARENT REPORT</p>
       <div><h2 class="system-chapter-term">MyGrip</h2><p class="system-chapter-title">모든 학생의 학습 기록을 학부모님과 공유</p></div>
     </div>
     <p class="eyebrow">학부모 피드백</p>
