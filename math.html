@@ -271,6 +271,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .presentation-head{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:end;margin-bottom:28px;}
 .presentation-head h3{font-size:31px;line-height:1.35;letter-spacing:-.8px;}
 .presentation-head p{font-size:15px;line-height:1.85;color:rgba(255,255,255,.67);font-weight:600;}
+.presentation-video-wrap{max-width:960px;margin:0 auto 24px;border-radius:18px;overflow:hidden;background:#0b102f;box-shadow:0 18px 46px rgba(0,0,0,.28);}
+.presentation-video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#0b102f;}
+.presentation-video-caption{padding:15px 20px;font-size:13px;line-height:1.65;color:rgba(255,255,255,.78);font-weight:700;}
 .presentation-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
 .presentation-shot{margin:0;overflow:hidden;border-radius:18px;background:#101846;}
 .presentation-shot img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;}
@@ -1093,6 +1096,12 @@ footer{background:#111;padding:48px 40px;text-align:left;}
         <h3>풀이를 말로 설명할 때,<br>배운 수학이 자기 것이 됩니다</h3>
         <p>수학발표대회에서는 답을 맞히는 데서 멈추지 않고 조건을 읽은 방법, 식을 세운 이유, 계산 과정을 학생이 직접 설명합니다. 선생님이 아는 수학이 아니라 학생이 설명할 수 있는 수학으로 바꾸는 과정입니다.</p>
       </div>
+      <figure class="presentation-video-wrap">
+        <video class="presentation-video" controls playsinline preload="metadata" poster="assets/video/math-events/math-presentation-highlights-2026-poster.jpg" aria-label="학생 다섯 명의 수학발표대회 하이라이트 영상">
+          <source src="assets/video/math-events/math-presentation-highlights-2026.mp4" type="video/mp4">
+        </video>
+        <figcaption class="presentation-video-caption">다섯 학생이 풀이의 조건과 계산 과정을 직접 설명하는 약 30초 하이라이트입니다. 학생 얼굴은 보호 처리했습니다.</figcaption>
+      </figure>
       <div class="presentation-gallery">
         <figure class="presentation-shot"><img src="assets/images/math-evidence/math-presentation-01.jpg" alt="학생이 직사각형 문제의 풀이 과정을 발표하는 수학발표대회" loading="lazy"><figcaption>조건을 그림과 식으로 바꾸고, 풀이 순서를 직접 설명합니다.</figcaption></figure>
         <figure class="presentation-shot"><img src="assets/images/math-evidence/math-presentation-02.jpg" alt="학생이 비율 문제 풀이를 발표하는 수학발표대회" loading="lazy"><figcaption>친구 앞에서 설명하며 자신감과 논리적인 표현력을 함께 기릅니다.</figcaption></figure>
