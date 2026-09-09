@@ -136,6 +136,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .system-map{background:#fff;padding:110px 40px;border-top:1px solid #edf2ee;border-bottom:1px solid #dfe8e2;}
 .system-map-intro{max-width:860px;margin-bottom:52px;}
 .system-map-note{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 16px;border-radius:999px;background:#fff3ec;color:#c84f0d;font-size:14px;font-weight:800;}
+.learning-tower{max-width:930px;margin:0 auto 54px;padding:36px 34px 30px;border-radius:28px;background:#f3f7f4;border:1px solid #dfe8e2;box-shadow:0 18px 46px rgba(0,57,30,.08);}
+.learning-tower-label{text-align:center;margin-bottom:24px;font-size:13px;font-weight:900;letter-spacing:1.4px;color:#ec6619;}
+.learning-tower-stage{margin:0 auto 10px;padding:20px 28px;text-align:center;color:#fff;box-shadow:0 10px 22px rgba(0,57,30,.1);}
+.learning-tower-stage:last-child{margin-bottom:0;}
+.learning-tower-stage strong{display:block;font-family:'Montserrat',sans-serif;font-size:clamp(28px,3.4vw,42px);font-weight:900;line-height:1;margin-bottom:8px;}
+.learning-tower-stage span{display:block;font-size:15px;line-height:1.5;font-weight:750;}
+.learning-tower-top{width:48%;border-radius:24px 24px 10px 10px;background:#ec6619;}
+.learning-tower-middle{width:70%;background:#176847;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);}
+.learning-tower-base{width:94%;border-radius:10px 10px 24px 24px;background:#00391e;clip-path:polygon(7% 0,93% 0,100% 100%,0 100%);}
+.learning-tower-flow{text-align:center;margin-top:18px;font-size:13px;font-weight:800;color:#667085;}
 .system-map-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
 .system-map-card{position:relative;display:block;min-height:300px;padding:30px 26px;border:1px solid #dfe8e2;border-radius:20px;background:#f7faf8;text-decoration:none;transition:transform .2s,border-color .2s,box-shadow .2s;}
 .system-map-card:hover{transform:translateY(-5px);border-color:#ec6619;box-shadow:0 16px 36px rgba(0,57,30,.09);}
@@ -309,6 +319,21 @@ body.lightbox-open{overflow:hidden;}
 .classroom-body h3{font-size:18px;color:#00391e;margin-bottom:7px;}
 .classroom-body p{font-size:13px;line-height:1.7;color:#667085;font-weight:600;}
 
+/* ELEMENTARY EVENTS */
+.elementary-events-sec{background:#fff;padding:100px 40px;border-top:1px solid #edf2ee;}
+.event-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:48px;}
+.event-card{overflow:hidden;border:1px solid #dfe8e2;border-radius:24px;background:#f7faf8;box-shadow:0 14px 34px rgba(0,57,30,.07);}
+.event-head{padding:28px 30px 24px;}
+.event-label{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:900;letter-spacing:1.4px;color:#ec6619;margin-bottom:8px;}
+.event-title{font-size:25px;font-weight:900;color:#00391e;margin-bottom:8px;}
+.event-desc{font-size:14px;line-height:1.75;color:#667085;font-weight:600;}
+.event-photos{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:0 4px 4px;}
+.event-photo{aspect-ratio:4/3;overflow:hidden;background:#eaf0ec;}
+.event-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.event-card-speaking .event-photo img{object-position:center center;}
+.event-card-voca .event-photo:first-child img{object-position:center center;}
+.event-card-voca .event-photo:last-child img{object-position:center 42%;}
+
 .programs-sec{background:#f9f9f7;padding:100px 40px;}
 .program-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:56px;}
 .program-card{background:#fff;border-radius:20px;overflow:hidden;border:1px solid #eee;}
@@ -465,7 +490,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .hero-metric-label{font-size:11px;line-height:1.5;}
   .hero-ctas{display:grid;grid-template-columns:1fr 1fr;width:100%;}
   .hero-btn{justify-content:center;padding:13px 10px;text-align:center;}
-  .director-sec,.story,.compare-sec,.system-map,.grip-sec,.mba-sec,.mba-class-sec,.imprint-sec,.blank-sec,.exam-sec,.evidence-sec,.classroom-sec,.programs-sec,.feedback-sec,.results-sec,.contact-sec{padding:64px 20px;}
+  .director-sec,.story,.compare-sec,.system-map,.grip-sec,.mba-sec,.mba-class-sec,.imprint-sec,.blank-sec,.exam-sec,.evidence-sec,.classroom-sec,.elementary-events-sec,.programs-sec,.feedback-sec,.results-sec,.contact-sec{padding:64px 20px;}
   .director-layout{grid-template-columns:170px 1fr;gap:32px;}
   .director-photo{width:170px;}
   .director-profile{grid-template-columns:1fr;}
@@ -491,6 +516,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .evidence-grid{grid-template-columns:1fr;}
   .classroom-grid{grid-template-columns:1fr;}
   .classroom-extra-grid{grid-template-columns:1fr;}
+  .event-grid{grid-template-columns:1fr;}
   .exam-proof{grid-template-columns:1fr;}
   .exam-proof-img{min-height:0;aspect-ratio:16/10;}
   .results-grid{grid-template-columns:1fr;}
@@ -511,6 +537,12 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .mygrip-points{grid-template-columns:1fr;}
   .mygrip-gallery{grid-template-columns:1fr;}
   .system-map-grid{grid-template-columns:1fr;}
+  .learning-tower{padding:26px 14px 22px;}
+  .learning-tower-top{width:72%;}
+  .learning-tower-middle{width:86%;}
+  .learning-tower-base{width:100%;}
+  .learning-tower-stage{padding:18px 14px;}
+  .learning-tower-stage span{font-size:13px;}
   .system-map-card{min-height:250px;}
   .system-map-card .system-map-arrow{display:flex !important;right:50%;top:auto;bottom:-13px;transform:translateX(50%) rotate(90deg);}
   .system-map-card:last-child .system-map-arrow{display:none !important;}
@@ -785,6 +817,22 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       <p class="lead" style="margin-bottom:0;">모든 학생은 GRIP에 따라 현재 수준을 진단하고 기본기를 쌓습니다. 기초가 충분한 일정 레벨 이상 학생은 MBA로 배운 영어를 자기화하고, 모든 과정과 다음 계획은 MyGrip으로 학부모님께 공유합니다.</p>
       <p class="system-map-note">● MBA는 Memorize → Blank Test → Apply로 이루어진 심화 과정입니다</p>
     </div>
+    <div class="learning-tower fade-up" aria-label="GRIP에서 MBA를 거쳐 MyGrip으로 연결되는 잉그립 학습 구조">
+      <p class="learning-tower-label">아래에서 위로 쌓이는 잉그립 학습 구조</p>
+      <div class="learning-tower-stage learning-tower-top">
+        <strong>MyGrip</strong>
+        <span>학습 기록과 다음 계획을 학부모님께 공유</span>
+      </div>
+      <div class="learning-tower-stage learning-tower-middle">
+        <strong>MBA</strong>
+        <span>외우고 백지테스트로 확인하는 심화 자기화</span>
+      </div>
+      <div class="learning-tower-stage learning-tower-base">
+        <strong>GRIP</strong>
+        <span>진단 · 복습 · 자기화 · 증명으로 만드는 성장 기반</span>
+      </div>
+      <p class="learning-tower-flow">GRIP으로 기초를 세우고 → MBA로 깊이를 더하고 → MyGrip으로 성장을 확인합니다</p>
+    </div>
     <div class="system-map-grid fade-up">
       <a class="system-map-card" href="#grip">
         <p class="system-map-num">01 · GROWTH FRAMEWORK</p>
@@ -996,6 +1044,39 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   </div>
 </section>
 
+<!-- ELEMENTARY REGULAR EVENTS -->
+<section class="elementary-events-sec" id="elementary-events">
+  <div class="w-inner">
+    <p class="eyebrow">초등부 정규 프로그램</p>
+    <h2 class="heading">배운 문장과 어휘를<br>직접 꺼내 증명합니다</h2>
+    <p class="lead">문장 말하기와 누적 어휘 점검을 정규 프로그램 안에서 반복해, 아는 영어가 실제로 꺼내 쓰는 영어가 되도록 합니다.</p>
+    <div class="event-grid fade-up">
+      <article class="event-card event-card-speaking">
+        <div class="event-head">
+          <p class="event-label">SENTENCE SPEAKING</p>
+          <h3 class="event-title">영어 문장 말하기대회</h3>
+          <p class="event-desc">수업에서 익힌 문장을 학생이 직접 구성하고 발표하며 표현력과 자신감을 함께 기릅니다.</p>
+        </div>
+        <div class="event-photos">
+          <div class="event-photo"><img src="assets/images/english-events/sentence-speaking-01.png" alt="잉그립 영어 문장 말하기대회에서 발표하는 학생" loading="lazy"></div>
+          <div class="event-photo"><img src="assets/images/english-events/sentence-speaking-02.png" alt="잉그립 영어 문장 말하기대회 발표 장면" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="event-card event-card-voca">
+        <div class="event-head">
+          <p class="event-label">VOCA KING</p>
+          <h3 class="event-title">보카킹</h3>
+          <p class="event-desc">누적해서 익힌 어휘를 정기적으로 점검하고, 정확히 쓰지 못한 단어는 다시 학습해 빈틈을 채웁니다.</p>
+        </div>
+        <div class="event-photos">
+          <div class="event-photo"><img src="assets/images/english-events/voca-king-01.jpg" alt="잉그립 보카킹 어휘 시험을 치르는 학생들" loading="lazy"></div>
+          <div class="event-photo"><img src="assets/images/english-events/voca-king-02.jpg" alt="보카킹 어휘 시험 답안을 작성하는 학생들" loading="lazy"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- PROGRAMS -->
 <section class="programs-sec" id="programs">
   <div class="w-inner">
@@ -1020,7 +1101,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
           <p class="program-level-note">입학 진단 후 현재 실력에 맞는 단계부터 시작하며, MBA는 준비도가 확인된 일정 레벨 이상 학생에게 적용합니다.</p>
           <div class="program-items">
             <div class="program-item">레벨별 어휘·문법·독해·쓰기 정규수업</div>
-            <div class="program-item">문장발표대회 — 배운 문장을 말로 표현</div>
+            <div class="program-item">영어 문장 말하기대회 — 배운 문장을 말로 표현</div>
             <div class="program-item">보카킹 — 누적 어휘를 즐겁게 점검</div>
             <div class="program-item">영어 독서 및 문장 쓰기 습관 형성</div>
           </div>
