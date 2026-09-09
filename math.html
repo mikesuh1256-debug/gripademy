@@ -270,6 +270,34 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .evidence-cta{display:inline-flex;margin-top:28px;padding:14px 24px;border-radius:10px;background:#1e2a6d;color:#fff;text-decoration:none;font-size:14px;font-weight:800;}
 .evidence-cta:hover{background:#19b1c6;}
 
+/* MOBILE NOTE PAGES + PHOTO LIGHTBOX */
+.note-page-single{position:relative;}
+.note-page-single::after{content:'눌러서 크게 보기';position:absolute;right:10px;bottom:10px;padding:7px 10px;border-radius:999px;background:rgba(30,42,109,.92);color:#fff;font-size:11px;font-weight:800;pointer-events:none;box-shadow:0 3px 12px rgba(0,0,0,.18);}
+.zoomable-photo{cursor:zoom-in;}
+.zoomable-photo:focus-visible{outline:4px solid #19b1c6;outline-offset:4px;}
+.photo-lightbox{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:28px;background:rgba(4,9,35,.94);opacity:0;overflow:auto;transition:opacity .2s ease;}
+.photo-lightbox[hidden]{display:none;}
+.photo-lightbox.is-open{opacity:1;}
+.photo-lightbox-dialog{position:relative;display:flex;flex-direction:column;align-items:center;max-width:96vw;max-height:94vh;}
+.photo-lightbox-frame{position:relative;display:flex;align-items:center;justify-content:center;max-width:94vw;max-height:86vh;overflow:hidden;cursor:zoom-in;}
+.photo-lightbox-img{display:block;max-width:94vw;max-height:86vh;width:auto;height:auto;object-fit:contain;border-radius:12px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.45);}
+.photo-lightbox-caption{margin-top:12px;color:#fff;font-size:15px;font-weight:700;text-align:center;line-height:1.5;}
+.photo-lightbox-close{position:absolute;top:-18px;right:-18px;width:46px;height:46px;border:2px solid rgba(255,255,255,.85);border-radius:50%;background:#111;color:#fff;font-size:25px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);}
+.photo-lightbox-close:hover,.photo-lightbox-close:focus-visible{background:#19b1c6;outline:none;}
+body.lightbox-open{overflow:hidden;}
+@media(max-width:600px){
+  .note-page-single{aspect-ratio:auto!important;}
+  .note-page-single img{width:100%!important;height:auto!important;object-fit:contain!important;}
+  .photo-lightbox{align-items:flex-start;justify-content:flex-start;padding:58px 8px 28px;}
+  .photo-lightbox-dialog{width:max-content;max-width:none;max-height:none;margin:0 auto;}
+  .photo-lightbox-frame{display:block;width:calc(100vw - 16px);max-width:none;max-height:none;flex:none;transition:width .2s ease;}
+  .photo-lightbox-img{width:100%;height:auto;max-width:none;max-height:none;border-radius:8px;}
+  .photo-lightbox-dialog.is-zoomed{margin-left:0;}
+  .photo-lightbox-dialog.is-zoomed .photo-lightbox-frame{width:170vw;cursor:zoom-out;}
+  .photo-lightbox-close{position:fixed;top:10px;right:10px;z-index:2;}
+  .photo-lightbox-caption{font-size:13px;}
+}
+
 /* PRESENTATION + AWARDS */
 .award-sec{background:#1e2a6d;padding:100px 40px;color:#fff;}
 .award-layout{display:grid;grid-template-columns:.92fr 1.08fr;gap:46px;align-items:center;}
@@ -655,12 +683,12 @@ footer{background:#111;padding:48px 40px;text-align:left;}
     <h2 class="heading">실제 오답·풀이·학교별 내신자료</h2>
     <p class="lead">매쓰그립이 어떻게 가르치는지 실제 학습 기록으로 먼저 확인하세요.</p>
     <div class="evidence-grid fade-up">
-      <article class="evidence-card"><div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-workbook.jpg" alt="학생이 틀린 문제와 풀이 흔적이 남은 수학 실전 모의고사" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">TWC · 확인하기</p><h3 class="evidence-title">틀린 문제에서 시작합니다</h3><p class="evidence-note">채점 결과만 보지 않고, 어떤 생각과 계산에서 막혔는지 풀이 흔적을 확인합니다.</p></div></article>
+      <article class="evidence-card"><div class="evidence-thumb note-page-single"><img src="assets/images/math-evidence/mistake-workbook.jpg" alt="학생이 틀린 문제와 풀이 흔적이 남은 수학 실전 모의고사" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">TWC · 확인하기</p><h3 class="evidence-title">틀린 문제에서 시작합니다</h3><p class="evidence-note">채점 결과만 보지 않고, 어떤 생각과 계산에서 막혔는지 풀이 흔적을 확인합니다.</p></div></article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-materials.jpg" alt="학생별 오답을 표시하고 다시 풀이한 여러 권의 수학 교재" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">REVIEW · RETEST</p><h3 class="evidence-title">오답을 다시 풀어 증명합니다</h3><p class="evidence-note">답만 고치는 것이 아니라 다시 풀고, 유사 유형과 재시험으로 같은 실수를 확인합니다.</p></div>
+        <div class="evidence-thumb note-page-single"><img src="assets/images/math-evidence/mistake-materials.jpg" alt="학생별 오답을 표시하고 다시 풀이한 여러 권의 수학 교재" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">REVIEW · RETEST</p><h3 class="evidence-title">오답을 다시 풀어 증명합니다</h3><p class="evidence-note">답만 고치는 것이 아니라 다시 풀고, 유사 유형과 재시험으로 같은 실수를 확인합니다.</p></div>
       </article>
       <article class="evidence-card">
-        <div class="evidence-thumb"><img src="assets/images/math-evidence/school-exam-analysis.jpg" alt="학교 교과서와 시험 범위에 맞춰 분석한 수학 내신 대비 자료" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 기출·직전대비 자료</h3><p class="evidence-note">교과서·프린트·범위·기출을 분석해 학교별 유형훈련과 개인 오답 보강으로 연결합니다.</p></div>
+        <div class="evidence-thumb note-page-single"><img src="assets/images/math-evidence/school-exam-analysis.jpg" alt="학교 교과서와 시험 범위에 맞춰 분석한 수학 내신 대비 자료" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">SCHOOL EXAM</p><h3 class="evidence-title">학교별 기출·직전대비 자료</h3><p class="evidence-note">교과서·프린트·범위·기출을 분석해 학교별 유형훈련과 개인 오답 보강으로 연결합니다.</p></div>
       </article>
     </div>
     <a class="evidence-cta" href="/apply?subject=math&amp;source=homepage&amp;program=evidence" target="_blank">우리 아이 수학 진단 상담신청 →</a>
@@ -1211,6 +1239,17 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   </div>
 </footer>
 
+<!-- PHOTO LIGHTBOX -->
+<div class="photo-lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기" hidden>
+  <div class="photo-lightbox-dialog">
+    <button class="photo-lightbox-close" id="photoLightboxClose" type="button" aria-label="큰 사진 닫기">×</button>
+    <div class="photo-lightbox-frame" id="photoLightboxFrame">
+      <img class="photo-lightbox-img" id="photoLightboxImg" src="assets/images/logo/grip-icon.png" alt="">
+    </div>
+    <p class="photo-lightbox-caption" id="photoLightboxCaption"></p>
+  </div>
+</div>
+
 <!-- FLOATING NAVER -->
 <div class="floating-consult">
   <a href="https://talk.naver.com/W5XRAC" target="_blank" class="floating-naver" title="네이버톡 상담">
@@ -1287,6 +1326,49 @@ if(mathGripIntroVideo&&mathGripEndCta){
     }
   });
 }
+
+const photoLightbox=document.getElementById('photoLightbox');
+const photoLightboxDialog=photoLightbox.querySelector('.photo-lightbox-dialog');
+const photoLightboxFrame=document.getElementById('photoLightboxFrame');
+const photoLightboxImg=document.getElementById('photoLightboxImg');
+const photoLightboxCaption=document.getElementById('photoLightboxCaption');
+const photoLightboxClose=document.getElementById('photoLightboxClose');
+let lastPhotoTrigger=null;
+function openPhotoLightbox(img){
+  lastPhotoTrigger=img;
+  photoLightboxImg.src=img.currentSrc||img.src;
+  photoLightboxImg.alt=img.alt||'확대 사진';
+  photoLightboxCaption.textContent=`${img.alt||'노트 한 페이지'} · 이미지를 누르면 확대·축소됩니다.`;
+  photoLightboxDialog.classList.remove('is-zoomed');
+  photoLightbox.hidden=false;
+  document.body.classList.add('lightbox-open');
+  requestAnimationFrame(()=>photoLightbox.classList.add('is-open'));
+  photoLightboxClose.focus();
+}
+function closePhotoLightbox(){
+  photoLightbox.classList.remove('is-open');
+  document.body.classList.remove('lightbox-open');
+  setTimeout(()=>{photoLightbox.hidden=true;photoLightboxImg.src='assets/images/logo/grip-icon.png';},200);
+  if(lastPhotoTrigger)lastPhotoTrigger.focus();
+}
+document.querySelectorAll('section img').forEach(img=>{
+  if(img.closest('a'))return;
+  img.classList.add('zoomable-photo');
+  img.tabIndex=0;
+  img.setAttribute('role','button');
+  img.setAttribute('aria-label',`${img.alt||'사진'} 크게 보기`);
+  img.addEventListener('click',()=>openPhotoLightbox(img));
+  img.addEventListener('keydown',event=>{
+    if(event.key==='Enter'||event.key===' '){event.preventDefault();openPhotoLightbox(img);}
+  });
+});
+photoLightboxFrame.addEventListener('click',event=>{
+  event.stopPropagation();
+  photoLightboxDialog.classList.toggle('is-zoomed');
+});
+photoLightboxClose.addEventListener('click',closePhotoLightbox);
+photoLightbox.addEventListener('click',event=>{if(event.target===photoLightbox)closePhotoLightbox();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!photoLightbox.hidden)closePhotoLightbox();});
 
 const FAQ = {
   location:{q:'📍 위치가 어디인가요?',a:'서울 서대문구 가재울미래로 17, 7층에 위치해 있습니다. 가재울역 근처라 교통이 편리합니다! 🏢'},
