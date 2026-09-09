@@ -274,9 +274,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* CLASSROOM */
 .classroom-sec{background:#f7faf8;padding:100px 40px;}
 .classroom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:46px;}
+.classroom-extra-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px;}
 .classroom-card{overflow:hidden;border-radius:20px;background:#fff;border:1px solid #dfe8e2;box-shadow:0 14px 32px rgba(0,57,30,.07);}
 .classroom-photo{aspect-ratio:4/3;overflow:hidden;background:#eaf0ec;}
 .classroom-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.classroom-photo.focus-sheet img{object-position:center 38%;}
 .classroom-body{padding:22px 22px 24px;}
 .classroom-body h3{font-size:18px;color:#00391e;margin-bottom:7px;}
 .classroom-body p{font-size:13px;line-height:1.7;color:#667085;font-weight:600;}
@@ -447,6 +449,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .exam-grid{grid-template-columns:1fr 1fr;}
   .evidence-grid{grid-template-columns:1fr;}
   .classroom-grid{grid-template-columns:1fr;}
+  .classroom-extra-grid{grid-template-columns:1fr;}
   .exam-proof{grid-template-columns:1fr;}
   .exam-proof-img{min-height:0;aspect-ratio:16/10;}
   .results-grid{grid-template-columns:1fr;}
@@ -943,6 +946,10 @@ footer{background:#111;padding:36px 40px;text-align:center;}
       <article class="classroom-card"><div class="classroom-photo"><img src="assets/images/english-evidence/elementary-class-writing.jpg" alt="교재를 읽고 직접 쓰는 잉그립 영어수업" loading="lazy"></div><div class="classroom-body"><h3>혼자 읽고 쓰는 집중 학습</h3><p>설명을 들은 뒤 학생이 스스로 문제를 읽고 답을 써 보며 이해를 확인합니다.</p></div></article>
       <article class="classroom-card"><div class="classroom-photo"><img src="assets/images/english-evidence/elementary-class-feedback.jpg" alt="선생님이 학생별 영어 학습을 확인하는 수업" loading="lazy"></div><div class="classroom-body"><h3>교재와 학생별 피드백</h3><p>같은 교재를 사용해도 학생마다 막히는 지점이 다르므로 풀이 과정에서 바로 잡아줍니다.</p></div></article>
       <article class="classroom-card"><div class="classroom-photo"><img src="assets/images/english-evidence/elementary-class-coaching.jpg" alt="학생의 영어 풀이 과정을 밀착 확인하는 수업" loading="lazy"></div><div class="classroom-body"><h3>풀이 과정 밀착 확인</h3><p>정답만 보지 않고 읽는 순서와 쓰는 과정을 확인해 혼자 공부할 수 있는 습관을 만듭니다.</p></div></article>
+    </div>
+    <div class="classroom-extra-grid fade-up">
+      <article class="classroom-card"><div class="classroom-photo"><img src="assets/images/english-evidence/IMG_7966.jpg" alt="전자칠판의 영어 교재를 보며 배우는 잉그립 초등영어 수업" loading="lazy"></div><div class="classroom-body"><h3>보고 듣고 직접 쓰는 초등수업</h3><p>화면의 발음과 문장을 함께 확인한 뒤 교재에 직접 쓰며 기초 표현을 익힙니다.</p></div></article>
+      <article class="classroom-card"><div class="classroom-photo focus-sheet"><img src="assets/images/english-evidence/IMG_7967.jpg" alt="학생이 직접 작성한 초등영어 어휘 학습지를 확인하는 모습" loading="lazy"></div><div class="classroom-body"><h3>쓴 답을 다시 확인하는 습관</h3><p>배운 어휘를 직접 적고 채점 결과를 확인하며 빠진 부분을 바로 보완합니다.</p></div></article>
     </div>
   </div>
 </section>

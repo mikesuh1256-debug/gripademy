@@ -293,6 +293,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .track-photo figcaption{position:absolute;left:0;right:0;bottom:0;padding:44px 18px 18px;background:linear-gradient(transparent,rgba(10,17,54,.9));color:#fff;font-size:13px;font-weight:800;line-height:1.55;}
 .track-photo-stack .track-photo{min-height:0;}
 .track-photo-stack .track-photo img{height:auto;min-height:0;aspect-ratio:4/3;}
+.track-dd-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;}
+.track-dd-shot{margin:0;overflow:hidden;border-radius:14px;background:#eaf0f8;}
+.track-dd-shot img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;}
+.track-dd-shot figcaption{padding:13px 14px;background:#f4f7fb;color:#41506d;font-size:12px;font-weight:800;line-height:1.55;}
 .track-flow{display:flex;flex-direction:column;gap:16px;}
 .track-step{display:flex;align-items:flex-start;gap:16px;padding:20px 22px;background:#f9f9f7;border-radius:12px;border:1px solid #f0f0f0;}
 .track-step-n{width:36px;height:36px;border-radius:50%;background:#1e2a6d;color:#fff;font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
@@ -453,6 +457,7 @@ footer{background:#111;padding:36px 40px;text-align:center;}
   .track-grid{grid-template-columns:1fr;}
   .track-body-grid{grid-template-columns:1fr;}
   .track-photo img{height:auto;min-height:0;aspect-ratio:4/3;object-position:center 35%;}
+  .track-dd-gallery{grid-template-columns:1fr;}
   .track-program-proof{grid-template-columns:1fr;}
   .track-program-proof img{min-height:0;aspect-ratio:16/9;}
   .gpa-grid{grid-template-columns:1fr;}
@@ -874,6 +879,11 @@ footer{background:#111;padding:36px 40px;text-align:center;}
               <div class="track-step-text"><strong>TWC 적용 훈련</strong>생각과 풀이를 손으로 남기고, 오답·재시험까지 선생님이 직접 확인합니다.</div>
             </div>
             </div>
+          </div>
+          <div class="track-dd-gallery" aria-label="DD반 실제 수업 사진">
+            <figure class="track-dd-shot"><img src="assets/images/math-evidence/IMG_7955.jpg" alt="선생님이 전자칠판으로 식의 계산을 설명하는 DD반 수학수업" loading="lazy"><figcaption>개념 설명 · 화면과 풀이를 연결합니다</figcaption></figure>
+            <figure class="track-dd-shot"><img src="assets/images/math-evidence/IMG_7968.jpg" alt="전자칠판의 도형을 활용해 개념을 설명하는 DD반 수학수업" loading="lazy"><figcaption>도형 수업 · 눈으로 확인하며 원리를 이해합니다</figcaption></figure>
+            <figure class="track-dd-shot"><img src="assets/images/math-evidence/IMG_7956.jpg" alt="선생님이 학생들과 질문을 주고받으며 진행하는 DD반 수학수업" loading="lazy"><figcaption>질문과 확인 · 배운 개념을 풀이로 이어갑니다</figcaption></figure>
           </div>
         </div>
       </div>
