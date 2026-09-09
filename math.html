@@ -149,15 +149,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .system-map-title{font-size:44px;font-weight:900;line-height:1.25;letter-spacing:-1.5px;color:#1e2a6d;margin-bottom:22px;}
 .system-map-intro{font-size:20px;line-height:1.85;color:#4f5d76;font-weight:700;word-break:keep-all;}
 .system-map-intro strong{color:#1e2a6d;}
-.system-map-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
-.system-map-card{position:relative;display:flex;min-width:0;min-height:310px;flex-direction:column;padding:30px 24px;border:1px solid #dfe5ef;border-radius:20px;background:#f7f9fc;text-decoration:none;transition:transform .25s,border-color .25s,box-shadow .25s;}
-.system-map-card:hover{transform:translateY(-5px);border-color:#19b1c6;box-shadow:0 16px 36px rgba(30,42,109,.11);}
-.system-map-card:not(:last-child)::after{content:'→';position:absolute;right:-13px;top:50%;z-index:2;width:26px;height:26px;border-radius:50%;background:#19b1c6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;transform:translateY(-50%);}
-.system-map-num{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;color:#19b1c6;margin-bottom:24px;}
-.system-map-term{font-family:'Montserrat',sans-serif;font-size:38px;font-weight:800;line-height:1;color:#1e2a6d;letter-spacing:-1.5px;margin-bottom:16px;}
-.system-map-role{font-size:20px;font-weight:900;color:#1e2a6d;margin-bottom:15px;}
+.system-map-tower{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:1080px;margin:0 auto;}
+.system-map-tier{position:relative;display:grid;grid-template-columns:150px minmax(0,1fr) 104px;align-items:center;gap:24px;min-height:126px;padding:22px 28px;border-radius:22px;text-decoration:none;box-shadow:0 12px 32px rgba(30,42,109,.1);transition:transform .25s,box-shadow .25s;overflow:visible;}
+.system-map-tier:hover{transform:translateY(-4px);box-shadow:0 18px 42px rgba(30,42,109,.17);}
+.system-map-tier::after{content:'↑';position:absolute;left:50%;top:-20px;z-index:3;width:30px;height:30px;border-radius:50%;background:#19b1c6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;transform:translateX(-50%);box-shadow:0 4px 12px rgba(25,177,198,.3);}
+.system-map-tier:first-child::after{display:none;}
+.system-map-tier--mygrip{width:68%;min-height:205px;background:linear-gradient(135deg,#e9faf7,#fff);border:2px solid #55d8c4;grid-template-columns:170px minmax(0,1fr) 104px;}
+.system-map-tier--gpa{width:78%;background:#eef1fb;border:1px solid #cdd4ec;}
+.system-map-tier--twc{width:89%;background:#e4f7f8;border:1px solid #a9e2e8;}
+.system-map-tier--grip{width:100%;background:#1e2a6d;border:1px solid #1e2a6d;}
+.system-map-tier--grip .system-map-num,.system-map-tier--grip .system-map-term,.system-map-tier--grip .system-map-role,.system-map-tier--grip .system-map-desc,.system-map-tier--grip .system-map-link{color:#fff;}
+.system-map-copy{display:flex;min-width:0;flex-direction:column;}
+.system-map-app{width:160px;height:176px;border-radius:18px;object-fit:cover;object-position:center 32%;box-shadow:0 12px 26px rgba(30,42,109,.16);background:#f4faf8;}
+.system-map-num{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;color:#19b1c6;margin-bottom:8px;}
+.system-map-term{font-family:'Montserrat',sans-serif;font-size:34px;font-weight:800;line-height:1;color:#1e2a6d;letter-spacing:-1.5px;margin-bottom:8px;}
+.system-map-role{font-size:19px;font-weight:900;color:#1e2a6d;margin-bottom:8px;}
 .system-map-desc{font-size:14px;line-height:1.75;color:#637089;font-weight:600;word-break:keep-all;}
-.system-map-link{margin-top:auto;padding-top:22px;font-size:12px;font-weight:800;color:#19b1c6;}
+.system-map-link{font-size:12px;font-weight:800;color:#19b1c6;text-align:right;}
 .system-map-loop{margin-top:24px;padding:20px 24px;border-radius:14px;background:#1e2a6d;color:#fff;text-align:center;font-size:16px;line-height:1.7;font-weight:800;}
 .system-map-loop strong{color:#19b1c6;}
 
@@ -465,8 +473,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .compare-grid{grid-template-columns:1fr;}
   .cmp-bad,.cmp-good{padding:40px 28px;}
   .cmp-item{font-size:16px;}
-  .system-map-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .system-map-card:not(:last-child)::after{display:none;}
+  .system-map-tier{width:100%;}
   .grip-steps{grid-template-columns:1fr 1fr;}
   .grip-num{font-size:32px;}
   .twc-intro{grid-template-columns:1fr;}
@@ -497,8 +504,10 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .problem-question{font-size:30px;}
   .system-map-title{font-size:32px;}
   .system-map-intro{font-size:17px;}
-  .system-map-grid{grid-template-columns:1fr;}
-  .system-map-card{min-height:0;padding:26px 22px;}
+  .system-map-tier{grid-template-columns:1fr;gap:10px;min-height:0;padding:24px 22px;text-align:center;}
+  .system-map-tier--mygrip{grid-template-columns:1fr;}
+  .system-map-app{width:132px;height:146px;margin:0 auto;}
+  .system-map-link{text-align:center;}
   .system-map-term{font-size:34px;}
   .system-chapter-term{font-size:50px;letter-spacing:-2px;}
   .system-chapter-role{font-size:23px;}
@@ -712,34 +721,20 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       <h2 class="system-map-title">매쓰그립은 이렇게<br>아이의 성장을 만듭니다</h2>
       <p class="system-map-intro">매쓰그립의 네 가지 용어는 서로 다른 프로그램이 아닙니다. 아이의 성장을 <strong>설계하고, 수업으로 실행하고, 변화로 측정하고, 학부모님께 공유하는</strong> 하나의 연결된 시스템입니다.</p>
     </div>
-    <div class="system-map-grid fade-up" aria-label="매쓰그립 4가지 핵심 시스템 목차">
-      <a class="system-map-card" href="#grip">
-        <span class="system-map-num">01 · GROWTH FRAMEWORK</span>
-        <strong class="system-map-term">GRIP</strong>
-        <span class="system-map-role">성장 설계</span>
-        <span class="system-map-desc">어디서 막혔는지 진단하고, 학교 시험에서 증명할 때까지 계획합니다.</span>
+    <div class="system-map-tower fade-up" aria-label="GRIP에서 MyGrip으로 쌓이는 매쓰그립 성장 타워">
+      <a class="system-map-tier system-map-tier--mygrip" href="#mygrip">
+        <img class="system-map-app" src="assets/images/system/mygrip-app-in-hand.png" alt="손에 든 MyGrip 학습관리 앱 화면" loading="lazy">
+        <span class="system-map-copy"><span class="system-map-num">04 · PARENT REPORT</span><strong class="system-map-term">MyGrip</strong><span class="system-map-role">학부모 공유</span><span class="system-map-desc">오늘의 수업과 변화, 다음 계획을 앱으로 투명하게 보여드립니다.</span></span>
         <span class="system-map-link">자세히 보기 ↓</span>
       </a>
-      <a class="system-map-card" href="#twc">
-        <span class="system-map-num">02 · LESSON METHOD</span>
-        <strong class="system-map-term">TWC</strong>
-        <span class="system-map-role">수업 실행</span>
-        <span class="system-map-desc">생각한 것을 손으로 쓰고 확인하며, 배운 내용을 자기 것으로 만듭니다.</span>
-        <span class="system-map-link">자세히 보기 ↓</span>
+      <a class="system-map-tier system-map-tier--gpa" href="#gpa">
+        <span class="system-map-num">03 · GROWTH MEASURE</span><span class="system-map-copy"><strong class="system-map-term">GPA</strong><span class="system-map-role">성장 측정</span><span class="system-map-desc">점수뿐 아니라 출결·숙제·태도·평가까지 종합해 변화의 원인을 찾습니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
       </a>
-      <a class="system-map-card" href="#gpa">
-        <span class="system-map-num">03 · GROWTH MEASURE</span>
-        <strong class="system-map-term">GPA</strong>
-        <span class="system-map-role">성장 측정</span>
-        <span class="system-map-desc">점수뿐 아니라 출결·숙제·태도·평가까지 종합해 변화의 원인을 찾습니다.</span>
-        <span class="system-map-link">자세히 보기 ↓</span>
+      <a class="system-map-tier system-map-tier--twc" href="#twc">
+        <span class="system-map-num">02 · LESSON METHOD</span><span class="system-map-copy"><strong class="system-map-term">TWC</strong><span class="system-map-role">수업 실행</span><span class="system-map-desc">생각한 것을 손으로 쓰고 확인하며, 배운 내용을 자기 것으로 만듭니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
       </a>
-      <a class="system-map-card" href="#mygrip">
-        <span class="system-map-num">04 · PARENT REPORT</span>
-        <strong class="system-map-term">MyGrip</strong>
-        <span class="system-map-role">학부모 공유</span>
-        <span class="system-map-desc">오늘의 수업과 변화, 다음 계획을 학부모님께 투명하게 보여드립니다.</span>
-        <span class="system-map-link">자세히 보기 ↓</span>
+      <a class="system-map-tier system-map-tier--grip" href="#grip">
+        <span class="system-map-num">01 · GROWTH FRAMEWORK</span><span class="system-map-copy"><strong class="system-map-term">GRIP</strong><span class="system-map-role">성장 설계</span><span class="system-map-desc">어디서 막혔는지 진단하고, 학교 시험에서 증명할 때까지 계획합니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
       </a>
     </div>
     <p class="system-map-loop">GRIP으로 설계하고 → TWC로 실행하고 → GPA로 측정하고 → MyGrip으로 공유합니다.<br><strong>기록된 결과는 다시 다음 진단과 계획으로 연결됩니다.</strong></p>
