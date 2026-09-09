@@ -259,9 +259,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 
 /* EVIDENCE */
 .evidence-sec{background:#fff;padding:100px 40px;}
+.evidence-principle{margin-top:36px;overflow:hidden;border:1px solid #dfe8e2;border-radius:20px;background:#fff;box-shadow:0 14px 36px rgba(0,57,30,.08);}
+.evidence-principle img{display:block;width:100%;height:auto;}
 .evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:48px;}
 .evidence-card{overflow:hidden;border:1px solid #dfe8e2;border-radius:20px;background:#fff;box-shadow:0 14px 36px rgba(0,57,30,.08);}
+.evidence-card.evidence-card-wide{grid-column:1/-1;}
 .evidence-thumb{aspect-ratio:16/10;overflow:hidden;background:#eef4f0;}
+.evidence-card-wide .evidence-thumb{aspect-ratio:16/9;}
 .evidence-thumb img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;transition:transform .35s;}
 .evidence-card:hover .evidence-thumb img{transform:scale(1.025);}
 .evidence-body{padding:24px 24px 26px;}
@@ -601,6 +605,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
     <p class="eyebrow">말이 아니라 기록으로 확인</p>
     <h2 class="heading">실제 백지노트와 채점 기록</h2>
     <p class="lead">잉그립이 어떻게 가르치는지 학생이 직접 쓰고 교정받은 결과로 먼저 확인하세요. 학생 이름은 노출하지 않았습니다.</p>
+    <div class="evidence-principle fade-up"><img src="assets/images/english-evidence/blank-test-principle.png" alt="문법은 배웠는지보다 꺼낼 수 있는지를 백지테스트로 확인하는 다섯 가지 기준" loading="lazy"></div>
     <div class="evidence-grid fade-up">
       <article class="evidence-card">
         <div class="evidence-thumb"><img src="assets/images/english-evidence/blank-test-adjective-comparison.jpg" alt="형용사 모범답안과 학생 백지테스트 답안 비교" loading="lazy"></div>
@@ -609,6 +614,10 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       <article class="evidence-card">
         <div class="evidence-thumb"><img src="assets/images/english-evidence/blank-note-sensory-verbs.jpg" alt="학생이 작성하고 채점받은 감각동사 백지테스트" loading="lazy"></div>
         <div class="evidence-body"><p class="evidence-kicker">ACTUAL BLANK NOTE</p><h3 class="evidence-title">감각동사, 문장으로 재현하기</h3><p class="evidence-note">개념 설명부터 영작까지 스스로 꺼내 쓰고, 선생님의 채점으로 빠진 표현을 확인합니다.</p></div>
+      </article>
+      <article class="evidence-card evidence-card-wide">
+        <div class="evidence-thumb"><img src="assets/images/english-evidence/blank-test-infinitive-comparison.jpg" alt="to부정사 학생답안과 모범답안을 나란히 비교한 백지테스트" loading="lazy"></div>
+        <div class="evidence-body"><p class="evidence-kicker">STUDENT ANSWER · MODEL ANSWER</p><h3 class="evidence-title">to부정사 · 학생답안과 모범답안</h3><p class="evidence-note">명사적·형용사적·부사적 용법을 직접 재현한 뒤 모범답안과 비교하며 부족한 개념과 문장을 정확히 교정합니다.</p></div>
       </article>
     </div>
     <a class="evidence-cta" href="/apply?subject=english&amp;source=homepage&amp;program=evidence" target="_blank">우리 아이 영어 진단 상담신청 →</a>
