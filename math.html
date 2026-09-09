@@ -182,30 +182,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .mygrip-chapter{margin-top:86px;scroll-margin-top:90px;}
 
 /* GRIP */
-.grip-sec{background:#1e2a6d;padding:100px 40px;}
-.grip-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:56px;border-radius:20px;overflow:hidden;}
-.grip-step{background:rgba(255,255,255,0.04);padding:56px 36px;border-right:1px solid rgba(255,255,255,0.06);position:relative;transition:background 0.3s;}
-.grip-step:last-child{border-right:none;}
-.grip-step:hover{background:rgba(255,255,255,0.09);}
-.grip-letter{font-family:'Montserrat',sans-serif;font-size:112px;font-weight:900;color:rgba(255,255,255,0.15);position:absolute;top:10px;right:10px;line-height:1;}
-.grip-num{font-family:'Montserrat',sans-serif;font-size:31px;font-weight:900;color:#fff;margin-bottom:20px;letter-spacing:-1px;position:relative;z-index:1;}
-.grip-title{font-size:18px;font-weight:900;color:#fff;margin-bottom:6px;position:relative;z-index:1;}
-.grip-sub{font-size:13px;color:#19b1c6;font-weight:600;margin-bottom:18px;letter-spacing:0.5px;position:relative;z-index:1;}
-.grip-desc{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;font-weight:600;position:relative;z-index:1;}
+.grip-sec{background:#eef3fb;padding:100px 40px;}
+.grip-table{margin-top:46px;border:1px solid #cfd9ea;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 18px 44px rgba(30,42,109,.09);}
+.grip-table-row{display:grid;grid-template-columns:110px 160px minmax(0,1fr) 220px;align-items:stretch;border-top:1px solid #dfe6f1;}
+.grip-table-row:first-child{border-top:0;}
+.grip-table-head{background:#1e2a6d;color:#fff;font-size:13px;font-weight:900;letter-spacing:.6px;}
+.grip-table-cell{display:flex;align-items:center;padding:21px 20px;border-left:1px solid #dfe6f1;font-size:14px;line-height:1.7;color:#53617a;font-weight:650;word-break:keep-all;}
+.grip-table-cell:first-child{border-left:0;}
+.grip-table-head .grip-table-cell{color:#fff;justify-content:center;border-color:rgba(255,255,255,.16);}
+.grip-stage{justify-content:center;gap:9px;background:#f8fafc;}
+.grip-stage b{font-family:'Montserrat',sans-serif;font-size:30px;color:#19b1c6;line-height:1;}
+.grip-stage span{font-size:12px;font-weight:900;color:#7a879d;}
+.grip-core{font-size:20px;font-weight:900;color:#1e2a6d;}
+.grip-standard{color:#1e2a6d;font-weight:800;background:#f4f7fc;}
+.grip-table-note{margin-top:18px;font-size:14px;line-height:1.75;color:#64718a;font-weight:700;text-align:center;}
 
 /* TWC */
 .twc-sec{background:#fff;padding:100px 40px;}
-.twc-intro{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;margin-bottom:72px;max-width:820px;}
+.twc-intro{display:grid;grid-template-columns:1fr;gap:40px;align-items:start;margin-bottom:58px;max-width:920px;}
 .twc-intro-body{font-size:16px;color:#555;line-height:1.9;font-weight:600;}
-.twc-steps{display:grid;grid-template-columns:1fr;gap:16px;max-width:820px;}
+.twc-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:none;}
 .twc-card{border-radius:20px;overflow:hidden;}
 .twc-card-head{padding:40px 36px 28px;}
 .twc-letter{font-family:'Montserrat',sans-serif;font-size:56px;font-weight:900;line-height:1;margin-bottom:14px;opacity:0.15;}
 .twc-num{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
-.twc-name{font-size:20px;font-weight:900;margin-bottom:6px;}
+.twc-name{font-size:25px;font-weight:900;margin-bottom:6px;}
 .twc-sub{font-size:13px;font-weight:600;opacity:0.8;}
 .twc-card-body{padding:28px 36px 44px;background:rgba(0,0,0,0.04);}
-.twc-card-body p{font-size:13px;line-height:1.9;font-weight:700;}
+.twc-card-body p{font-size:14px;line-height:1.85;font-weight:700;}
+.twc-definition{margin-top:18px;padding:18px 22px;border-radius:14px;border:1px solid #dce5f2;background:#f7f9fc;color:#4f5d76;font-size:14px;line-height:1.75;font-weight:700;}
+.twc-definition strong{color:#1e2a6d;}
 .twc-card.think{background:#1e2a6d;}
 .twc-card.think .twc-letter,.twc-card.think .twc-name,.twc-card.think .twc-sub{color:#fff;}
 .twc-card.think .twc-num{color:#19b1c6;}
@@ -322,6 +328,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 /* GPA + MYGRIP */
 .gpa-sec{background:#eef3fb;padding:100px 40px;}
 .gpa-intro{max-width:820px;margin-bottom:46px;}
+.gpa-equation{display:flex;align-items:center;gap:16px;margin:0 0 26px;padding:20px 24px;border:1px solid #cedaed;border-radius:16px;background:#fff;box-shadow:0 10px 28px rgba(30,42,109,.06);}
+.gpa-equation b{font-family:'Montserrat',sans-serif;font-size:30px;color:#1e2a6d;}
+.gpa-equation i{font-style:normal;font-size:22px;font-weight:900;color:#19b1c6;}
+.gpa-equation strong{font-size:22px;color:#1e2a6d;}
+.gpa-equation span{margin-left:auto;font-size:13px;line-height:1.6;color:#68758d;font-weight:750;}
 .gpa-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;}
 .gpa-panel{background:#fff;border:1px solid #dce5f2;border-radius:22px;padding:34px;box-shadow:0 14px 36px rgba(30,42,109,.08);}
 .gpa-panel-dark{background:#1e2a6d;border-color:#1e2a6d;color:#fff;}
@@ -351,9 +362,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .mygrip-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
 .mygrip-shot{background:#fff;border:1px solid #dce5f2;border-radius:18px;overflow:hidden;box-shadow:0 12px 30px rgba(30,42,109,.07);}
 .mygrip-shot img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;}
-.mygrip-shot figcaption{padding:18px 18px 20px;}
-.mygrip-shot strong{display:block;font-size:16px;color:#1e2a6d;margin-bottom:6px;}
-.mygrip-shot span{display:block;font-size:13px;color:#6b7890;line-height:1.65;font-weight:600;}
+.mygrip-shot figcaption{padding:24px 24px 26px;}
+.mygrip-shot strong{display:block;font-size:21px;color:#1e2a6d;margin-bottom:8px;}
+.mygrip-shot span{display:block;font-size:16px;color:#5f6d85;line-height:1.7;font-weight:650;}
 .mygrip-source{margin-top:18px;font-size:12px;color:#8591a6;text-align:right;}
 
 /* MANAGE */
@@ -474,8 +485,8 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .cmp-bad,.cmp-good{padding:40px 28px;}
   .cmp-item{font-size:16px;}
   .system-map-tier{width:100%;}
-  .grip-steps{grid-template-columns:1fr 1fr;}
-  .grip-num{font-size:32px;}
+  .grip-table-row{grid-template-columns:90px 140px minmax(0,1fr) 190px;}
+  .grip-table-cell{padding:18px 14px;}
   .twc-intro{grid-template-columns:1fr;}
   .twc-steps{grid-template-columns:1fr;}
   .twc-class{grid-template-columns:1fr;padding:36px 24px;}
@@ -486,6 +497,8 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .track-program-proof{grid-template-columns:1fr;}
   .track-program-proof img{min-height:0;aspect-ratio:16/9;}
   .gpa-grid{grid-template-columns:1fr;}
+  .gpa-equation{align-items:flex-start;flex-wrap:wrap;}
+  .gpa-equation span{width:100%;margin-left:0;}
   .mygrip-gallery{grid-template-columns:repeat(2,1fr);}
   .mygrip-gallery-head{align-items:flex-start;flex-direction:column;}
   .mygrip-gallery-head p{text-align:left;}
@@ -520,7 +533,14 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   .reality-grid{grid-template-columns:1fr;}
   .reality-grid.all-photos{grid-template-columns:1fr;}
   .reality-card img{aspect-ratio:4/3;}
-  .grip-steps{grid-template-columns:1fr;}
+  .grip-table{overflow:visible;border:0;background:transparent;box-shadow:none;}
+  .grip-table-head{display:none;}
+  .grip-table-row{display:block;margin-bottom:14px;border:1px solid #d7e0ee;border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 10px 24px rgba(30,42,109,.06);}
+  .grip-table-cell{display:block;border-left:0;border-top:1px solid #e6ebf3;padding:16px 18px;}
+  .grip-table-cell::before{content:attr(data-label);display:block;margin-bottom:5px;font-size:11px;font-weight:900;color:#19b1c6;letter-spacing:.5px;}
+  .grip-stage{display:flex;justify-content:flex-start;border-top:0;}
+  .grip-stage::before{display:none;}
+  .grip-core{font-size:21px;}
   .exam-grid{grid-template-columns:1fr;}
   .exam-materials{padding:24px 20px;}
   .exam-material-list,.presentation-gallery{grid-template-columns:1fr;}
@@ -557,9 +577,9 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   </a>
   <div class="nav-menu">
     <a href="#system-map">4가지 시스템</a>
-    <a href="#grip">GRIP</a>
-    <a href="#twc">TWC</a>
-    <a href="#gpa">GPA·MyGrip</a>
+    <a href="#grip">GRIP 4단계</a>
+    <a href="#twc">TWC 문제풀이</a>
+    <a href="#gpa">그립성취점수·MyGrip</a>
     <a href="#exam4">4주 내신관리</a>
     <a href="#evidence">증거자료</a>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="nav-cta" style="background:#03C75A;display:flex;align-items:center;gap:5px;">
@@ -635,7 +655,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
     <h2 class="heading">실제 오답·풀이·학교별 내신자료</h2>
     <p class="lead">매쓰그립이 어떻게 가르치는지 실제 학습 기록으로 먼저 확인하세요.</p>
     <div class="evidence-grid fade-up">
-      <article class="evidence-card"><div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-workbook.jpg" alt="학생이 틀린 문제와 풀이 흔적이 남은 수학 실전 모의고사" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">TWC · CHECK</p><h3 class="evidence-title">틀린 문제에서 시작합니다</h3><p class="evidence-note">채점 결과만 보지 않고, 어떤 생각과 계산에서 막혔는지 풀이 흔적을 확인합니다.</p></div></article>
+      <article class="evidence-card"><div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-workbook.jpg" alt="학생이 틀린 문제와 풀이 흔적이 남은 수학 실전 모의고사" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">TWC · 확인하기</p><h3 class="evidence-title">틀린 문제에서 시작합니다</h3><p class="evidence-note">채점 결과만 보지 않고, 어떤 생각과 계산에서 막혔는지 풀이 흔적을 확인합니다.</p></div></article>
       <article class="evidence-card">
         <div class="evidence-thumb"><img src="assets/images/math-evidence/mistake-materials.jpg" alt="학생별 오답을 표시하고 다시 풀이한 여러 권의 수학 교재" loading="lazy"></div><div class="evidence-body"><p class="evidence-kicker">REVIEW · RETEST</p><h3 class="evidence-title">오답을 다시 풀어 증명합니다</h3><p class="evidence-note">답만 고치는 것이 아니라 다시 풀고, 유사 유형과 재시험으로 같은 실수를 확인합니다.</p></div>
       </article>
@@ -669,9 +689,9 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       </div>
       <div class="solution-grid">
         <article class="solution-card"><p class="solution-num">01</p><h3 class="solution-name">진단과 DD·PT 맞춤 계획</h3><p class="solution-desc">레벨테스트와 최근 오답으로 막힌 지점을 찾고, 수준과 목표에 맞춰 진도와 보완 순서를 정합니다.</p></article>
-        <article class="solution-card"><p class="solution-num">02</p><h3 class="solution-name">모든 수업 TWC</h3><p class="solution-desc">Think·Write·Check로 생각하고 쓰고 확인하며 자기 풀이를 완성합니다.</p></article>
+        <article class="solution-card"><p class="solution-num">02</p><h3 class="solution-name">TWC 문제풀이 코칭</h3><p class="solution-desc">생각하기·쓰기·확인하기로 자기 풀이를 완성하고 선생님이 전 과정을 코칭합니다.</p></article>
         <article class="solution-card"><p class="solution-num">03</p><h3 class="solution-name">DW·오답·재시험 완결</h3><p class="solution-desc">제출 여부를 넘어 풀이 과정을 확인하고, 다시 풀기와 재시험으로 끝까지 보완합니다.</p></article>
-        <article class="solution-card"><p class="solution-num">04</p><h3 class="solution-name">GPA 측정과 MyGrip 공유</h3><p class="solution-desc">학습 결과와 변화를 누적해 학부모님께 공유하고 다음 계획으로 연결합니다.</p></article>
+        <article class="solution-card"><p class="solution-num">04</p><h3 class="solution-name">그립성취점수와 MyGrip 공유</h3><p class="solution-desc">학습 결과와 변화를 그립성취점수로 누적해 학부모님께 공유하고 다음 계획으로 연결합니다.</p></article>
       </div>
       <p class="solution-promise">매쓰그립은 문제를 더 많이 풀리는 학원이 아니라,<br><strong>성적이 오르지 않는 원인을 찾아 끝까지 해결하는 학원</strong>입니다.</p>
     </div>
@@ -719,66 +739,44 @@ footer{background:#111;padding:48px 40px;text-align:left;}
     <div class="system-map-head">
       <p class="eyebrow">매쓰그립 시스템 한눈에 보기</p>
       <h2 class="system-map-title">매쓰그립은 이렇게<br>아이의 성장을 만듭니다</h2>
-      <p class="system-map-intro">매쓰그립의 네 가지 용어는 서로 다른 프로그램이 아닙니다. 아이의 성장을 <strong>설계하고, 수업으로 실행하고, 변화로 측정하고, 학부모님께 공유하는</strong> 하나의 연결된 시스템입니다.</p>
+      <p class="system-map-intro">매쓰그립의 네 가지 용어는 서로 다른 프로그램이 아닙니다. 아이를 <strong>진단·복습·자기화·증명으로 성장시키고, 문제풀이 과정을 코칭하고, 그립성취점수로 확인해 학부모님께 공유하는</strong> 하나의 연결된 시스템입니다.</p>
     </div>
     <div class="system-map-tower fade-up" aria-label="GRIP에서 MyGrip으로 쌓이는 매쓰그립 성장 타워">
       <a class="system-map-tier system-map-tier--mygrip" href="#mygrip">
         <img class="system-map-app" src="assets/images/system/mygrip-app-in-hand.png" alt="손에 든 MyGrip 학습관리 앱 화면" loading="lazy">
-        <span class="system-map-copy"><span class="system-map-num">04 · PARENT REPORT</span><strong class="system-map-term">MyGrip</strong><span class="system-map-role">학부모 공유</span><span class="system-map-desc">오늘의 수업과 변화, 다음 계획을 앱으로 투명하게 보여드립니다.</span></span>
+        <span class="system-map-copy"><span class="system-map-num">04 · 학부모 공유</span><strong class="system-map-term">MyGrip</strong><span class="system-map-role">수업 기록과 성장 공유</span><span class="system-map-desc">오늘의 수업과 변화, 다음 계획을 앱으로 투명하게 보여드립니다.</span></span>
         <span class="system-map-link">자세히 보기 ↓</span>
       </a>
       <a class="system-map-tier system-map-tier--gpa" href="#gpa">
-        <span class="system-map-num">03 · GROWTH MEASURE</span><span class="system-map-copy"><strong class="system-map-term">GPA</strong><span class="system-map-role">성장 측정</span><span class="system-map-desc">점수뿐 아니라 출결·숙제·태도·평가까지 종합해 변화의 원인을 찾습니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
+        <span class="system-map-num">03 · 그립발전평가</span><span class="system-map-copy"><strong class="system-map-term">GPA</strong><span class="system-map-role">그립성취점수</span><span class="system-map-desc">출결·숙제·태도·평가를 종합한 하나의 점수로 강점과 보완점을 확인합니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
       </a>
       <a class="system-map-tier system-map-tier--twc" href="#twc">
-        <span class="system-map-num">02 · LESSON METHOD</span><span class="system-map-copy"><strong class="system-map-term">TWC</strong><span class="system-map-role">수업 실행</span><span class="system-map-desc">생각한 것을 손으로 쓰고 확인하며, 배운 내용을 자기 것으로 만듭니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
+        <span class="system-map-num">02 · 수업 문제풀이 코칭</span><span class="system-map-copy"><strong class="system-map-term">TWC</strong><span class="system-map-role">생각하기 · 쓰기 · 확인하기</span><span class="system-map-desc">자기 풀이를 완성하는 세 단계 전체를 선생님이 코칭합니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
       </a>
       <a class="system-map-tier system-map-tier--grip" href="#grip">
-        <span class="system-map-num">01 · GROWTH FRAMEWORK</span><span class="system-map-copy"><strong class="system-map-term">GRIP</strong><span class="system-map-role">성장 설계</span><span class="system-map-desc">어디서 막혔는지 진단하고, 학교 시험에서 증명할 때까지 계획합니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
+        <span class="system-map-num">01 · 성장관리 4단계</span><span class="system-map-copy"><strong class="system-map-term">GRIP</strong><span class="system-map-role">진단 · 복습 · 자기화 · 증명</span><span class="system-map-desc">막힌 지점을 찾아 다시 배우고, 스스로 풀어 시험 결과로 증명합니다.</span></span><span class="system-map-link">자세히 보기 ↓</span>
       </a>
     </div>
-    <p class="system-map-loop">GRIP으로 설계하고 → TWC로 실행하고 → GPA로 측정하고 → MyGrip으로 공유합니다.<br><strong>기록된 결과는 다시 다음 진단과 계획으로 연결됩니다.</strong></p>
+    <p class="system-map-loop">GRIP으로 성장 단계를 관리하고 → TWC로 문제풀이를 완성하고 → 그립성취점수로 변화를 확인하고 → MyGrip으로 공유합니다.<br><strong>기록된 결과는 다시 다음 진단과 계획으로 연결됩니다.</strong></p>
   </div>
 </section>
 
 <!-- GRIP 4단계 -->
 <section class="grip-sec" id="grip">
   <div class="w-inner">
-    <div class="system-chapter system-chapter-dark">
-      <p class="system-chapter-kicker">01 · GROWTH FRAMEWORK</p>
-      <div class="system-chapter-row"><h2 class="system-chapter-term">GRIP</h2><p class="system-chapter-role">성장 설계</p></div>
-      <p class="system-chapter-summary">어디서 막혔는지 진단하고, 다시 풀고, 자기 것으로 만든 뒤 학교 시험에서 증명할 때까지 연결하는 매쓰그립의 전체 성장 구조입니다.</p>
+    <div class="system-chapter">
+      <p class="system-chapter-kicker">01 · 성장관리 4단계</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">GRIP</h2><p class="system-chapter-role">진단 · 복습 · 자기화 · 증명</p></div>
+      <p class="system-chapter-summary">학생의 현재 위치를 진단하고, 오답을 복습하고, 혼자 풀 수 있도록 자기화한 뒤 시험 결과로 증명하는 매쓰그립의 성장관리 과정입니다.</p>
     </div>
-    <div class="grip-steps fade-up">
-      <div class="grip-step">
-        <span class="grip-letter">G</span>
-        <p class="grip-num">01 / GRASP</p>
-        <h3 class="grip-title">진단</h3>
-        <p class="grip-sub">Grasp — 손에 잡다</p>
-        <p class="grip-desc">레벨테스트와 최근 시험·오답을 함께 봅니다. 개념, 연산, 풀이 과정과 학습 습관까지 확인해 가장 먼저 보완할 순서를 정합니다.</p>
-      </div>
-      <div class="grip-step">
-        <span class="grip-letter">R</span>
-        <p class="grip-num">02 / REVIEW</p>
-        <h3 class="grip-title">오답 복습</h3>
-        <p class="grip-sub">Review — 다시 보다</p>
-        <p class="grip-desc">오답은 그날 다시 풀고 설명합니다. TWC의 Check와 유사 유형 재시험으로 같은 실수가 반복되지 않게 합니다.</p>
-      </div>
-      <div class="grip-step">
-        <span class="grip-letter">I</span>
-        <p class="grip-num">03 / INTERNALIZE</p>
-        <h3 class="grip-title">학생의 자기화</h3>
-        <p class="grip-sub">Internalize — 내 것으로 만들다</p>
-        <p class="grip-desc">TWC의 Think·Write로 풀이를 보지 않고 재현합니다. 이해한 개념을 변형 문제에도 적용하며 꺼내 쓸 수 있는 지식으로 바꿉니다.</p>
-      </div>
-      <div class="grip-step">
-        <span class="grip-letter">P</span>
-        <p class="grip-num">04 / PROVE</p>
-        <h3 class="grip-title">학교 시험 증명</h3>
-        <p class="grip-sub">Prove — 결과로 확인하다</p>
-        <p class="grip-desc">일일테스트·월말평가·학교 시험 결과를 학부모님과 공유합니다. 확인된 결과는 다시 다음 진단과 보완 계획으로 연결됩니다.</p>
-      </div>
+    <div class="grip-table fade-up" role="table" aria-label="GRIP 진단 복습 자기화 증명 4단계">
+      <div class="grip-table-row grip-table-head" role="row"><div class="grip-table-cell" role="columnheader">단계</div><div class="grip-table-cell" role="columnheader">핵심</div><div class="grip-table-cell" role="columnheader">무엇을 하는가</div><div class="grip-table-cell" role="columnheader">완료 기준</div></div>
+      <div class="grip-table-row" role="row"><div class="grip-table-cell grip-stage" role="cell"><b>G</b><span>1단계</span></div><div class="grip-table-cell grip-core" data-label="핵심" role="cell">진단</div><div class="grip-table-cell" data-label="무엇을 하는가" role="cell">레벨테스트·최근 시험·오답을 분석해 개념, 연산, 풀이 습관 중 막힌 원인을 찾습니다.</div><div class="grip-table-cell grip-standard" data-label="완료 기준" role="cell">개인별 보완 순서 확정</div></div>
+      <div class="grip-table-row" role="row"><div class="grip-table-cell grip-stage" role="cell"><b>R</b><span>2단계</span></div><div class="grip-table-cell grip-core" data-label="핵심" role="cell">복습</div><div class="grip-table-cell" data-label="무엇을 하는가" role="cell">틀린 문제를 다시 풀고 설명한 뒤 유사 문제와 재시험으로 같은 실수를 막습니다.</div><div class="grip-table-cell grip-standard" data-label="완료 기준" role="cell">오답·유사 문제 통과</div></div>
+      <div class="grip-table-row" role="row"><div class="grip-table-cell grip-stage" role="cell"><b>I</b><span>3단계</span></div><div class="grip-table-cell grip-core" data-label="핵심" role="cell">자기화</div><div class="grip-table-cell" data-label="무엇을 하는가" role="cell">풀이를 보지 않고 스스로 재현하고, 배운 개념을 새로운 문제에 적용합니다.</div><div class="grip-table-cell grip-standard" data-label="완료 기준" role="cell">혼자 풀이 완성</div></div>
+      <div class="grip-table-row" role="row"><div class="grip-table-cell grip-stage" role="cell"><b>P</b><span>4단계</span></div><div class="grip-table-cell grip-core" data-label="핵심" role="cell">증명</div><div class="grip-table-cell" data-label="무엇을 하는가" role="cell">일일테스트·월말평가·학교 시험에서 배운 내용을 정확하게 꺼내 씁니다.</div><div class="grip-table-cell grip-standard" data-label="완료 기준" role="cell">시험 결과로 확인</div></div>
     </div>
+    <p class="grip-table-note">증명된 결과는 끝이 아니라 다음 진단으로 이어져, 네 단계가 계속 순환합니다.</p>
   </div>
 </section>
 
@@ -786,17 +784,18 @@ footer{background:#111;padding:48px 40px;text-align:left;}
 <section class="twc-sec" id="twc">
   <div class="w-inner">
     <div class="system-chapter fade-up">
-      <p class="system-chapter-kicker">02 · LESSON METHOD</p>
-      <div class="system-chapter-row"><h2 class="system-chapter-term">TWC</h2><p class="system-chapter-role">수업 실행</p></div>
-      <p class="system-chapter-summary">Think → Write → Check. 생각한 것을 손으로 쓰고 이해 여부를 확인하며, 배운 내용을 학생의 실력으로 완성하는 매쓰그립의 공통 수업법입니다.</p>
+      <p class="system-chapter-kicker">02 · 수업 문제풀이 코칭</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">TWC</h2><p class="system-chapter-role">생각하기 · 쓰기 · 확인하기</p></div>
+      <p class="system-chapter-summary">문제를 먼저 생각하고, 풀이를 손으로 쓰고, 이해 여부를 다시 확인합니다. 선생님은 정답만 알려주는 것이 아니라 이 세 단계의 문제풀이 과정을 코칭합니다.</p>
+      <p class="twc-definition"><strong>C는 Coaching이 아니라 Check, ‘확인하기’입니다.</strong> 코칭은 T·W·C 세 단계 전체에서 이루어집니다.</p>
     </div>
     <div class="twc-steps fade-up">
       <div class="twc-card think">
         <div class="twc-card-head">
           <div class="twc-letter">T</div>
           <p class="twc-num">Step 01</p>
-          <h3 class="twc-name">Think</h3>
-          <p class="twc-sub">생각하기</p>
+          <h3 class="twc-name">생각하기</h3>
+          <p class="twc-sub">Think · 풀이 전략 세우기</p>
         </div>
         <div class="twc-card-body">
           <p>문제를 읽고 어떤 개념이 필요한지, 어떤 순서로 풀어야 하는지 머릿속에서 그립니다. 무작정 계산하지 않고 먼저 전략을 세우는 습관이 상위권을 만듭니다.</p>
@@ -806,8 +805,8 @@ footer{background:#111;padding:48px 40px;text-align:left;}
         <div class="twc-card-head">
           <div class="twc-letter">W</div>
           <p class="twc-num">Step 02</p>
-          <h3 class="twc-name">Write</h3>
-          <p class="twc-sub">손으로 쓰기</p>
+          <h3 class="twc-name">쓰기</h3>
+          <p class="twc-sub">Write · 풀이 과정 남기기</p>
         </div>
         <div class="twc-card-body">
           <p>생각한 풀이를 처음부터 끝까지 완전히 손으로 씁니다. 중간 단계를 생략하지 않아 풀이의 논리와 막힌 지점을 스스로 확인할 수 있습니다.</p>
@@ -817,8 +816,8 @@ footer{background:#111;padding:48px 40px;text-align:left;}
         <div class="twc-card-head">
           <div class="twc-letter">C</div>
           <p class="twc-num">Step 03</p>
-          <h3 class="twc-name">Check</h3>
-          <p class="twc-sub">확인하기</p>
+          <h3 class="twc-name">확인하기</h3>
+          <p class="twc-sub">Check · 이해와 오답 점검하기</p>
         </div>
         <div class="twc-card-body">
           <p>틀린 문제의 원인을 단순히 채점에서 끝내지 않습니다. 어느 개념에서 틀렸는지 분석하고, 그 개념을 다시 정확하게 손으로 정리합니다.</p>
@@ -828,7 +827,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
     <div class="twc-class fade-up">
       <div>
         <p class="twc-class-lbl">수업 구조</p>
-        <h3 class="twc-class-title">모든 수업에 적용하는 TWC 수업 구조</h3>
+        <h3 class="twc-class-title">모든 수업에 적용하는 TWC 문제풀이 코칭</h3>
         <p class="twc-class-desc">개념을 이해하는 시간과 스스로 생각하고 쓰고 확인하는 시간을 분리해, 배운 것을 학생의 실력으로 완성합니다.</p>
       </div>
       <div class="twc-periods">
@@ -843,7 +842,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
           <div class="twc-period-num">2교시</div>
           <div>
             <h4>TWC 집중훈련 · 90분</h4>
-            <p>Think → Write → Check로 풀이를 스스로 완성하고 선생님의 피드백을 받습니다.</p>
+            <p>생각하기 → 쓰기 → 확인하기로 풀이를 완성하고 선생님의 코칭을 받습니다.</p>
           </div>
         </div>
         <div class="twc-period">
@@ -962,14 +961,15 @@ footer{background:#111;padding:48px 40px;text-align:left;}
 <section class="gpa-sec" id="gpa">
   <div class="w-inner">
     <div class="system-chapter">
-      <p class="system-chapter-kicker">03 · GROWTH MEASURE</p>
-      <div class="system-chapter-row"><h2 class="system-chapter-term">GPA</h2><p class="system-chapter-role">성장 측정</p></div>
-      <p class="system-chapter-summary">시험 점수 하나가 아니라 출결·숙제·수업태도·월말평가·DW와 테스트를 함께 보며, 성적 변화의 원인과 필요한 도움을 찾는 그립성취점수입니다.</p>
+      <p class="system-chapter-kicker">03 · 그립발전평가</p>
+      <div class="system-chapter-row"><h2 class="system-chapter-term">GPA</h2><p class="system-chapter-role">그립성취점수</p></div>
+      <p class="system-chapter-summary">GPA는 Grip Progress Assessment, 즉 그립발전평가입니다. 홈페이지에서는 그 결과 지표를 모두 ‘그립성취점수’로 부릅니다. 시험 점수뿐 아니라 출결·숙제·수업태도·월말평가·DW와 테스트를 함께 봅니다.</p>
     </div>
+    <div class="gpa-equation" aria-label="GPA 그립성취점수 구성"><b>GPA</b><i>=</i><strong>그립성취점수</strong><span>출결 + 숙제 + 수업태도 + 월말평가 + DW·테스트</span></div>
 
     <div class="gpa-grid">
       <article class="gpa-panel gpa-panel-dark">
-        <p class="gpa-label">GRIP PROGRESS ASSESSMENT</p>
+        <p class="gpa-label">그립발전평가 결과</p>
         <h3 class="gpa-title">GPA · 그립성취점수</h3>
         <p class="gpa-copy">최근 3개월의 출결·숙제·수업태도·월말평가·DW 및 테스트를 종합합니다. 단순 시험 점수가 아니라, 성적을 만드는 매일의 습관을 빠짐없이 보는 매쓰그립의 성장 지표입니다.</p>
         <div class="gpa-grade-row" aria-label="GPA 등급 기준">
@@ -983,7 +983,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       </article>
 
       <article class="gpa-panel">
-        <p class="gpa-label">MATHGRIP GPA WEIGHT</p>
+        <p class="gpa-label">그립성취점수 반영 항목</p>
         <h3 class="gpa-title">어느 항목이 강하고 약한지까지 봅니다</h3>
         <p class="gpa-copy">총점 하나만 알려 드리지 않습니다. 출결이 흔들리는지, 숙제 완성도가 낮은지, 수업 태도와 평가 중 어디에 도움이 필요한지를 항목별로 확인합니다.</p>
         <div class="gpa-weights" aria-label="매쓰그립 GPA 항목별 반영 비중">
@@ -997,14 +997,14 @@ footer{background:#111;padding:48px 40px;text-align:left;}
     </div>
 
     <div class="system-chapter mygrip-chapter" id="mygrip">
-      <p class="system-chapter-kicker">04 · PARENT REPORT</p>
+      <p class="system-chapter-kicker">04 · 학부모 공유</p>
       <div class="system-chapter-row"><h2 class="system-chapter-term">MyGrip</h2><p class="system-chapter-role">학부모 공유</p></div>
       <p class="system-chapter-summary">오늘 무엇을 배웠는지, 어디에서 막혔는지, 다음에 무엇을 보완할지 수업 기록과 성장 변화로 학부모님께 투명하게 보여드리는 소통 창구입니다.</p>
     </div>
 
     <div class="gpa-grid">
       <article class="gpa-panel">
-        <p class="gpa-label">MYGRIP PARENT REPORT</p>
+        <p class="gpa-label">MyGrip 학부모 리포트</p>
         <h3 class="gpa-title">오늘 무엇을 배우고, 다음에 무엇을 할지 보입니다</h3>
         <p class="gpa-copy">수업이 끝난 뒤 학부모님은 MyGrip에서 진도와 숙제, 이해도와 태도, 선생님의 관찰 기록을 확인합니다. 월말에는 누적 변화와 다음 학습 방향까지 한 장으로 받아보실 수 있습니다.</p>
         <div class="mygrip-points">
@@ -1017,7 +1017,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       </article>
 
       <article class="gpa-panel gpa-panel-dark">
-        <p class="gpa-label">ONE RECORD, NEXT ACTION</p>
+        <p class="gpa-label">기록에서 다음 행동으로</p>
         <h3 class="gpa-title">학부모에게 알리는 데서 끝나지 않습니다</h3>
         <p class="gpa-copy">같은 기록을 학생·학부모·담임이 함께 보고, 필요한 다음 행동을 정합니다. 잘한 점은 구체적으로 칭찬하고, 부족한 점은 보완 범위와 확인 시점을 분명히 약속합니다.</p>
         <p class="gpa-flow"><span>기록 → 발견 → 처방 → 동행</span><br>매일의 작은 기록이 아이에게 맞는 수업과 상담의 근거가 됩니다.</p>
@@ -1029,14 +1029,10 @@ footer{background:#111;padding:48px 40px;text-align:left;}
       <p>실제 운영 화면에서 학생 이름만 가린 예시입니다. 수업 내용과 평가, 숙제 피드백, 월말 변화까지 어떤 방식으로 전달되는지 먼저 확인해 보세요.</p>
     </div>
     <div class="mygrip-gallery">
-      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-01.png" alt="마이그립 학부모 홈 화면" loading="lazy"><figcaption><strong>한눈에 보는 오늘</strong><span>출석·GPA·숙제 제출과 주요 메뉴를 첫 화면에서 확인합니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-01.png" alt="마이그립 학부모 홈 화면" loading="lazy"><figcaption><strong>한눈에 보는 오늘</strong><span>출석·그립성취점수·숙제 제출과 주요 메뉴를 첫 화면에서 확인합니다.</span></figcaption></figure>
       <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-03.png" alt="매쓰그립 수학 일일리포트 실제 화면" loading="lazy"><figcaption><strong>수학 일일리포트</strong><span>교재 진도, DW, 오늘의 숙제와 선생님 관찰 기록이 남습니다.</span></figcaption></figure>
-      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-04.png" alt="마이그립 출결 이해도 태도 숙제 4대 관리지표" loading="lazy"><figcaption><strong>4대 관리지표</strong><span>출결·이해도·수업태도·숙제 수행을 직관적으로 확인합니다.</span></figcaption></figure>
-      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-06.png" alt="마이그립 GPA 그립성취점수 화면" loading="lazy"><figcaption><strong>GPA 변화 확인</strong><span>과목별 점수와 등급, 최근 3개월의 학습 흐름을 함께 봅니다.</span></figcaption></figure>
-      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-07.png" alt="마이그립 숙제 사진 제출과 교사 피드백 화면" loading="lazy"><figcaption><strong>숙제 사진 피드백</strong><span>풀이를 사진으로 제출하면 선생님 확인과 보완 안내가 이어집니다.</span></figcaption></figure>
+      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-06.png" alt="마이그립 GPA 그립성취점수 화면" loading="lazy"><figcaption><strong>그립성취점수 변화</strong><span>과목별 점수와 등급, 최근 3개월의 학습 흐름을 함께 봅니다.</span></figcaption></figure>
       <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-08.png" alt="매쓰그립 월말 평가보고서 화면" loading="lazy"><figcaption><strong>월말 성장보고</strong><span>한 달의 출결·태도·숙제와 관찰 기록을 다음 계획으로 연결합니다.</span></figcaption></figure>
-      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-09.png" alt="마이그립 리포트 이모지와 댓글 소통 화면" loading="lazy"><figcaption><strong>리포트에 바로 답하기</strong><span>표정 이모지와 댓글로 궁금한 점을 선생님께 바로 전합니다.</span></figcaption></figure>
-      <figure class="mygrip-shot"><img src="assets/images/mygrip/mygrip-guide-10.png" alt="마이그립 공지와 알림장 화면" loading="lazy"><figcaption><strong>공지·알림장 통합</strong><span>학원 공지, 반별 안내와 개인 알림을 한곳에서 놓치지 않습니다.</span></figcaption></figure>
     </div>
     <p class="mygrip-source">※ 공개용 예시 화면이며 학생 이름은 비식별 처리했습니다.</p>
   </div>
@@ -1186,7 +1182,7 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   <div class="contact-box fade-up">
     <div class="contact-icon">📐</div>
     <h2 class="contact-title">상담은 우리 아이의 다음 단계를 설계하는 시간입니다</h2>
-    <p class="contact-sub">개념·연산·문제해결·풀이과정을 진단하고<br>TWC·DD/PT 수업과 GPA·MyGrip 관리, 학교별 4주 내신 계획을 제안합니다.</p>
+    <p class="contact-sub">개념·연산·문제해결·풀이과정을 진단하고<br>TWC 문제풀이 코칭과 그립성취점수·MyGrip 관리, 학교별 4주 내신 계획을 제안합니다.</p>
     <a href="https://talk.naver.com/W5XRAC" target="_blank" class="contact-btn">네이버 톡으로 상담하기 →</a>
     <a href="/apply?subject=math&amp;source=homepage" target="_blank" class="contact-btn" style="background:#19b1c6;">우리 아이 수학 진단 상담신청 →</a>
     <p class="contact-hint">사전 정보 확인 → 영역별 진단 → 결과 상담 순서로 진행합니다.</p>
