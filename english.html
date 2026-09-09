@@ -261,7 +261,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .evidence-sec{background:#fff;padding:100px 40px;}
 .evidence-principle{margin-top:36px;overflow:hidden;border:1px solid #dfe8e2;border-radius:20px;background:#fff;box-shadow:0 14px 36px rgba(0,57,30,.08);}
 .evidence-principle img{display:block;width:100%;height:auto;}
-.evidence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:48px;}
+.evidence-grid{display:grid;grid-template-columns:1fr;gap:28px;margin-top:48px;}
 .evidence-card{overflow:hidden;border:1px solid #dfe8e2;border-radius:20px;background:#fff;box-shadow:0 14px 36px rgba(0,57,30,.08);}
 .evidence-card.evidence-card-wide{grid-column:1/-1;}
 .evidence-thumb{aspect-ratio:16/10;overflow:hidden;background:#eef4f0;}
@@ -274,6 +274,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,
 .evidence-note{font-size:14px;line-height:1.75;color:#667085;font-weight:500;}
 .evidence-cta{display:inline-flex;margin-top:28px;padding:14px 24px;border-radius:10px;background:#00391e;color:#fff;text-decoration:none;font-size:14px;font-weight:800;}
 .evidence-cta:hover{background:#ec6619;}
+
+/* PHOTO LIGHTBOX */
+.zoomable-photo{cursor:zoom-in;}
+.zoomable-photo:focus-visible{outline:4px solid #ec6619;outline-offset:4px;}
+.photo-lightbox{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:28px;background:rgba(4,10,7,.92);opacity:0;transition:opacity .2s ease;}
+.photo-lightbox[hidden]{display:none;}
+.photo-lightbox.is-open{opacity:1;}
+.photo-lightbox-dialog{position:relative;display:flex;flex-direction:column;align-items:center;max-width:96vw;max-height:94vh;}
+.photo-lightbox-img{display:block;max-width:94vw;max-height:86vh;width:auto;height:auto;object-fit:contain;border-radius:12px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.45);}
+.photo-lightbox-caption{margin-top:12px;color:#fff;font-size:15px;font-weight:700;text-align:center;line-height:1.5;}
+.photo-lightbox-close{position:absolute;top:-18px;right:-18px;width:46px;height:46px;border:2px solid rgba(255,255,255,.85);border-radius:50%;background:#111;color:#fff;font-size:25px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);}
+.photo-lightbox-close:hover,.photo-lightbox-close:focus-visible{background:#ec6619;outline:none;}
+body.lightbox-open{overflow:hidden;}
+@media(max-width:600px){
+  .photo-lightbox{padding:16px;}
+  .photo-lightbox-img{max-width:96vw;max-height:82vh;border-radius:8px;}
+  .photo-lightbox-close{top:-14px;right:-4px;}
+  .photo-lightbox-caption{font-size:13px;}
+}
 
 /* CLASSROOM */
 .classroom-sec{background:#f7faf8;padding:100px 40px;}
@@ -1145,6 +1164,15 @@ footer{background:#111;padding:48px 40px;text-align:left;}
   </div>
 </footer>
 
+<!-- PHOTO LIGHTBOX -->
+<div class="photo-lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="사진 크게 보기" hidden>
+  <div class="photo-lightbox-dialog">
+    <button class="photo-lightbox-close" id="photoLightboxClose" type="button" aria-label="큰 사진 닫기">×</button>
+    <img class="photo-lightbox-img" id="photoLightboxImg" src="assets/images/logo/grip-icon.png" alt="">
+    <p class="photo-lightbox-caption" id="photoLightboxCaption"></p>
+  </div>
+</div>
+
 <!-- FLOATING NAVER -->
 <div class="floating-consult">
   <a href="https://talk.naver.com/W5XRAC" target="_blank" class="floating-naver" title="네이버톡 상담">
@@ -1221,6 +1249,42 @@ if(englishGripIntroVideo&&englishGripEndCta){
     }
   });
 }
+
+const photoLightbox=document.getElementById('photoLightbox');
+const photoLightboxImg=document.getElementById('photoLightboxImg');
+const photoLightboxCaption=document.getElementById('photoLightboxCaption');
+const photoLightboxClose=document.getElementById('photoLightboxClose');
+let lastPhotoTrigger=null;
+function openPhotoLightbox(img){
+  lastPhotoTrigger=img;
+  photoLightboxImg.src=img.currentSrc||img.src;
+  photoLightboxImg.alt=img.alt||'확대 사진';
+  photoLightboxCaption.textContent=img.alt||'';
+  photoLightbox.hidden=false;
+  document.body.classList.add('lightbox-open');
+  requestAnimationFrame(()=>photoLightbox.classList.add('is-open'));
+  photoLightboxClose.focus();
+}
+function closePhotoLightbox(){
+  photoLightbox.classList.remove('is-open');
+  document.body.classList.remove('lightbox-open');
+  setTimeout(()=>{photoLightbox.hidden=true;photoLightboxImg.src='assets/images/logo/grip-icon.png';},200);
+  if(lastPhotoTrigger)lastPhotoTrigger.focus();
+}
+document.querySelectorAll('section img').forEach(img=>{
+  if(img.closest('a'))return;
+  img.classList.add('zoomable-photo');
+  img.tabIndex=0;
+  img.setAttribute('role','button');
+  img.setAttribute('aria-label',`${img.alt||'사진'} 크게 보기`);
+  img.addEventListener('click',()=>openPhotoLightbox(img));
+  img.addEventListener('keydown',event=>{
+    if(event.key==='Enter'||event.key===' '){event.preventDefault();openPhotoLightbox(img);}
+  });
+});
+photoLightboxClose.addEventListener('click',closePhotoLightbox);
+photoLightbox.addEventListener('click',event=>{if(event.target===photoLightbox)closePhotoLightbox();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!photoLightbox.hidden)closePhotoLightbox();});
 
 const FAQ = {
   location:{q:'📍 위치가 어디인가요?',a:'서울 서대문구 가재울미래로 17, 7층에 위치해 있습니다. 가재울역 근처라 교통이 편리합니다! 🏢'},
