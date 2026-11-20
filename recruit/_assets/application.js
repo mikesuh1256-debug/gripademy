@@ -11,6 +11,7 @@
     ['지도 가능 학년', node('quick-grades')],
     ['희망연봉', node('quick-salary')],
     ['근무 가능 시작일', node('quick-start')],
+    ['기타', node('quick-other')],
   ];
   const recipient = 'mikesuh1256@gmail.com';
   const status = node('quick-status');
@@ -29,7 +30,7 @@
     const body = [
       '안녕하세요. 매쓰그립수학 수학 강사에 지원합니다.',
       '',
-      ...list.map(([label, input]) => label + ': ' + (clean(input.value) || '미기재')),
+      ...list.map(([label, input]) => label + ': ' + ((input.id === 'quick-other' ? input.value.trim().replace(/\r?\n/g, '\r\n') : clean(input.value)) || '미기재')),
       '',
       '이력서를 첨부합니다. 감사합니다.',
     ].join('\r\n');

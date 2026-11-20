@@ -30,5 +30,12 @@ img{display:block;max-width:100%}h1,h2,h3,p{margin:0}h1,h2,h3{line-height:1.22;l
 .preview-home{padding:0 clamp(14px,2.6vw,23px) 13px;font-size:.78rem}.preview-home a{color:#49648d}
 @media(max-width:620px){.preview-grid{grid-template-columns:minmax(0,1fr)}}
 .preview-main img{aspect-ratio:16/9}.preview-blog .preview-main img{object-fit:contain;background:#202c57}
-.commute-map{overflow:hidden;margin:18px 0 0;background:#fff;border:1px solid var(--line);border-radius:13px}.commute-map figcaption{padding:10px 15px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}.commute-map figcaption strong{color:#174b8f}.commute-map figcaption span,.commute-map p{font-size:.8rem;color:#45566e}.commute-map iframe{display:block;border:0;width:100%;height:clamp(285px,39vw,365px);background:#eef5fe}.commute-map p{padding:5px 15px 8px}.commute-map p a:hover{text-decoration:underline}
-@media(max-width:620px){.commute-map figcaption{display:grid;gap:0}.commute-map iframe{height:300px}}
+.commute-map{overflow:hidden;margin:18px 0 0;background:#fff;border:1px solid var(--line);border-radius:13px}.commute-map figcaption{padding:10px 15px;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}.commute-map figcaption strong{color:#174b8f}.commute-map figcaption span,.commute-map p{font-size:.8rem;color:#45566e}.commute-map .map-visual{display:block;width:100%;height:auto;background:#eef5fe}.commute-map p{padding:5px 15px 8px}.commute-map p a:hover{text-decoration:underline}
+@media(max-width:620px){.commute-map figcaption{display:grid;gap:0}.commute-map .map-visual{min-width:0}}
+
+
+@media(min-width:901px){.preview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:621px) and (max-width:900px){.preview-official{grid-column:1/-1}.preview-official .preview-main{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1fr)}}
+.preview-official-visual{display:grid;place-items:center;padding:10px;background:#e8f1fc;aspect-ratio:16/9}.preview-official-visual img{width:min(81%,255px);max-height:85%;aspect-ratio:auto;object-fit:contain;object-position:center}
+.quick-grid textarea{display:block;width:100%;margin-top:4px;padding:8px 9px;min-height:78px;border:1px solid #9fb7d4;background:#fff;border-radius:6px;color:var(--ink);font-family:inherit;font-size:16px;resize:vertical}.quick-grid textarea:focus-visible{outline:3px solid #0e61ca;outline-offset:3px}
+.commute-map .map-visual{width:min(100%,850px);margin-inline:auto;object-fit:contain}
